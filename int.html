@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Archinova Smart Layout Builder</title>
+
+   <link rel="stylesheet" href="style.css" />
+  <!-- Google Font: Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome Icons (IMPORTANT for icons to work) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+
+h1{
+    color:#14b8a6;
+}
+
+select,button{
+    padding:10px 20px;
+    margin:10px;
+    border-radius:8px;
+    border:none;
+}
+select, button{
+  background:#0c1c2c;
+  color:white;
+  border:1px solid rgba(0,255,195,0.2);
+}
+
+button{
+    background:#14b8a6;
+    color:white;
+    cursor:pointer;
+}
+
+#loading{
+    display:none;
+    margin-top:20px;
+    font-size:18px;
+    color:#14b8a6;
+}
+
+#output{
+    margin-top:30px;
+    display:none;
+    animation:fadeIn 1s ease-in-out;
+}
+
+.room-card{
+    background:rgba(12,28,44,0.9);
+    backdrop-filter: blur(8px);
+    color:#dce7f0;
+    padding:20px;
+    border-radius:15px;
+    margin:20px auto;
+    width:90%;
+    max-width:1000px;
+    box-shadow:0 8px 25px rgba(0,0,0,0.3);
+}
+
+.room-card img{
+    width:100%;
+    border-radius:10px;
+    margin-top:10px;
+}
+.room-card h2{
+    margin-bottom:10px;
+    color: #fff;;
+}
+.room-card p{
+    margin-bottom:10px;
+    color: #fff;;
+}
+.progress{
+    background:#ddd;
+    height:8px;
+    border-radius:10px;
+    overflow:hidden;
+    margin-top:10px;
+}
+
+.fill{
+    height:8px;
+    background:#14b8a6;
+}
+.loader {
+  margin-top: 30px;
+  width: 60px;
+  height: 60px;
+  border: 6px solid #eee;
+  border-top: 6px solid #14b8a6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-left: auto;
+  margin-right: auto;
+}
+.design-report {
+  line-height: 1.8;
+  font-size: 15px;
+}
+
+.design-report strong {
+  color: #14b8a6;
+}
+.label {
+  color: #14b8a6;
+  font-weight: 600;
+  display: block;
+  margin-top: 8px;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg);}
+  100% { transform: rotate(360deg);}
+}
+
+.preview-img {
+  width: 100%;
+  border-radius: 12px;
+  margin-top: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  transition: 0.4s ease;
+}
+
+
+.room-card {
+    max-width: 900px;
+    width: 95%;
+}
+
+#aiText {
+    margin-top: 15px;
+    line-height: 1.8;
+    text-align: start;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+.zigzag {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  text-align: left;
+}
+
+.zigzag.reverse {
+  flex-direction: row-reverse;
+}
+
+.zigzag-image {
+  flex: 1;
+  max-width: 48%;
+}
+
+.zigzag-text {
+  max-width: 52%;
+}
+.zigzag-text{
+  flex: 1;
+  background: rgba(12,28,44,0.9);
+  backdrop-filter: blur(8px);
+  border-radius: 15px;
+  padding: 25px;
+  border:1px solid rgba(0,255,195,0.08);
+}
+
+.preview-section {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+#previewImage {
+  width: 80%;
+  max-width: 700px;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+  transition: 0.4s ease;
+}
+
+#previewImage:hover {
+  transform: scale(1.03);
+}
+/* ===== Skeleton Loading ===== */
+
+/* ===== DARK THEME SKELETON LOADER ===== */
+
+
+
+/* Skeleton shimmer */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(0,255,195,0.05) 25%,
+    rgba(0,255,195,0.15) 50%,
+    rgba(0,255,195,0.05) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+/* Title skeleton */
+.skeleton-title {
+  height: 22px;
+  width: 60%;
+}
+
+/* Line skeleton */
+.skeleton-line {
+  height: 14px;
+  width: 100%;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.preview-section {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 350px;
+  position: relative;
+}
+
+.fade-image {
+  width: 80%;
+  max-width: 750px;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  transition: opacity 0.8s ease-in-out;
+  opacity: 1;
+}
+
+.fade-out {
+  opacity: 0;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+/* ===== Dynamic Preview ===== */
+
+#dynamicPreview {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.preview-grid {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin-top: 25px;
+  flex-wrap: wrap;
+}
+
+.fade-image {
+  width: 280px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 18px;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+  transition: opacity 0.8s ease-in-out, transform 0.5s ease;
+}
+
+.fade-image:hover {
+  transform: scale(1.05);
+}
+
+.fade-out {
+  opacity: 0;
+}
+
+img {
+  display: block;
+}
+.preview-card {
+  margin-bottom: 30px;
+}
+
+.preview-card h2 {
+  color: #14b8a6;
+}
+
+.preview-images {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.preview-box {
+  width: 200px;
+  height: 130px;
+  background: linear-gradient(135deg, #14b8a6, #0f766e);
+  border-radius: 15px;
+  animation: float 3s ease-in-out infinite;
+}
+
+.preview-box:nth-child(2) {
+  animation-delay: 0.5s;
+}
+
+.preview-box:nth-child(3) {
+  animation-delay: 1s;
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@media(max-width:768px){
+  .preview-box{
+    width:150px;
+    height:100px;
+  }
+}
+
+@media (max-width: 768px) {
+  .zigzag {
+    flex-direction: column !important;
+  }
+}
+/* ===== RESPONSIVE UPGRADE ===== */
+
+
+
+@media (max-width: 768px) {
+
+  h1 {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  select,
+  button {
+    width: 100%;
+    margin: 8px 0;
+  }
+
+  .room-card {
+    width: 95%;
+    padding: 20px;
+  }
+
+  .preview-img {
+    margin-top: 12px;
+  }
+
+  .carousel-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .carousel-btn {
+    width: 45px;
+    height: 45px;
+    font-size: 16px;
+  }
+
+  #carousel-content {
+    width: 100%;
+    min-height: 150px;
+    font-size: 14px;
+  }
+
+  button[onclick="downloadPDF()"] {
+    width: 100%;
+  }
+}
+.step{
+display:none;
+animation:slideIn 0.6s ease;
+}
+
+.step.active{
+display:block;
+}
+
+@keyframes slideIn{
+
+from{
+opacity:0;
+transform:translateX(80px);
+}
+
+to{
+opacity:1;
+transform:translateX(0);
+}
+
+}
+
+@media (max-width: 480px) {
+
+  h1 {
+    font-size: 18px;
+  }
+
+  #carousel-content {
+    font-size: 13px;
+    padding: 15px;
+  }
+
+  .carousel-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
+}
+
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(20px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+.fade-in {
+  animation: fadeUp 0.8s ease forwards;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (max-width: 768px){
+
+  .room-card{
+    padding:20px;
+    width:95%;
+  }
+
+  select, button{
+    width:90%;
+    margin:8px 0;
+  }
+
+  h1{
+    font-size:22px;
+  }
+
+}
+</style>
+</head>
+
+<body>
+    
+  <!-- MOVING BACKGROUND -->
+  <div class="animated-bg"></div>
+
+  <!-- ================= NAVBAR ================= -->
+  <header>
+  <div class="navbar">
+
+    <!-- Logo -->
+    <div class="logo">
+      <img src="logo.png" alt="Archinova Logo">
+      Archinova
+    </div>
+
+    <!-- Hamburger Icon -->
+    <div class="menu-toggle" id="menu-toggle">
+      <i class="fa-solid fa-bars"></i>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="nav-menu">
+      <div class="close-btn" id="close-btn">
+        <i class="fa-solid fa-xmark"></i>
+      </div>
+
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="recommend.html">Recommendation</a></li>
+        <li><a href="interior.html">Interior</a></li>
+        <li><a href="#about">Modules</a></li>
+        <li><a class="btn-nav" href="login.html">Login</a></li>
+      </ul>
+    </nav>
+
+  </div>
+</header>
+
+<div class="section">
+
+<h1>Archinova Smart Layout Builder</h1>
+<div id="wizard">
+
+<!-- STEP 1 REGION -->
+
+<div class="step active" id="step1">
+<h2>Select Region</h2>
+
+<button onclick="selectRegion('north')">North India</button>
+<button onclick="selectRegion('south')">South India</button>
+<button onclick="selectRegion('east')">East India</button>
+<button onclick="selectRegion('west')">West India</button>
+
+</div>
+
+
+<!-- STEP 2 CLIMATE -->
+
+<div class="step" id="step2">
+
+<h2>Climate Adaptation</h2>
+
+<button onclick="selectClimate('hot')">Hot Climate</button>
+<button onclick="selectClimate('cold')">Cold Climate</button>
+<button onclick="selectClimate('rainy')">Rainy Climate</button>
+<button onclick="selectClimate('coastal')">Coastal Climate</button>
+
+</div>
+
+
+<!-- STEP 3 ROOM -->
+
+<div class="step" id="step3">
+
+<h2>Select Room</h2>
+
+<button onclick="selectRoom('Living Room')">Living Room</button>
+<button onclick="selectRoom('Bedroom')">Bedroom</button>
+<button onclick="selectRoom('Kitchen')">Kitchen</button>
+
+</div>
+
+
+<!-- STEP 4 SQFT -->
+
+<div class="step" id="step4">
+
+<h2>House Size</h2>
+
+<button onclick="selectSqft(600)">600 sqft</button>
+<button onclick="selectSqft(1000)">1000 sqft</button>
+<button onclick="selectSqft(1500)">1500 sqft</button>
+<button onclick="selectSqft(2000)">2000+ sqft</button>
+
+</div>
+
+
+<!-- STEP 5 BUDGET -->
+
+<div class="step" id="step5">
+
+<h2>Select Budget</h2>
+
+<button onclick="selectBudget(300000)">₹3L</button>
+<button onclick="selectBudget(600000)">₹6L</button>
+<button onclick="selectBudget(1000000)">₹10L</button>
+<button onclick="selectBudget(2000000)">₹20L+</button>
+
+</div>
+
+
+<!-- STEP 6 GENERATE -->
+
+<div class="step" id="step6">
+
+<h2>Generate Interior</h2>
+
+<button onclick="generateDesign()">Generate Interiors</button>
+
+</div>
+
+</div>
+
+<div id="loading">Generating Climate-Optimized Interiors...</div>
+
+<div id="dynamicPreview">
+
+  <div class="preview-card">
+    <h2>Smart Climate-Based Interiors</h2>
+    <p id="rotatingText">Modern Living Room Concepts</p>
+  </div>
+
+  <div class="preview-grid">
+    <img id="previewImage1" class="fade-image" src="Modern Living Room Concepts.png">
+    <img id="previewImage2" class="fade-image" src="Luxury Bedroom Layout Ideas.png">
+    <img id="previewImage3" class="fade-image" src="Minimal Kitchen Designs.png">
+  </div>
+
+</div>
+
+<div id="output"></div>
+<div id="wallColorControl" style="display:none;margin-top:20px;">
+
+<h3>Change Wall Color</h3>
+
+<input type="color" id="wallColorPicker">
+
+</div>
+<button id="downloadBtn" onclick="downloadPDF()" style="margin-top:20px; display:none;">
+Download Full Report
+</button>
+</div>
+
+<script>
+const data = {
+
+hot:{
+percent:88,
+material:"Light colors, marble flooring, cross ventilation.",
+budget:"₹5L - ₹10L",
+rooms:[
+{
+title:"Living Room",
+styles:{
+modern:["mhlr-1.jpg","mhlr-2.jpg","mhlr-3.jpg"],
+luxury:["lhlr-1.jpg","lhlr-2.jpg","lhlr-3.jpg"],
+contemporary:["chlr-1.jpg","chlr-2.jpg","chlr-3.jpg"],
+traditional:["thlr-1.jpg","thlr-2.jpg","thlr-3.jpg"],
+minimal:["mihlr-1.jpg","mihlr-2.jpg","mihlr-3.jpg"]
+}
+},
+{
+title:"Bedroom",
+styles:{
+modern:["mhbr-1.jpg","mhbr-2.jpg","mhbr-3.jpg"],
+luxury:["lhbr-1.jpg","lhbr-2.jpg","lhbr-3.jpg"],
+contemporary:["chbr-1.jpg","chbr-2.jpg","chbr-3.jpg"],
+traditional:["thbr-1.jpg","thbr-2.jpg","thbr-3.jpg"],
+minimal:["mihbr-1.jpg","mihbr-2.jpg","mihbr-3.jpg"]
+}
+},
+{
+title:"Kitchen",
+styles:{
+modern:["mhk-1.jpg","mhk-2.jpg","mhk-3.jpg"],
+luxury:["lhk-1.jpg","lhk-2.jpg","lhk-3.jpg"],
+contemporary:["chk-1.jpg","chk-2.jpg","chk-3.jpg"],
+traditional:["thk-1.jpg","thk-2.jpg","thk-3.jpg"],
+minimal:["mihk-1.jpg","mihk-2.jpg","mihk-3.jpg"]
+}
+}
+]
+},
+
+cold:{
+percent:82,
+material:"Wooden flooring, warm lighting, insulated walls.",
+budget:"₹6L - ₹12L",
+rooms:[
+{
+title:"Living Room",
+styles:{
+modern:["mclr-1.jpg","mclr-2.jpg","mclr-3.jpg"],
+luxury:["lclr-1.jpg","lclr-2.jpg","lclr-3.jpg"],
+contemporary:["cclr-1.jpg","cclr-2.jpg","cclr-3.jpg"],
+traditional:["tclr-1.jpg","tclr-2.jpg","tclr-3.jpg"],
+minimal:["miclr-1.jpg","miclr-2.jpg","miclr-3.jpg"]
+}
+},
+{
+title:"Bedroom",
+styles:{
+modern:["mcbr-1.jpg","mcbr-2.jpg","mcbr-3.jpg"],
+luxury:["lcbr-1.jpg","lcbr-2.jpg","lcbr-3.jpg"],
+contemporary:["ccbr-1.jpg","ccbr-2.jpg","ccbr-3.jpg"],
+traditional:["tcbr-1.jpg","tcbr-2.jpg","tcbr-3.jpg"],
+minimal:["micbr-1.jpg","micbr-2.jpg","micbr-3.jpg"]
+}
+},
+{
+title:"Kitchen",
+styles:{
+modern:["mck-1.jpg","mck-2.jpg","mck-3.jpg"],
+luxury:["lck-1.jpg","lck-2.jpg","lck-3.jpg"],
+contemporary:["cck-1.jpg","cck-2.jpg","cck-3.jpg"],
+traditional:["tck-1.jpg","tck-2.jpg","tck-3.jpg"],
+minimal:["mick-1.jpg","mick-2.jpg","mick-3.jpg"]
+}
+}
+]
+},
+
+coastal:{
+percent:91,
+material:"Rattan furniture, blue accents, airy layout.",
+budget:"₹7L - ₹15L",
+rooms:[
+{
+title:"Living Room",
+styles:{
+modern:["mcolr-1.jpg","mcolr-2.jpg","mcolr-3.jpg"],
+luxury:["lcolr-1.jpg","lcolr-2.jpg","lcolr-3.jpg"],
+contemporary:["ccolr-1.jpg","ccolr-2.jpg",'ccolr-3.jpg'],
+traditional:["tcolr-1.jpg","tcolr-2.jpg","tcolr-3.jpg"],
+minimal:["micolr-1.jpg","micolr-2.jpg","micolr-3.jpg"]
+}
+},
+{
+title:"Bedroom",
+styles:{
+modern:["mcobr-1.jpg","mcobr-2.jpg","mcobr-3.jpg"],
+luxury:["lcobr-1.jpg","lcobr-2.jpg","lcobr-3.jpg"],
+contemporary:["cocobr-1.jpg","cocobr-2.jpg","cocobr-3.jpg"],
+traditional:["tcobr-1.jpg","tcobr-2.jpg","tcobr-3.jpg"],
+minimal:["micobr-1.jpg","micobr-2.jpg","micobr-3.jpg"]
+}
+},
+{
+title:"Kitchen",
+styles:{
+modern:["mcok-1.jpg","mcok-2.jpg","mcok-3.jpg"],
+luxury:["lcok-1.jpg","lcok-2.jpg","lcok-3.jpg"],
+contemporary:["ccok-1.jpg","ccok-2.jpg","ccok-3.jpg"],
+traditional:["tcok-1.jpg","tcok-2.jpg","tcok-3.jpg"],
+minimal:["micok-1.jpg","micok-2.jpg","micok-3.jpg"]
+}
+}
+]
+},
+
+rainy:{
+percent:76,
+material:"Moisture resistant paint, soft lighting, cozy fabrics.",
+budget:"₹4L - ₹9L",
+rooms:[
+{
+title:"Living Room",
+styles:{
+modern:["mrlr-1.jpg","mrlr-2.jpg","mrlr-3.jpg"],
+luxury:["lrlr-1.jpg","lrlr-2.jpg","lrlr-3.jpg"],
+contemporary:["crlr-1.jpg","crlr-2.jpg","crlr-3.jpg"],
+traditional:["trlr-1.jpg","trlr-2.jpg","trlr-3.jpg"],
+minimal:["mirlr-1.jpg","mirlr-2.jpg","mirlr-3.jpg"]
+}
+},
+{
+title:"Bedroom",
+styles:{
+modern:["mrbr-1.jpg","mrbr-2.jpg","mrbr-3.jpg"],
+luxury:["lrbr-1.jpg","lrbr-2.jpg","lrbr-3.jpg"],
+contemporary:["crbr-1.jpg","crbr-2.jpg","crbr-3.jpg"],
+traditional:["trbr-1.jpg","trbr-2.jpg","trbr-3.jpg"],
+minimal:["mirbr-1.jpg","mirbr-2.jpg","mirbr-3.jpg"]
+}
+},
+{
+title:"Kitchen",
+styles:{
+modern:["mrk-1.jpg","mrk-2.jpg","mrk-3.jpg"],
+luxury:["lrk-1.jpg","lrk-2.jpg","lrk-3.jpg"],
+contemporary:["corbr-1.jpg","corbr-2.jpg","corbr-3.jpg"],
+traditional:["trk-1.jpg","trk-2.jpg","trk-3.jpg"],
+minimal:["mirk-1.jpg","mirk-2.jpg","mirk-3.jpg"]
+}
+}
+]
+}
+
+};
+</script>
+<!-- ===== DYNAMIC PREVIEW TEXT ===== -->
+<script>
+const texts = [
+  "Modern Living Room Concepts",
+  "Luxury Bedroom Layout Ideas",
+  "Minimal Kitchen Designs",
+  "Contemporary Furniture Planning"
+];
+
+let textIndex = 0;
+
+setInterval(() => {
+  textIndex = (textIndex + 1) % texts.length;
+  document.getElementById("rotatingText").innerText = texts[textIndex];
+}, 2000);
+</script>
+<script>
+function showError(message){
+
+  const errorBox = document.createElement("div");
+
+  errorBox.innerText = message;
+
+  errorBox.style.position = "fixed";
+  errorBox.style.top = "20px";
+  errorBox.style.left = "50%";
+  errorBox.style.transform = "translateX(-50%)";
+  errorBox.style.background = "#ff4d4d";
+  errorBox.style.color = "#fff";
+  errorBox.style.padding = "14px 28px";
+  errorBox.style.borderRadius = "12px";
+  errorBox.style.fontWeight = "600";
+  errorBox.style.fontSize = "14px";
+  errorBox.style.zIndex = "9999";
+  errorBox.style.boxShadow = "0 15px 35px rgba(0,0,0,0.4)";
+  errorBox.style.opacity = "0";
+  errorBox.style.transition = "opacity 0.3s ease";
+
+  document.body.appendChild(errorBox);
+
+  setTimeout(() => {
+    errorBox.style.opacity = "1";
+  }, 50);
+
+  setTimeout(() => {
+    errorBox.style.opacity = "0";
+    setTimeout(() => {
+      errorBox.remove();
+    }, 300);
+  }, 3000);
+}
+/* steps*/
+let selected = {
+region:null,
+climate:null,
+room:null,
+sqft:null,
+budget:null
+};
+/*level by level*/
+function goToStep(step){
+
+document.querySelectorAll(".step").forEach(s=>{
+s.classList.remove("active");
+});
+
+document.getElementById(step).classList.add("active");
+
+}
+/*region*/
+function selectRegion(region){
+
+selected.region = region;
+
+goToStep("step2");
+
+}
+/*climate*/
+function selectClimate(climate){
+
+selected.climate = climate;
+
+goToStep("step3");
+
+}
+/*room*/
+function selectRoom(room){
+
+selected.room = room;
+
+goToStep("step4");
+
+}
+/*sqft*/
+function selectSqft(size){
+
+selected.sqft = size;
+
+goToStep("step5");
+
+}
+/*budget*/
+function selectBudget(amount){
+
+selected.budget = amount;
+
+goToStep("step6");
+
+}
+  //Design Algorithm (Sqft + Budget )
+  function calculateDesign(){
+
+let sqft = selected.sqft;
+let budget = selected.budget;
+
+let ratio = budget / sqft;
+
+let style;
+
+if(ratio < 500){
+style = "minimal";
+}
+else if(ratio < 1200){
+style = "modern";
+}
+else{
+style = "luxury";
+}
+
+return style;
+
+}
+document.getElementById("wallColorPicker").addEventListener("input",function(){
+
+let color = this.value;
+
+document.querySelectorAll(".zigzag-text").forEach(box=>{
+
+box.style.background=color;
+
+});
+
+});
+</script>
+
+<script>
+function generateDesign(){
+
+let climate = selected.climate;
+let room = selected.room;
+let style = calculateDesign();
+
+if(!climate || !room){
+showError("Please complete all steps");
+return;
+}
+
+document.getElementById("wallColorControl").style.display="block";
+
+clearInterval(slideshowInterval);
+document.getElementById("dynamicPreview").style.display="none";
+
+document.getElementById("downloadBtn").style.display="none";
+
+build(climate, room, style);
+}
+
+function build(climate, selectedRoom, selectedStyle){
+document.getElementById("wallColorControl").style.display="block";
+
+  // ✅ Hide preview only after validation passes
+  clearInterval(slideshowInterval);
+  document.getElementById("dynamicPreview").style.display = "none";
+
+  document.getElementById("downloadBtn").style.display = "none";
+
+if(!climate || !selectedRoom || !selectedStyle){
+    showError("Please select Climate, Room and Style");
+    return;
+}
+
+let output = document.getElementById("output");
+let loading = document.getElementById("loading");
+
+output.style.display="none";
+loading.style.display="block";
+output.innerHTML="";
+
+setTimeout(async ()=>{
+
+loading.style.display="none";
+output.style.display="block";
+
+let info = data[climate];
+
+// Header
+output.innerHTML += `
+<div class="room-card">
+<h2>${climate.toUpperCase()} CLIMATE ANALYSIS</h2>
+<p><b>Materials:</b> ${info.material}</p>
+<p><b>Budget Range:</b> ${info.budget}</p>
+<div class="progress">
+<div class="fill" style="width:${info.percent}%"></div>
+</div>
+<p>Climate Suitability: ${info.percent}%</p>
+</div>
+`;
+
+// Find Room
+let roomData = info.rooms.find(r => r.title === selectedRoom);
+
+if(roomData && roomData.styles[selectedStyle]){
+
+let images = roomData.styles[selectedStyle];
+
+
+let reports = [];
+
+// Show skeletons first
+images.forEach((img, index) => {
+
+  output.innerHTML += `
+  <div class="room-card fade-in zigzag ${index % 2 !== 0 ? 'reverse' : ''}">
+    
+    <div class="zigzag-image">
+      <img src="${img}" class="preview-img">
+    </div>
+
+    <div class="zigzag-text">
+      <div class="skeleton skeleton-title"></div>
+      <div class="skeleton skeleton-line"></div>
+      <div class="skeleton skeleton-line"></div>
+      <div class="skeleton skeleton-line"></div>
+    </div>
+
+  </div>
+  `;
+});
+document.getElementById("downloadBtn").style.display = "inline-block";
+// Fetch AI reports
+for (let i = 0; i < images.length; i++) {
+
+  const response = await fetch("http://localhost:5000/generate-description", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      climate,
+      room: selectedRoom,
+      style: selectedStyle
+    })
+  });
+
+  const aiData = await response.json();
+  reports.push(aiData.description || "Report failed.");
+}
+
+// 🔥 Remove skeleton cards but KEEP header
+output.innerHTML = `
+<div class="room-card">
+<h2>${climate.toUpperCase()} CLIMATE ANALYSIS</h2>
+<p><b>Materials:</b> ${info.material}</p>
+<p><b>Budget Range:</b> ${info.budget}</p>
+<div class="progress">
+<div class="fill" style="width:${info.percent}%"></div>
+</div>
+<p>Climate Suitability: ${info.percent}%</p>
+</div>
+`;
+
+// Now render final zig-zag layout
+images.forEach((img, index) => {
+
+  const isReverse = index % 2 !== 0;
+
+  output.innerHTML += `
+  <div class="room-card fade-in zigzag ${isReverse ? 'reverse' : ''}">
+    
+    <div class="zigzag-image">
+      <img src="${img}" class="preview-img">
+    </div>
+
+    <div class="zigzag-text">
+      <h3 style="color:#14b8a6;">Interior Design – Option ${index + 1}</h3>
+      <div class="design-report">
+        ${formatReport(reports[index])}
+      </div>
+    </div>
+
+  </div>
+  `;
+});
+
+}
+},1000);
+
+}
+
+</script>
+
+<script>
+function formatReport(text) {
+
+  return text
+    .replace("Color Palette:", "<span class='label'>Color Palette:</span>")
+    .replace("Furniture Style:", "<span class='label'>Furniture Style:</span>")
+    .replace("Flooring & Lighting:", "<span class='label'>Flooring & Lighting:</span>");
+}
+</script>
+<script>
+let slideshowInterval;
+
+function startSlideshow(images) {
+
+  clearInterval(slideshowInterval);
+
+  const img1 = document.getElementById("previewImage1");
+  const img2 = document.getElementById("previewImage2");
+  const img3 = document.getElementById("previewImage3");
+
+  img1.src = images[0];
+  img2.src = images[1];
+  img3.src = images[2];
+
+  let index = 0;
+
+  slideshowInterval = setInterval(() => {
+
+    index = (index + 1) % images.length;
+
+    const next1 = images[index];
+    const next2 = images[(index + 1) % images.length];
+    const next3 = images[(index + 2) % images.length];
+
+    [img1, img2, img3].forEach(img => img.classList.add("fade-out"));
+
+    setTimeout(() => {
+      img1.src = next1;
+      img2.src = next2;
+      img3.src = next3;
+
+      [img1, img2, img3].forEach(img => img.classList.remove("fade-out"));
+    }, 400);
+
+  }, 3000);
+}
+
+function updatePreview() {
+
+  const climate = document.getElementById("climate").value;
+  const room = document.getElementById("room").value;
+  const style = document.getElementById("style").value;
+
+  if (!climate || !room || !style) return;
+
+  const roomData = data[climate]?.rooms.find(r => r.title === room);
+
+  if (roomData && roomData.styles[style]) {
+    startSlideshow(roomData.styles[style]);
+  }
+}
+
+document.getElementById("climate").addEventListener("change", updatePreview);
+document.getElementById("room").addEventListener("change", updatePreview);
+document.getElementById("style").addEventListener("change", updatePreview);
+</script>
+
+
+<script src="script.js"></script>
+</body>
+</html>

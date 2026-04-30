@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Studio Apartment | Archinova</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+<style>
+/* ================= GLOBAL ================= */
+html{scroll-behavior:smooth;}
+
+body{
+margin:0;
+font-family:'Poppins', sans-serif;
+color:#e5e7eb;
+background:#020617;
+overflow-x:hidden;
+}
+
+/* 🔲 GRID BACKGROUND */
+body::after{
+content:"";
+position:fixed;
+width:100%;
+height:100%;
+top:0;
+left:0;
+background-image:
+linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+background-size:60px 60px;
+z-index:-2;
+}
+
+/* 🌈 BACKGROUND GLOW */
+body::before{
+content:"";
+position:fixed;
+width:500px;
+height:500px;
+background:#38bdf8;
+filter:blur(120px);
+opacity:0.15;
+top:-100px;
+left:-100px;
+z-index:-1;
+}
+
+/* 🌀 MOUSE GLOW */
+.cursor-glow{
+position:fixed;
+width:300px;
+height:300px;
+background:radial-gradient(circle,rgba(56,189,248,0.25),transparent 70%);
+border-radius:50%;
+pointer-events:none;
+z-index:999;
+transform:translate(-50%,-50%);
+}
+
+/* ================= HERO ================= */
+.hero{
+height:100vh;
+position:relative;
+display:flex;
+justify-content:center;
+align-items:center;
+overflow:hidden;
+}
+
+/* SLIDER */
+.slide{
+position:absolute;
+width:100%;
+height:100%;
+object-fit:cover;
+opacity:0;
+transition:1.5s;
+transform:scale(1.1);
+}
+.slide.active{
+opacity:0.5;
+transform:scale(1.2);
+}
+
+/* HERO CONTENT */
+.hero-content{
+position:relative;
+text-align:center;
+padding:60px;
+background:rgba(0,0,0,0.5);
+backdrop-filter:blur(25px);
+border-radius:25px;
+box-shadow:0 0 80px rgba(56,189,248,0.4);
+}
+
+.hero h1{
+font-family:'Orbitron', sans-serif;
+font-size:70px;
+letter-spacing:2px;
+text-shadow:0 0 25px rgba(56,189,248,0.3);
+
+background:linear-gradient(90deg,#38bdf8,#22c55e,#a78bfa,#f472b6);
+background-size:300%;
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+
+animation:gradientMove 6s linear infinite;
+}
+
+@keyframes gradientMove{
+0%{background-position:0%;}
+100%{background-position:300%;}
+}
+
+.hero p, .text p{
+font-weight:300;
+letter-spacing:0.5px;
+line-height:1.7;
+color:#cbd5f5;
+}
+
+/* BUTTON */
+.btn{
+padding:14px 35px;
+border-radius:30px;
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(20px);
+border:1px solid rgba(255,255,255,0.2);
+color:white;
+cursor:pointer;
+transition:0.3s;
+}
+
+.btn:hover{
+transform:scale(1.1);
+box-shadow:0 0 25px #38bdf8;
+}
+
+/* ================= GRID ================= */
+/* ================= GRID CARDS ================= */
+.grid-section{
+padding:80px 5%;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:25px;
+}
+
+.grid-card{
+padding:30px;
+border-radius:20px;
+
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(15px);
+
+border:1px solid rgba(255,255,255,0.1);
+
+cursor:pointer;
+transition:0.4s;
+
+position:relative;
+overflow:hidden;
+}
+
+/* glow */
+.grid-card::before{
+content:"";
+position:absolute;
+width:200%;
+height:200%;
+background:linear-gradient(45deg,#38bdf8,#22c55e,#a78bfa);
+animation:rotate 6s linear infinite;
+opacity:0.1;
+}
+
+.grid-card h3{
+font-size:20px;
+background:linear-gradient(90deg,#38bdf8,#22c55e);
+-webkit-background-clip:text;
+color:transparent;
+}
+
+.grid-card p{
+font-size:14px;
+color:#cbd5f5;
+margin-top:8px;
+}
+
+/* hover */
+.grid-card:hover{
+transform:translateY(-8px) scale(1.03);
+box-shadow:0 0 25px rgba(56,189,248,0.5);
+}
+
+/* active */
+.grid-card.active{
+background:linear-gradient(135deg,#38bdf8,#22c55e);
+color:white;
+box-shadow:0 0 30px rgba(56,189,248,0.8);
+}
+
+.grid-card.active h3{
+color:white;
+background:none;
+}
+
+/* ================= PREVIEW ================= */
+.layout-preview{
+margin:60px auto;
+max-width:1000px;
+
+display:flex;
+align-items:center;
+gap:40px;
+
+background:rgba(255,255,255,0.04);
+padding:30px;
+border-radius:20px;
+
+backdrop-filter:blur(20px);
+}
+
+.layout-preview img{
+width:50%;
+height:320px;
+object-fit:cover;
+border-radius:15px;
+}
+
+.layout-text{
+width:40%;
+}
+
+.layout-text h2{
+font-size:28px;
+background:linear-gradient(90deg,#38bdf8,#22c55e,#a78bfa);
+-webkit-background-clip:text;
+color:transparent;
+}
+
+.layout-text p{
+color:#cbd5f5;
+line-height:1.6;
+}
+
+/* mobile */
+@media(max-width:900px){
+.grid-section{
+grid-template-columns:1fr;
+}
+
+.layout-preview{
+flex-direction:column;
+text-align:center;
+}
+
+.layout-preview img, .layout-text{
+width:100%;
+}
+}
+
+/* ================= FULLSCREEN MODAL ================= */
+.preview-modal{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+
+background:rgba(0,0,0,0.85);
+backdrop-filter:blur(15px);
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+opacity:0;
+pointer-events:none;
+transition:0.4s;
+
+z-index:9999;
+}
+
+.preview-modal.show{
+opacity:1;
+pointer-events:auto;
+}
+
+/* CONTENT */
+.preview-content{
+display:flex;
+gap:40px;
+
+max-width:1000px;
+width:90%;
+
+background:rgba(255,255,255,0.05);
+border-radius:20px;
+padding:30px;
+
+backdrop-filter:blur(20px);
+
+transform:scale(0.8);
+transition:0.4s;
+}
+
+.preview-modal.show .preview-content{
+transform:scale(1);
+}
+
+/* IMAGE */
+.preview-content img{
+width:50%;
+height:350px;
+object-fit:cover;
+border-radius:15px;
+
+transition:0.4s;
+}
+
+.preview-content img:hover{
+transform:scale(1.05);
+}
+
+/* TEXT */
+.modal-text{
+width:40%;
+}
+
+.modal-text h2{
+font-size:30px;
+background:linear-gradient(90deg,#38bdf8,#22c55e,#a78bfa);
+-webkit-background-clip:text;
+color:transparent;
+}
+
+.modal-text p{
+color:#cbd5f5;
+line-height:1.6;
+margin-top:10px;
+}
+
+/* CLOSE BUTTON */
+.close-btn{
+position:absolute;
+top:20px;
+right:30px;
+
+font-size:22px;
+cursor:pointer;
+color:white;
+
+transition:0.3s;
+}
+
+.close-btn:hover{
+transform:scale(1.2);
+color:#38bdf8;
+}
+
+/* MOBILE */
+@media(max-width:900px){
+.preview-content{
+flex-direction:column;
+text-align:center;
+}
+
+.preview-content img,
+.modal-text{
+width:100%;
+}
+}
+/* ================= AMENITIES ================= */
+.amenity-section{
+padding:80px 10%;
+text-align:center;
+}
+
+.amenity-section h2{
+font-family:'Orbitron', sans-serif;
+font-size:38px;
+letter-spacing:1.5px;
+
+background:linear-gradient(90deg,#38bdf8,#22c55e,#a78bfa);
+-webkit-background-clip:text;
+color:transparent;
+
+margin-bottom:30px;
+}
+
+.amenity-buttons{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:12px;
+}
+
+.amenity{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+
+padding:10px 18px;
+border-radius:30px;
+
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(15px);
+border:1px solid rgba(255,255,255,0.2);
+
+color:#e5e7eb;
+font-size:14px;
+
+cursor:pointer;
+transition:0.3s;
+
+white-space:nowrap;
+width:auto;
+max-width:max-content;
+
+position:relative;
+overflow:hidden;
+}
+
+/* shine */
+.amenity::before{
+content:"";
+position:absolute;
+top:0;
+left:-100%;
+width:100%;
+height:100%;
+background:linear-gradient(120deg,transparent,rgba(255,255,255,0.4),transparent);
+transition:0.5s;
+}
+.amenity:hover::before{left:100%;}
+
+.amenity:hover{
+transform:translateY(-5px) scale(1.05);
+box-shadow:0 0 25px rgba(56,189,248,0.6);
+}
+
+.amenity.active{
+background:linear-gradient(135deg,#38bdf8,#22c55e);
+color:white;
+box-shadow:0 0 30px rgba(56,189,248,0.9);
+}
+
+/* DISPLAY */
+.display{
+display:flex;
+gap:40px;
+margin-top:40px;
+align-items:center;
+justify-content:center;
+}
+
+.display img{
+width:50%;
+height:300px;
+object-fit:cover;
+border-radius:20px;
+}
+
+.text{width:40%;}
+
+.text h3{
+font-size:28px;
+background:linear-gradient(90deg,#38bdf8,#22c55e,#facc15);
+-webkit-background-clip:text;
+color:transparent;
+}
+
+/* ================= FOOTER ================= */
+.footer{
+text-align:center;
+padding:40px;
+background:#020617;
+}
+
+/* ================= RESPONSIVE ================= */
+@media(max-width:900px){
+
+.grid-section{
+grid-template-columns:1fr;
+}
+
+.display{
+flex-direction:column;
+text-align:center;
+}
+
+.display img, .text{
+width:100%;
+}
+}
+</style>
+</head>
+
+<body>
+
+<div class="cursor-glow" id="cursor"></div>
+
+<!-- HERO -->
+<section class="hero">
+<img src="studio1.jpg" class="slide active">
+<img src="studio2.jpg" class="slide">
+<img src="studio3.jpg" class="slide">
+
+<div class="hero-content">
+<h1>Studio Living</h1>
+<p>Smart • Compact • Premium</p>
+<button class="btn" onclick="scrollToAmenities()">Explore</button>
+</div>
+</section>
+
+<!-- GRID -->
+<section class="grid-section">
+
+<div class="grid-card active" onclick="showLayout('studio', this)">
+<h3>🏠 Smart Core Layout</h3>
+<p>Multi-functional design where living, sleeping, and working merge seamlessly.</p>
+</div>
+
+<div class="grid-card" onclick="showLayout('minimal', this)">
+<h3>🧘 Minimal Flow Design</h3>
+<p>Open layout with clutter-free zones and maximum visual space.</p>
+</div>
+
+<div class="grid-card" onclick="showLayout('lux', this)">
+<h3>💎 Premium Studio Living</h3>
+<p>Luxury interiors, ambient lighting, and high-end compact living.</p>
+</div>
+
+<div class="grid-card" onclick="showLayout('hidden', this)">
+<h3>📦 Hidden Storage System</h3>
+<p>Invisible storage integrated into walls, floors, and furniture.</p>
+</div>
+
+<div class="grid-card" onclick="showLayout('duo', this)">
+<h3>👫 Duo Smart Living</h3>
+<p>Designed for two with privacy + shared comfort in limited space.</p>
+</div>
+
+<div class="grid-card" onclick="showLayout('smart', this)">
+<h3>🧠 AI Optimized Space</h3>
+<p>Layout dynamically optimized for efficiency, storage, and movement.</p>
+</div>
+
+</section>
+
+<!-- AMENITIES -->
+<section class="amenity-section" id="amenities">
+<h2>Amenities</h2>
+
+<div class="amenity-buttons">
+<div class="amenity active" onclick="showAmenity('furniture',this)">Furniture</div>
+<div class="amenity" onclick="showAmenity('kitchen',this)">Kitchen</div>
+<div class="amenity" onclick="showAmenity('wifi',this)">Wi-Fi</div>
+<div class="amenity" onclick="showAmenity('smart',this)">Smart</div>
+<div class="amenity" onclick="showAmenity('storage',this)">Storage</div>
+<div class="amenity" onclick="showAmenity('work',this)">Work</div>
+<div class="amenity" onclick="showAmenity('bathroom',this)">Bathroom</div>
+<div class="amenity" onclick="showAmenity('balcony',this)">Balcony</div>
+<div class="amenity" onclick="showAmenity('air',this)">Air</div>
+
+</div>
+
+<div class="display">
+<img id="img" src="furniture.jpg">
+<div class="text">
+<h3 id="title">Smart Space-Saving Furniture</h3>
+<p id="desc">Foldable bed, sofa-cum-bed, wall-mounted table</p>
+</div>
+</div>
+</section>
+
+
+<!-- FOOTER -->
+<div class="footer">© Archinova</div>
+
+<!-- 🔥 FULLSCREEN PREVIEW -->
+<div class="preview-modal" id="previewModal">
+
+<div class="preview-content">
+
+<span class="close-btn" onclick="closePreview()">✖</span>
+
+<img id="modalImg" src="">
+
+<div class="modal-text">
+<h2 id="modalTitle"></h2>
+<p id="modalDesc"></p>
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+/* CURSOR */
+document.addEventListener("mousemove",e=>{
+document.getElementById("cursor").style.left=e.clientX+"px";
+document.getElementById("cursor").style.top=e.clientY+"px";
+});
+
+/* HERO SLIDER */
+let s=document.querySelectorAll(".slide"),i=0;
+setInterval(()=>{
+s[i].classList.remove("active");
+i=(i+1)%s.length;
+s[i].classList.add("active");
+},4000);
+
+/* VIDEO HOVER */
+document.querySelectorAll("video").forEach(v=>{
+v.parentElement.addEventListener("mouseenter",()=>v.play());
+v.parentElement.addEventListener("mouseleave",()=>v.pause());
+});
+
+/* AMENITY */
+function showAmenity(type, el){
+
+// Select elements properly
+const img = document.getElementById("img");
+const title = document.getElementById("title");
+const desc = document.getElementById("desc");
+
+// Remove active class
+document.querySelectorAll(".amenity").forEach(b => b.classList.remove("active"));
+el.classList.add("active");
+
+// Correct object structure
+const data = {
+    furniture:{
+        img:"furniture.jpg",
+        title:"Smart Space-Saving Furniture",
+        text:"Foldable bed, sofa-cum-bed, wall-mounted table"
+    },
+    kitchen:{
+        img:"kitchen.jpg",
+        title:"Modular Kitchen",
+        text:"Compact kitchen with built-in cabinets"
+    },
+    wifi:{
+        img:"wifi.jpg",
+        title:"High-Speed Wi-Fi",
+        text:"Essential for work and entertainment"
+    },
+    smart:{
+        img:"smart.jpg",
+        title:"Smart Home Features",
+        text:"App/voice-controlled lights, AC, etc."
+    },
+    storage:{
+        img:"storage.jpg",
+        title:"Built-in Storage Solutions",
+        text:"Wardrobes, hidden storage spaces"
+    },
+    work:{
+        img:"work.jpg",
+        title:"Work / Study Desk",
+        text:"Small dedicated workspace"
+    },
+    bathroom:{
+        img:"bathroom.jpg",
+        title:"Modern Bathroom Fittings",
+        text:"Stylish and space-efficient design"
+    },
+    balcony:{
+        img:"balcony.jpg",
+        title:"Balcony or Large Window",
+        text:"For natural light and ventilation"
+    },
+    air:{
+        img:"air.jpg",
+        title:"Air Conditioning & Ventilation",
+        text:"Comfortable living environment"
+    }
+};
+
+// Update content
+const selected = data[type];
+
+if(selected){
+    img.src = selected.img;
+    title.innerText = selected.title;
+    desc.innerText = selected.text;
+}
+}
+/* SCROLL */
+function scrollToAmenities(){
+document.getElementById("amenities").scrollIntoView({behavior:"smooth"});
+}
+
+/* AI */
+function generateAI(){
+document.getElementById("aiResult").innerText="AI suggests L-shaped layout with foldable furniture.";
+}
+
+</script>
+<script>
+
+function showLayout(type, el){
+
+// ✅ ACTIVE FIX
+document.querySelectorAll(".grid-card").forEach(card=>{
+card.classList.remove("active");
+});
+el.classList.add("active");
+
+// ✅ DATA
+const data = {
+
+studio:{
+img:"studio-layout.jpg",
+title:"Smart Core Layout",
+desc:"A highly efficient design combining living, sleeping, and working in one seamless flow."
+},
+
+minimal:{
+img:"minimalflow.jpg",
+title:"Minimal Flow Design",
+desc:"Decluttered open space with clean lines and calming environment."
+},
+
+lux:{
+img:"lux.jpg",
+title:"Premium Studio Living",
+desc:"Luxury finishes, ambient lighting, and elegant compact lifestyle."
+},
+
+hidden:{
+img:"hidden.jpg",
+title:"Hidden Storage System",
+desc:"Invisible storage integrated into walls, floors, and furniture."
+},
+
+duo:{
+img:"duo.jpg",
+title:"Duo Smart Living",
+desc:"Perfect for two occupants with smart zoning and privacy balance."
+},
+
+smart:{
+img:"Ai.jpg",
+title:"AI Optimized Space",
+desc:"Intelligent layout designed using AI for maximum efficiency and usability."
+}
+};
+
+let selected = data[type];
+
+// ✅ SET CONTENT
+document.getElementById("modalImg").src = selected.img;
+document.getElementById("modalTitle").innerText = selected.title;
+document.getElementById("modalDesc").innerText = selected.desc;
+
+// ✅ OPEN MODAL
+document.getElementById("previewModal").classList.add("show");
+}
+
+// ✅ CLOSE
+function closePreview(){
+document.getElementById("previewModal").classList.remove("show");
+}
+
+</script>
+</body>
+</html>

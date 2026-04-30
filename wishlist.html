@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>ArchiNova — My Wishlist</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#071525;--navy2:#0b1e35;--navy3:#132848;--teal:#0d9488;--teal2:#14b8a6;--white:#fff;--muted:#6b8fa3;--light:#c0dde0}
+body{background:var(--navy);color:var(--white);font-family:'Outfit',sans-serif;min-height:100vh}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--navy)}::-webkit-scrollbar-thumb{background:var(--teal);border-radius:3px}
+nav{position:fixed;top:0;left:0;right:0;z-index:999;display:flex;align-items:center;justify-content:space-between;padding:0 4rem;height:72px;background:rgba(7,21,37,.93);border-bottom:1px solid rgba(13,148,136,.18);backdrop-filter:blur(20px)}
+.logo{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:700;color:#fff;text-decoration:none;letter-spacing:1px}
+.logo span{color:var(--teal2)}
+.nav-mid{font-family:'Space Mono',monospace;font-size:.7rem;color:var(--muted);display:flex;align-items:center;gap:.4rem}
+.nav-mid a{color:var(--muted);text-decoration:none;transition:color .2s}.nav-mid a:hover{color:var(--teal2)}
+.nav-mid .sep{color:var(--teal)}.nav-mid b{color:var(--teal2)}
+.nav-r{display:flex;align-items:center;gap:1rem}
+.back{display:flex;align-items:center;gap:.4rem;color:var(--muted);font-size:.78rem;text-decoration:none;border:1px solid rgba(255,255,255,.1);padding:.42rem 1rem;border-radius:4px;transition:all .2s}
+.back:hover{color:var(--teal2);border-color:rgba(13,148,136,.35)}
+.btn-p{background:var(--teal);color:#fff;border:none;padding:.6rem 1.5rem;border-radius:4px;font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s}
+.btn-p:hover{background:var(--teal2);transform:translateY(-1px)}
+.btn-g{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.2);padding:.6rem 1.5rem;border-radius:4px;font-size:.8rem;font-weight:500;cursor:pointer;transition:all .2s}
+.btn-g:hover{border-color:var(--teal2);color:var(--teal2)}
+.btn-o{background:transparent;color:var(--light);border:1px solid rgba(255,255,255,.16);padding:.58rem 1.3rem;border-radius:4px;font-size:.78rem;font-weight:500;cursor:pointer;transition:all .2s;font-family:'Outfit',sans-serif}
+.btn-o:hover{border-color:var(--teal2);color:var(--teal2)}
+.ph{padding:7rem 5rem 3rem;display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;border-bottom:1px solid rgba(255,255,255,.05);position:relative}
+.ph::before{content:'';position:absolute;top:0;right:0;width:500px;height:100%;background:radial-gradient(ellipse at 80% 40%,rgba(13,148,136,.08) 0%,transparent 65%);pointer-events:none}
+.ph-eye{display:flex;align-items:center;gap:.6rem;font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--teal2);margin-bottom:1rem}
+.ph-eye::before{content:'';display:inline-block;width:22px;height:1px;background:var(--teal2)}
+.ph h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,4.5vw,4rem);font-weight:700;letter-spacing:-1px;color:#fff;line-height:1.1}
+.ph h1 em{font-style:italic;color:var(--teal2)}
+.ph-sub{font-size:.9rem;color:var(--muted);font-weight:300;margin-top:.7rem;line-height:1.7}
+.ph-ctrl{display:flex;align-items:center;gap:.8rem;flex-shrink:0}
+.sort-sel{background:var(--navy2);border:1px solid rgba(13,148,136,.2);border-radius:4px;padding:.52rem 1rem;color:var(--light);font-size:.78rem;font-family:'Outfit',sans-serif;outline:none;cursor:pointer}
+.clr-btn{display:flex;align-items:center;gap:.4rem;color:var(--muted);font-size:.78rem;font-weight:500;background:transparent;border:1px solid rgba(239,68,68,.2);padding:.5rem 1rem;border-radius:4px;cursor:pointer;transition:all .2s;font-family:'Outfit',sans-serif}
+.clr-btn:hover{color:#f87171;border-color:rgba(239,68,68,.5);background:rgba(239,68,68,.08)}
+.sb{display:flex;padding:0 5rem;border-bottom:1px solid rgba(255,255,255,.05)}
+.sc{padding:1.4rem 2.5rem 1.4rem 0;display:flex;flex-direction:column;gap:.25rem;border-right:1px solid rgba(255,255,255,.05);margin-right:2.5rem}
+.sc:last-child{border-right:none;margin-right:0}
+.sv{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:700;color:#fff;line-height:1}
+.sl{font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-family:'Space Mono',monospace}
+.main{padding:3rem 5rem 6rem}
+.empty{text-align:center;padding:7rem 2rem;display:none}
+.empty-icon{width:76px;height:76px;background:rgba(13,148,136,.08);border:1px solid rgba(13,148,136,.15);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 2rem}
+.empty-icon svg{width:34px;height:34px;stroke:var(--teal);fill:none;stroke-width:1.5}
+.empty h2{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:#fff;margin-bottom:.7rem}
+.empty p{color:var(--muted);font-size:.9rem;font-weight:300;line-height:1.7;max-width:380px;margin:0 auto 2rem}
+.blinks{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap}
+.bl{background:rgba(13,148,136,.1);border:1px solid rgba(13,148,136,.25);color:var(--teal2);font-size:.8rem;font-weight:500;padding:.55rem 1.2rem;border-radius:4px;text-decoration:none;transition:all .2s}
+.bl:hover{background:var(--teal);color:#fff;border-color:var(--teal)}
+.grp{margin-bottom:3.5rem}
+.grp-hd{display:flex;align-items:center;margin-bottom:1.4rem;padding-bottom:.8rem;border-bottom:1px solid rgba(255,255,255,.06)}
+.grp-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:.7rem}
+.grp-cnt{font-family:'Space Mono',monospace;font-size:.64rem;color:var(--teal2);background:rgba(13,148,136,.1);border:1px solid rgba(13,148,136,.2);padding:.18rem .55rem;border-radius:2px}
+.wgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.wc{background:var(--navy2);border:1px solid rgba(255,255,255,.05);border-radius:12px;overflow:hidden;transition:border-color .3s,transform .3s;position:relative}
+.wc:hover{border-color:rgba(13,148,136,.3);transform:translateY(-3px)}
+.wc-img{width:100%;aspect-ratio:16/9;overflow:hidden;position:relative}
+.wc-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.8);transition:transform .5s,filter .4s;display:block}
+.wc:hover .wc-img img{transform:scale(1.04);filter:brightness(.9)}
+.wc-rem{position:absolute;top:.7rem;right:.7rem;width:28px;height:28px;border-radius:50%;background:rgba(7,21,37,.8);border:1px solid rgba(239,68,68,.3);color:#f87171;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(.7);transition:all .25s}
+.wc:hover .wc-rem{opacity:1;transform:scale(1)}
+.wc-rem:hover{background:rgba(239,68,68,.2);border-color:rgba(239,68,68,.6)}
+.wc-date{position:absolute;bottom:.7rem;left:.7rem;background:rgba(7,21,37,.82);border:1px solid rgba(13,148,136,.3);border-radius:3px;padding:.16rem .5rem;font-family:'Space Mono',monospace;font-size:.58rem;color:var(--teal2)}
+.wc-body{padding:1.1rem 1.2rem 1.3rem}
+.wc-sec{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal2);margin-bottom:.35rem}
+.wc-title{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:#fff;margin-bottom:.35rem;line-height:1.25}
+.wc-desc{font-size:.75rem;color:var(--muted);line-height:1.6;font-weight:300;margin-bottom:.9rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.wc-specs{display:flex;gap:1.2rem;margin-bottom:.8rem}
+.wc-spec{font-size:.72rem;color:var(--light);font-weight:300}
+.wc-spec b{font-weight:600;color:#fff;display:block;font-size:.78rem}
+.wc-tags{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:1rem}
+.wc-tag{background:rgba(13,148,136,.1);border:1px solid rgba(13,148,136,.2);color:var(--teal2);font-size:.58rem;padding:.15rem .5rem;border-radius:2px;font-family:'Space Mono',monospace}
+.wc-acts{display:flex;gap:.6rem}
+.wc-bp{flex:1;background:var(--teal);color:#fff;border:none;padding:.55rem .9rem;border-radius:4px;font-size:.75rem;font-weight:600;cursor:pointer;transition:all .2s;font-family:'Outfit',sans-serif}
+.wc-bp:hover{background:var(--teal2)}
+.wc-bg{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,.1);padding:.55rem .9rem;border-radius:4px;font-size:.75rem;font-weight:500;cursor:pointer;transition:all .2s;font-family:'Outfit',sans-serif}
+.wc-bg:hover{color:#f87171;border-color:rgba(239,68,68,.35)}
+.bot-bar{margin:0 5rem 5rem;padding:2rem 2.5rem;background:var(--navy2);border:1px solid rgba(13,148,136,.15);border-radius:12px;display:flex;align-items:center;justify-content:space-between;gap:2rem}
+.bot-bar p{font-size:.85rem;color:var(--light);font-weight:300}
+.bot-bar p b{color:#fff;font-weight:600}
+.bot-btns{display:flex;gap:.8rem;flex-shrink:0}
+.mwrap{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;background:rgba(4,10,18,.88);backdrop-filter:blur(16px);opacity:0;pointer-events:none;transition:opacity .3s}
+.mwrap.open{opacity:1;pointer-events:all}
+.mbox{background:var(--navy2);border:1px solid rgba(13,148,136,.25);border-radius:16px;width:92%;max-width:500px;max-height:90vh;overflow-y:auto;transform:translateY(24px);transition:transform .35s;position:relative}
+.mwrap.open .mbox{transform:translateY(0)}
+.mclose{position:absolute;top:1rem;right:1rem;background:rgba(7,21,37,.7);border:1px solid rgba(255,255,255,.1);width:34px;height:34px;border-radius:50%;color:var(--muted);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.mclose:hover{color:#fff}
+.mbody{padding:2.5rem}
+.mbadge{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--teal2);margin-bottom:.5rem}
+.mbox h2{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:#fff;margin-bottom:.5rem}
+.fl{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-family:'Space Mono',monospace;display:block;margin-bottom:.4rem}
+.fi{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(13,148,136,.25);border-radius:4px;padding:.65rem .9rem;color:#fff;font-size:.84rem;font-family:'Outfit',sans-serif;outline:none;margin-bottom:.9rem}
+.fi:focus{border-color:var(--teal2)}
+select.fi{background:#0b1e35;cursor:pointer}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:.9rem}
+.frow .fi{margin-bottom:0}
+.sbox{display:none;background:rgba(13,148,136,.12);border:1px solid rgba(13,148,136,.3);border-radius:8px;padding:1rem 1.2rem;font-size:.84rem;color:var(--teal2);font-weight:500;margin-bottom:1rem}
+.factions{display:flex;gap:.8rem}
+#toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--navy2);border:1px solid rgba(13,148,136,.35);border-radius:8px;padding:.85rem 1.3rem;font-size:.83rem;color:#fff;box-shadow:0 12px 40px rgba(0,0,0,.4);z-index:9999;transition:transform .4s cubic-bezier(.34,1.56,.64,1),opacity .3s;opacity:0;pointer-events:none}
+@media(max-width:1024px){nav,.ph,.sb,.main,.bot-bar{padding-left:1.5rem;padding-right:1.5rem}.bot-bar{margin-left:1.5rem;margin-right:1.5rem}.wgrid{grid-template-columns:repeat(2,1fr)}.ph{flex-direction:column;align-items:flex-start}}
+@media(max-width:640px){.wgrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="#" class="logo">Archi<span>Nova</span></a>
+  <div class="nav-mid"><a href="#">Gallery</a><span class="sep">/</span><b>My Wishlist</b></div>
+  <div class="nav-r">
+    <a href="archinova-corporate.html" class="back">&#8592; Back to Gallery</a>
+    <button class="btn-p" onclick="openCM()">Book Consultation</button>
+  </div>
+</nav>
+
+<div class="ph">
+  <div>
+    <div class="ph-eye">My Collection</div>
+    <h1>Saved <em>Designs</em></h1>
+    <p class="ph-sub" id="ph-sub">Your curated selection — saved across all ArchiNova gallery pages.</p>
+  </div>
+  <div class="ph-ctrl">
+    <select class="sort-sel" onchange="sortMode=this.value;render()">
+      <option value="newest">Newest Saved</option>
+      <option value="oldest">Oldest Saved</option>
+      <option value="alpha">A &ndash; Z</option>
+      <option value="bhi">Budget: High &ndash; Low</option>
+      <option value="blo">Budget: Low &ndash; High</option>
+    </select>
+    <button class="clr-btn" onclick="clearAll()">&#10005; Clear All</button>
+  </div>
+</div>
+
+<div class="sb">
+  <div class="sc"><span class="sv" id="s-saved">0</span><span class="sl">Saved Designs</span></div>
+  <div class="sc"><span class="sv" id="s-secs">0</span><span class="sl">Gallery Sections</span></div>
+  <div class="sc"><span class="sv" id="s-budget">&mdash;</span><span class="sl">Total Est. Budget</span></div>
+  <div class="sc"><span class="sv" id="s-latest">&mdash;</span><span class="sl">Last Saved</span></div>
+</div>
+
+<main class="main">
+  <div class="empty" id="empty">
+    <div class="empty-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
+    <h2>No designs saved yet</h2>
+    <p>Browse any gallery page and tap the heart icon &mdash; designs save here automatically no matter which page you're on.</p>
+    <div class="blinks">
+      <a href="archinova-corporate.html" class="bl">Corporate Office</a>
+      <a href="startup-office.html" class="bl">Startup Office</a>
+      <a href="futuristic-office.html" class="bl">Futuristic Office</a>
+      <a href="house.html" class="bl">House Designs</a>
+      <a href="apartment.html" class="bl">Apartments</a>
+    </div>
+  </div>
+  <div id="cards"></div>
+</main>
+
+<div class="bot-bar" id="bot-bar" style="display:none">
+  <p id="bot-msg"></p>
+  <div class="bot-btns">
+    <button class="btn-o" onclick="reqAll()">Request All Packages</button>
+    <button class="btn-p" onclick="openCM()">Book Consultation</button>
+  </div>
+</div>
+
+<!-- REQUEST PACKAGE MODAL -->
+<div class="mwrap" id="rm" onclick="if(event.target===this)closeRM()">
+  <div class="mbox">
+    <button class="mclose" onclick="closeRM()">&#10005;</button>
+    <div class="mbody">
+      <div class="mbadge">Design Package Request</div>
+      <h2 id="rm-title" style="margin-bottom:.5rem"></h2>
+      <p style="font-size:.82rem;color:var(--light);font-weight:300;line-height:1.7;margin-bottom:1.4rem">We'll email the complete package &mdash; floor plans, 3D renders, materials board &mdash; within 48 hours.</p>
+      <div class="frow"><div><label class="fl">Full Name</label><input id="r-name" type="text" class="fi" placeholder="Your name"/></div><div><label class="fl">Company</label><input id="r-co" type="text" class="fi" placeholder="Company"/></div></div>
+      <label class="fl">Email</label><input id="r-email" type="email" class="fi" placeholder="your@company.com"/>
+      <div class="frow"><div><label class="fl">Budget</label><select id="r-budget" class="fi"><option>Under $500K</option><option>$500K-$1M</option><option>$1M-$2M</option><option>$2M+</option></select></div><div><label class="fl">Timeline</label><select id="r-time" class="fi"><option>ASAP</option><option>1-3 months</option><option>3-6 months</option><option>6+ months</option></select></div></div>
+      <div class="sbox" id="r-ok">&#10003; &nbsp;Package request sent! You'll hear from us within 48 hours.</div>
+      <div class="factions"><button class="btn-p" style="flex:1" onclick="submitReq()">Send Request</button><button class="btn-g" onclick="closeRM()">Cancel</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- CONSULTATION MODAL -->
+<div class="mwrap" id="cm" onclick="if(event.target===this)closeCM()">
+  <div class="mbox">
+    <button class="mclose" onclick="closeCM()">&#10005;</button>
+    <div class="mbody">
+      <div class="mbadge">ArchiNova &middot; Free Consultation</div>
+      <h2 style="margin-bottom:.5rem">Book a Consultation</h2>
+      <p style="font-size:.82rem;color:var(--light);font-weight:300;line-height:1.7;margin-bottom:1.4rem">A specialist will discuss your saved designs and plan next steps within 24 hours.</p>
+      <div class="frow"><div><label class="fl">First Name</label><input id="c-first" type="text" class="fi" placeholder="First name"/></div><div><label class="fl">Last Name</label><input id="c-last" type="text" class="fi" placeholder="Last name"/></div></div>
+      <label class="fl">Email</label><input id="c-email" type="email" class="fi" placeholder="your@company.com"/>
+      <label class="fl">Preferred Date</label><input id="c-date" type="date" class="fi" style="color-scheme:dark"/>
+      <div class="sbox" id="c-ok">&#10003; &nbsp;Consultation booked! We'll confirm within 24 hours.</div>
+      <div class="factions"><button class="btn-p" style="flex:1" onclick="submitCon()">Confirm Booking</button><button class="btn-g" onclick="closeCM()">Cancel</button></div>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const KEY='archinova_wishlist';
+function getL(){try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){return[]}}
+function setL(l){localStorage.setItem(KEY,JSON.stringify(l))}
+let sortMode='newest';
+
+function pBudget(s){if(!s)return 0;const n=parseFloat(s.replace(/[^0-9.]/g,''));if(s.includes('M'))return n*1e6;if(s.includes('K'))return n*1e3;return n;}
+function fBudget(t){if(t>=1e6)return'$'+(t/1e6).toFixed(1)+'M';if(t>=1e3)return'$'+(t/1e3).toFixed(0)+'K';return'$'+t;}
+function fDate(iso){try{return new Date(iso).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}catch(e){return''}}
+
+function sorted(){
+  const l=getL();
+  if(sortMode==='newest')return l.slice().sort((a,b)=>new Date(b.savedAt)-new Date(a.savedAt));
+  if(sortMode==='oldest')return l.slice().sort((a,b)=>new Date(a.savedAt)-new Date(b.savedAt));
+  if(sortMode==='alpha')return l.slice().sort((a,b)=>a.title.localeCompare(b.title));
+  if(sortMode==='bhi')return l.slice().sort((a,b)=>pBudget(b.budget)-pBudget(a.budget));
+  if(sortMode==='blo')return l.slice().sort((a,b)=>pBudget(a.budget)-pBudget(b.budget));
+  return l;
+}
+
+function render(){
+  const list=sorted();
+  const g=id=>document.getElementById(id);
+  const secs=[...new Set(list.map(d=>d.section||'Gallery'))];
+  g('s-saved').textContent=list.length;
+  g('s-secs').textContent=secs.length||0;
+  const tot=list.reduce((s,d)=>s+pBudget(d.budget),0);
+  g('s-budget').textContent=list.length?fBudget(tot):'—';
+  const lat=[...list].sort((a,b)=>new Date(b.savedAt)-new Date(a.savedAt))[0];
+  g('s-latest').textContent=lat?fDate(lat.savedAt):'—';
+  g('ph-sub').textContent=list.length?`${list.length} design${list.length!==1?'s':''} saved across ${secs.length} section${secs.length!==1?'s':''}.`:'Your curated selection — saved across all ArchiNova gallery pages.';
+  if(!list.length){g('empty').style.display='block';g('cards').innerHTML='';g('bot-bar').style.display='none';return;}
+  g('empty').style.display='none';g('bot-bar').style.display='flex';
+  g('bot-msg').innerHTML=`<b>${list.length} design${list.length!==1?'s':''} saved.</b> Request packages or book a consultation.`;
+  const groups={};
+  list.forEach(d=>{const s=d.section||'Gallery';if(!groups[s])groups[s]=[];groups[s].push(d);});
+  g('cards').innerHTML=Object.entries(groups).map(([sec,items])=>`
+    <div class="grp">
+      <div class="grp-hd"><div class="grp-title">${sec}<span class="grp-cnt">${items.length}</span></div></div>
+      <div class="wgrid">${items.map(d=>`
+        <div class="wc">
+          <div class="wc-img">
+            <img src="${d.img}" alt="${d.title}" loading="lazy"/>
+            <button class="wc-rem" onclick="rem('${d.id}')">&#10005;</button>
+            <div class="wc-date">Saved ${fDate(d.savedAt)}</div>
+          </div>
+          <div class="wc-body">
+            <div class="wc-sec">${d.badge||sec}</div>
+            <div class="wc-title">${d.title}</div>
+            <div class="wc-desc">${d.desc||''}</div>
+            <div class="wc-specs">
+              <div class="wc-spec"><b>${d.area||'—'}</b>Area</div>
+              <div class="wc-spec"><b>${d.cap||'—'}</b>Capacity</div>
+              <div class="wc-spec"><b>${d.budget||'—'}</b>Budget</div>
+            </div>
+            <div class="wc-tags">${(d.tags||[]).map(t=>'<span class="wc-tag">'+t+'</span>').join('')}</div>
+            <div class="wc-acts">
+              <button class="wc-bp" onclick="openRM('${d.id}')">Request Package</button>
+              <button class="wc-bg" onclick="rem('${d.id}')">Remove</button>
+            </div>
+          </div>
+        </div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+
+function rem(id){setL(getL().filter(d=>d.id!==id));render();showToast('Design removed');}
+function clearAll(){if(!getL().length)return;if(!confirm('Remove all saved designs?'))return;setL([]);render();showToast('Wishlist cleared');}
+
+let _rid=null;
+function openRM(id){
+  _rid=id;
+  const d=getL().find(x=>x.id===id);
+  document.getElementById('rm-title').textContent=d?d.title:'Design Package';
+  document.getElementById('r-ok').style.display='none';
+  ['r-name','r-email','r-co'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('rm').classList.add('open');document.body.style.overflow='hidden';
+}
+function reqAll(){
+  _rid='all';const n=getL().length;
+  document.getElementById('rm-title').textContent='All '+n+' saved designs';
+  document.getElementById('r-ok').style.display='none';
+  ['r-name','r-email','r-co'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('rm').classList.add('open');document.body.style.overflow='hidden';
+}
+function closeRM(){document.getElementById('rm').classList.remove('open');document.body.style.overflow='';}
+function submitReq(){
+  if(!document.getElementById('r-name').value.trim()||!document.getElementById('r-email').value.trim()){alert('Please fill in name and email.');return;}
+  document.getElementById('r-ok').style.display='block';
+  setTimeout(()=>closeRM(),2400);
+}
+function openCM(){
+  document.getElementById('c-ok').style.display='none';
+  ['c-first','c-last','c-email'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('cm').classList.add('open');document.body.style.overflow='hidden';
+}
+function closeCM(){document.getElementById('cm').classList.remove('open');document.body.style.overflow='';}
+function submitCon(){
+  if(!document.getElementById('c-first').value.trim()||!document.getElementById('c-email').value.trim()){alert('Please fill in name and email.');return;}
+  document.getElementById('c-ok').style.display='block';
+  setTimeout(()=>closeCM(),2200);
+}
+function showToast(msg){
+  const t=document.getElementById('toast');t.textContent=msg;
+  t.style.opacity='1';t.style.transform='translateX(-50%) translateY(0)';
+  clearTimeout(t._t);t._t=setTimeout(()=>{t.style.opacity='0';t.style.transform='translateX(-50%) translateY(80px)';},2800);
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeRM();closeCM();}});
+render();
+</script>
+</body>
+</html>

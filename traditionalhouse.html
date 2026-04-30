@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Archinova - Modern Villa</title>
+
+<style>
+
+/* ===== GLOBAL STYLE ===== */
+
+body{
+margin:0;
+font-family:Arial, sans-serif;
+color:rgb(252, 248, 248);
+overflow-x:hidden;
+
+  background: linear-gradient(-45deg, #1d0588, #0c0938, #3fedf6d3);
+  background-size: 400% 400%;
+  animation: gradientMove 5s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
+/* ===== VIDEO HERO ===== */
+
+.hero{
+height:100vh;
+position:relative;
+overflow:hidden;
+}
+
+.hero video{
+position:absolute;
+width:100%;
+height:100%;
+object-fit:cover;
+filter:brightness(0.5);
+animation:zoomHero 20s linear infinite;
+}
+
+@keyframes zoomHero{
+0%{transform:scale(1);}
+50%{transform:scale(1.08);}
+100%{transform:scale(1);}
+}
+
+.hero-text{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+text-align:center;
+}
+
+.hero h1{
+font-size:60px;
+color:#00ffd5;
+}
+
+.hero p{
+font-size:20px;
+}
+.hero video{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+object-fit:cover;
+z-index:-1;
+}
+
+/* ===== SEARCH BAR ===== */
+
+.search{
+text-align:center;
+margin:40px;
+}
+
+.search input{
+padding:12px;
+width:300px;
+border-radius:20px;
+border:none;
+}
+
+/* ===== NETFLIX SCROLL ROW ===== */
+
+.scroll{
+display:flex;
+overflow-x:auto;
+gap:20px;
+padding-bottom:20px;
+margin-left:40px;
+}
+
+.card{
+min-width:300px;
+background:#0f2338;
+border-radius:15px;
+transition:0.4s;
+cursor:pointer;
+}
+
+.card:hover{
+transform:scale(1.08);
+}
+.card img{
+width:100%;
+height:200px;
+object-fit:cover;
+border-radius:15px 15px 0 0;
+}
+
+/* ===== DETAILS BOX ===== */
+
+.details{
+padding:15px;
+}
+
+.quickbox{
+background:rgba(0,255,213,0.1);
+padding:10px;
+margin:10px 0;
+border-radius:10px;
+}
+
+/* ===== BUTTONS ===== */
+
+.btn{
+background:#00ffd5;
+border:none;
+padding:10px 15px;
+margin:5px;
+border-radius:8px;
+cursor:pointer;
+}
+
+/* GLASS PANEL */
+
+.ai-panel{
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(12px);
+margin:60px;
+padding:40px;
+border-radius:20px;
+box-shadow:0 0 30px rgba(0,255,213,0.1);
+}
+
+.ai-panel h2{
+color:#00ffd5;
+margin-bottom:30px;
+}
+
+.feature-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+
+.feature-card{
+background:#0f2338;
+padding:20px;
+border-radius:15px;
+transition:0.3s;
+}
+
+.feature-card:hover{
+transform:translateY(-5px);
+box-shadow:0 10px 20px rgba(0,255,213,0.2);
+}
+
+.feature-card h4{
+color:#00ffd5;
+margin-bottom:10px;
+}
+
+.ai-summary{
+display:flex;
+gap:20px;
+margin-top:40px;
+flex-wrap:wrap;
+}
+
+.summary-box{
+flex:1;
+background:#0f2338;
+padding:20px;
+border-radius:15px;
+}
+
+.summary-box h3{
+color:#00ffd5;
+}
+
+.save-container{
+position:absolute;
+top:15px;
+right:15px;
+}
+
+.save-btn{
+background:rgba(0,255,213,0.15);
+border:2px solid #00ffd5;
+width:45px;
+height:45px;
+border-radius:50%;
+cursor:pointer;
+font-size:20px;
+color:#00ffd5;
+display:flex;
+align-items:center;
+justify-content:center;
+backdrop-filter:blur(10px);
+transition:0.3s;
+}
+
+.save-btn:hover{
+background:#00ffd5;
+color:#0f172a;
+box-shadow:0 0 20px #00ffd5;
+}
+
+.save-btn.saved{
+background:#4df6ff;
+border-color:#0c2747;
+color:white;
+box-shadow:0 0 20px #4dffed;
+}
+
+/* Card Hover Lift Effect */
+.card {
+  transition: all 0.4s ease;
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.02);
+}
+
+.back-btn {
+    position: absolute;
+    top: 7px;
+    left: 7px;
+    text-decoration: none;
+    color: #00f5d4;
+    font-weight: 600;
+    font-size: 16px;
+    transition: 0.3s ease;
+}
+
+.back-btn:hover {
+    letter-spacing: 1px;
+    transform: translateX(-3px);
+
+}
+.back-btn-container {
+    position: absolute;
+    top: 25px;
+    left: 40px;
+    z-index: 1000;
+}
+/* CARD STYLE */
+.card{
+width:340px;
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(15px);
+border-radius:20px;
+overflow:hidden;
+box-shadow:0 0 25px rgba(0,255,200,0.2);
+transition:0.4s;
+margin:40px auto;
+}
+
+.card:hover{
+transform:translateY(-10px);
+box-shadow:0 0 35px #00f5d4;
+}
+
+.card img{
+width:100%;
+height:220px;
+object-fit:cover;
+}
+
+.details{
+padding:20px;
+color:white;
+}
+
+.design-title{
+color:#00f5d4;
+margin-bottom:10px;
+}
+
+.quickbox{
+background:rgba(0,255,200,0.1);
+padding:10px;
+border-radius:12px;
+margin-bottom:10px;
+font-size:14px;
+}
+
+.save-container{
+margin:15px 0;
+}
+
+.save-container button{
+background:transparent;
+border:1px solid #00f5d4;
+color:#00f5d4;
+padding:8px 15px;
+border-radius:20px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.save-container button:hover{
+background:#00f5d4;
+color:#0b1c2d;
+box-shadow:0 0 15px #00f5d4;
+}
+
+.btn{
+width:100%;
+padding:10px;
+border:none;
+border-radius:25px;
+background:#00f5d4;
+color:#0b1c2d;
+font-weight:bold;
+cursor:pointer;
+transition:0.3s;
+}
+
+.btn:hover{
+box-shadow:0 0 20px #00f5d4;
+}
+#globalToast {
+  position: fixed !important;
+  bottom: 40px !important;
+  right: 40px !important;
+  background: rgb(18, 245, 230) !important;
+  color: white !important;
+  padding: 15px 25px !important;
+  border-radius: 8px !important;
+  font-weight: bold !important;
+  z-index: 999999 !important;
+}
+.toast.show{
+opacity:1;
+transform:translateY(0);
+}
+#toastBox {
+ position: fixed;
+    bottom: 40px;
+    right: 40px;
+    background: rgb(18, 245, 230) !important;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 8px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s ease;
+    z-index: 9999;
+}
+.floating-heart {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(0,0,0,0.6);
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.floating-heart:hover {
+    transform: scale(1.1);
+}
+.wishlist-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgb(18, 245, 230) !important;
+    backdrop-filter: blur(12px);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 40px;
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 0 20px rgba(0, 255, 213, 0.4);
+    transition: 0.3s ease;
+    z-index: 9999;
+}
+
+.wishlist-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(0, 255, 213, 0.8);
+}
+
+#wishlistCount {
+    background: #ff2e63;
+    padding: 4px 10px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: bold;
+}
+.ai-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    color: #27f5d4;
+    font-size: 15px;
+    font-weight: 500;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* ==================== FLOOR SECTION ULTRA-PREMIUM STYLE ==================== */
+
+/* Floor container */
+.floor-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 50px;
+}
+
+/* Video side */
+.floor-left {
+    flex: 1;
+    min-width: 320px;
+    position: relative;
+}
+
+#floorVideo {
+    width: 100%;
+    max-width: 600px;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 20px;
+    transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.6s ease;
+    box-shadow: 0 15px 40px rgba(0,255,213,0.4);
+    border: 2px solid rgba(0,255,213,0.2);
+}
+
+#floorVideo:hover {
+    transform: scale(1.02);
+}
+
+/* Floor buttons */
+.floor-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.floor-buttons button {
+    flex: 1;
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: 1px solid #00ffd5;
+    background: transparent;
+    color: #00ffd5;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.floor-buttons button:hover,
+.floor-buttons button.active {
+    background: #00ffd5;
+    color: #0b1c2d;
+    box-shadow: 0 0 15px #00ffd5;
+}
+
+/* Info side */
+.floor-stats {
+    flex: 1;
+    min-width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+/* Floor info grid */
+.floor-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+.info-card-pro {
+    background: linear-gradient(145deg, #0f2345, #0b1a34);
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    color: #00f5c4;
+    font-weight: 600;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.info-card-pro:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,255,213,0.5);
+}
+
+/* Progress bars */
+.progress-container {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+.progress-card {
+    flex: 1;
+    background: #0f1f3d;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+}
+
+.progress-card h4 {
+    color: #00f5c4;
+    margin-bottom: 8px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 12px;
+    background: #1e2d4d;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 20px;
+    background: linear-gradient(90deg, #00f5c4, #00b3ff);
+    transition: width 0.8s ease-in-out;
+    box-shadow: 0 2px 5px rgba(0,255,213,0.3);
+}
+
+/* Vastu card */
+.vastu-card {
+    background: linear-gradient(145deg, #102748, #0c1e3c);
+    padding: 20px;
+    border-radius: 16px;
+    font-weight: 600;
+    font-size: 16px;
+    color: #00f5c4;
+    box-shadow: 0 8px 20px rgba(0,255,213,0.4);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.vastu-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 25px rgba(0,255,213,0.5);
+}
+
+/* AI Recommendation Box */
+.ai-box {
+    background: rgba(0,255,213,0.08);
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid rgba(0,255,213,0.4);
+    color: #00ffd5;
+    font-weight: 500;
+    transition: box-shadow 0.3s ease;
+}
+
+.ai-box:hover {
+    box-shadow: 0 10px 25px rgba(0,255,213,0.3);
+}
+
+/* AI Recommendation Items */
+.ai-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    color: #27f5d4;
+    font-size: 15px;
+    font-weight: 500;
+    opacity: 0;
+    transform: translateY(5px);
+    animation: fadeIn 0.3s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .floor-container { gap: 30px; }
+    .floor-info-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 768px) {
+    .floor-container { flex-direction: column; gap: 30px; }
+    .floor-info-grid { grid-template-columns: 1fr; gap: 20px; }
+    .floor-buttons { flex-wrap: wrap; gap: 12px; }
+}
+
+@media (max-width: 480px) {
+    #floorVideo { height: 300px; }
+    .progress-container { flex-direction: column; gap: 20px; }
+}
+
+</style>
+</head>
+
+<body>
+    <div class="back-btn-container">
+ <a href="javascript:history.back()" class="back-btn">← Back</a></div>
+</div>
+
+<!-- VIDEO HERO -->
+<div class="hero">
+<video autoplay muted loop playsinline>
+<source src="traditional.mp4">
+</video>
+
+<div class="hero-text">
+<h1>Traditional House</h1>
+<p>Heritage Living • Timeless Design • Cultural Essence</p>
+</div>
+</div>
+
+<!-- SEARCH -->
+<div class="search">
+<input id="searchInput" type="text" placeholder="Search Design Name..." onkeyup="searchDesign()">
+</div>
+<a href="wishlist.html" class="wishlist-button">
+    ❤️ Wishlist
+    <span id="wishlistCount">0</span>
+</a>
+<!-- NETFLIX STYLE GALLERY -->
+<div class="scroll">
+
+<!-- CARD 1 -->
+<div class="card">
+<img src="traditional1.jpg">
+<div class="details">
+<h3 class="design-title">Courtyard House</h3>
+<div class="quickbox">
+Area:2200sqft<br>Floors:G+1<br>3BHK Traditional
+</div>
+<p>⭐ 4.5 – 4.9</p>
+<div class="save-container">
+<button class="save-btn floating-heart"
+        data-name="Courtyard House">
+    ❤️
+</button>
+</div>
+<a href="https://app.sketchup.com/app" target="_blank">
+<button class="btn">View Full Details</button>
+</a>
+</div>
+</div>
+
+<!-- CARD 2 -->
+<div class="card">
+<img src="traditional2.jpg">
+<div class="details">
+<h3 class="design-title">Mud House</h3>
+<div class="quickbox">
+Area:2800sqft<br>Floors:G+2<br>4BHK
+</div>
+<p>⭐ 4.7/5</p>
+<div class="save-container">
+    <button class="save-btn floating-heart"
+        data-name="Mud House">
+    ❤️
+</button>
+</div>
+<a href="https://app.sketchup.com/app" target="_blank">
+<button class="btn">View Full Details</button>
+</a>
+</div>
+</div>
+
+<!-- CARD 3 -->
+<div class="card">
+<img src="traditional3.jpg">
+<div class="details">
+<h3 class="design-title">Thatch Roof House</h3>
+<div class="quickbox">
+Area:3000sqft<br>Floors:G+1<br>Luxury
+</div>
+<p>⭐ 4.8/5</p>
+<div class="save-container">
+    <button class="save-btn floating-heart"
+        data-name="Thatch Roof House">
+    ❤️
+</button>
+</div>
+<a href="https://app.sketchup.com/app" target="_blank">
+<button class="btn">View Full Details</button>
+</a>
+</div>
+</div>
+
+<!-- CARD 4 -->
+<div class="card">
+<img src="traditional4.jpg">
+<div class="details">
+<h3 class="design-title">Timber Frame House</h3>
+<div class="quickbox">
+Area:2700sqft<br>Floors:G+1<br>Glass Elevation
+</div>
+<p>⭐ 4.5/5</p>
+<div class="save-container">
+<button class="save-btn floating-heart"
+        data-name="Timber Frame House">
+    ❤️
+</button>
+</div>
+<a href="https://app.sketchup.com/app" target="_blank">
+<button class="btn">View Full Details</button>
+</a>
+</div>
+</div>
+
+<!-- CARD 5 -->
+<div class="card">
+<img src="traditional5.jpg">
+<div class="details">
+<h3 class="design-title">Stone House</h3>
+<div class="quickbox">
+Area:3200sqft<br>Floors:G+2<br>Luxury Modern
+</div>
+<p>⭐ 4.9/5</p>
+<div class="save-container">
+    <button class="save-btn floating-heart"
+        data-name="Stone House">
+    ❤️
+</button>
+</div>
+<a href="https://app.sketchup.com/app" target="_blank">
+<button class="btn">View Full Details</button>
+</a>
+</div>
+</div>
+
+<!-- CARD 6 -->
+<div class="card">
+<img src="traditional7.jpg">
+<div class="details">
+<h3 class="design-title">Longhouse</h3>
+<div class="quickbox">
+Area:2400sqft<br>Floors:G+1<br>Minimal
+</div>
+<p>⭐ 4.4/5</p>
+<div class="save-container">
+<button class="save-btn floating-heart"
+        data-name="Longhouse">
+    ❤️
+</button>
+</div>
+<a href="https://app.sketchup.com/app" target="_blank">
+<button class="btn">View Full Details</button>
+</a>
+</div>
+</div>
+
+<!-- CARD 7 -->
+<div class="card">
+<img src="traditional8.jpg">
+<div class="details">
+<h3 class="design-title">Hut</h3>
+<div class="quickbox">
+Area:2400sqft<br>Floors:G+1<br>Minimal
+</div>
+<p>⭐ 4.4/5</p>
+<div class="save-container">
+<button class="save-btn floating-heart"
+        data-name="Hut">
+    ❤️
+</button>
+</div>
+<a href="https://app.sketchup.com/app" target="_blank">
+<button class="btn">View Full Details</button>
+</a>
+</div>
+</div>
+
+<!-- CARD 8 -->
+<div class="card">
+<img src="traditional9.jpg">
+<div class="details">
+<h3 class="design-title">Bamboo House</h3>
+<div class="quickbox">
+Area:2400sqft<br>Floors:G+1<br>Minimal
+</div>
+<p>⭐ 4.4/5</p>
+<div class="save-container">
+<button class="save-btn floating-heart"
+        data-name="Bamboo House">
+    ❤️
+</button>
+</div>
+<a href="https://app.sketchup.com/app" target="_blank">
+<button class="btn">View Full Details</button>
+</a>
+</div>
+</div>
+
+<!-- CARD 9 -->
+<div class="card">
+<img src="traditioanal99.jpg">
+<div class="details">
+<h3 class="design-title">Adobe House</h3>
+<div class="quickbox">
+Area:2400sqft<br>Floors:G+1<br>Minimal
+</div>
+<p>⭐ 4.4/5</p>
+<div class="save-container">
+<button class="save-btn floating-heart"
+        data-name="Adobe House">
+    ❤️
+</button>
+</div>
+<a href="https://app.sketchup.com/app" target="_blank">
+<button class="btn">View Full Details</button>
+</a>
+</div>
+</div>
+
+<!-- CARD 10 -->
+<div class="card">
+<img src="traditional10.jpg">
+<div class="details">
+<h3 class="design-title">Stilt House</h3>
+<div class="quickbox">
+Area:2400sqft<br>Floors:G+1<br>Minimal
+</div>
+<p>⭐ 4.4/5</p>
+<div class="save-container">
+<button class="save-btn floating-heart"
+        data-name="Stilt House">
+    ❤️
+</button>
+</div>
+<a href="https://app.sketchup.com/app" target="_blank">
+<button class="btn">View Full Details</button>
+</a>
+</div>
+</div>
+
+</div> <!-- END SCROLL -->
+
+<!-- FLOOR PLAN DISPLAY -->
+
+<section class="floor-section" style="margin:50px 40px;">
+  <h2 style="color:#00ffd5; font-size:32px; margin-bottom:30px;">2D Floor Plan Intelligence</h2>
+
+  <div class="floor-container" style="display:flex; gap:30px; align-items:flex-start; flex-wrap:wrap;">
+    
+    <!-- VIDEO SIDE -->
+    <div class="floor-left" style="flex:1; min-width:320px; position:relative;">
+      <video id="floorVideo" autoplay muted loop playsinline 
+             style="width:100%; border-radius:20px; height:400px; object-fit:cover; transition:opacity 0.6s;">
+        <source src="ground-floor-video.mp4" type="video/mp4">
+      </video>
+      <div class="floor-buttons" style="display:flex; gap:10px; margin-top:15px;">
+        <button onclick="updateFloorInfo('ground', this)">Ground Floor</button>
+        <button onclick="updateFloorInfo('first', this)">First Floor</button>
+        <button onclick="updateFloorInfo('terrace', this)">Terrace</button>
+      </div>
+    </div>
+
+    <!-- INFO SIDE -->
+    <div class="floor-stats" style="flex:1; min-width:320px; display:flex; flex-direction:column; gap:20px;">
+      
+      <div class="floor-info-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
+        <div class="info-card-pro floor-card">Total Area: <span id="totalArea"></span></div>
+        <div class="info-card-pro floor-card">Living Area: <span id="livingRoom"></span></div>
+        <div class="info-card-pro floor-card">Kitchen: <span id="kitchen"></span></div>
+        <div class="info-card-pro floor-card">Master Bedroom: <span id="masterBedroom"></span></div>
+      </div>
+
+      <div class="progress-container" style="display:flex; gap:20px;">
+        <div class="progress-card" style="flex:1;">
+          <h4 style="color:#00ffd5;">Ventilation</h4>
+          <div class="progress-bar" style="background:#1e2d4d; border-radius:10px; height:12px;">
+            <div class="progress-fill" id="ventilationBar" style="width:0%; height:100%; border-radius:10px; background:linear-gradient(90deg,#00f5c4,#00b3ff); transition:width 0.8s;"></div>
+          </div>
+          <span id="ventilationScore" style="color:#00f5c4;"></span>
+        </div>
+        <div class="progress-card" style="flex:1;">
+          <h4 style="color:#00ffd5;">Space Utilization</h4>
+          <div class="progress-bar" style="background:#1e2d4d; border-radius:10px; height:12px;">
+            <div class="progress-fill" id="spaceBar" style="width:0%; height:100%; border-radius:10px; background:linear-gradient(90deg,#00f5c4,#00b3ff); transition:width 0.8s;"></div>
+          </div>
+          <span id="spaceScore" style="color:#00f5c4;"></span>
+        </div>
+      </div>
+
+      <div class="vastu-card" id="vastuStatus" style="background:linear-gradient(145deg,#102748,#0c1e3c); padding:15px; border-radius:12px; color:#00f5c4; font-weight:600;"></div>
+
+      <div class="ai-box" style="background:rgba(0,255,213,0.08); padding:15px; border-radius:12px; border:1px solid rgba(0,255,213,0.4); color:#00ffd5;">
+        <h3>AI Recommendation</h3>
+        <div id="aiRecommendation"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- FEATURES PANEL -->
+<div class="ai-panel">
+<h2>Traditional Design Intelligence</h2>
+
+<div class="feature-grid">
+<div class="feature-card">
+<h4>Veranda Design</h4>
+<p>Shaded outdoor seating area around the house.</p>
+</div>
+<div class="feature-card">
+<h4>Wooden Architecture</h4>
+<p>Use of carved wood pillars and beams.</p>
+</div>
+<div class="feature-card">
+<h4>Sloped Roof</h4>
+<p>Clay tile roofing for natural cooling.</p>
+</div>
+<div class="feature-card">
+<h4>Natural Ventilation</h4>
+<p>Airflow design without heavy dependence on AC.</p>
+</div>
+<div class="feature-card">
+<h4>Traditional Kitchen</h4>
+<p>Spacious kitchen with cultural layout.</p>
+</div>
+<div class="feature-card">
+<h4>Handcrafted Elements</h4>
+<p>Artistic details reflecting heritage style.</p>
+</div>
+<div class="feature-card">
+<h4>Tulsi Courtyard Space</h4>
+<p>Sacred central courtyard with Tulsi plant, symbolizing tradition, positivity, and natural well-being.</p>
+</div>
+<div class="feature-card">
+<h4>Stone Flooring</h4>
+<p>Durable natural flooring with a classic finish.</p>
+</div>
+</div>
+
+<div class="ai-summary">
+<div class="summary-box">
+<h3>Estimated Budget</h3>
+<p>₹35L – ₹80L</p>
+</div>
+<div class="summary-box">
+<h3>Suggested Materials</h3>
+<p>Wood • Clay Tiles • Stone • Lime Plaster • Natural Paint</p>
+</div>
+</div>
+<div id="toastBox" style="
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    background: #111;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 8px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s ease;
+    z-index: 9999;
+">
+</div>
+
+
+<button class="btn" onclick="location.href='traditionalhouse-interior.html'">
+  🛋 View Interior Experience
+</button>
+
+<script>
+function searchDesign(){
+  let input = document.getElementById("searchInput").value.toLowerCase();
+  let cards = document.querySelectorAll(".card");
+  cards.forEach(card => {
+    let title = card.querySelector(".design-title").innerText.toLowerCase();
+    card.style.display = title.includes(input) ? "block" : "none";
+  });
+}
+
+const floorData = {
+    ground: {
+        video: "ground-floor-video.mp4",
+        area: "1200 sq.ft",
+        living: "Central Courtyard",
+        kitchen: "Traditional 10x12 ft",
+        bedroom: "12x14 ft",
+        ventilation: 96,
+        space: 85,
+        vastu: "Yes",
+        ai: [
+            "Maintain open courtyard for airflow.",
+            "Use natural materials for cooling."
+        ]
+    },
+    first: {
+        video: "first-floor-video.mp4",
+        area: "1000 sq.ft",
+        living: "Veranda Seating",
+        kitchen: "Utility Kitchen",
+        bedroom: "2 Bedrooms 12x12 ft",
+        ventilation: 94,
+        space: 83,
+        vastu: "Yes",
+        ai: [
+            "Add wooden railings.",
+            "Ensure shaded balcony areas."
+        ]
+    },
+    terrace: {
+        video: "terrace-video.mp4",
+        area: "500 sq.ft",
+        living: "Open Roof Space",
+        kitchen: "Traditional Cooking Area",
+        bedroom: "No bedroom",
+        ventilation: 97,
+        space: 80,
+        vastu: "Yes",
+        ai: [
+            "Use clay tiles for heat control.",
+            "Add seating for evening relaxation."
+        ]
+    }
+};
+
+function updateFloorInfo(floor, button){
+    const data = floorData[floor];
+    const video = document.getElementById("floorVideo");
+
+    // Smooth fade out and change video
+    video.style.opacity = 0;
+    setTimeout(()=>{
+        video.querySelector("source").src = data.video;
+        video.load();
+        video.play();
+        video.style.opacity = 1;
+    }, 300);
+
+    // Update text info
+    document.getElementById("totalArea").innerText = data.area;
+    document.getElementById("livingRoom").innerText = data.living;
+    document.getElementById("kitchen").innerText = data.kitchen;
+    document.getElementById("masterBedroom").innerText = data.bedroom;
+
+    document.getElementById("ventilationBar").style.width = data.ventilation + "%";
+    document.getElementById("spaceBar").style.width = data.space + "%";
+    document.getElementById("ventilationScore").innerText = data.ventilation + "%";
+    document.getElementById("spaceScore").innerText = data.space + "%";
+
+    document.getElementById("vastuStatus").innerText = "Vastu Compliance: " + data.vastu;
+
+    // Animated AI recommendations
+    const aiBox = document.getElementById("aiRecommendation");
+    aiBox.innerHTML = "";
+    data.ai.forEach((item,i)=>{
+        setTimeout(()=>{
+            const div = document.createElement("div");
+            div.className = "ai-item";
+            div.style.opacity = 0;
+            div.style.transition = "opacity 0.5s";
+            div.innerText = "✔ " + item;
+            aiBox.appendChild(div);
+            setTimeout(()=>{div.style.opacity=1},50);
+        }, i*300);
+    });
+
+    // Highlight active button
+    document.querySelectorAll(".floor-buttons button").forEach(b=>b.classList.remove("active"));
+    button.classList.add("active");
+}
+
+// Initialize
+document.addEventListener("DOMContentLoaded", ()=>{
+    updateFloorInfo("ground", document.querySelector(".floor-buttons button"));
+});
+</script>
+
+<div id="toastBox"></div>
+<script src="wishlist.js"></script>
+</body>
+</html>

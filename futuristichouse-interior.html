@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Futuristic House — Interior Experience | Archinova</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}body{font-family:'DM Sans',sans-serif;background:linear-gradient(135deg,#050d1a,#0b1c2d,#08121f);color:#e8e2d9;min-height:100vh;overflow-x:hidden;}canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;}header{position:sticky;top:0;z-index:100;background:rgba(7,13,26,0.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(26,158,143,0.25);}.navbar{display:flex;justify-content:space-between;align-items:center;padding:16px 48px;max-width:1400px;margin:auto;}.logo{display:flex;align-items:center;gap:10px;font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;letter-spacing:0.08em;color:#e8edf5;text-decoration:none;}.logo img{width:38px;height:38px;object-fit:contain;border-radius:4px;}.back-link{display:inline-flex;align-items:center;gap:8px;color:rgba(232,226,217,0.5);text-decoration:none;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.25s;}.back-link:hover{color:#1a9e8f;}.hero{position:relative;z-index:1;text-align:center;padding:70px 24px 50px;}.hero-eyebrow{font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:#1a9e8f;display:block;margin-bottom:14px;}.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,6vw,64px);font-weight:300;line-height:1.1;color:#e8e2d9;}.hero h1 em{color:#1a9e8f;font-style:italic;}.hero-divider{width:56px;height:1px;background:linear-gradient(90deg,transparent,#1a9e8f,transparent);margin:20px auto 14px;}.hero-sub{font-size:14px;color:rgba(232,226,217,0.45);letter-spacing:0.04em;}.chips-wrap{position:relative;z-index:1;display:flex;flex-wrap:wrap;justify-content:center;gap:12px;padding:0 24px 52px;}.chip{display:inline-flex;align-items:center;gap:8px;padding:12px 26px;border:1.5px solid rgba(26,158,143,0.4);border-radius:999px;background:rgba(26,158,143,0.07);color:#1a9e8f;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all 0.25s;}.chip:hover,.chip.active{background:#1a9e8f;color:white;border-color:#1a9e8f;transform:translateY(-3px);box-shadow:0 8px 22px rgba(26,158,143,0.35);}.room-section{display:none;position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:0 32px 80px;animation:fadeUp 0.5s ease both;}.room-section.active{display:block;}@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}.room-header{text-align:center;margin-bottom:40px;}.room-header h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:#e8e2d9;}.room-header h2 em{color:#1a9e8f;font-style:italic;}.room-header p{font-size:13px;color:rgba(232,226,217,0.4);margin-top:6px;}.img-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;}.img-card{border-radius:8px;overflow:hidden;border:1px solid rgba(232,226,217,0.07);background:rgba(255,255,255,0.025);transition:all 0.35s;}.img-card:hover{transform:translateY(-7px);border-color:rgba(26,158,143,0.35);box-shadow:0 22px 55px rgba(0,0,0,0.45);}.img-card img{width:100%;height:240px;object-fit:cover;display:block;transition:transform 0.5s ease;}.img-card:hover img{transform:scale(1.05);}.img-caption{padding:16px 18px 18px;}.img-caption h4{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;color:#1a9e8f;margin-bottom:5px;}.img-caption p{font-size:12px;color:rgba(232,226,217,0.45);line-height:1.65;}.detail-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}.dtag{padding:3px 11px;background:rgba(26,158,143,0.1);border:1px solid rgba(26,158,143,0.25);border-radius:999px;font-size:11px;color:#1a9e8f;}.cta-bar{position:relative;z-index:1;text-align:center;padding:40px;border:1px solid rgba(26,158,143,0.2);border-radius:8px;background:rgba(26,158,143,0.05);max-width:1280px;margin:0 auto 80px;}.cta-bar h3{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:#e8e2d9;margin-bottom:8px;}.cta-bar p{font-size:13px;color:rgba(232,226,217,0.4);margin-bottom:22px;}.cta-btn{display:inline-flex;align-items:center;gap:10px;padding:14px 36px;background:linear-gradient(135deg,#1a9e8f,#0d6e63);border:none;border-radius:4px;color:white;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;transition:all 0.3s;}.cta-btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(26,158,143,0.4);}@media(max-width:640px){.navbar{padding:14px 20px;}.hero{padding:50px 16px 36px;}.chips-wrap{padding:0 16px 36px;}.room-section{padding:0 16px 60px;}.img-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<header>
+  <div class="navbar">
+    <a href="home.html" class="logo"><img src="logo.jpeg" alt="Archinova"> Archinova</a>
+    <a href="futuristichouse.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Futuristic House</a>
+  </div>
+</header>
+<div class="hero">
+  <span class="hero-eyebrow">Interior Experience</span>
+  <h1>Futuristic <em>House</em> Interiors</h1>
+  <div class="hero-divider"></div>
+  <p class="hero-sub">Smart systems · Glass facade · Modular layout · Choose a room below</p>
+</div>
+<div class="chips-wrap">
+  <button class="chip active" onclick="showRoom('living',this)"><i class="fa-solid fa-couch"></i> Living Room</button>
+  <button class="chip" onclick="showRoom('bedroom',this)"><i class="fa-solid fa-bed"></i> Bedroom</button>
+  <button class="chip" onclick="showRoom('kitchen',this)"><i class="fa-solid fa-kitchen-set"></i> Kitchen</button>
+  <button class="chip" onclick="showRoom('bathroom',this)"><i class="fa-solid fa-bath"></i> Bathroom</button>
+</div>
+
+<!-- LIVING -->
+<div class="room-section active" id="room-living">
+  <div class="room-header"><h2>Living Room — <em>Futuristic House</em></h2><p>Automated lighting, glass walls, smart climate control · ₹2L – ₹4L</p></div>
+  <div class="img-grid">
+    <div class="img-card"><img src="mv\smartlr.jpg" alt=""><div class="img-caption"><h4>Smart Living Zone</h4><p>Voice-controlled blinds, LED strip mood lighting, modular sofa with built-in charging, floor sensors.</p><div class="detail-tags"><span class="dtag">Smart Controls</span><span class="dtag">LED Mood</span><span class="dtag">Modular</span></div></div></div>
+    <div class="img-card"><img src="mv\glassflr.jpg" alt=""><div class="img-caption"><h4>Glass Facade Living</h4><p>Floor-to-ceiling motorised glass wall, integrated projector screen, floating TV unit, polished concrete floor.</p><div class="detail-tags"><span class="dtag">Glass Wall</span><span class="dtag">Projector</span><span class="dtag">Concrete Floor</span></div></div></div>
+    <div class="img-card"><img src="mv\noirlr.jpg" alt=""><div class="img-caption"><h4>Noir Tech Lounge</h4><p>Dark matte surfaces, RGB accent lighting, automated curtains, smart hub central console and wireless charging tables.</p><div class="detail-tags"><span class="dtag">Dark Matte</span><span class="dtag">RGB Lighting</span><span class="dtag">Smart Hub</span></div></div></div>
+    <div class="img-card"><img src="mv\capsule.jpg" alt=""><div class="img-caption"><h4>Capsule Living</h4><p>Curved walls, pod seating, biophilic planted ceiling panel, ambient sound system built into walls.</p><div class="detail-tags"><span class="dtag">Curved Walls</span><span class="dtag">Biophilic</span><span class="dtag">Sound System</span></div></div></div>
+  </div>
+</div>
+
+<!-- BEDROOM -->
+<div class="room-section" id="room-bedroom">
+  <div class="room-header"><h2>Bedroom — <em>Futuristic House</em></h2><p>Sleep tech, automated blackout, circadian lighting · ₹1.5L – ₹3L</p></div>
+  <div class="img-grid">
+    <div class="img-card"><img src="mv\podbr.jpg" alt=""><div class="img-caption"><h4>Sleep Pod Bedroom</h4><p>Smart bed with sleep tracking, circadian rhythm ceiling light, automated blackout panels, invisible storage.</p><div class="detail-tags"><span class="dtag">Sleep Tracking</span><span class="dtag">Circadian Light</span><span class="dtag">Auto Blackout</span></div></div></div>
+    <div class="img-card"><img src="mv\techbr.jpg" alt=""><div class="img-caption"><h4>Minimalist Tech Room</h4><p>Wall-integrated touch panel controls, floating bed frame, under-bed LED, acoustic wall tiles for sleep quality.</p><div class="detail-tags"><span class="dtag">Touch Panel</span><span class="dtag">Floating Bed</span><span class="dtag">Acoustic</span></div></div></div>
+    <div class="img-card"><img src="mv\holobr.jpg" alt=""><div class="img-caption"><h4>Holographic Suite</h4><p>Projection-mapped ceiling, motorised wardrobe, sensor-activated night lighting pathway, climate micro-zones.</p><div class="detail-tags"><span class="dtag">Projection Ceiling</span><span class="dtag">Motorised</span><span class="dtag">Climate Zones</span></div></div></div>
+    <div class="img-card"><img src="mv\monobr.jpg" alt=""><div class="img-caption"><h4>Mono Cube Bedroom</h4><p>Single-tone monochrome space, retractable desk from wall, pop-up TV, smart mirror with weather display.</p><div class="detail-tags"><span class="dtag">Monochrome</span><span class="dtag">Retractable Desk</span><span class="dtag">Smart Mirror</span></div></div></div>
+  </div>
+</div>
+
+<!-- KITCHEN -->
+<div class="room-section" id="room-kitchen">
+  <div class="room-header"><h2>Kitchen — <em>Futuristic House</em></h2><p>Touchscreen cabinets, auto-dispense, integrated AI · ₹2L – ₹4L</p></div>
+  <div class="img-grid">
+    <div class="img-card"><img src="mv\smartkit.jpg" alt=""><div class="img-caption"><h4>Smart Kitchen</h4><p>Touchscreen cabinet fronts, auto-dispensing tap, induction cooktop flush with counter, voice-controlled appliances.</p><div class="detail-tags"><span class="dtag">Touchscreen</span><span class="dtag">Auto Tap</span><span class="dtag">Voice Control</span></div></div></div>
+    <div class="img-card"><img src="mv\labkit.jpg" alt=""><div class="img-caption"><h4>Lab Kitchen</h4><p>Brushed aluminium surfaces, integrated sous-vide station, UV sanitiser drawer, smart pantry inventory display.</p><div class="detail-tags"><span class="dtag">Aluminium</span><span class="dtag">Sous-Vide</span><span class="dtag">UV Sanitiser</span></div></div></div>
+    <div class="img-card"><img src="mv\whitekit.jpg" alt=""><div class="img-caption"><h4>White Tech Kitchen</h4><p>Seamless all-white, pop-up power sockets, integrated Alexa, hidden ventilation, smart fridge with display panel.</p><div class="detail-tags"><span class="dtag">Seamless White</span><span class="dtag">Pop-up Sockets</span><span class="dtag">Smart Fridge</span></div></div></div>
+    <div class="img-card"><img src="mv\modularkit.jpg" alt=""><div class="img-caption"><h4>Modular Flex Kitchen</h4><p>Reconfigurable island on rails, fold-out dining table, retractable bar, all controlled from a central wall panel.</p><div class="detail-tags"><span class="dtag">Reconfigurable</span><span class="dtag">Fold-out Table</span><span class="dtag">Rail System</span></div></div></div>
+  </div>
+</div>
+
+<!-- BATHROOM -->
+<div class="room-section" id="room-bathroom">
+  <div class="room-header"><h2>Bathroom — <em>Futuristic House</em></h2><p>Digital shower, chromotherapy, smart mirror · ₹80K – ₹1.5L</p></div>
+  <div class="img-grid">
+    <div class="img-card"><img src="mv\digbar.jpg" alt=""><div class="img-caption"><h4>Digital Shower Cabin</h4><p>Preset temperature profiles, chromotherapy LED shower, body-scanning mirror, automated ventilation.</p><div class="detail-tags"><span class="dtag">Digital Shower</span><span class="dtag">Chromotherapy</span><span class="dtag">Smart Vent</span></div></div></div>
+    <div class="img-card"><img src="mv\floatbar.jpg" alt=""><div class="img-caption"><h4>Float Tank Bathroom</h4><p>Sensory float tub, star-ceiling panel, infrared floor heating, Bluetooth speaker embedded in wall.</p><div class="detail-tags"><span class="dtag">Float Tub</span><span class="dtag">Star Ceiling</span><span class="dtag">Infrared Heat</span></div></div></div>
+    <div class="img-card"><img src="mv\vanbar.jpg" alt=""><div class="img-caption"><h4>Smart Vanity</h4><p>AI mirror with health metrics, automated toothbrush steriliser, touchless taps, biometric door lock.</p><div class="detail-tags"><span class="dtag">AI Mirror</span><span class="dtag">Health Metrics</span><span class="dtag">Touchless</span></div></div></div>
+    <div class="img-card"><img src="mv\monobar.jpg" alt=""><div class="img-caption"><h4>Monolith Bathroom</h4><p>Single slab stone trough, wall-recessed faucet, anti-fog mirror panel, underlit floating vanity.</p><div class="detail-tags"><span class="dtag">Stone Trough</span><span class="dtag">Anti-Fog Mirror</span><span class="dtag">Underlit</span></div></div></div>
+  </div>
+</div>
+
+<div class="cta-bar">
+  <h3>Want to customise your <em style="color:#1a9e8f;font-style:italic">own interior?</em></h3>
+  <p>Use the full AI Interior Builder to pick your region, climate, room and style</p>
+  <a href="interior.html" class="cta-btn"><i class="fa-solid fa-wand-magic-sparkles"></i> Open Interior Builder</a>
+</div>
+<script>
+function showRoom(id,el){document.querySelectorAll('.room-section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));document.getElementById('room-'+id).classList.add('active');el.classList.add('active');document.getElementById('room-'+id).scrollIntoView({behavior:'smooth',block:'start'});}
+const canvas=document.getElementById('bg'),ctx=canvas.getContext('2d');canvas.width=window.innerWidth;canvas.height=window.innerHeight;window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});const pts=Array.from({length:70},()=>({x:Math.random()*canvas.width,y:Math.random()*canvas.height,vx:(Math.random()-.5)*.9,vy:(Math.random()-.5)*.9}));(function draw(){ctx.clearRect(0,0,canvas.width,canvas.height);pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>canvas.width)p.vx*=-1;if(p.y<0||p.y>canvas.height)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,1.8,0,Math.PI*2);ctx.fillStyle='#1a9e8f';ctx.fill();});for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y;if(Math.sqrt(dx*dx+dy*dy)<110){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle='rgba(26,158,143,0.08)';ctx.stroke();}}requestAnimationFrame(draw);})();
+</script>
+</body>
+</html>

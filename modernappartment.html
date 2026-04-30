@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Modern Apartment | Archinova</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+/* ================= GLOBAL ================= */
+body{
+margin:0;
+font-family:'Segoe UI', sans-serif;
+color:#e2e8f0;
+overflow-x:hidden;
+
+/* 🔥 DARK LUXURY BASE */
+background: radial-gradient(circle at 20% 30%, #1e1b4b, transparent 40%),
+            radial-gradient(circle at 80% 70%, #0f172a, transparent 50%),
+            #020617;
+
+/* ✨ Smooth feel */
+background-attachment: fixed;
+}
+/* 🔥 SOFT GLOW LIGHTS */
+body::before,
+body::after{
+content:"";
+position:fixed;
+width:500px;
+height:500px;
+border-radius:50%;
+filter:blur(120px);
+z-index:-1;
+opacity:0.25;
+}
+
+/* LEFT PURPLE GLOW */
+body::before{
+top:-100px;
+left:-100px;
+background:#8b5cf6;
+}
+
+/* RIGHT BLUE GLOW */
+body::after{
+bottom:-100px;
+right:-100px;
+background:#3b82f6;
+}
+/* SUBTLE GRID TEXTURE */
+body::selection{
+background:#8b5cf6;
+color:white;
+}
+
+body{
+background-image:
+linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+background-size: 60px 60px;
+}
+
+/* Section spacing */
+section{
+padding:100px 10%;
+}
+
+/* FLOATING ORBS */
+
+.floating-orbs span{
+position:absolute;
+width:200px;
+height:200px;
+background:radial-gradient(circle,#8b5cf6,transparent);
+border-radius:50%;
+filter:blur(60px);
+animation: floatOrb 10s infinite alternate;
+}
+
+.floating-orbs span:nth-child(1){
+top:10%; left:20%;
+}
+
+.floating-orbs span:nth-child(2){
+top:60%; left:70%;
+animation-duration:14s;
+}
+
+.floating-orbs span:nth-child(3){
+top:40%; left:40%;
+animation-duration:18s;
+}
+
+@keyframes floatOrb{
+from{ transform:translateY(0px);}
+to{ transform:translateY(-60px);}
+}
+/* ================= HERO ULTRA PREMIUM ================= */
+
+/* ===== CINEMATIC HERO ===== */
+
+.hero{
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+position:relative;
+overflow:hidden;
+}
+
+/* Background glow */
+.hero-bg{
+position:absolute;
+width:100%;
+height:100%;
+background:
+radial-gradient(circle at 20% 30%, rgba(139,92,246,0.3), transparent 40%),
+radial-gradient(circle at 80% 70%, rgba(59,130,246,0.3), transparent 40%);
+animation:none;
+z-index:0;
+}
+
+
+/* SLIDER */
+.slider{
+position:absolute;
+width:100%;
+height:100%;
+overflow:hidden;
+z-index:1;
+}
+
+.slide{
+position:absolute;
+width:100%;
+height:100%;
+object-fit:cover;
+opacity:0;
+transition:opacity 1.5s ease-in-out, transform 6s ease;
+transform:scale(1.1);
+}
+
+.slide.active{
+opacity:0.35;
+transform:scale(1.2);
+}
+
+/* CONTENT */
+.hero-content{
+position:relative;
+z-index:2;
+text-align:center;
+padding:60px;
+border-radius:20px;
+background:rgba(0,0,0,0.4);
+backdrop-filter:blur(20px);
+box-shadow:0 0 80px rgba(139,92,246,0.4);
+transition:transform 0.2s ease;
+}
+
+/* TEXT */
+.hero h1{
+font-size:70px;
+background:linear-gradient(90deg,#c084fc,#60a5fa);
+-webkit-background-clip:text;
+color:transparent;
+}
+
+.hero p{
+font-size:18px;
+margin:20px 0;
+color:#e5e7eb;
+}
+
+/* BUTTON */
+.hero .btn{
+padding:15px 35px;
+border-radius:30px;
+background:linear-gradient(135deg,#8b5cf6,#3b82f6);
+border:none;
+color:white;
+font-weight:bold;
+cursor:pointer;
+transition:0.3s;
+}
+html {
+scroll-behavior: smooth;
+}
+
+.hero .btn:hover{
+transform:scale(1.1);
+box-shadow:0 0 30px rgba(139,92,246,0.7);
+}
+/* ================= INTRO ================= */
+
+.intro{
+max-width:800px;
+margin:auto;
+text-align:center;
+}
+
+.intro h2{
+font-size:42px;
+background:linear-gradient(90deg,#a78bfa,#f0abfc);
+-webkit-background-clip:text;
+color:transparent;
+margin-bottom:20px;
+}
+
+.intro p{
+line-height:1.8;
+font-size:17px;
+color:#cbd5e1;
+}
+
+/* ================= UPDATED ZIG ZAG ================= */
+.zigzag {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 80px; /* Wider gap for a cleaner look */
+    margin: 40px 0; /* Reduced margin so they aren't so far apart */
+    padding: 40px 10%;
+}
+
+.zigzag:nth-child(even) {
+    flex-direction: row-reverse;
+}
+
+.zigzag img {
+    width: 40%; /* Reduced from 50% */
+    max-width: 500px; /* Prevents them from getting "huge" on big monitors */
+    height: 350px; /* Fixed height to keep it consistent */
+    object-fit: cover; /* Crops them perfectly */
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    transition: 0.4s ease;
+}
+
+.zigzag-text {
+    width: 40%; /* Matches the image width for balance */
+}
+
+.zigzag-text h3 {
+    font-size: 32px;
+    color: #c4b5fd;
+    margin-bottom: 15px;
+    background: linear-gradient(90deg, #c4b5fd, #f0abfc);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.zigzag-text p {
+    color: #cbd5e1;
+    line-height: 1.8;
+    font-size: 18px;
+}
+
+/* Mobile Fix: Stack them so they don't get squished */
+@media(max-width: 900px) {
+    .zigzag, .zigzag:nth-child(even) {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+    .zigzag img, .zigzag-text {
+        width: 100%;
+    }
+}
+/* ================= CARDS ================= */
+
+.types{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:30px;
+}
+
+.type-card{
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(15px);
+padding:40px;
+border-radius:20px;
+text-align:center;
+transition:0.4s;
+position:relative;
+overflow:hidden;
+}
+
+/* 🔥 Glow border effect */
+
+@keyframes rotate{
+0%{transform:rotate(0deg);}
+100%{transform:rotate(360deg);}
+}
+
+.type-card:hover{
+transform:translateY(-10px) scale(1.03);
+}
+
+.type-card h3{
+color:#e9d5ff;
+}
+
+.type-card p{
+color:#cbd5e1;
+}
+
+/* ================= APARTMENT GRID ================= */
+.apartments{
+padding:80px 5%;
+text-align:center;
+}
+
+.apartments h2{
+font-size:36px;
+margin-bottom:40px;
+color:white;
+}
+
+/* PERFECT GRID */
+.apartment-grid{
+display:grid;
+grid-template-columns:repeat(3, 1fr);
+gap:30px;
+}
+
+/* CARD */
+.apartment-card{
+position:relative;
+border-radius:20px;
+overflow:hidden;
+height:260px;
+cursor:pointer;
+transform:translateY(0);
+transition:0.4s;
+}
+
+/* IMAGE */
+.apartment-card img{
+width:100%;
+height:100%;
+object-fit:cover;
+transition:0.5s;
+}
+
+/* DARK OVERLAY (FIXED ISSUE) */
+.overlay{
+position:absolute;
+bottom:0;
+width:100%;
+padding:20px;
+background:linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+color:white;
+text-align:left;
+}
+
+/* TEXT FIX */
+.overlay h3{
+margin:0;
+font-size:20px;
+color:#d0a8ff;
+}
+
+.overlay p{
+font-size:14px;
+opacity:0.85;
+}
+
+/* HOVER EFFECT */
+.apartment-card:hover{
+transform:translateY(-10px) scale(1.03);
+}
+
+.apartment-card:hover img{
+transform:scale(1.1);
+}
+
+/* CENTER LAST 2 CARDS */
+.types div:nth-child(4){
+grid-column:1/2;
+}
+.types div:nth-child(5){
+grid-column:2/3;
+}
+
+/* ================= AMENITIES ================= */
+
+/* ===== SECTION ===== */
+.amenity{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+
+padding:12px 22px;
+border-radius:30px;
+
+background: rgba(255,255,255,0.08);
+backdrop-filter: blur(12px);
+
+border:1px solid rgba(255,255,255,0.15);
+
+color:#e5e7eb;
+font-size:14px;
+
+cursor:pointer;
+transition:0.4s;
+
+white-space:nowrap;
+position:relative;
+overflow:hidden;
+}
+
+/* 🔥 SHINE EFFECT */
+.amenity::before{
+content:"";
+position:absolute;
+top:0;
+left:-100%;
+width:100%;
+height:100%;
+background:linear-gradient(120deg, transparent, rgba(192,132,252,0.6), transparent);
+transition:0.5s;
+}
+
+.amenity:hover::before{
+left:100%;
+}
+
+/* 🔥 HOVER GLOW */
+.amenity:hover{
+transform:translateY(-5px) scale(1.05);
+box-shadow:0 0 25px rgba(139,92,246,0.6);
+}
+
+/* 🔥 ACTIVE BUTTON */
+.amenity.active{
+background:linear-gradient(135deg,#8b5cf6,#c084fc);
+box-shadow:0 0 30px rgba(192,132,252,0.9);
+color:white;
+}
+
+/* ===== HEADING ===== */
+.amenity-section{
+text-align:center;
+margin-top:80px;
+}
+
+.amenity-section h2{
+font-size:36px;
+margin-bottom:30px;
+letter-spacing:1px;
+}
+
+/* ===== AMENITY BUTTONS ===== */
+.amenity-buttons{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;  /* 🔥 CENTER */
+gap:15px;
+margin-top:20px;
+}
+
+/* GLOW BORDER ANIMATION */
+
+.amenity:hover::before{
+left:100%;
+}
+
+/* HOVER EFFECT */
+.amenity:hover{
+transform:translateY(-6px) scale(1.05);
+box-shadow:0 0 25px rgba(139,92,246,0.6);
+}
+
+/* ACTIVE SELECTED */
+.amenity.active{
+background:linear-gradient(135deg,#8b5cf6,#c084fc);
+box-shadow:0 0 30px rgba(192,132,252,0.9);
+color:white;
+}
+
+
+/* Updated Display Panel */
+.amenity-display {
+    margin-top: 50px;
+    display: flex;
+    align-items: center; /* Centers text vertically against image */
+    justify-content: center;
+    gap: 40px; /* Space between image and text */
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 30px;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Fixed Image Size & Aspect Ratio */
+.amenity-display img {
+    width: 50%; /* Image takes up half the width */
+    max-width: 500px;
+    height: 350px; /* Fixed height for all images */
+    object-fit: cover; /* Crops image to fit perfectly without stretching */
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    transition: opacity 0.4s ease;
+}
+
+/* Text Styling */
+.amenity-text-container {
+    width: 40%;
+    text-align: left; /* Aligns text to the left for better readability */
+}
+
+.amenity-text-container h3 {
+    color: #c084fc;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.amenity-text-container p {
+    font-size: 18px;
+    color: #cbd5f5;
+    line-height: 1.6;
+}
+
+/* Responsive Fix for Mobile */
+@media(max-width: 850px) {
+    .amenity-display {
+        flex-direction: column; /* Stacks them on small screens */
+        text-align: center;
+    }
+    .amenity-text-container {
+        width: 100%;
+        text-align: center;
+    }
+    .amenity-display img {
+        width: 100%;
+        height: 250px;
+    }
+}
+
+/* ===== FADE ===== */
+
+/* FADE ANIMATION */
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(20px);}
+to{opacity:1; transform:translateY(0);}
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:900px){
+.apartment-grid{
+grid-template-columns:1fr 1fr;
+}
+
+.amenity-display{
+flex-direction:column;
+}
+}
+
+@media(max-width:600px){
+.apartment-grid{
+grid-template-columns:1fr;
+}
+}
+/* ================= BUTTON ================= */
+
+.btn{
+background:linear-gradient(90deg,#8b5cf6,#c084fc);
+padding:14px 40px;
+border-radius:30px;
+color:white;
+font-weight:bold;
+transition:0.3s;
+display:inline-block;
+}
+
+.btn:hover{
+transform:scale(1.1);
+box-shadow:0 0 30px #8b5cf6;
+}
+
+/* ================= SCROLL ANIMATION ================= */
+
+.reveal{
+opacity:0;
+transform:translateY(60px);
+transition:1s ease;
+}
+
+.reveal.active{
+opacity:1;
+transform:translateY(0);
+}
+
+/* ================= FOOTER ================= */
+
+.footer{
+width:100%;
+background:linear-gradient(135deg,#070b1f,#0f1a3d);
+margin-top:80px;
+padding:60px 0 20px;
+}
+
+.footer-content{
+max-width:1200px;
+margin:auto;
+text-align:center;
+padding:0 20px;
+}
+
+.footer-bottom{
+text-align:center;
+margin-top:20px;
+opacity:0.6;
+}
+@keyframes bgMove {
+0% { background-position: 0% 50%; }
+50% { background-position: 100% 50%; }
+100% { background-position: 0% 50%; }
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="particles"></div>
+
+<!-- HERO -->
+<section class="hero">
+
+<div class="hero-bg"></div>
+
+<!-- IMAGE SLIDER -->
+<div class="slider" id="slider">
+<img src="apartment1.jpg" class="slide active">
+<img src="apartment2.jpg" class="slide">
+<img src="apartment3.jpg" class="slide">
+</div>
+
+<!-- CONTENT -->
+<div class="hero-content" id="heroCard">
+<h1>Modern Apartments</h1>
+<p>Luxury • Smart • Future Living</p>
+<a href="#amenities">
+<button class="btn" onclick="scrollToAmenities()">Explore Amenities</button>
+</a>
+</div>
+
+<div class="floating-orbs">
+<span></span>
+<span></span>
+<span></span>
+</div>
+</section>
+
+<!-- INTRO -->
+<section class="intro reveal">
+
+<h2>Future of Urban Living</h2>
+
+<p>
+Modern apartments combine smart technology, luxury interiors,
+and space-efficient architecture to create homes designed for
+fast-paced city lifestyles. Archinova's intelligent system
+optimizes layout, lighting, and ventilation for next-gen living.
+</p>
+
+</section>
+
+
+<!-- 🔥 ZIG-ZAG STORIES -->
+
+<section>
+
+<div class="zigzag reveal">
+
+<img src="apartment1.jpg">
+
+<div class="zigzag-text">
+<h3>Open Concept Living</h3>
+<p>
+Seamless connection between spaces enhances openness,
+natural light, and modern aesthetics.
+</p>
+</div>
+
+</div>
+
+
+<div class="zigzag reveal">
+
+<img src="apartment2.jpg">
+
+<div class="zigzag-text">
+<h3>Panoramic Skyline Views</h3>
+<p>
+Floor-to-ceiling windows deliver breathtaking city views
+while improving ventilation and brightness.
+</p>
+</div>
+
+</div>
+
+
+<div class="zigzag reveal">
+
+<img src="apartment3.jpg">
+
+<div class="zigzag-text">
+<h3>Smart Apartment Technology</h3>
+<p>
+AI-powered automation enhances comfort, security,
+and energy efficiency in modern homes.
+</p>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= APARTMENT TYPES ================= -->
+
+<section class="amenity-section" id="amenities">
+
+<h2>Apartment Configurations</h2>
+
+<div class="apartment-grid">
+
+<div class="apartment-card">
+<img src="ap1.jpg">
+<div class="overlay">
+<h3>1 BHK Smart</h3>
+<p>Efficient and modern living designed for individuals and young professionals.</p>
+</div>
+</div>
+
+<div class="apartment-card">
+<img src="ap2.jpg">
+<div class="overlay">
+<h3>2 BHK Comfort</h3>
+<p>Perfect for small families with smart layouts and comfort living.</p>
+</div>
+</div>
+
+<div class="apartment-card">
+<img src="ap3.jpg">
+<div class="overlay">
+<h3>3 BHK Luxury</h3>
+<p>Spacious apartment with premium interiors and elegant design.</p>
+</div>
+</div>
+
+<div class="apartment-card">
+<img src="ap4.jpg">
+<div class="overlay">
+<h3>Duplex Apartment</h3>
+<p>Two-level modern lifestyle living.</p>
+</div>
+</div>
+
+<div class="apartment-card">
+<img src="ap5.jpg">
+<div class="overlay">
+<h3>Penthouse</h3>
+<p>Top-floor luxury with skyline views.</p>
+</div>
+</div>
+
+<div class="apartment-card">
+<img src="ap6.jpg">
+<div class="overlay">
+<h3>Sky Villa Apartment</h3>
+<p>Private villa experience in the sky.</p>
+</div>
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= AMENITIES INTERACTIVE ================= -->
+<section class="amenity-section">
+
+<h2>Modern Apartment Amenities</h2>
+
+<div class="amenity-buttons">
+
+<div class="amenity active" onclick="showAmenity('pool', this)">🏊 Infinity Pool</div>
+<div class="amenity" onclick="showAmenity('garden', this)">🌿 Sky Garden</div>
+<div class="amenity" onclick="showAmenity('security', this)">🔐 Smart Security</div>
+<div class="amenity" onclick="showAmenity('gym', this)">🏋️ Private Gym</div>
+<div class="amenity" onclick="showAmenity('kids', this)">🎠 Kids Area</div>
+<div class="amenity" onclick="showAmenity('ev', this)">⚡ EV Charging</div>
+
+</div>
+
+<div class="amenity-display">
+    <img id="amenityImg" src="pool.jpg" alt="Amenity">
+    
+    <div class="amenity-text-container">
+        <h3 id="amenityTitle">Infinity Pool</h3> <p id="amenityText">Luxury infinity pool with skyline view.</p>
+    </div>
+</div>
+</section>
+<!-- 3D EXPERIENCE -->
+
+<section class="reveal" style="text-align:center">
+
+<h2>Explore the Apartment in 3D</h2>
+
+<p>
+Launch the interactive apartment viewer to explore
+the full architectural layout and interiors.
+</p>
+
+<a href="#" target="_blank">
+<button class="btn">Launch 3D Apartment Experience</button>
+</a>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer class="footer">
+
+<div class="footer-content">
+
+<h2>Archinova</h2>
+<p>Smart Architecture & Innovation Recommendation System</p>
+
+<div class="footer-links">
+<a href="index.html">Home</a>
+<a href="gallery.html">GALLERY</a>
+<a href="about.html">About</a>
+<a href="interior.html">interior</a>
+</div>
+
+</div>
+
+<div class="footer-bottom">
+© 2026 Archinova. All Rights Reserved.
+</div>
+
+</footer>
+
+<!-- 🔥 SCROLL ANIMATION SCRIPT -->
+
+<script>
+window.addEventListener("scroll",function(){
+document.querySelectorAll(".reveal").forEach(el=>{
+let top=el.getBoundingClientRect().top;
+let windowHeight=window.innerHeight;
+if(top<windowHeight-100){
+el.classList.add("active");
+}
+});
+});
+</script>
+
+<script>
+// 1. AMENITY SWITCHER LOGIC
+function showAmenity(type, element) {
+    const img = document.getElementById("amenityImg");
+    const text = document.getElementById("amenityText");
+    const title = document.getElementById("amenityTitle");
+
+    // Remove 'active' class from all buttons and add to the clicked one
+    document.querySelectorAll(".amenity").forEach(btn => btn.classList.remove("active"));
+    element.classList.add("active");
+
+    // Start fade out animation
+    img.style.opacity = "0";
+
+    setTimeout(() => {
+        const content = {
+            'pool': { 
+                src: 'pool.jpg', 
+                title: 'Infinity Pool', 
+                txt: 'Luxury infinity pool with skyline view.' 
+            },
+            'garden': { 
+                src: 'garden.jpg', 
+                title: 'Sky Garden', 
+                txt: 'Sky garden with greenery and relaxation space.' 
+            },
+            'security': { 
+                src: 'security.jpg', 
+                title: 'Smart Security', 
+                txt: 'AI-powered 24/7 smart security system.' 
+            },
+            'gym': { 
+                src: 'gym.jpg', 
+                title: 'Private Gym', 
+                txt: 'Fully equipped premium fitness center.' 
+            },
+            'kids': { 
+                src: 'kids.jpg', 
+                title: 'Kids Area', 
+                txt: 'Safe and modern kids play zone.' 
+            },
+            'ev': { 
+                src: 'ev.jpg', 
+                title: 'EV Charging', 
+                txt: 'Fast EV charging infrastructure.' 
+            }
+        };
+
+        const selected = content[type];
+        if (selected) {
+            img.src = selected.src;
+            if (title) title.innerText = selected.title;
+            text.innerText = selected.txt;
+        }
+
+        // Fade back in
+        img.style.opacity = "1";
+    }, 300);
+}
+
+// 2. SCROLL REVEAL ANIMATION
+function reveal() {
+    var reveals = document.querySelectorAll(".reveal");
+    for (var i = 0; i < reveals.length; i++) {
+        var windowHeight = window.innerHeight;
+        var elementTop = reveals[i].getBoundingClientRect().top;
+        var elementVisible = 100;
+        if (elementTop < windowHeight - elementVisible) {
+            reveals[i].classList.add("active");
+        }
+    }
+}
+
+window.addEventListener("scroll", reveal);
+window.addEventListener("load", reveal); // Runs on startup so top elements aren't hidden
+</script>
+<script>
+
+/* ===== TYPING EFFECT ===== */
+
+const text = "Luxury • Smart • Future Living";
+let i = 0;
+
+function typing(){
+if(i < text.length){
+document.getElementById("typingText").innerHTML += text.charAt(i);
+i++;
+setTimeout(typing, 50);
+}
+}
+typing();
+</script>
+<script>
+
+// ===== AUTO IMAGE SLIDER =====
+let slides = document.querySelectorAll(".slide");
+let index = 0;
+
+setInterval(() => {
+slides[index].classList.remove("active");
+index = (index + 1) % slides.length;
+slides[index].classList.add("active");
+}, 4000);
+
+
+// ===== MOUSE PARALLAX + 3D TILT =====
+const card = document.getElementById("heroCard");
+
+document.addEventListener("mousemove", (e) => {
+
+let x = (window.innerWidth / 2 - e.clientX) / 25;
+let y = (window.innerHeight / 2 - e.clientY) / 25;
+
+card.style.transform = `
+rotateY(${x}deg)
+rotateX(${-y}deg)
+`;
+
+});
+
+function scrollToAmenities(){
+document.getElementById("amenities").scrollIntoView({
+    behavior: "smooth"
+});
+}
+
+</script>
+</body>
+</html>
