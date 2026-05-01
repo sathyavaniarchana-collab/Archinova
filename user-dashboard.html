@@ -1001,7 +1001,7 @@
               <p>Here's a summary of your Archinova activity</p>
             </div>
           </div>
-          <div class="stats-row">
+          <div class="stats-row" style="grid-template-columns:repeat(4,1fr)">
             <div class="stat-card">
               <div class="stat-num" id="statSaved">0</div>
               <div class="stat-label">Saved Designs</div>
@@ -1009,6 +1009,10 @@
             <div class="stat-card">
               <div class="stat-num" id="statFavs">0</div>
               <div class="stat-label">Favourites</div>
+            </div>
+            <div class="stat-card" style="cursor:pointer" onclick="showPanel('favourites',event)">
+              <div class="stat-num" id="statGallery">0</div>
+              <div class="stat-label">Gallery Wishlist</div>
             </div>
             <div class="stat-card">
               <div class="stat-num" id="statExports">0</div>
@@ -1054,18 +1058,28 @@
         <div class="panel" id="panel-favourites">
           <div class="section-hdr">
             <h2>My <em>Favourites</em></h2>
-            <span
-              style="font-size: 12px; color: var(--muted)"
-              id="favCount"
-            ></span>
+            <span style="font-size: 12px; color: var(--muted)" id="favCount"></span>
           </div>
           <div class="designs-grid" id="favsGrid">
             <div class="empty">
               <i class="fa-solid fa-heart"></i>
               <p>No favourites yet — heart a design to save it here</p>
-              <a href="interior.html"
-                ><i class="fa-solid fa-plus"></i> Browse designs</a
-              >
+              <a href="interior.html"><i class="fa-solid fa-plus"></i> Browse designs</a>
+            </div>
+          </div>
+
+          <!-- GALLERY WISHLIST SECTION -->
+          <div style="margin-top:36px">
+            <div class="section-hdr" style="margin-top:8px">
+              <h2>Gallery <em>Wishlist</em></h2>
+              <a href="gallery.html" style="font-size:12px;color:var(--teal);text-decoration:none;display:flex;align-items:center;gap:6px;opacity:0.85;transition:opacity .2s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.85"><i class="fa-solid fa-arrow-up-right-from-square"></i> Browse Gallery</a>
+            </div>
+            <div class="designs-grid" id="galleryWishlistGrid">
+              <div class="empty">
+                <i class="fa-solid fa-image"></i>
+                <p>No gallery designs saved yet</p>
+                <a href="gallery.html"><i class="fa-solid fa-arrow-right"></i> Go to Gallery</a>
+              </div>
             </div>
           </div>
         </div>
@@ -1235,7 +1249,7 @@
         favourites: "My Favourites",
         profile: "My Profile",
       };
-      function showPanel(id) {
+      function showPanel(id, evt) {
         document
           .querySelectorAll(".panel")
           .forEach((p) => p.classList.remove("active"));
@@ -1243,7 +1257,8 @@
           .querySelectorAll(".nav-item")
           .forEach((n) => n.classList.remove("active"));
         document.getElementById("panel-" + id).classList.add("active");
-        event.currentTarget.classList.add("active");
+        const src = evt ? evt.currentTarget : (typeof event !== "undefined" ? event.currentTarget : null);
+        if (src && src.classList && src.classList.contains("nav-item")) src.classList.add("active");
         document.getElementById("topbarTitle").innerHTML = (
           panelTitles[id] || id
         ).replace(/(\S+)$/, "<em>$1</em>");
@@ -1266,6 +1281,15 @@
           localStorage.getItem(`Archinova_exports_${uid}`) || "0";
         document.getElementById("profileSaved").textContent = saved.size;
         document.getElementById("profileFavs").textContent = favs.size;
+        // Gallery wishlist count
+        db.collection("saved_designs")
+          .where("userId","==",uid)
+          .where("source","==","gallery")
+          .get()
+          .then(snap => {
+            const el = document.getElementById("statGallery");
+            if (el) el.textContent = snap.size;
+          }).catch(() => {});
       }
 
       /* ── LOAD SAVED DESIGNS ── */
@@ -1331,6 +1355,67 @@
             );
         document.getElementById("favCount").textContent =
           favDocs.length + " favourite" + (favDocs.length !== 1 ? "s" : "");
+
+        // Also load gallery wishlist items
+        loadGalleryWishlist();
+      }
+
+      /* ── LOAD GALLERY WISHLIST ── */
+      async function loadGalleryWishlist() {
+        const uid = currentUser.uid;
+        const grid = document.getElementById("galleryWishlistGrid");
+        if (!grid) return;
+        try {
+          const snap = await db.collection("saved_designs")
+            .where("userId", "==", uid)
+            .where("source", "==", "gallery")
+            .get();
+          if (!snap.size) {
+            grid.innerHTML = emptyHTML("fa-image", "No gallery designs saved yet", "Go to Gallery", "gallery.html");
+            return;
+          }
+          grid.innerHTML = snap.docs.map(doc => {
+            const d = doc.data();
+            const savedDate = d.savedAt
+              ? new Date(d.savedAt.seconds * 1000).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })
+              : "";
+            const imgSrc = d.imageUrl || "";
+            return `<div class="design-card">
+              <div class="design-card-img">
+                ${imgSrc
+                  ? `<img src="${imgSrc}" alt="${d.title}" onerror="this.parentElement.innerHTML='<div class=\"no-img\"><i class=\"fa-solid fa-image\"></i></div>'">`
+                  : `<div class="no-img" style="display:flex;align-items:center;justify-content:center;height:100%"><i class="fa-solid fa-house" style="font-size:32px;color:rgba(0,201,167,0.3)"></i></div>`}
+                <div class="design-card-fav" onclick="removeGalleryItem('${doc.id}',this)" title="Remove from wishlist" style="background:rgba(0,0,0,0.5);backdrop-filter:blur(8px)">
+                  <i class="fa-solid fa-xmark" style="font-size:11px"></i>
+                </div>
+              </div>
+              <div class="design-card-body">
+                <div class="design-card-title">${d.title || "Gallery Design"}</div>
+                <div class="design-card-meta">${d.section || ""}${savedDate ? " · " + savedDate : ""}</div>
+                <div class="design-card-tags">
+                  ${d.style ? `<span class="design-tag">${d.style}</span>` : ""}
+                  ${d.area ? `<span class="design-tag">${d.area}</span>` : ""}
+                  ${d.budget ? `<span class="design-tag">${d.budget}</span>` : ""}
+                </div>
+                <div class="design-card-actions">
+                  <a href="gallery.html" class="card-btn view" style="text-decoration:none"><i class="fa-solid fa-arrow-right"></i> View Gallery</a>
+                  <button class="card-btn del" onclick="removeGalleryItem('${doc.id}',this)"><i class="fa-solid fa-trash"></i></button>
+                </div>
+              </div>
+            </div>`;
+          }).join("");
+        } catch(e) {
+          console.warn("Gallery wishlist load failed:", e);
+          grid.innerHTML = emptyHTML("fa-image", "No gallery designs saved yet", "Go to Gallery", "gallery.html");
+        }
+      }
+
+      async function removeGalleryItem(docId, el) {
+        if (!confirm("Remove this gallery design from your wishlist?")) return;
+        await db.collection("saved_designs").doc(docId).delete();
+        showToast("Removed from Gallery Wishlist");
+        loadGalleryWishlist();
+        loadStats();
       }
 
       function designsHTML(docs) {
