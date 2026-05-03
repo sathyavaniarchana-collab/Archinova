@@ -791,7 +791,7 @@
     <!-- TOPBAR -->
     <div class="topbar">
       <div class="topbar-left">
-        <div class="topbar-logo">Norv<span>ex</span></div>
+        <div class="topbar-logo">Archi<span>nova</span></div>
         <div class="admin-badge">
           <i class="fa-solid fa-shield-halved"></i> Admin Panel
         </div>
@@ -990,6 +990,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
     <script>
+      // Single app — archinova-41427 — auth, users, designs AND messages
       if (!firebase.apps.length)
         firebase.initializeApp({
           apiKey: "AIzaSyAgcKYuy18C6lEvfxhI_Ir_9AWPtyWj7WM",
@@ -1002,7 +1003,8 @@
         });
 
       const auth = firebase.auth();
-      const db = firebase.firestore();
+      const db = firebase.firestore();   // users, designs AND messages — all in archinova
+      const msgDb = db;                  // alias — same project, no second app needed
 
       let allMessages = [],
         currentFilter = "all",
@@ -1047,7 +1049,7 @@
       // ══════════════════════════════════════════════
       function startListening() {
         if (unsubscribe) unsubscribe();
-        unsubscribe = db
+        unsubscribe = msgDb
           .collection("messages")
           .orderBy("createdAt", "desc")
           .onSnapshot(
@@ -1163,14 +1165,14 @@
       }
 
       function markRead(id) {
-        db.collection("messages").doc(id).update({ status: "read" });
+        msgDb.collection("messages").doc(id).update({ status: "read" });
       }
       function markUnread(id) {
-        db.collection("messages").doc(id).update({ status: "unread" });
+        msgDb.collection("messages").doc(id).update({ status: "unread" });
       }
       function deleteMsg(id) {
         if (!confirm("Delete this message?")) return;
-        db.collection("messages").doc(id).delete();
+        msgDb.collection("messages").doc(id).delete();
       }
 
       // ══════════════════════════════════════════════

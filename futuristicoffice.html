@@ -1,0 +1,2640 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Futuristic Office – ArchiNova</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --n1: #04080f;
+        --n2: #080f1a;
+        --n3: #0d1825;
+        --n4: #122030;
+        --t: #00e5ff;
+        --t2: #00c8e0;
+        --tdim: rgba(0, 229, 255, 0.1);
+        --tbrd: rgba(0, 229, 255, 0.28);
+        --p: #7c3aed;
+        --pdim: rgba(124, 58, 237, 0.12);
+        --pbrd: rgba(124, 58, 237, 0.3);
+        --w: #fff;
+        --w80: rgba(255, 255, 255, 0.8);
+        --w50: rgba(255, 255, 255, 0.5);
+        --w10: rgba(255, 255, 255, 0.1);
+        --w06: rgba(255, 255, 255, 0.06);
+        --brd: rgba(255, 255, 255, 0.08);
+        --brd2: rgba(255, 255, 255, 0.15);
+        --r: 12px;
+      }
+      html,
+      body {
+        font-family: "Outfit", sans-serif;
+        background: var(--n1);
+        color: var(--w);
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      /* ANIMATED BG */
+      .bg-anim {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .bg-anim span {
+        position: absolute;
+        border-radius: 50%;
+        animation: float linear infinite;
+      }
+      .bg-anim span:nth-child(1) {
+        width: 700px;
+        height: 700px;
+        background: radial-gradient(
+          circle,
+          rgba(0, 229, 255, 0.06),
+          transparent 70%
+        );
+        top: -250px;
+        left: -200px;
+        animation-duration: 20s;
+      }
+      .bg-anim span:nth-child(2) {
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(
+          circle,
+          rgba(124, 58, 237, 0.07),
+          transparent 70%
+        );
+        top: 30%;
+        right: -180px;
+        animation-duration: 25s;
+        animation-delay: -8s;
+      }
+      .bg-anim span:nth-child(3) {
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(
+          circle,
+          rgba(0, 229, 255, 0.05),
+          transparent 70%
+        );
+        bottom: -120px;
+        left: 35%;
+        animation-duration: 18s;
+        animation-delay: -4s;
+      }
+      .bg-grid {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background-image:
+          linear-gradient(rgba(0, 229, 255, 0.025) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0, 229, 255, 0.025) 1px, transparent 1px);
+        background-size: 50px 50px;
+      }
+      @keyframes float {
+        0% {
+          transform: translateY(0) scale(1);
+        }
+        50% {
+          transform: translateY(-50px) scale(1.06);
+        }
+        100% {
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      nav {
+        background: rgba(8, 15, 26, 0.92);
+        border-bottom: 1px solid var(--brd);
+        padding: 0 2rem;
+        height: 62px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: sticky;
+        top: 0;
+        z-index: 500;
+        backdrop-filter: blur(12px);
+      }
+      .logo {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.6rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        color: var(--w);
+      }
+      .logo em {
+        color: var(--t);
+        font-style: normal;
+      }
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+      .nav-links a {
+        color: var(--w50);
+        text-decoration: none;
+        font-size: 0.82rem;
+        font-weight: 400;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: var(--w);
+      }
+      .nav-r {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .nb {
+        padding: 6px 14px;
+        border-radius: 7px;
+        font-size: 0.78rem;
+        font-weight: 500;
+        cursor: pointer;
+        border: 1px solid var(--brd2);
+        background: transparent;
+        color: var(--w80);
+        transition: all 0.2s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-family: "Outfit", sans-serif;
+      }
+      .nb:hover {
+        border-color: var(--t);
+        color: var(--t);
+      }
+      .nb-teal {
+        background: var(--t);
+        border-color: var(--t);
+        color: var(--n1);
+        font-weight: 600;
+      }
+      .nb-teal:hover {
+        background: var(--t2);
+        color: var(--n1);
+      }
+      .bc {
+        background: rgba(8, 15, 26, 0.7);
+        border-bottom: 1px solid var(--brd);
+        padding: 0.5rem 2rem;
+        font-size: 0.73rem;
+        color: var(--w50);
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        position: relative;
+        z-index: 10;
+      }
+      .bc a {
+        color: var(--t);
+        text-decoration: none;
+      }
+      .bc-s {
+        opacity: 0.4;
+      }
+
+      .hero {
+        position: relative;
+        z-index: 10;
+        background: rgba(8, 15, 26, 0.6);
+        border-bottom: 1px solid var(--brd);
+        padding: 3.5rem 2rem 2.8rem;
+        text-align: center;
+        overflow: hidden;
+      }
+      .hbadge {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        background: var(--tdim);
+        border: 1px solid var(--tbrd);
+        color: var(--t);
+        padding: 4px 14px;
+        border-radius: 100px;
+        font-size: 0.7rem;
+        font-weight: 500;
+        margin-bottom: 1.2rem;
+        letter-spacing: 0.06em;
+      }
+      .hdot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--t);
+        animation: blink 1.8s infinite;
+      }
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.1;
+        }
+      }
+      .hero h1 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(2rem, 4.5vw, 3.6rem);
+        font-weight: 700;
+        line-height: 1.1;
+        max-width: 700px;
+        margin: 0 auto;
+        letter-spacing: -0.5px;
+      }
+      .hero h1 em {
+        color: var(--t);
+        font-style: italic;
+      }
+      .hero p {
+        color: var(--w50);
+        font-size: 0.88rem;
+        max-width: 500px;
+        margin: 0.9rem auto 0;
+        line-height: 1.75;
+        font-weight: 300;
+      }
+      .hstats {
+        display: flex;
+        justify-content: center;
+        gap: 2.5rem;
+        margin-top: 2rem;
+        flex-wrap: wrap;
+      }
+      .hs-num {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: var(--t);
+      }
+      .hs-lbl {
+        font-size: 0.68rem;
+        color: var(--w50);
+        margin-top: 1px;
+        font-weight: 400;
+        letter-spacing: 0.04em;
+      }
+
+      .ttabs {
+        display: flex;
+        justify-content: center;
+        gap: 0.8rem;
+        padding: 1.1rem 2rem;
+        background: rgba(13, 24, 37, 0.8);
+        border-bottom: 1px solid var(--brd);
+        position: relative;
+        z-index: 10;
+      }
+      .tt {
+        padding: 7px 26px;
+        border-radius: 100px;
+        border: 1px solid var(--brd2);
+        background: transparent;
+        color: var(--w50);
+        font-size: 0.82rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: "Outfit", sans-serif;
+      }
+      .tt:hover {
+        border-color: var(--t);
+        color: var(--t);
+      }
+      .tt.active {
+        background: var(--t);
+        color: var(--n1);
+        border-color: var(--t);
+        font-weight: 600;
+      }
+
+      .abar {
+        background: rgba(13, 24, 37, 0.7);
+        border-bottom: 1px solid var(--brd);
+        padding: 0.85rem 2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        flex-wrap: wrap;
+        position: relative;
+        z-index: 10;
+      }
+      .ab {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-size: 0.78rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        border: 1px solid transparent;
+        white-space: nowrap;
+        font-family: "Outfit", sans-serif;
+      }
+      .ab svg {
+        width: 14px;
+        height: 14px;
+        flex-shrink: 0;
+      }
+      .ab-teal {
+        background: var(--t);
+        color: var(--n1);
+        font-weight: 600;
+      }
+      .ab-teal:hover {
+        background: var(--t2);
+      }
+      .ab-out {
+        background: transparent;
+        border-color: var(--tbrd);
+        color: var(--t);
+      }
+      .ab-out:hover {
+        background: var(--tdim);
+      }
+      .ab-ghost {
+        background: transparent;
+        border-color: var(--brd2);
+        color: var(--w80);
+      }
+      .ab-ghost:hover {
+        border-color: var(--t);
+        color: var(--t);
+      }
+      .ab-purple {
+        background: transparent;
+        border-color: var(--pbrd);
+        color: #a78bfa;
+      }
+      .ab-purple:hover {
+        background: var(--pdim);
+      }
+
+      .tbar {
+        background: rgba(8, 15, 26, 0.95);
+        border-bottom: 1px solid var(--brd);
+        padding: 0.65rem 2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        flex-wrap: wrap;
+        position: sticky;
+        top: 62px;
+        z-index: 400;
+        backdrop-filter: blur(10px);
+      }
+      .srch {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--n4);
+        border: 1px solid var(--brd2);
+        border-radius: 8px;
+        padding: 7px 12px;
+        flex: 1;
+        max-width: 280px;
+      }
+      .srch svg {
+        width: 14px;
+        height: 14px;
+        fill: var(--w50);
+        flex-shrink: 0;
+      }
+      .srch input {
+        background: transparent;
+        border: none;
+        outline: none;
+        color: var(--w);
+        font-size: 0.82rem;
+        width: 100%;
+        font-family: "Outfit", sans-serif;
+      }
+      .srch input::placeholder {
+        color: var(--w50);
+      }
+      .frow {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      .fb {
+        padding: 5px 13px;
+        border-radius: 7px;
+        border: 1px solid var(--brd2);
+        background: transparent;
+        color: var(--w50);
+        font-size: 0.73rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: "Outfit", sans-serif;
+      }
+      .fb:hover {
+        border-color: var(--t);
+        color: var(--t);
+      }
+      .fb.on {
+        background: var(--tdim);
+        border-color: var(--t);
+        color: var(--t);
+      }
+      .ss {
+        background: var(--n4);
+        border: 1px solid var(--brd2);
+        color: var(--w80);
+        padding: 5px 10px;
+        border-radius: 7px;
+        font-size: 0.73rem;
+        cursor: pointer;
+        outline: none;
+        font-family: "Outfit", sans-serif;
+      }
+      .ss option {
+        background: var(--n2);
+      }
+
+      .page-wrap {
+        position: relative;
+        z-index: 10;
+      }
+      main {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 2rem 2rem 3rem;
+      }
+      .sh {
+        margin-bottom: 1.4rem;
+      }
+      .sh h2 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: var(--w);
+        letter-spacing: -0.2px;
+      }
+      .sh p {
+        color: var(--w50);
+        font-size: 0.8rem;
+        margin-top: 0.2rem;
+        font-weight: 300;
+      }
+      .shline {
+        width: 32px;
+        height: 2px;
+        background: var(--t);
+        border-radius: 2px;
+        margin-top: 0.5rem;
+      }
+
+      /* TECH STRIP */
+      .tech-strip {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+        margin: 0 0 2.5rem;
+      }
+      .tc {
+        background: var(--n3);
+        border: 1px solid var(--brd);
+        border-radius: var(--r);
+        padding: 1.2rem;
+        text-align: center;
+        transition: border-color 0.2s;
+      }
+      .tc:hover {
+        border-color: var(--tbrd);
+      }
+      .tc-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 9px;
+        background: var(--tdim);
+        border: 1px solid var(--tbrd);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 0.7rem;
+        font-size: 1.1rem;
+      }
+      .tc h4 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--w);
+      }
+      .tc p {
+        font-size: 0.72rem;
+        color: var(--w50);
+        margin-top: 4px;
+        line-height: 1.55;
+        font-weight: 300;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.2rem;
+      }
+      .dc {
+        background: var(--n3);
+        border: 1px solid var(--brd);
+        border-radius: var(--r);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transition:
+          border-color 0.2s,
+          transform 0.2s;
+      }
+      .dc:hover {
+        border-color: var(--tbrd);
+        transform: translateY(-3px);
+      }
+      .dci {
+        position: relative;
+        overflow: hidden;
+        height: 200px;
+        flex-shrink: 0;
+      }
+      .dci img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.45s;
+      }
+      .dc:hover .dci img {
+        transform: scale(1.06);
+      }
+      .dco {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to top,
+          rgba(4, 8, 15, 0.7) 0%,
+          transparent 55%
+        );
+      }
+      .dbgs {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        display: flex;
+        gap: 5px;
+      }
+      .bdg {
+        font-size: 0.62rem;
+        font-weight: 600;
+        padding: 2px 8px;
+        border-radius: 100px;
+        letter-spacing: 0.3px;
+      }
+      .b1 {
+        background: var(--t);
+        color: var(--n1);
+      }
+      .b2 {
+        background: #f59e0b;
+        color: #1a0f00;
+      }
+      .b3 {
+        background: #8b5cf6;
+        color: #fff;
+      }
+      .b4 {
+        background: #ec4899;
+        color: #fff;
+      }
+      .drt {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        background: rgba(4, 8, 15, 0.88);
+        border: 1px solid var(--brd2);
+        border-radius: 6px;
+        padding: 2px 8px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 3px;
+      }
+      .drt em {
+        color: #f59e0b;
+        font-style: normal;
+      }
+      .dcb {
+        padding: 1rem;
+        flex: 1;
+      }
+      .dcb-cat {
+        font-size: 0.64rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--t);
+        font-weight: 600;
+      }
+      .dcb h4 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-top: 3px;
+        color: var(--w);
+      }
+      .dcb p {
+        font-size: 0.77rem;
+        color: var(--w50);
+        margin-top: 5px;
+        line-height: 1.6;
+        font-weight: 300;
+      }
+      .dtags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        margin-top: 8px;
+      }
+      .dt {
+        font-size: 0.62rem;
+        background: var(--w06);
+        border: 1px solid var(--brd);
+        color: var(--w50);
+        padding: 2px 7px;
+        border-radius: 100px;
+      }
+      .dcf {
+        padding: 0 1rem 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 6px;
+      }
+      .dsqft {
+        font-size: 0.72rem;
+        color: var(--w50);
+      }
+      .dcf-btns {
+        display: flex;
+        gap: 6px;
+      }
+      .dsv {
+        padding: 6px 9px;
+        border-radius: 7px;
+        border: 1px solid var(--brd2);
+        background: transparent;
+        color: var(--w50);
+        cursor: pointer;
+        font-size: 0.8rem;
+        transition: all 0.2s;
+      }
+      .dsv:hover {
+        border-color: var(--t);
+        color: var(--t);
+      }
+      .dsv.saved {
+        background: var(--tdim);
+        border-color: var(--t);
+        color: var(--t);
+      }
+      .dvw {
+        padding: 6px 14px;
+        border-radius: 7px;
+        border: none;
+        background: var(--t);
+        color: var(--n1);
+        font-size: 0.75rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+        font-family: "Outfit", sans-serif;
+      }
+      .dvw:hover {
+        background: var(--t2);
+      }
+
+      /* PILL VARIANTS */
+      .pill {
+        background: var(--tdim);
+        border: 1px solid var(--tbrd);
+        color: var(--t);
+        font-size: 0.67rem;
+        padding: 3px 10px;
+        border-radius: 100px;
+        font-weight: 500;
+      }
+      .pill-p {
+        background: var(--pdim);
+        border: 1px solid var(--pbrd);
+        color: #a78bfa;
+        font-size: 0.67rem;
+        padding: 3px 10px;
+        border-radius: 100px;
+        font-weight: 500;
+      }
+
+      /* MATERIALS */
+      .mat-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2.5rem;
+      }
+      .mc {
+        background: var(--n3);
+        border: 1px solid var(--brd);
+        border-radius: var(--r);
+        overflow: hidden;
+      }
+      .mc-img-wrap {
+        height: 240px;
+        overflow: hidden;
+        position: relative;
+      }
+      .mc-main-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: opacity 0.5s ease;
+      }
+      .mc-body {
+        padding: 1.2rem;
+      }
+      .mc-body h4 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: var(--w);
+      }
+      .mc-body p {
+        font-size: 0.78rem;
+        color: var(--w50);
+        margin-top: 4px;
+        line-height: 1.6;
+        font-weight: 300;
+      }
+      .swatches {
+        display: flex;
+        gap: 10px;
+        margin-top: 14px;
+        align-items: flex-end;
+      }
+      .sw-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+      }
+      .sw {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        border: 2px solid transparent;
+        transition: all 0.2s;
+      }
+      .sw:hover {
+        transform: scale(1.1);
+      }
+      .sw-item.active .sw {
+        border-color: var(--w);
+        transform: scale(1.12);
+      }
+      .sw-lbl {
+        font-size: 0.6rem;
+        color: var(--w50);
+        text-align: center;
+        white-space: nowrap;
+        font-family: "Outfit", sans-serif;
+        transition: color 0.2s;
+      }
+      .sw-item.active .sw-lbl {
+        color: var(--t);
+      }
+      .mat-desc {
+        font-size: 0.72rem;
+        color: var(--t);
+        margin-top: 10px;
+        font-weight: 500;
+        min-height: 1.2em;
+        font-family: "Outfit", sans-serif;
+      }
+
+      /* PHILOSOPHY */
+      .phi {
+        background: var(--n3);
+        border: 1px solid var(--brd);
+        border-radius: var(--r);
+        padding: 2.5rem;
+        margin: 2.5rem 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2.5rem;
+        align-items: center;
+      }
+      .phi h2 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.8rem;
+        font-weight: 700;
+        line-height: 1.25;
+        letter-spacing: -0.3px;
+      }
+      .phi h2 em {
+        color: var(--t);
+        font-style: italic;
+      }
+      .phi p {
+        color: var(--w50);
+        font-size: 0.82rem;
+        margin-top: 0.6rem;
+        line-height: 1.75;
+        font-weight: 300;
+      }
+      .phi-list {
+        list-style: none;
+        margin-top: 1.2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .phi-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 9px;
+        color: var(--w80);
+        font-size: 0.82rem;
+        font-weight: 300;
+      }
+      .pc {
+        width: 16px;
+        height: 16px;
+        background: var(--tdim);
+        border: 1px solid var(--tbrd);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+      .pd {
+        width: 5px;
+        height: 5px;
+        background: var(--t);
+        border-radius: 50%;
+      }
+      .phi-img {
+        border-radius: 10px;
+        overflow: hidden;
+        height: 280px;
+      }
+      .phi-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      /* MODALS */
+      .ov {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(4, 8, 15, 0.92);
+        z-index: 900;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 2rem 1rem;
+        overflow-y: auto;
+        backdrop-filter: blur(10px);
+      }
+      .ov.open {
+        display: flex;
+      }
+      .mbox {
+        background: var(--n3);
+        border: 1px solid var(--brd2);
+        border-radius: var(--r);
+        width: 100%;
+        max-width: 560px;
+        padding: 2rem;
+        position: relative;
+        margin: auto;
+      }
+      .mbox.wide {
+        max-width: 760px;
+      }
+      .mcl {
+        position: absolute;
+        top: 14px;
+        right: 16px;
+        background: transparent;
+        border: none;
+        color: var(--w50);
+        font-size: 1.2rem;
+        cursor: pointer;
+        line-height: 1;
+        transition: color 0.2s;
+      }
+      .mcl:hover {
+        color: var(--w);
+      }
+      .mtitle {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--w);
+        margin-bottom: 1.2rem;
+        letter-spacing: -0.2px;
+      }
+      .mtitle em {
+        color: var(--t);
+        font-style: italic;
+      }
+      .fg {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .fi2 {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .fi2.full {
+        grid-column: 1/-1;
+      }
+      .fi2 label {
+        font-size: 0.7rem;
+        color: var(--w50);
+        font-weight: 500;
+        letter-spacing: 0.04em;
+      }
+      .fi2 input,
+      .fi2 select,
+      .fi2 textarea {
+        background: var(--n4);
+        border: 1px solid var(--brd2);
+        border-radius: 7px;
+        color: var(--w);
+        padding: 9px 12px;
+        font-size: 0.82rem;
+        outline: none;
+        transition: border-color 0.2s;
+        font-family: "Outfit", sans-serif;
+        width: 100%;
+      }
+      .fi2 input:focus,
+      .fi2 select:focus,
+      .fi2 textarea:focus {
+        border-color: var(--t);
+      }
+      .fi2 input::placeholder,
+      .fi2 textarea::placeholder {
+        color: var(--w50);
+      }
+      .fi2 select option {
+        background: var(--n2);
+      }
+      .mactions {
+        display: flex;
+        gap: 8px;
+        margin-top: 1.2rem;
+        justify-content: flex-end;
+      }
+      .mcnl {
+        padding: 8px 18px;
+        border-radius: 7px;
+        border: 1px solid var(--brd2);
+        background: transparent;
+        color: var(--w50);
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: "Outfit", sans-serif;
+      }
+      .mcnl:hover {
+        border-color: var(--t);
+        color: var(--t);
+      }
+      .vm-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+      .vm-img {
+        border-radius: 10px;
+        overflow: hidden;
+        height: 260px;
+      }
+      .vm-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .vm-cat {
+        font-size: 0.64rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--t);
+        font-weight: 600;
+        margin-bottom: 0.4rem;
+      }
+      .vm-info h3 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: var(--w);
+      }
+      .vm-info p {
+        font-size: 0.8rem;
+        color: var(--w50);
+        margin-top: 0.5rem;
+        line-height: 1.7;
+        font-weight: 300;
+      }
+      .specs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-top: 1rem;
+      }
+      .sp {
+        background: var(--n4);
+        border-radius: 8px;
+        padding: 0.7rem;
+        border: 1px solid var(--brd);
+      }
+      .sp-l {
+        font-size: 0.62rem;
+        text-transform: uppercase;
+        letter-spacing: 0.7px;
+        color: var(--w50);
+        margin-bottom: 3px;
+      }
+      .sp-v {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--t);
+      }
+      .lb-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-bottom: 1.2rem;
+      }
+      .lb-img {
+        border-radius: 8px;
+        overflow: hidden;
+        height: 100px;
+      }
+      .lb-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .nores {
+        text-align: center;
+        padding: 3rem 1rem;
+        color: var(--w50);
+        grid-column: 1/-1;
+      }
+      .nores h3 {
+        font-size: 1rem;
+        color: var(--w80);
+        margin-bottom: 0.4rem;
+      }
+
+      footer {
+        background: var(--n2);
+        border-top: 1px solid var(--brd);
+        color: var(--w50);
+        text-align: center;
+        padding: 1.5rem;
+        font-size: 0.75rem;
+        position: relative;
+        z-index: 10;
+      }
+      footer strong {
+        color: var(--t);
+      }
+      .toastwrap {
+        position: fixed;
+        bottom: 1.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 9999;
+        pointer-events: none;
+      }
+      .toast {
+        background: var(--n3);
+        border: 1px solid var(--tbrd);
+        color: var(--w);
+        padding: 10px 20px;
+        border-radius: 100px;
+        font-size: 0.82rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        opacity: 0;
+        transform: translateY(16px);
+        transition: all 0.3s;
+        white-space: nowrap;
+        font-family: "Outfit", sans-serif;
+      }
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .tdot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--t);
+      }
+      @media (max-width: 860px) {
+        .phi,
+        .vm-grid {
+          grid-template-columns: 1fr;
+        }
+        .grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .mat-grid {
+          grid-template-columns: 1fr;
+        }
+        .fg {
+          grid-template-columns: 1fr;
+        }
+        .tech-strip {
+          grid-template-columns: 1fr 1fr;
+        }
+        nav .nav-links {
+          display: none;
+        }
+      }
+      @media (max-width: 560px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+        .tech-strip {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-grid"></div>
+    <div class="bg-anim"><span></span><span></span><span></span></div>
+
+    <nav>
+      <div class="logo">Archi<em>Nova</em></div>
+      <ul class="nav-links">
+        <li><a href="home.html">HOME</a></li>
+        <li><a href="about.html">ABOUT US</a></li>
+        <li><a href="gallery.html">GALLERY</a></li>
+        <li><a href="startupoffice.html" class="active">OFFICE</a></li>
+        <li><a href="interior.html">INTERIOR</a></li>
+      </ul>
+      <div class="nav-r">
+        <a href="wishlist.html" class="nb"
+          >&#9825; Wishlist
+          <span
+            id="wcount"
+            style="
+              display: none;
+              background: var(--t);
+              color: var(--n1);
+              border-radius: 100px;
+              padding: 1px 6px;
+              font-size: 0.65rem;
+              margin-left: 3px;
+            "
+            >0</span
+          ></a
+        >
+      </div>
+    </nav>
+
+    <div class="hero">
+      <div class="hbadge">
+        <div class="hdot"></div>
+        Futuristic Office Collection
+      </div>
+      <h1>Where <em>Tomorrow Works</em> Today</h1>
+      <p>
+        AI-integrated, sensor-responsive, and architecturally bold spaces
+        designed for the next decade of work — and beyond.
+      </p>
+      <div class="hstats">
+        <div>
+          <div class="hs-num">18</div>
+          <div class="hs-lbl">Concepts</div>
+        </div>
+        <div>
+          <div class="hs-num">100%</div>
+          <div class="hs-lbl">Smart Tech</div>
+        </div>
+        <div>
+          <div class="hs-num">4.9</div>
+          <div class="hs-lbl">Avg Rating</div>
+        </div>
+        <div>
+          <div class="hs-num">200+</div>
+          <div class="hs-lbl">Projects Built</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ttabs">
+      <button class="tt" onclick="location.href = 'corporate-office.html'">
+        Corporate
+      </button>
+      <button class="tt" onclick="location.href = 'startupoffice.html'">
+        Startup
+      </button>
+      <button class="tt active">Futuristic</button>
+    </div>
+
+    <div class="abar">
+      <button class="ab ab-teal" onclick="openModal('explore')">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"
+          /></svg
+        >Explore Designs
+      </button>
+      <button class="ab ab-out" onclick="openModal('lookbook')">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" /></svg
+        >Download Lookbook
+      </button>
+    </div>
+
+    <div class="tbar">
+      <div class="srch">
+        <svg viewBox="0 0 24 24">
+          <circle
+            cx="11"
+            cy="11"
+            r="7"
+            stroke="currentColor"
+            stroke-width="2"
+            fill="none"
+          />
+          <path
+            d="M21 21l-4.35-4.35"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            fill="none"
+          />
+        </svg>
+        <input
+          type="text"
+          id="si"
+          placeholder="Search concepts..."
+          oninput="doFilter()"
+        />
+      </div>
+      <div class="frow">
+        <button class="fb on" onclick="setTag(this, 'all')">All</button>
+        <button class="fb" onclick="setTag(this, 'ai')">AI-Powered</button>
+        <button class="fb" onclick="setTag(this, 'biomorphic')">
+          Biomorphic
+        </button>
+        <button class="fb" onclick="setTag(this, 'smart')">Smart Glass</button>
+        <button class="fb" onclick="setTag(this, 'holographic')">
+          Holographic
+        </button>
+        <button class="fb" onclick="setTag(this, 'modular')">Modular</button>
+        <select class="ss" id="sortSel" onchange="doSort(this.value)">
+          <option value="def">Sort: Default</option>
+          <option value="rat">Highest Rated</option>
+          <option value="sa">Smallest Area</option>
+          <option value="la">Largest Area</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- MODALS -->
+    <div id="m-explore" class="ov" onclick="ovClick(event, 'explore')">
+      <div class="mbox wide">
+        <button class="mcl" onclick="closeModal('explore')">&#10005;</button>
+        <div class="mtitle">Explore <em>Futuristic Designs</em></div>
+        <p
+          style="
+            font-size: 0.82rem;
+            color: var(--w50);
+            margin-bottom: 1.2rem;
+            font-weight: 300;
+          "
+        >
+          18 cutting-edge concepts integrating AI, smart glass, holographics,
+          and biomorphic architecture.
+        </p>
+        <div
+          style="
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 1.4rem;
+          "
+        >
+          <div
+            style="
+              background: var(--n4);
+              border-radius: 8px;
+              overflow: hidden;
+              border: 1px solid var(--brd);
+            "
+          >
+            <img
+              src="https://i.pinimg.com/736x/81/b1/09/81b109b788b8cd28af3efebabecb60bd.jpg"
+              style="
+                width: 100%;
+                height: 90px;
+                object-fit: cover;
+                display: block;
+              "
+            />
+            <div
+              style="
+                padding: 0.6rem;
+                font-size: 0.75rem;
+                font-weight: 600;
+                color: var(--w);
+                font-family: &quot;Cormorant Garamond&quot;, serif;
+              "
+            >
+              Neural Command Hub
+            </div>
+          </div>
+          <div
+            style="
+              background: var(--n4);
+              border-radius: 8px;
+              overflow: hidden;
+              border: 1px solid var(--brd);
+            "
+          >
+            <img
+              src="https://i.pinimg.com/736x/96/a3/3c/96a33c9cff6c1aa41bf4a4e5dfe99403.jpg"
+              style="
+                width: 100%;
+                height: 90px;
+                object-fit: cover;
+                display: block;
+              "
+            />
+            <div
+              style="
+                padding: 0.6rem;
+                font-size: 0.75rem;
+                font-weight: 600;
+                color: var(--w);
+                font-family: &quot;Cormorant Garamond&quot;, serif;
+              "
+            >
+              Holographic Atrium
+            </div>
+          </div>
+          <div
+            style="
+              background: var(--n4);
+              border-radius: 8px;
+              overflow: hidden;
+              border: 1px solid var(--brd);
+            "
+          >
+            <img
+              src="https://i.pinimg.com/1200x/23/27/53/2327531a02ada1131f01e810334e00f1.jpg"
+              style="
+                width: 100%;
+                height: 90px;
+                object-fit: cover;
+                display: block;
+              "
+            />
+            <div
+              style="
+                padding: 0.6rem;
+                font-size: 0.75rem;
+                font-weight: 600;
+                color: var(--w);
+                font-family: &quot;Cormorant Garamond&quot;, serif;
+              "
+            >
+              AI Adaptive Office
+            </div>
+          </div>
+          <div
+            style="
+              background: var(--n4);
+              border-radius: 8px;
+              overflow: hidden;
+              border: 1px solid var(--brd);
+            "
+          >
+            <img
+              src="https://i.pinimg.com/736x/fb/1d/09/fb1d09b959af6b6f054225dcea1a33f4.jpg"
+              style="
+                width: 100%;
+                height: 90px;
+                object-fit: cover;
+                display: block;
+              "
+            />
+            <div
+              style="
+                padding: 0.6rem;
+                font-size: 0.75rem;
+                font-weight: 600;
+                color: var(--w);
+                font-family: &quot;Cormorant Garamond&quot;, serif;
+              "
+            >
+              Bio-Tech Lab
+            </div>
+          </div>
+          <div
+            style="
+              background: var(--n4);
+              border-radius: 8px;
+              overflow: hidden;
+              border: 1px solid var(--brd);
+            "
+          >
+            <img
+              src="https://i.pinimg.com/1200x/e0/da/c1/e0dac114aa55371236dc844d954a0fa2.jpg"
+              style="
+                width: 100%;
+                height: 90px;
+                object-fit: cover;
+                display: block;
+              "
+            />
+            <div
+              style="
+                padding: 0.6rem;
+                font-size: 0.75rem;
+                font-weight: 600;
+                color: var(--w);
+                font-family: &quot;Cormorant Garamond&quot;, serif;
+              "
+            >
+              Smart Glass Tower
+            </div>
+          </div>
+          <div
+            style="
+              background: var(--n4);
+              border-radius: 8px;
+              overflow: hidden;
+              border: 1px solid var(--brd);
+            "
+          >
+            <img
+              src="https://i.pinimg.com/1200x/b7/84/92/b7849203955a2cabcc39057d6e7cce7f.jpg"
+              style="
+                width: 100%;
+                height: 90px;
+                object-fit: cover;
+                display: block;
+              "
+            />
+            <div
+              style="
+                padding: 0.6rem;
+                font-size: 0.75rem;
+                font-weight: 600;
+                color: var(--w);
+                font-family: &quot;Cormorant Garamond&quot;, serif;
+              "
+            >
+              Modular Hive Pod
+            </div>
+          </div>
+        </div>
+        <div class="mactions">
+          <button class="mcnl" onclick="closeModal('explore')">Close</button
+          ><button
+            class="nb nb-teal"
+            onclick="
+              closeModal('explore');
+              showToast('Browse all concepts below');
+            "
+          >
+            View All Below
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="m-lookbook" class="ov" onclick="ovClick(event, 'lookbook')">
+      <div class="mbox">
+        <button class="mcl" onclick="closeModal('lookbook')">&#10005;</button>
+        <div class="mtitle">Futuristic Office <em>Lookbook 2025</em></div>
+        <div class="lb-grid">
+          <div class="lb-img">
+            <img
+              src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&q=75"
+              alt=""
+            />
+          </div>
+          <div class="lb-img">
+            <img
+              src="https://images.unsplash.com/photo-1488998427799-e3362cec87c3?w=400&q=75"
+              alt=""
+            />
+          </div>
+          <div class="lb-img">
+            <img
+              src="https://images.unsplash.com/photo-1560472355-536de3962603?w=400&q=75"
+              alt=""
+            />
+          </div>
+        </div>
+        <div
+          style="
+            background: var(--n4);
+            border-radius: 8px;
+            padding: 0.9rem;
+            margin-bottom: 1.1rem;
+            font-size: 0.79rem;
+            color: var(--w80);
+            line-height: 1.6;
+            font-weight: 300;
+          "
+        >
+          <strong style="color: var(--t)"
+            >ArchiNova Futuristic Office Lookbook 2025</strong
+          ><br />56 pages &bull; 18 tech-integrated concepts &bull; Smart
+          systems guide &bull; ROI calculators.<br />Format: PDF &bull; Size:
+          ~22 MB &bull; Instant download.
+        </div>
+        <div class="mactions">
+          <button class="mcnl" onclick="closeModal('lookbook')">Cancel</button
+          ><button class="nb nb-teal" onclick="triggerDownload()">
+            &#8595; Download PDF
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW MODALS -->
+    <div id="m-v0" class="ov" onclick="ovClick(event, 'v0')">
+      <div class="mbox wide">
+        <button class="mcl" onclick="closeModal('v0')">&#10005;</button>
+        <div class="vm-grid">
+          <div class="vm-img">
+            <img
+              src="https://i.pinimg.com/736x/81/b1/09/81b109b788b8cd28af3efebabecb60bd.jpg"
+              alt=""
+            />
+          </div>
+          <div class="vm-info">
+            <div class="vm-cat">AI-Powered &bull; Smart Systems</div>
+            <h3>AI Adaptive Office</h3>
+            <p>
+              Machine-learning climate control, occupancy-prediction algorithms,
+              and voice-activated room booking. Every surface is a data
+              touchpoint that learns your team's patterns.
+            </p>
+            <div class="specs">
+              <div class="sp">
+                <div class="sp-l">Area</div>
+                <div class="sp-v">3,800 sq ft</div>
+              </div>
+              <div class="sp">
+                <div class="sp-l">Capacity</div>
+                <div class="sp-v">25–50 seats</div>
+              </div>
+              <div class="sp">
+                <div class="sp-l">AI Nodes</div>
+                <div class="sp-v">48 sensors</div>
+              </div>
+              <div class="sp">
+                <div class="sp-l">Lead Time</div>
+                <div class="sp-v">12–16 weeks</div>
+              </div>
+            </div>
+            <div class="mactions" style="margin-top: 1rem">
+              <button class="mcnl" onclick="closeModal('v0')">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="m-v1" class="ov" onclick="ovClick(event, 'v1')">
+      <div class="mbox wide">
+        <button class="mcl" onclick="closeModal('v1')">&#10005;</button>
+        <div class="vm-grid">
+          <div class="vm-img">
+            <img
+              src="https://i.pinimg.com/736x/96/a3/3c/96a33c9cff6c1aa41bf4a4e5dfe99403.jpg"
+              alt=""
+            />
+          </div>
+          <div class="vm-info">
+            <div class="vm-cat">Holographic &bull; Immersive Display</div>
+            <h3>Holographic Atrium</h3>
+            <p>
+              Floor-to-ceiling transparent OLED panels replace whiteboards. 3D
+              holographic projectors enable spatial prototyping for product and
+              design teams.
+            </p>
+            <div class="specs">
+              <div class="sp">
+                <div class="sp-l">Area</div>
+                <div class="sp-v">4,500 sq ft</div>
+              </div>
+              <div class="sp">
+                <div class="sp-l">Capacity</div>
+                <div class="sp-v">30–60 seats</div>
+              </div>
+              <div class="sp">
+                <div class="sp-l">OLED Panels</div>
+                <div class="sp-v">18 panels</div>
+              </div>
+              <div class="sp">
+                <div class="sp-l">Lead Time</div>
+                <div class="sp-v">18–24 weeks</div>
+              </div>
+            </div>
+            <div class="mactions" style="margin-top: 1rem">
+              <button class="mcnl" onclick="closeModal('v1')">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="m-v2" class="ov" onclick="ovClick(event, 'v2')">
+      <div class="mbox wide">
+        <button class="mcl" onclick="closeModal('v2')">&#10005;</button>
+        <div class="vm-grid">
+          <div class="vm-img">
+            <img
+              src="https://i.pinimg.com/1200x/23/27/53/2327531a02ada1131f01e810334e00f1.jpg"
+              alt=""
+            />
+          </div>
+          <div class="vm-info">
+            <div class="vm-cat">Smart Glass &bull; Dynamic Walls</div>
+            <h3>Smart Glass Tower</h3>
+            <p>
+              Electrochromic glass walls shift opacity on command, creating
+              instant privacy pods or open vistas. Solar harvesting powers the
+              ambient systems.
+            </p>
+            <div class="specs">
+              <div class="sp">
+                <div class="sp-l">Area</div>
+                <div class="sp-v">5,200 sq ft</div>
+              </div>
+              <div class="sp">
+                <div class="sp-l">Capacity</div>
+                <div class="sp-v">40–70 seats</div>
+              </div>
+              <div class="sp">
+                <div class="sp-l">Smart Glass</div>
+                <div class="sp-v">1,200 sq ft</div>
+              </div>
+              <div class="sp">
+                <div class="sp-l">Lead Time</div>
+                <div class="sp-v">20–26 weeks</div>
+              </div>
+            </div>
+            <div class="mactions" style="margin-top: 1rem">
+              <button class="mcnl" onclick="closeModal('v2')">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="m-v3" class="ov" onclick="ovClick(event, 'v3')">
+      <div class="mbox wide">
+        <button class="mcl" onclick="closeModal('v3')">&#10005;</button>
+        <div class="vm-grid">
+          <div class="vm-img">
+            <img
+              src="https://i.pinimg.com/736x/fb/1d/09/fb1d09b959af6b6f054225dcea1a33f4.jpg"
+              alt=""
+            />
+          </div>
+          <div class="vm-info">
+            <div class="vm-cat">Biomorphic &bull; Organic Architecture</div>
+            <h3>Bio-Morphic Lab</h3>
+            <p>
+              Curved walls inspired by cellular biology, bioluminescent accent
+              lighting, and living moss installations create a workspace that
+              feels alive.
+            </p>
+            <div class="specs">
+              <div class="sp">
+                <div class="sp-l">Area</div>
+                <div class="sp-v">4,000 sq ft</div>
+              </div>
+              <div class="sp">
+                <div class="sp-l">Capacity</div>
+                <div class="sp-v">25–45 seats</div>
+              </div>
+              <div class="sp">
+                <div class="sp-l">Organic Elements</div>
+                <div class="sp-v">8 zones</div>
+              </div>
+              <div class="sp">
+                <div class="sp-l">Lead Time</div>
+                <div class="sp-v">14–18 weeks</div>
+              </div>
+            </div>
+            <div class="mactions" style="margin-top: 1rem">
+              <button class="mcnl" onclick="closeModal('v3')">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="m-v4" class="ov" onclick="ovClick(event, 'v4')">
+      <div class="mbox wide">
+        <button class="mcl" onclick="closeModal('v4')">&#10005;</button>
+        <div class="vm-grid">
+          <div class="vm-img">
+            <img
+              src="https://i.pinimg.com/1200x/e0/da/c1/e0dac114aa55371236dc844d954a0fa2.jpg"
+              alt=""
+            />
+          </div>
+          <div class="vm-info">
+            <div class="vm-cat">Modular &bull; Reconfigurable</div>
+            <h3>Modular Hive Pod</h3>
+            <p>
+              Hexagonal modular units that snap together or apart in hours.
+              Reconfigures from sprint lab to presentation hall without
+              contractors or downtime.
+            </p>
+            <div class="specs">
+              <div class="sp">
+                <div class="sp-l">Area</div>
+                <div class="sp-v">3,500 sq ft</div>
+              </div>
+              <div class="sp">
+                <div class="sp-l">Capacity</div>
+                <div class="sp-v">20–55 seats</div>
+              </div>
+              <div class="sp">
+                <div class="sp-l">Modules</div>
+                <div class="sp-v">36 hex units</div>
+              </div>
+              <div class="sp">
+                <div class="sp-l">Lead Time</div>
+                <div class="sp-v">8–12 weeks</div>
+              </div>
+            </div>
+            <div class="mactions" style="margin-top: 1rem">
+              <button class="mcnl" onclick="closeModal('v4')">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="m-v5" class="ov" onclick="ovClick(event, 'v5')">
+      <div class="mbox wide">
+        <button class="mcl" onclick="closeModal('v5')">&#10005;</button>
+        <div class="vm-grid">
+          <div class="vm-img">
+            <img
+              src="https://i.pinimg.com/1200x/b7/84/92/b7849203955a2cabcc39057d6e7cce7f.jpg"
+              alt=""
+            />
+          </div>
+          <div class="vm-info">
+            <div class="vm-cat">Full Integration &bull; Premium</div>
+            <h3>Quantum Collaboration Suite</h3>
+            <p>
+              Predictive AI, haptic floors, AR overlay navigation, and a live
+              digital twin of your entire floor plan. The most advanced office
+              concept in our portfolio.
+            </p>
+            <div class="specs">
+              <div class="sp">
+                <div class="sp-l">Area</div>
+                <div class="sp-v">7,000 sq ft</div>
+              </div>
+              <div class="sp">
+                <div class="sp-l">Capacity</div>
+                <div class="sp-v">60–100 seats</div>
+              </div>
+              <div class="sp">
+                <div class="sp-l">Tech Systems</div>
+                <div class="sp-v">24 integrated</div>
+              </div>
+              <div class="sp">
+                <div class="sp-l">Lead Time</div>
+                <div class="sp-v">24–32 weeks</div>
+              </div>
+            </div>
+            <div class="mactions" style="margin-top: 1rem">
+              <button class="mcnl" onclick="closeModal('v5')">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-wrap">
+      <main>
+        <div class="sh">
+          <h2>All Futuristic Designs</h2>
+          <p>
+            Filter and search — click View to explore full specs and book a
+            consultation.
+          </p>
+          <div class="shline"></div>
+        </div>
+        <div class="grid" id="dg">
+          <div
+            class="dc"
+            data-tags="ai smart"
+            data-rat="4.9"
+            data-sqft="3800"
+            data-name="AI Adaptive Office"
+          >
+            <div class="dci">
+              <img
+                src="https://i.pinimg.com/736x/81/b1/09/81b109b788b8cd28af3efebabecb60bd.jpg"
+                alt="AI Adaptive Office"
+              />
+              <div class="dco"></div>
+              <div class="dbgs"><span class="bdg b3">Trending</span></div>
+              <div class="drt"><em>&#9733;</em>4.9</div>
+            </div>
+            <div class="dcb">
+              <div class="dcb-cat">AI-Powered &bull; Smart Systems</div>
+              <h4>AI Adaptive Office</h4>
+              <p>
+                ML climate control, occupancy prediction, and voice-activated
+                room booking. Every surface learns your team.
+              </p>
+              <div class="dtags">
+                <span class="dt">AI</span><span class="dt">Voice Control</span
+                ><span class="dt">48 Sensors</span>
+              </div>
+            </div>
+            <div class="dcf">
+              <div class="dsqft">3,800 sq ft &bull; 25–50 seats</div>
+              <div class="dcf-btns">
+                <button
+                  class="dsv"
+                  onclick="
+                    saveD(
+                      this,
+                      'AI Adaptive Office',
+                      'Futuristic Office',
+                      'https://i.pinimg.com/736x/81/b1/09/81b109b788b8cd28af3efebabecb60bd.jpg',
+                      '3,800 sq ft',
+                      '25–50',
+                      '₹1.2Cr–₹2Cr',
+                      ['AI', 'Smart Systems', 'Voice Control'],
+                    )
+                  "
+                >
+                  &#9825;</button
+                ><button class="dvw" onclick="openModal('v0')">View</button>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="dc"
+            data-tags="holographic immersive"
+            data-rat="4.8"
+            data-sqft="4500"
+            data-name="Holographic Atrium"
+          >
+            <div class="dci">
+              <img
+                src="https://i.pinimg.com/736x/96/a3/3c/96a33c9cff6c1aa41bf4a4e5dfe99403.jpg"
+                alt="Holographic Atrium"
+              />
+              <div class="dco"></div>
+              <div class="dbgs"><span class="bdg b4">New</span></div>
+              <div class="drt"><em>&#9733;</em>4.8</div>
+            </div>
+            <div class="dcb">
+              <div class="dcb-cat">Holographic &bull; Immersive Display</div>
+              <h4>Holographic Atrium</h4>
+              <p>
+                Transparent OLED panels and 3D holographic projectors for
+                spatial product prototyping and team collaboration.
+              </p>
+              <div class="dtags">
+                <span class="dt">Holographic</span><span class="dt">OLED</span
+                ><span class="dt">3D Display</span>
+              </div>
+            </div>
+            <div class="dcf">
+              <div class="dsqft">4,500 sq ft &bull; 30–60 seats</div>
+              <div class="dcf-btns">
+                <button
+                  class="dsv"
+                  onclick="
+                    saveD(
+                      this,
+                      'Holographic Atrium',
+                      'Futuristic Office',
+                      'https://i.pinimg.com/736x/96/a3/3c/96a33c9cff6c1aa41bf4a4e5dfe99403.jpg',
+                      '4,500 sq ft',
+                      '30–60',
+                      '₹1.8Cr–₹2.8Cr',
+                      ['Holographic', 'OLED', '3D'],
+                    )
+                  "
+                >
+                  &#9825;</button
+                ><button class="dvw" onclick="openModal('v1')">View</button>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="dc"
+            data-tags="smart glass dynamic"
+            data-rat="4.7"
+            data-sqft="5200"
+            data-name="Smart Glass Tower"
+          >
+            <div class="dci">
+              <img
+                src="https://i.pinimg.com/1200x/23/27/53/2327531a02ada1131f01e810334e00f1.jpg"
+                alt="Smart Glass Tower"
+              />
+              <div class="dco"></div>
+              <div class="dbgs"><span class="bdg b2">Popular</span></div>
+              <div class="drt"><em>&#9733;</em>4.7</div>
+            </div>
+            <div class="dcb">
+              <div class="dcb-cat">Smart Glass &bull; Dynamic Walls</div>
+              <h4>Smart Glass Tower</h4>
+              <p>
+                Electrochromic walls shift opacity on command. Solar-harvesting
+                glass powers the entire ambient system.
+              </p>
+              <div class="dtags">
+                <span class="dt">Smart Glass</span><span class="dt">Solar</span
+                ><span class="dt">Privacy On-Demand</span>
+              </div>
+            </div>
+            <div class="dcf">
+              <div class="dsqft">5,200 sq ft &bull; 40–70 seats</div>
+              <div class="dcf-btns">
+                <button
+                  class="dsv"
+                  onclick="
+                    saveD(
+                      this,
+                      'Smart Glass Tower',
+                      'Futuristic Office',
+                      'https://i.pinimg.com/1200x/23/27/53/2327531a02ada1131f01e810334e00f1.jpg',
+                      '5,200 sq ft',
+                      '40–70',
+                      '₹2Cr–₹3.5Cr',
+                      ['Smart Glass', 'Solar', 'Dynamic'],
+                    )
+                  "
+                >
+                  &#9825;</button
+                ><button class="dvw" onclick="openModal('v2')">View</button>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="dc"
+            data-tags="biomorphic organic"
+            data-rat="4.8"
+            data-sqft="4000"
+            data-name="Bio-Morphic Lab"
+          >
+            <div class="dci">
+              <img
+                src="https://i.pinimg.com/736x/fb/1d/09/fb1d09b959af6b6f054225dcea1a33f4.jpg"
+                alt="Bio-Morphic Lab"
+              />
+              <div class="dco"></div>
+              <div class="dbgs"><span class="bdg b3">Trending</span></div>
+              <div class="drt"><em>&#9733;</em>4.8</div>
+            </div>
+            <div class="dcb">
+              <div class="dcb-cat">Biomorphic &bull; Organic Architecture</div>
+              <h4>Bio-Morphic Lab</h4>
+              <p>
+                Curved cellular walls, bioluminescent lighting, and living moss
+                installations — a workspace that feels alive.
+              </p>
+              <div class="dtags">
+                <span class="dt">Biomorphic</span
+                ><span class="dt">Bioluminescent</span
+                ><span class="dt">Organic</span>
+              </div>
+            </div>
+            <div class="dcf">
+              <div class="dsqft">4,000 sq ft &bull; 25–45 seats</div>
+              <div class="dcf-btns">
+                <button
+                  class="dsv"
+                  onclick="
+                    saveD(
+                      this,
+                      'Bio-Morphic Lab',
+                      'Futuristic Office',
+                      'https://i.pinimg.com/736x/fb/1d/09/fb1d09b959af6b6f054225dcea1a33f4.jpg',
+                      '4,000 sq ft',
+                      '25–45',
+                      '₹1.5Cr–₹2.5Cr',
+                      ['Biomorphic', 'Organic', 'Bioluminescent'],
+                    )
+                  "
+                >
+                  &#9825;</button
+                ><button class="dvw" onclick="openModal('v3')">View</button>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="dc"
+            data-tags="modular reconfigurable"
+            data-rat="4.7"
+            data-sqft="3500"
+            data-name="Modular Hive Pod"
+          >
+            <div class="dci">
+              <img
+                src="https://i.pinimg.com/1200x/e0/da/c1/e0dac114aa55371236dc844d954a0fa2.jpg"
+                alt="Modular Hive Pod"
+              />
+              <div class="dco"></div>
+              <div class="dbgs"><span class="bdg b4">New</span></div>
+              <div class="drt"><em>&#9733;</em>4.7</div>
+            </div>
+            <div class="dcb">
+              <div class="dcb-cat">Modular &bull; Reconfigurable</div>
+              <h4>Modular Hive Pod</h4>
+              <p>
+                Hexagonal snap-together units reconfigure from sprint lab to
+                presentation hall in hours, no contractors needed.
+              </p>
+              <div class="dtags">
+                <span class="dt">Modular</span><span class="dt">Hexagonal</span
+                ><span class="dt">Zero Downtime</span>
+              </div>
+            </div>
+            <div class="dcf">
+              <div class="dsqft">3,500 sq ft &bull; 20–55 seats</div>
+              <div class="dcf-btns">
+                <button
+                  class="dsv"
+                  onclick="
+                    saveD(
+                      this,
+                      'Modular Hive Pod',
+                      'Futuristic Office',
+                      'https://i.pinimg.com/1200x/e0/da/c1/e0dac114aa55371236dc844d954a0fa2.jpg',
+                      '3,500 sq ft',
+                      '20–55',
+                      '₹1.2Cr–₹2Cr',
+                      ['Modular', 'Hexagonal', 'Flexible'],
+                    )
+                  "
+                >
+                  &#9825;</button
+                ><button class="dvw" onclick="openModal('v4')">View</button>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="dc"
+            data-tags="ai holographic smart modular"
+            data-rat="5.0"
+            data-sqft="7000"
+            data-name="Quantum Collaboration Suite"
+          >
+            <div class="dci">
+              <img
+                src="https://i.pinimg.com/1200x/b7/84/92/b7849203955a2cabcc39057d6e7cce7f.jpg"
+                alt="Quantum Collaboration Suite"
+              />
+              <div class="dco"></div>
+              <div class="dbgs"><span class="bdg b1">Flagship</span></div>
+              <div class="drt"><em>&#9733;</em>5.0</div>
+            </div>
+            <div class="dcb">
+              <div class="dcb-cat">Full Integration &bull; Premium</div>
+              <h4>Quantum Collaboration Suite</h4>
+              <p>
+                Predictive AI, haptic floors, AR overlay navigation, and a live
+                digital twin of your entire floor plan.
+              </p>
+              <div class="dtags">
+                <span class="dt">AI</span><span class="dt">Haptic</span
+                ><span class="dt">AR Navigation</span
+                ><span class="dt">Digital Twin</span>
+              </div>
+            </div>
+            <div class="dcf">
+              <div class="dsqft">7,000 sq ft &bull; 60–100 seats</div>
+              <div class="dcf-btns">
+                <button
+                  class="dsv"
+                  onclick="
+                    saveD(
+                      this,
+                      'Quantum Collaboration Suite',
+                      'Futuristic Office',
+                      'https://i.pinimg.com/1200x/b7/84/92/b7849203955a2cabcc39057d6e7cce7f.jpg',
+                      '7,000 sq ft',
+                      '60–100',
+                      '₹4Cr–₹6Cr',
+                      ['AI', 'Haptic', 'AR', 'Digital Twin'],
+                    )
+                  "
+                >
+                  &#9825;</button
+                ><button class="dvw" onclick="openModal('v5')">View</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sh">
+          <h2>Core Technology Systems</h2>
+          <p>
+            Every futuristic design integrates these foundational smart layers.
+          </p>
+          <div class="shline"></div>
+        </div>
+        <div class="tech-strip">
+          <div class="tc">
+            <div class="tc-icon">&#129504;</div>
+            <h4>AI Climate Control</h4>
+            <p>
+              Predictive HVAC learns team patterns and pre-conditions zones 30
+              min ahead.
+            </p>
+          </div>
+          <div class="tc">
+            <div class="tc-icon">&#128065;</div>
+            <h4>Smart Glass Walls</h4>
+            <p>
+              Electrochromic glass shifts from transparent to opaque with a
+              voice command.
+            </p>
+          </div>
+          <div class="tc">
+            <div class="tc-icon">&#127981;</div>
+            <h4>Holographic Displays</h4>
+            <p>
+              Spatial 3D prototyping replaces flat screens for architecture and
+              design teams.
+            </p>
+          </div>
+          <div class="tc">
+            <div class="tc-icon">&#9889;</div>
+            <h4>Haptic Floors</h4>
+            <p>
+              Vibration feedback guides navigation and delivers notifications
+              without screens.
+            </p>
+          </div>
+        </div>
+
+        <!-- PHILOSOPHY -->
+        <div class="phi">
+          <div>
+            <h2>Offices That <em>Think, Adapt &amp; Evolve</em></h2>
+            <p>
+              Futuristic design isn't about aesthetics alone — it's about
+              embedding intelligence into architecture so the space actively
+              improves how people work.
+            </p>
+            <ul class="phi-list">
+              <li>
+                <div class="pc"><div class="pd"></div></div>
+                Real-time AI adaptation — light, sound, temperature, layout
+              </li>
+              <li>
+                <div class="pc"><div class="pd"></div></div>
+                Zero-touch interfaces — voice, gesture, biometric access
+              </li>
+              <li>
+                <div class="pc"><div class="pd"></div></div>
+                Predictive maintenance — the building self-reports issues
+              </li>
+              <li>
+                <div class="pc"><div class="pd"></div></div>
+                Energy intelligence — AI reduces consumption by up to 40%
+              </li>
+              <li>
+                <div class="pc"><div class="pd"></div></div>
+                Digital twin — every room mapped in a live 3D model
+              </li>
+            </ul>
+          </div>
+          <div class="phi-img">
+            <img
+              src="https://images.unsplash.com/photo-1488998427799-e3362cec87c3?w=700&q=80"
+              alt=""
+            />
+          </div>
+        </div>
+
+        <!-- MATERIALS -->
+        <div class="sh">
+          <h2>Signature Materials</h2>
+          <p>Click any colour swatch to preview how it transforms the space.</p>
+          <div class="shline"></div>
+        </div>
+        <div class="mat-grid">
+          <div class="mc">
+            <div class="mc-img-wrap">
+              <img
+                class="mc-main-img"
+                id="mat-img-0"
+                src="https://i.pinimg.com/1200x/c0/8e/76/c08e767e424e40224466620804964d10.jpg"
+                alt="Carbon Alloy"
+              />
+            </div>
+            <div class="mc-body">
+              <h4>Polished Alloy &amp; Carbon Fibre</h4>
+              <p>
+                Aerospace-grade materials that telegraph precision and
+                technological mastery.
+              </p>
+              <div class="swatches">
+                <div
+                  class="sw-item active"
+                  onclick="
+                    changeMat(
+                      0,
+                      this,
+                      'https://i.pinimg.com/1200x/c0/8e/76/c08e767e424e40224466620804964d10.jpg',
+                      'Midnight — Deep navy carbon panel',
+                    )
+                  "
+                >
+                  <div class="sw" style="background: #1c2b3a"></div>
+                  <div class="sw-lbl">Midnight</div>
+                </div>
+                <div
+                  class="sw-item"
+                  onclick="
+                    changeMat(
+                      0,
+                      this,
+                      'https://i.pinimg.com/1200x/70/0e/ad/700ead5503965576a0da1ac1f9b752dc.jpg',
+                      'Steel — Brushed titanium alloy',
+                    )
+                  "
+                >
+                  <div class="sw" style="background: #8c9bac"></div>
+                  <div class="sw-lbl">Steel</div>
+                </div>
+                <div
+                  class="sw-item"
+                  onclick="
+                    changeMat(
+                      0,
+                      this,
+                      'https://i.pinimg.com/1200x/b5/8b/23/b58b2365c532dd66e2d8800d6aff4df6.jpg',
+                      'Cyan — Electrochromic teal glass',
+                    )
+                  "
+                >
+                  <div class="sw" style="background: #00e5ff"></div>
+                  <div class="sw-lbl">Cyan</div>
+                </div>
+                <div
+                  class="sw-item"
+                  onclick="
+                    changeMat(
+                      0,
+                      this,
+                      'https://i.pinimg.com/1200x/3f/2c/59/3f2c59f86efbaac1b69e569bac7a2369.jpg',
+                      'Void — Deep violet accent wall',
+                    )
+                  "
+                >
+                  <div class="sw" style="background: #7c3aed"></div>
+                  <div class="sw-lbl">Void</div>
+                </div>
+              </div>
+              <div class="mat-desc" id="mat-label-0">
+                Midnight — Deep navy carbon panel
+              </div>
+            </div>
+          </div>
+
+          <div class="mc">
+            <div class="mc-img-wrap">
+              <img
+                class="mc-main-img"
+                id="mat-img-1"
+                src="https://i.pinimg.com/736x/08/07/04/080704e72707c1d23f87ece9426f91ff.jpg"
+                alt="Smart Glass"
+              />
+            </div>
+            <div class="mc-body">
+              <h4>Smart Glass &amp; Living Resin</h4>
+              <p>
+                Electronically switchable glass paired with bio-resin panels
+                embedded with preserved botanicals.
+              </p>
+              <div class="swatches">
+                <div
+                  class="sw-item active"
+                  onclick="
+                    changeMat(
+                      1,
+                      this,
+                      'https://i.pinimg.com/736x/08/07/04/080704e72707c1d23f87ece9426f91ff.jpg',
+                      'Clear — Fully transparent smart glass',
+                    )
+                  "
+                >
+                  <div
+                    class="sw"
+                    style="
+                      background: #d4edf0;
+                      border: 2px solid rgba(255, 255, 255, 0.3);
+                    "
+                  ></div>
+                  <div class="sw-lbl">Clear</div>
+                </div>
+                <div
+                  class="sw-item"
+                  onclick="
+                    changeMat(
+                      1,
+                      this,
+                      'https://i.pinimg.com/1200x/ce/7a/8e/ce7a8eed519d0923e44dcdef495293b6.jpg',
+                      'Frosted — 50% opacity privacy mode',
+                    )
+                  "
+                >
+                  <div class="sw" style="background: #5b8a8a"></div>
+                  <div class="sw-lbl">Frosted</div>
+                </div>
+                <div
+                  class="sw-item"
+                  onclick="
+                    changeMat(
+                      1,
+                      this,
+                      'https://i.pinimg.com/1200x/36/d0/71/36d0718ef73b070f1abd902f0031dec7.jpg',
+                      'Tinted — Blackout privacy mode',
+                    )
+                  "
+                >
+                  <div class="sw" style="background: #1c4040"></div>
+                  <div class="sw-lbl">Tinted</div>
+                </div>
+                <div
+                  class="sw-item"
+                  onclick="
+                    changeMat(
+                      1,
+                      this,
+                      'https://i.pinimg.com/1200x/48/82/61/488261ece3ba11ace025b39f4f34fc71.jpg',
+                      'Active — Illuminated projection mode',
+                    )
+                  "
+                >
+                  <div class="sw" style="background: #00e5ff"></div>
+                  <div class="sw-lbl">Active</div>
+                </div>
+              </div>
+              <div class="mat-desc" id="mat-label-1">
+                Clear — Fully transparent smart glass
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <footer>
+      &copy; 2025 <strong>ArchiNova</strong> &bull; Architectural Design &amp;
+      Innovation Recommendation System
+    </footer>
+    <div class="toastwrap">
+      <div class="toast" id="toast">
+        <div class="tdot"></div>
+        <span id="tmsg">Saved!</span>
+      </div>
+    </div>
+
+    <script>
+      var KEY = "archinova_wishlist";
+      function getWL() {
+        try {
+          return JSON.parse(localStorage.getItem(KEY) || "[]");
+        } catch (e) {
+          return [];
+        }
+      }
+      function setWL(l) {
+        localStorage.setItem(KEY, JSON.stringify(l));
+      }
+      function updateBadge() {
+        var b = document.getElementById("wcount");
+        var l = getWL();
+        if (l.length) {
+          b.style.display = "inline";
+          b.textContent = l.length;
+        } else {
+          b.style.display = "none";
+        }
+      }
+      function showToast(msg) {
+        var t = document.getElementById("toast");
+        document.getElementById("tmsg").textContent = msg;
+        t.classList.add("show");
+        clearTimeout(t._to);
+        t._to = setTimeout(function () {
+          t.classList.remove("show");
+        }, 3000);
+      }
+      function openModal(id) {
+        document.getElementById("m-" + id).classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+      function closeModal(id) {
+        document.getElementById("m-" + id).classList.remove("open");
+        document.body.style.overflow = "";
+      }
+      function ovClick(e, id) {
+        if (e.target === document.getElementById("m-" + id)) closeModal(id);
+      }
+      function submitForm(id, msg) {
+        closeModal(id);
+        showToast(msg);
+      }
+      function triggerDownload() {
+        closeModal("lookbook");
+        showToast("Lookbook download starting...");
+      }
+      function saveD(btn, name, section, img, area, cap, budget, tags) {
+        var wl = getWL();
+        var idx = wl.findIndex(function (d) {
+          return d.id === name;
+        });
+        if (idx === -1) {
+          wl.push({
+            id: name,
+            title: name,
+            section: section,
+            badge: section,
+            img: img,
+            area: area,
+            cap: cap,
+            budget: budget,
+            tags: tags,
+            desc: "A curated ArchiNova " + section + " design.",
+            savedAt: new Date().toISOString(),
+          });
+          setWL(wl);
+          btn.classList.add("saved");
+          btn.innerHTML = "&#9829;";
+          showToast('"' + name + '" saved to Wishlist!');
+        } else {
+          wl.splice(idx, 1);
+          setWL(wl);
+          btn.classList.remove("saved");
+          btn.innerHTML = "&#9825;";
+          showToast('"' + name + '" removed from Wishlist.');
+        }
+        updateBadge();
+      }
+      var curTag = "all";
+      function setTag(btn, tag) {
+        document.querySelectorAll(".fb").forEach(function (b) {
+          b.classList.remove("on");
+        });
+        btn.classList.add("on");
+        curTag = tag;
+        doFilter();
+      }
+      function doFilter() {
+        var q = document.getElementById("si").value.toLowerCase().trim();
+        var cards = document.querySelectorAll(".dc");
+        var vis = 0;
+        cards.forEach(function (c) {
+          var tags = c.dataset.tags;
+          var txt = c.querySelector(".dcb").textContent.toLowerCase();
+          var nm = c.dataset.name.toLowerCase();
+          var tagOk =
+            curTag === "all" || tags.includes(curTag) || txt.includes(curTag);
+          var qOk = !q || nm.includes(q) || txt.includes(q) || tags.includes(q);
+          if (tagOk && qOk) {
+            c.style.display = "flex";
+            vis++;
+          } else {
+            c.style.display = "none";
+          }
+        });
+        var nr = document.getElementById("nores");
+        if (vis === 0) {
+          if (!nr) {
+            var d = document.createElement("div");
+            d.id = "nores";
+            d.className = "nores";
+            d.innerHTML =
+              "<h3>No designs found</h3><p>Try a different keyword or filter.</p>";
+            document.getElementById("dg").appendChild(d);
+          }
+        } else {
+          if (nr) nr.remove();
+        }
+      }
+      function doSort(v) {
+        var g = document.getElementById("dg");
+        var cs = Array.from(g.querySelectorAll(".dc"));
+        cs.sort(function (a, b) {
+          if (v === "rat")
+            return parseFloat(b.dataset.rat) - parseFloat(a.dataset.rat);
+          if (v === "sa")
+            return parseInt(a.dataset.sqft) - parseInt(b.dataset.sqft);
+          if (v === "la")
+            return parseInt(b.dataset.sqft) - parseInt(a.dataset.sqft);
+          return 0;
+        });
+        cs.forEach(function (c) {
+          g.appendChild(c);
+        });
+        document.getElementById("sortSel").value = v;
+      }
+      function changeMat(idx, swItem, imgUrl, label) {
+        var wrap = swItem.closest(".swatches");
+        wrap.querySelectorAll(".sw-item").forEach(function (s) {
+          s.classList.remove("active");
+        });
+        swItem.classList.add("active");
+        var img = document.getElementById("mat-img-" + idx);
+        img.style.opacity = "0";
+        setTimeout(function () {
+          img.src = imgUrl;
+          img.onload = function () {
+            img.style.opacity = "1";
+          };
+        }, 250);
+        document.getElementById("mat-label-" + idx).textContent = label;
+      }
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          document.querySelectorAll(".ov.open").forEach(function (m) {
+            m.classList.remove("open");
+            document.body.style.overflow = "";
+          });
+        }
+      });
+      window.addEventListener("DOMContentLoaded", function () {
+        updateBadge();
+        var wl = getWL();
+        wl.forEach(function (item) {
+          document.querySelectorAll(".dsv").forEach(function (btn) {
+            var card = btn.closest(".dc");
+            if (card && card.dataset.name === item.id) {
+              btn.classList.add("saved");
+              btn.innerHTML = "&#9829;";
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

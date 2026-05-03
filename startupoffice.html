@@ -1,0 +1,2503 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Startup Office – ArchiNova</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --n1: #060f18;
+        --n2: #0b1825;
+        --n3: #102030;
+        --n4: #162840;
+        --t: #0abfbf;
+        --t2: #08a8a8;
+        --tdim: rgba(10, 191, 191, 0.12);
+        --tbrd: rgba(10, 191, 191, 0.3);
+        --w: #fff;
+        --w80: rgba(255, 255, 255, 0.8);
+        --w50: rgba(255, 255, 255, 0.5);
+        --w10: rgba(255, 255, 255, 0.1);
+        --w06: rgba(255, 255, 255, 0.06);
+        --brd: rgba(255, 255, 255, 0.08);
+        --brd2: rgba(255, 255, 255, 0.16);
+        --r: 12px;
+      }
+      html,
+      body {
+        font-family: "Outfit", sans-serif;
+        background: var(--n1);
+        color: var(--w);
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      /* ANIMATED BG */
+      .bg-anim {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .bg-anim span {
+        position: absolute;
+        border-radius: 50%;
+        opacity: 0.06;
+        animation: float linear infinite;
+      }
+      .bg-anim span:nth-child(1) {
+        width: 600px;
+        height: 600px;
+        background: var(--t);
+        top: -200px;
+        left: -150px;
+        animation-duration: 18s;
+        animation-delay: 0s;
+      }
+      .bg-anim span:nth-child(2) {
+        width: 400px;
+        height: 400px;
+        background: #0d4a6b;
+        top: 40%;
+        right: -100px;
+        animation-duration: 22s;
+        animation-delay: -6s;
+      }
+      .bg-anim span:nth-child(3) {
+        width: 300px;
+        height: 300px;
+        background: var(--t);
+        bottom: -100px;
+        left: 30%;
+        animation-duration: 15s;
+        animation-delay: -3s;
+      }
+      @keyframes float {
+        0% {
+          transform: translateY(0) scale(1);
+        }
+        50% {
+          transform: translateY(-40px) scale(1.05);
+        }
+        100% {
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      /* NAV */
+      nav {
+        background: rgba(11, 24, 37, 0.92);
+        border-bottom: 1px solid var(--brd);
+        padding: 0 2rem;
+        height: 62px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: sticky;
+        top: 0;
+        z-index: 500;
+        backdrop-filter: blur(12px);
+      }
+      .logo {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.6rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        color: var(--w);
+      }
+      .logo em {
+        color: var(--t);
+        font-style: normal;
+      }
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+      .nav-links a {
+        color: var(--w50);
+        text-decoration: none;
+        font-size: 0.82rem;
+        font-weight: 400;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: var(--w);
+      }
+      .nav-r {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .nb {
+        padding: 6px 14px;
+        border-radius: 7px;
+        font-size: 0.78rem;
+        font-weight: 500;
+        cursor: pointer;
+        border: 1px solid var(--brd2);
+        background: transparent;
+        color: var(--w80);
+        transition: all 0.2s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-family: "Outfit", sans-serif;
+      }
+      .nb:hover {
+        border-color: var(--t);
+        color: var(--t);
+      }
+      .nb-teal {
+        background: var(--t);
+        border-color: var(--t);
+        color: var(--n1);
+        font-weight: 600;
+      }
+      .nb-teal:hover {
+        background: var(--t2);
+        color: var(--n1);
+      }
+
+      /* BREADCRUMB */
+      .bc {
+        background: rgba(11, 24, 37, 0.7);
+        border-bottom: 1px solid var(--brd);
+        padding: 0.5rem 2rem;
+        font-size: 0.73rem;
+        color: var(--w50);
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        position: relative;
+        z-index: 10;
+      }
+      .bc a {
+        color: var(--t);
+        text-decoration: none;
+      }
+      .bc-s {
+        opacity: 0.4;
+      }
+
+      /* HERO */
+      .hero {
+        position: relative;
+        z-index: 10;
+        background: rgba(11, 24, 37, 0.6);
+        border-bottom: 1px solid var(--brd);
+        padding: 3.5rem 2rem 2.8rem;
+        text-align: center;
+        overflow: hidden;
+      }
+      .hbadge {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        background: var(--tdim);
+        border: 1px solid var(--tbrd);
+        color: var(--t);
+        padding: 4px 14px;
+        border-radius: 100px;
+        font-size: 0.7rem;
+        font-weight: 500;
+        margin-bottom: 1.2rem;
+        font-family: "Outfit", sans-serif;
+        letter-spacing: 0.04em;
+      }
+      .hdot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--t);
+        animation: blink 1.8s infinite;
+      }
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.15;
+        }
+      }
+      .hero h1 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(2rem, 4.5vw, 3.6rem);
+        font-weight: 700;
+        line-height: 1.1;
+        max-width: 700px;
+        margin: 0 auto;
+        letter-spacing: -0.5px;
+      }
+      .hero h1 em {
+        color: var(--t);
+        font-style: italic;
+      }
+      .hero p {
+        color: var(--w50);
+        font-size: 0.88rem;
+        max-width: 480px;
+        margin: 0.9rem auto 0;
+        line-height: 1.75;
+        font-weight: 300;
+      }
+      .hstats {
+        display: flex;
+        justify-content: center;
+        gap: 2.5rem;
+        margin-top: 2rem;
+        flex-wrap: wrap;
+      }
+      .hs-num {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: var(--t);
+      }
+      .hs-lbl {
+        font-size: 0.68rem;
+        color: var(--w50);
+        margin-top: 1px;
+        font-weight: 400;
+        letter-spacing: 0.04em;
+      }
+
+      /* TYPE TABS */
+      .ttabs {
+        display: flex;
+        justify-content: center;
+        gap: 0.8rem;
+        padding: 1.1rem 2rem;
+        background: rgba(16, 32, 48, 0.8);
+        border-bottom: 1px solid var(--brd);
+        position: relative;
+        z-index: 10;
+      }
+      .tt {
+        padding: 7px 26px;
+        border-radius: 100px;
+        border: 1px solid var(--brd2);
+        background: transparent;
+        color: var(--w50);
+        font-size: 0.82rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: "Outfit", sans-serif;
+      }
+      .tt:hover {
+        border-color: var(--t);
+        color: var(--t);
+      }
+      .tt.active {
+        background: var(--t);
+        color: var(--n1);
+        border-color: var(--t);
+        font-weight: 600;
+      }
+
+      /* ACTION BAR */
+      .abar {
+        background: rgba(16, 32, 48, 0.7);
+        border-bottom: 1px solid var(--brd);
+        padding: 0.85rem 2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        flex-wrap: wrap;
+        position: relative;
+        z-index: 10;
+      }
+      .ab {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-size: 0.78rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        border: 1px solid transparent;
+        white-space: nowrap;
+        font-family: "Outfit", sans-serif;
+      }
+      .ab svg {
+        width: 14px;
+        height: 14px;
+        flex-shrink: 0;
+      }
+      .ab-teal {
+        background: var(--t);
+        color: var(--n1);
+        font-weight: 600;
+      }
+      .ab-teal:hover {
+        background: var(--t2);
+      }
+      .ab-out {
+        background: transparent;
+        border-color: var(--tbrd);
+        color: var(--t);
+      }
+      .ab-out:hover {
+        background: var(--tdim);
+      }
+      .ab-ghost {
+        background: transparent;
+        border-color: var(--brd2);
+        color: var(--w80);
+      }
+      .ab-ghost:hover {
+        border-color: var(--t);
+        color: var(--t);
+      }
+
+      /* STICKY FILTER BAR */
+      .tbar {
+        background: rgba(11, 24, 37, 0.95);
+        border-bottom: 1px solid var(--brd);
+        padding: 0.65rem 2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        flex-wrap: wrap;
+        position: sticky;
+        top: 62px;
+        z-index: 400;
+        backdrop-filter: blur(10px);
+      }
+      .srch {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--n4);
+        border: 1px solid var(--brd2);
+        border-radius: 8px;
+        padding: 7px 12px;
+        flex: 1;
+        max-width: 280px;
+      }
+      .srch svg {
+        width: 14px;
+        height: 14px;
+        fill: var(--w50);
+        flex-shrink: 0;
+      }
+      .srch input {
+        background: transparent;
+        border: none;
+        outline: none;
+        color: var(--w);
+        font-size: 0.82rem;
+        width: 100%;
+        font-family: "Outfit", sans-serif;
+      }
+      .srch input::placeholder {
+        color: var(--w50);
+      }
+      .frow {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      .fb {
+        padding: 5px 13px;
+        border-radius: 7px;
+        border: 1px solid var(--brd2);
+        background: transparent;
+        color: var(--w50);
+        font-size: 0.73rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: "Outfit", sans-serif;
+      }
+      .fb:hover {
+        border-color: var(--t);
+        color: var(--t);
+      }
+      .fb.on {
+        background: var(--tdim);
+        border-color: var(--t);
+        color: var(--t);
+      }
+      .ss {
+        background: var(--n4);
+        border: 1px solid var(--brd2);
+        color: var(--w80);
+        padding: 5px 10px;
+        border-radius: 7px;
+        font-size: 0.73rem;
+        cursor: pointer;
+        outline: none;
+        font-family: "Outfit", sans-serif;
+      }
+      .ss option {
+        background: var(--n2);
+      }
+
+      /* MAIN */
+      .page-wrap {
+        position: relative;
+        z-index: 10;
+      }
+      main {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 2rem 2rem 3rem;
+      }
+      .sh {
+        margin-bottom: 1.4rem;
+      }
+      .sh h2 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: var(--w);
+        letter-spacing: -0.2px;
+      }
+      .sh p {
+        color: var(--w50);
+        font-size: 0.8rem;
+        margin-top: 0.2rem;
+        font-weight: 300;
+      }
+      .shline {
+        width: 32px;
+        height: 2px;
+        background: var(--t);
+        border-radius: 2px;
+        margin-top: 0.5rem;
+      }
+
+      /* CARDS GRID */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.2rem;
+      }
+      .dc {
+        background: var(--n3);
+        border: 1px solid var(--brd);
+        border-radius: var(--r);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transition:
+          border-color 0.2s,
+          transform 0.2s;
+      }
+      .dc:hover {
+        border-color: var(--tbrd);
+        transform: translateY(-3px);
+      }
+      .dci {
+        position: relative;
+        overflow: hidden;
+        height: 200px;
+        flex-shrink: 0;
+      }
+      .dci img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.45s;
+      }
+      .dc:hover .dci img {
+        transform: scale(1.06);
+      }
+      .dco {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to top,
+          rgba(6, 15, 24, 0.65) 0%,
+          transparent 55%
+        );
+      }
+      .dbgs {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        display: flex;
+        gap: 5px;
+      }
+      .bdg {
+        font-size: 0.62rem;
+        font-weight: 600;
+        padding: 2px 8px;
+        border-radius: 100px;
+        letter-spacing: 0.3px;
+      }
+      .b1 {
+        background: var(--t);
+        color: var(--n1);
+      }
+      .b2 {
+        background: #f59e0b;
+        color: #1a0f00;
+      }
+      .b3 {
+        background: #8b5cf6;
+        color: #fff;
+      }
+      .drt {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        background: rgba(6, 15, 24, 0.85);
+        border: 1px solid var(--brd2);
+        border-radius: 6px;
+        padding: 2px 8px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 3px;
+      }
+      .drt em {
+        color: #f59e0b;
+        font-style: normal;
+      }
+      .dcb {
+        padding: 1rem;
+        flex: 1;
+      }
+      .dcb-cat {
+        font-size: 0.64rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--t);
+        font-weight: 600;
+        font-family: "Outfit", sans-serif;
+      }
+      .dcb h4 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-top: 3px;
+        color: var(--w);
+      }
+      .dcb p {
+        font-size: 0.77rem;
+        color: var(--w50);
+        margin-top: 5px;
+        line-height: 1.6;
+        font-weight: 300;
+      }
+      .dtags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        margin-top: 8px;
+      }
+      .dt {
+        font-size: 0.62rem;
+        background: var(--w06);
+        border: 1px solid var(--brd);
+        color: var(--w50);
+        padding: 2px 7px;
+        border-radius: 100px;
+      }
+      .dcf {
+        padding: 0 1rem 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 6px;
+      }
+      .dsqft {
+        font-size: 0.72rem;
+        color: var(--w50);
+      }
+      .dcf-btns {
+        display: flex;
+        gap: 6px;
+      }
+      .dsv {
+        padding: 6px 9px;
+        border-radius: 7px;
+        border: 1px solid var(--brd2);
+        background: transparent;
+        color: var(--w50);
+        cursor: pointer;
+        font-size: 0.8rem;
+        transition: all 0.2s;
+      }
+      .dsv:hover {
+        border-color: var(--t);
+        color: var(--t);
+      }
+      .dsv.saved {
+        background: var(--tdim);
+        border-color: var(--t);
+        color: var(--t);
+      }
+      .dvw {
+        padding: 6px 14px;
+        border-radius: 7px;
+        border: none;
+        background: var(--t);
+        color: var(--n1);
+        font-size: 0.75rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+        font-family: "Outfit", sans-serif;
+      }
+      .dvw:hover {
+        background: var(--t2);
+      }
+
+      /* MATERIALS */
+      .mat-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2.5rem;
+      }
+      .mc {
+        background: var(--n3);
+        border: 1px solid var(--brd);
+        border-radius: var(--r);
+        overflow: hidden;
+      }
+      .mc-img-wrap {
+        height: 240px;
+        overflow: hidden;
+        position: relative;
+      }
+      .mc-main-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: opacity 0.5s ease;
+      }
+      .mc-body {
+        padding: 1.2rem;
+      }
+      .mc-body h4 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: var(--w);
+      }
+      .mc-body p {
+        font-size: 0.78rem;
+        color: var(--w50);
+        margin-top: 4px;
+        line-height: 1.6;
+        font-weight: 300;
+      }
+      .swatches {
+        display: flex;
+        gap: 10px;
+        margin-top: 14px;
+        align-items: flex-end;
+      }
+      .sw-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+      }
+      .sw {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        border: 2px solid transparent;
+        transition: all 0.2s;
+        flex-shrink: 0;
+      }
+      .sw:hover {
+        transform: scale(1.1);
+      }
+      .sw-item.active .sw {
+        border-color: var(--w);
+        transform: scale(1.12);
+      }
+      .sw-lbl {
+        font-size: 0.6rem;
+        color: var(--w50);
+        text-align: center;
+        white-space: nowrap;
+        font-family: "Outfit", sans-serif;
+        transition: color 0.2s;
+      }
+      .sw-item.active .sw-lbl {
+        color: var(--t);
+      }
+      .mat-desc {
+        font-size: 0.72rem;
+        color: var(--t);
+        margin-top: 10px;
+        font-weight: 500;
+        min-height: 1.2em;
+        font-family: "Outfit", sans-serif;
+      }
+
+      /* PHILOSOPHY */
+      .phi {
+        background: var(--n3);
+        border: 1px solid var(--brd);
+        border-radius: var(--r);
+        padding: 2.5rem;
+        margin: 2.5rem 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2.5rem;
+        align-items: center;
+      }
+      .phi h2 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.8rem;
+        font-weight: 700;
+        line-height: 1.25;
+        letter-spacing: -0.3px;
+      }
+      .phi h2 em {
+        color: var(--t);
+        font-style: italic;
+      }
+      .phi p {
+        color: var(--w50);
+        font-size: 0.82rem;
+        margin-top: 0.6rem;
+        line-height: 1.75;
+        font-weight: 300;
+      }
+      .phi-list {
+        list-style: none;
+        margin-top: 1.2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .phi-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 9px;
+        color: var(--w80);
+        font-size: 0.82rem;
+        font-weight: 300;
+      }
+      .pc {
+        width: 16px;
+        height: 16px;
+        background: var(--tdim);
+        border: 1px solid var(--tbrd);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+      .pd {
+        width: 5px;
+        height: 5px;
+        background: var(--t);
+        border-radius: 50%;
+      }
+      .phi-img {
+        border-radius: 10px;
+        overflow: hidden;
+        height: 280px;
+      }
+      .phi-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      /* MODALS */
+      .ov {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(6, 15, 24, 0.9);
+        z-index: 900;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 2rem 1rem;
+        overflow-y: auto;
+        backdrop-filter: blur(8px);
+      }
+      .ov.open {
+        display: flex;
+      }
+      .mbox {
+        background: var(--n3);
+        border: 1px solid var(--brd2);
+        border-radius: var(--r);
+        width: 100%;
+        max-width: 560px;
+        padding: 2rem;
+        position: relative;
+        margin: auto;
+      }
+      .mbox.wide {
+        max-width: 760px;
+      }
+      .mcl {
+        position: absolute;
+        top: 14px;
+        right: 16px;
+        background: transparent;
+        border: none;
+        color: var(--w50);
+        font-size: 1.2rem;
+        cursor: pointer;
+        line-height: 1;
+        transition: color 0.2s;
+      }
+      .mcl:hover {
+        color: var(--w);
+      }
+      .mtitle {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--w);
+        margin-bottom: 1.2rem;
+        letter-spacing: -0.2px;
+      }
+      .mtitle em {
+        color: var(--t);
+        font-style: italic;
+      }
+      .fg {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .fi2 {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .fi2.full {
+        grid-column: 1/-1;
+      }
+      .fi2 label {
+        font-size: 0.7rem;
+        color: var(--w50);
+        font-weight: 500;
+        letter-spacing: 0.04em;
+      }
+      .fi2 input,
+      .fi2 select,
+      .fi2 textarea {
+        background: var(--n4);
+        border: 1px solid var(--brd2);
+        border-radius: 7px;
+        color: var(--w);
+        padding: 9px 12px;
+        font-size: 0.82rem;
+        outline: none;
+        transition: border-color 0.2s;
+        font-family: "Outfit", sans-serif;
+        width: 100%;
+      }
+      .fi2 input:focus,
+      .fi2 select:focus,
+      .fi2 textarea:focus {
+        border-color: var(--t);
+      }
+      .fi2 input::placeholder,
+      .fi2 textarea::placeholder {
+        color: var(--w50);
+      }
+      .fi2 select option {
+        background: var(--n2);
+      }
+      .mactions {
+        display: flex;
+        gap: 8px;
+        margin-top: 1.2rem;
+        justify-content: flex-end;
+      }
+      .mcnl {
+        padding: 8px 18px;
+        border-radius: 7px;
+        border: 1px solid var(--brd2);
+        background: transparent;
+        color: var(--w50);
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: "Outfit", sans-serif;
+      }
+      .mcnl:hover {
+        border-color: var(--t);
+        color: var(--t);
+      }
+      .vm-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+      .vm-img {
+        border-radius: 10px;
+        overflow: hidden;
+        height: 260px;
+      }
+      .vm-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .vm-cat {
+        font-size: 0.64rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--t);
+        font-weight: 600;
+        margin-bottom: 0.4rem;
+      }
+      .vm-info h3 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: var(--w);
+      }
+      .vm-info p {
+        font-size: 0.8rem;
+        color: var(--w50);
+        margin-top: 0.5rem;
+        line-height: 1.7;
+        font-weight: 300;
+      }
+      .specs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-top: 1rem;
+      }
+      .sp {
+        background: var(--n4);
+        border-radius: 8px;
+        padding: 0.7rem;
+        border: 1px solid var(--brd);
+      }
+      .sp-l {
+        font-size: 0.62rem;
+        text-transform: uppercase;
+        letter-spacing: 0.7px;
+        color: var(--w50);
+        margin-bottom: 3px;
+      }
+      .sp-v {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--t);
+        font-family: "Cormorant Garamond", serif;
+      }
+      .lb-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-bottom: 1.2rem;
+      }
+      .lb-img {
+        border-radius: 8px;
+        overflow: hidden;
+        height: 100px;
+      }
+      .lb-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .nores {
+        text-align: center;
+        padding: 3rem 1rem;
+        color: var(--w50);
+        grid-column: 1/-1;
+      }
+      .nores h3 {
+        font-size: 1rem;
+        color: var(--w80);
+        margin-bottom: 0.4rem;
+      }
+
+      footer {
+        background: var(--n2);
+        border-top: 1px solid var(--brd);
+        color: var(--w50);
+        text-align: center;
+        padding: 1.5rem;
+        font-size: 0.75rem;
+        position: relative;
+        z-index: 10;
+      }
+      footer strong {
+        color: var(--t);
+      }
+      .toastwrap {
+        position: fixed;
+        bottom: 1.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 9999;
+        pointer-events: none;
+      }
+      .toast {
+        background: var(--n3);
+        border: 1px solid var(--tbrd);
+        color: var(--w);
+        padding: 10px 20px;
+        border-radius: 100px;
+        font-size: 0.82rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        opacity: 0;
+        transform: translateY(16px);
+        transition: all 0.3s;
+        white-space: nowrap;
+        font-family: "Outfit", sans-serif;
+      }
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .tdot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--t);
+      }
+      @media (max-width: 860px) {
+        .phi,
+        .vm-grid {
+          grid-template-columns: 1fr;
+        }
+        .grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .mat-grid {
+          grid-template-columns: 1fr;
+        }
+        .fg {
+          grid-template-columns: 1fr;
+        }
+        nav .nav-links {
+          display: none;
+        }
+      }
+      @media (max-width: 560px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-anim"><span></span><span></span><span></span></div>
+
+    <nav>
+      <div class="logo">Archi<em>Nova</em></div>
+      <ul class="nav-links">
+        <li><a href="home.html">HOME</a></li>
+        <li><a href="about.html">ABOUT US</a></li>
+        <li><a href="gallery.html">GALLERY</a></li>
+        <li><a href="startupoffice.html" class="active">STARTUPOFFICE</a></li>
+        <li><a href="interior.html">INTERIOR</a></li>
+      </ul>
+      <div class="nav-r">
+        <a href="wishlist.html" class="nb"
+          >&#9825; Wishlist
+          <span
+            id="wcount"
+            style="
+              display: none;
+              background: var(--t);
+              color: var(--n1);
+              border-radius: 100px;
+              padding: 1px 6px;
+              font-size: 0.65rem;
+              margin-left: 3px;
+            "
+            >0</span
+          ></a
+        >
+      </div>
+    </nav>
+
+    <div class="hero">
+      <div class="hbadge">
+        <div class="hdot"></div>
+        Startup Office Collection
+      </div>
+      <h1>Spaces That <em>Fuel Innovation</em> &amp; Accelerate Growth</h1>
+      <p>
+        Bold, flexible environments built for fast-moving teams — where
+        creativity, speed, and culture converge.
+      </p>
+      <div class="hstats">
+        <div>
+          <div class="hs-num">24</div>
+          <div class="hs-lbl">Curated Designs</div>
+        </div>
+        <div>
+          <div class="hs-num">98%</div>
+          <div class="hs-lbl">Satisfaction Rate</div>
+        </div>
+        <div>
+          <div class="hs-num">4.9</div>
+          <div class="hs-lbl">Avg Rating</div>
+        </div>
+        <div>
+          <div class="hs-num">500+</div>
+          <div class="hs-lbl">Projects Delivered</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ttabs">
+      <button class="tt" onclick="location.href = 'corporate-office.html'">
+        Corporate
+      </button>
+      <button class="tt active">Startup</button>
+      <button class="tt" onclick="location.href = 'futuristicoffice.html'">
+        Futuristic
+      </button>
+    </div>
+
+    <div class="abar">
+      <button class="ab ab-teal" onclick="openModal('explore')">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"
+          /></svg
+        >Explore Designs
+      </button>
+      <button class="ab ab-out" onclick="openModal('lookbook')">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" /></svg
+        >Download Lookbook
+      </button>
+    </div>
+
+    <!-- STICKY FILTER — always visible below nav -->
+    <div class="tbar">
+      <div class="srch">
+        <svg viewBox="0 0 24 24">
+          <circle
+            cx="11"
+            cy="11"
+            r="7"
+            stroke="currentColor"
+            stroke-width="2"
+            fill="none"
+          />
+          <path
+            d="M21 21l-4.35-4.35"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            fill="none"
+          />
+        </svg>
+        <input
+          type="text"
+          id="si"
+          placeholder="Search designs..."
+          oninput="doFilter()"
+        />
+      </div>
+      <div class="frow">
+        <button class="fb on" onclick="setTag(this, 'all')">All</button>
+        <button class="fb" onclick="setTag(this, 'open')">Open Plan</button>
+        <button class="fb" onclick="setTag(this, 'loft')">Loft</button>
+        <button class="fb" onclick="setTag(this, 'focus')">Focus</button>
+        <button class="fb" onclick="setTag(this, 'hybrid')">Hybrid</button>
+        <button class="fb" onclick="setTag(this, 'biophilic')">
+          Biophilic
+        </button>
+        <select class="ss" id="sortSel" onchange="doSort(this.value)">
+          <option value="def">Sort: Default</option>
+          <option value="rat">Highest Rated</option>
+          <option value="sa">Smallest Area</option>
+          <option value="la">Largest Area</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- MODALS -->
+    <div id="m-explore" class="ov" onclick="ovClick(event, 'explore')">
+      <div class="mbox wide">
+        <button class="mcl" onclick="closeModal('explore')">&#10005;</button>
+        <div class="mtitle">Explore <em>All Startup Designs</em></div>
+        <p
+          style="
+            font-size: 0.82rem;
+            color: var(--w50);
+            margin-bottom: 1.2rem;
+            font-weight: 300;
+          "
+        >
+          Our curated startup office collection — 24 concepts across 6 design
+          philosophies.
+        </p>
+        <div
+          style="
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 1.4rem;
+          "
+        >
+          <div
+            style="
+              background: var(--n4);
+              border-radius: 8px;
+              overflow: hidden;
+              border: 1px solid var(--brd);
+            "
+          >
+            <img
+              src="https://images.unsplash.com/photo-1556761175-4b46a572b786?w=600&q=75"
+              style="
+                width: 100%;
+                height: 90px;
+                object-fit: cover;
+                display: block;
+              "
+            />
+            <div
+              style="
+                padding: 0.6rem;
+                font-size: 0.75rem;
+                font-weight: 600;
+                color: var(--w);
+                font-family: &quot;Cormorant Garamond&quot;, serif;
+              "
+            >
+              Agile Studio
+            </div>
+          </div>
+          <div
+            style="
+              background: var(--n4);
+              border-radius: 8px;
+              overflow: hidden;
+              border: 1px solid var(--brd);
+            "
+          >
+            <img
+              src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=400&q=75"
+              style="
+                width: 100%;
+                height: 90px;
+                object-fit: cover;
+                display: block;
+              "
+            />
+            <div
+              style="
+                padding: 0.6rem;
+                font-size: 0.75rem;
+                font-weight: 600;
+                color: var(--w);
+                font-family: &quot;Cormorant Garamond&quot;, serif;
+              "
+            >
+              Focus Lab
+            </div>
+          </div>
+          <div
+            style="
+              background: var(--n4);
+              border-radius: 8px;
+              overflow: hidden;
+              border: 1px solid var(--brd);
+            "
+          >
+            <img
+              src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=400&q=75"
+              style="
+                width: 100%;
+                height: 90px;
+                object-fit: cover;
+                display: block;
+              "
+            />
+            <div
+              style="
+                padding: 0.6rem;
+                font-size: 0.75rem;
+                font-weight: 600;
+                color: var(--w);
+                font-family: &quot;Cormorant Garamond&quot;, serif;
+              "
+            >
+              Biophilic Hub
+            </div>
+          </div>
+          <div
+            style="
+              background: var(--n4);
+              border-radius: 8px;
+              overflow: hidden;
+              border: 1px solid var(--brd);
+            "
+          >
+            <img
+              src="https://i.pinimg.com/1200x/59/ad/40/59ad40945d6d78b3fd361e67f18f4b72.jpg"
+              style="
+                width: 100%;
+                height: 90px;
+                object-fit: cover;
+                display: block;
+              "
+            />
+            <div
+              style="
+                padding: 0.6rem;
+                font-size: 0.75rem;
+                font-weight: 600;
+                color: var(--w);
+                font-family: &quot;Cormorant Garamond&quot;, serif;
+              "
+            >
+              Hybrid Flex Hub
+            </div>
+          </div>
+          <div
+            style="
+              background: var(--n4);
+              border-radius: 8px;
+              overflow: hidden;
+              border: 1px solid var(--brd);
+            "
+          >
+            <img
+              src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=400&q=75"
+              style="
+                width: 100%;
+                height: 90px;
+                object-fit: cover;
+                display: block;
+              "
+            />
+            <div
+              style="
+                padding: 0.6rem;
+                font-size: 0.75rem;
+                font-weight: 600;
+                color: var(--w);
+                font-family: &quot;Cormorant Garamond&quot;, serif;
+              "
+            >
+              Campus
+            </div>
+          </div>
+          <div
+            style="
+              background: var(--n4);
+              border-radius: 8px;
+              overflow: hidden;
+              border: 1px solid var(--brd);
+            "
+          >
+            <img
+              src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&q=75"
+              style="
+                width: 100%;
+                height: 90px;
+                object-fit: cover;
+                display: block;
+              "
+            />
+            <div
+              style="
+                padding: 0.6rem;
+                font-size: 0.75rem;
+                font-weight: 600;
+                color: var(--w);
+                font-family: &quot;Cormorant Garamond&quot;, serif;
+              "
+            >
+              Innovation Hub
+            </div>
+          </div>
+        </div>
+        <div class="mactions">
+          <button class="mcnl" onclick="closeModal('explore')">Close</button
+          ><button
+            class="nb nb-teal"
+            onclick="
+              closeModal('explore');
+              showToast('Browse all designs in the grid below');
+            "
+          >
+            View All Below
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="m-lookbook" class="ov" onclick="ovClick(event, 'lookbook')">
+      <div class="mbox">
+        <button class="mcl" onclick="closeModal('lookbook')">&#10005;</button>
+        <div class="mtitle">Startup Office <em>Lookbook 2025</em></div>
+        <div class="lb-grid">
+          <div class="lb-img">
+            <img
+              src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&q=75"
+              alt=""
+            />
+          </div>
+          <div class="lb-img">
+            <img
+              src="https://images.unsplash.com/photo-1556761175-4b46a572b786?w=400&q=75"
+              alt=""
+            />
+          </div>
+          <div class="lb-img">
+            <img
+              src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=400&q=75"
+              alt=""
+            />
+          </div>
+        </div>
+        <div
+          style="
+            background: var(--n4);
+            border-radius: 8px;
+            padding: 0.9rem;
+            margin-bottom: 1.1rem;
+            font-size: 0.79rem;
+            color: var(--w80);
+            line-height: 1.6;
+            font-weight: 300;
+          "
+        >
+          <strong style="color: var(--t)"
+            >ArchiNova Startup Office Lookbook 2025</strong
+          ><br />48 pages &bull; 24 curated designs &bull; Material guides
+          &bull; Space planning tips &bull; Budget templates.<br />Format: PDF
+          &bull; Size: ~18 MB &bull; Instant download.
+        </div>
+        <div class="mactions">
+          <button class="mcnl" onclick="closeModal('lookbook')">Cancel</button
+          ><button class="nb nb-teal" onclick="triggerDownload()">
+            &#8595; Download PDF
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- VIEW MODALS -->
+    <div id="m-v0" class="ov" onclick="ovClick(event, 'v0')">
+      <div class="mbox wide">
+        <button class="mcl" onclick="closeModal('v0')">&#10005;</button>
+        <div class="vm-grid">
+          <div class="vm-img"><img src="" alt="" /></div>
+          <div class="vm-info">
+            <div class="vm-cat">Team Studio &bull; Open Plan</div>
+            <h3>Agile Sprint Studio</h3>
+            <p>
+              Floor-to-ceiling writable walls, height-adjustable desks, and
+              modular breakout furniture for sprinting teams. Standups, retros,
+              and war-room sessions with zero reconfiguration.
+            </p>
+            <div class="specs">
+              <div class="sp">
+                <div class="sp-l">Area</div>
+                <div class="sp-v">2,800 sq ft</div>
+              </div>
+              <div class="sp">
+                <div class="sp-l">Capacity</div>
+                <div class="sp-v">20–35 seats</div>
+              </div>
+              <div class="sp">
+                <div class="sp-l">Breakout Rooms</div>
+                <div class="sp-v">4 rooms</div>
+              </div>
+              <div class="sp">
+                <div class="sp-l">Lead Time</div>
+                <div class="sp-v">6–8 weeks</div>
+              </div>
+            </div>
+            <div class="mactions" style="margin-top: 1rem">
+              <button class="mcnl" onclick="closeModal('v0')">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="m-v1" class="ov" onclick="ovClick(event, 'v1')">
+      <div class="mbox wide">
+        <button class="mcl" onclick="closeModal('v1')">&#10005;</button>
+        <div class="vm-grid">
+          <div class="vm-img">
+            <img
+              src="https://images.unsplash.com/photo-1556761175-4b46a572b786?w=600&q=75"
+              alt=""
+            />
+          </div>
+          <div class="vm-info">
+            <div class="vm-cat">Focus Environment &bull; Minimal</div>
+            <h3>Minimal Focus Lab</h3>
+            <p>
+              Class-A acoustic panels, directional lighting, and a deliberately
+              sparse layout reduce cognitive load. Private focus pods flank a
+              quiet central corridor.
+            </p>
+            <div class="specs">
+              <div class="sp">
+                <div class="sp-l">Area</div>
+                <div class="sp-v">2,200 sq ft</div>
+              </div>
+              <div class="sp">
+                <div class="sp-l">Capacity</div>
+                <div class="sp-v">15–25 seats</div>
+              </div>
+              <div class="sp">
+                <div class="sp-l">Focus Pods</div>
+                <div class="sp-v">8 enclosed</div>
+              </div>
+              <div class="sp">
+                <div class="sp-l">Lead Time</div>
+                <div class="sp-v">5–7 weeks</div>
+              </div>
+            </div>
+            <div class="mactions" style="margin-top: 1rem">
+              <button class="mcnl" onclick="closeModal('v1')">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="m-v2" class="ov" onclick="ovClick(event, 'v2')">
+      <div class="mbox wide">
+        <button class="mcl" onclick="closeModal('v2')">&#10005;</button>
+        <div class="vm-grid">
+          <div class="vm-img">
+            <img
+              src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=800&q=85"
+              alt=""
+            />
+          </div>
+          <div class="vm-info">
+            <div class="vm-cat">Biophilic Design &bull; Nature</div>
+            <h3>Green Biophilic Office</h3>
+            <p>
+              12 air-purifying plant species in vertical living walls. Timber
+              desktops, rattan partitions, and clay-finish walls create a
+              sensory environment that measurably reduces stress.
+            </p>
+            <div class="specs">
+              <div class="sp">
+                <div class="sp-l">Area</div>
+                <div class="sp-v">2,600 sq ft</div>
+              </div>
+              <div class="sp">
+                <div class="sp-l">Capacity</div>
+                <div class="sp-v">20–30 seats</div>
+              </div>
+              <div class="sp">
+                <div class="sp-l">Living Walls</div>
+                <div class="sp-v">3 panels</div>
+              </div>
+              <div class="sp">
+                <div class="sp-l">Lead Time</div>
+                <div class="sp-v">8–12 weeks</div>
+              </div>
+            </div>
+            <div class="mactions" style="margin-top: 1rem">
+              <button class="mcnl" onclick="closeModal('v2')">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="m-v3" class="ov" onclick="ovClick(event, 'v3')">
+      <div class="mbox wide">
+        <button class="mcl" onclick="closeModal('v3')">&#10005;</button>
+        <div class="vm-grid">
+          <div class="vm-img">
+            <img
+              src="https://i.pinimg.com/1200x/59/ad/40/59ad40945d6d78b3fd361e67f18f4b72.jpg"
+              alt=""
+            />
+          </div>
+          <div class="vm-info">
+            <div class="vm-cat">Hybrid Design &bull; Flexible</div>
+            <h3>Hybrid Flex Hub</h3>
+            <p>
+              Studio-quality ceiling microphones, phone booths for confidential
+              calls, town-hall commons in minutes. Built for teams that blend
+              remote and in-person seamlessly.
+            </p>
+            <div class="specs">
+              <div class="sp">
+                <div class="sp-l">Area</div>
+                <div class="sp-v">3,100 sq ft</div>
+              </div>
+              <div class="sp">
+                <div class="sp-l">Capacity</div>
+                <div class="sp-v">20–40 seats</div>
+              </div>
+              <div class="sp">
+                <div class="sp-l">Video Booths</div>
+                <div class="sp-v">6 booths</div>
+              </div>
+              <div class="sp">
+                <div class="sp-l">Lead Time</div>
+                <div class="sp-v">8–10 weeks</div>
+              </div>
+            </div>
+            <div class="mactions" style="margin-top: 1rem">
+              <button class="mcnl" onclick="closeModal('v3')">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="m-v4" class="ov" onclick="ovClick(event, 'v4')">
+      <div class="mbox wide">
+        <button class="mcl" onclick="closeModal('v4')">&#10005;</button>
+        <div class="vm-grid">
+          <div class="vm-img">
+            <img
+              src="https://images.unsplash.com/photo-1604328698692-f76ea9498e76?w=600&q=75"
+              alt=""
+            />
+          </div>
+          <div class="vm-info">
+            <div class="vm-cat">Loft Concept &bull; Industrial</div>
+            <h3>Creative Loft Space</h3>
+            <p>
+              Exposed concrete, steel accents, and plywood joinery create a raw
+              yet refined canvas. Mezzanine quiet zones above, creative energy
+              on the ground floor.
+            </p>
+            <div class="specs">
+              <div class="sp">
+                <div class="sp-l">Area</div>
+                <div class="sp-v">3,500 sq ft</div>
+              </div>
+              <div class="sp">
+                <div class="sp-l">Capacity</div>
+                <div class="sp-v">25–45 seats</div>
+              </div>
+              <div class="sp">
+                <div class="sp-l">Mezzanine</div>
+                <div class="sp-v">800 sq ft</div>
+              </div>
+              <div class="sp">
+                <div class="sp-l">Lead Time</div>
+                <div class="sp-v">10–14 weeks</div>
+              </div>
+            </div>
+            <div class="mactions" style="margin-top: 1rem">
+              <button class="mcnl" onclick="closeModal('v4')">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="m-v5" class="ov" onclick="ovClick(event, 'v5')">
+      <div class="mbox wide">
+        <button class="mcl" onclick="closeModal('v5')">&#10005;</button>
+        <div class="vm-grid">
+          <div class="vm-img">
+            <img
+              src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=85"
+              alt=""
+            />
+          </div>
+          <div class="vm-info">
+            <div class="vm-cat">Campus Style &bull; Large Scale</div>
+            <h3>Co-Working Campus</h3>
+            <p>
+              5 distinct team neighbourhoods, café commons with barista bar, and
+              a rooftop terrace concept. Designed for growing startups that want
+              campus culture without corporate sprawl.
+            </p>
+            <div class="specs">
+              <div class="sp">
+                <div class="sp-l">Area</div>
+                <div class="sp-v">5,000 sq ft</div>
+              </div>
+              <div class="sp">
+                <div class="sp-l">Capacity</div>
+                <div class="sp-v">50–80 seats</div>
+              </div>
+              <div class="sp">
+                <div class="sp-l">Zones</div>
+                <div class="sp-v">5 distinct</div>
+              </div>
+              <div class="sp">
+                <div class="sp-l">Lead Time</div>
+                <div class="sp-v">14–18 weeks</div>
+              </div>
+            </div>
+            <div class="mactions" style="margin-top: 1rem">
+              <button class="mcnl" onclick="closeModal('v5')">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-wrap">
+      <main>
+        <div class="sh">
+          <h2>All Startup Designs</h2>
+          <p>
+            Filter and search — click View on any card to explore full
+            specifications.
+          </p>
+          <div class="shline"></div>
+        </div>
+        <div class="grid" id="dg">
+          <div
+            class="dc"
+            data-tags="open agile"
+            data-rat="4.8"
+            data-sqft="2800"
+            data-name="Agile Sprint Studio"
+          >
+            <div class="dci">
+              <img
+                src="https://images.unsplash.com/photo-1556761175-4b46a572b786?w=600&q=75"
+                alt="Agile Sprint Studio"
+              />
+              <div class="dco"></div>
+              <div class="dbgs"><span class="bdg b2">Popular</span></div>
+              <div class="drt"><em>&#9733;</em>4.8</div>
+            </div>
+            <div class="dcb">
+              <div class="dcb-cat">Team Studio &bull; Open Plan</div>
+              <h4>Agile Sprint Studio</h4>
+              <p>
+                Whiteboard walls, standing desks, and breakout booths for rapid
+                iteration cycles and daily standups.
+              </p>
+              <div class="dtags">
+                <span class="dt">Open Floor</span><span class="dt">Agile</span
+                ><span class="dt">Standing Desks</span>
+              </div>
+            </div>
+            <div class="dcf">
+              <div class="dsqft">2,800 sq ft &bull; 20–35 seats</div>
+              <div class="dcf-btns">
+                <button
+                  class="dsv"
+                  onclick="
+                    saveD(
+                      this,
+                      'Agile Sprint Studio',
+                      'Startup Office',
+                      'https://images.unsplash.com/photo-1556761175-4b46a572b786?w=600&q=75',
+                      '2,800 sq ft',
+                      '20–35',
+                      '₹18L–₹28L',
+                      ['Open Floor', 'Agile', 'Standing Desks'],
+                    )
+                  "
+                >
+                  &#9825;</button
+                ><button class="dvw" onclick="openModal('v0')">View</button>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="dc"
+            data-tags="focus minimal"
+            data-rat="4.9"
+            data-sqft="2200"
+            data-name="Minimal Focus Lab"
+          >
+            <div class="dci">
+              <img
+                src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=600&q=75"
+                alt="Minimal Focus Lab"
+              />
+              <div class="dco"></div>
+              <div class="dbgs"><span class="bdg b3">Trending</span></div>
+              <div class="drt"><em>&#9733;</em>4.9</div>
+            </div>
+            <div class="dcb">
+              <div class="dcb-cat">Focus Environment &bull; Minimal</div>
+              <h4>Minimal Focus Lab</h4>
+              <p>
+                Acoustic panels and minimalist palette engineered for deep-work
+                productivity and sustained concentration.
+              </p>
+              <div class="dtags">
+                <span class="dt">Focus</span><span class="dt">Minimal</span
+                ><span class="dt">Acoustic</span>
+              </div>
+            </div>
+            <div class="dcf">
+              <div class="dsqft">2,200 sq ft &bull; 15–25 seats</div>
+              <div class="dcf-btns">
+                <button
+                  class="dsv"
+                  onclick="
+                    saveD(
+                      this,
+                      'Minimal Focus Lab',
+                      'Startup Office',
+                      'https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=400',
+                      '2,200 sq ft',
+                      '15–25',
+                      '₹14L–₹22L',
+                      ['Focus', 'Minimal', 'Acoustic'],
+                    )
+                  "
+                >
+                  &#9825;</button
+                ><button class="dvw" onclick="openModal('v1')">View</button>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="dc"
+            data-tags="biophilic nature"
+            data-rat="4.8"
+            data-sqft="2600"
+            data-name="Green Biophilic Office"
+          >
+            <div class="dci">
+              <img
+                src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=600&q=75"
+                alt="Green Biophilic Office"
+              />
+              <div class="dco"></div>
+              <div class="dbgs"><span class="bdg b2">Popular</span></div>
+              <div class="drt"><em>&#9733;</em>4.8</div>
+            </div>
+            <div class="dcb">
+              <div class="dcb-cat">Biophilic Design &bull; Nature</div>
+              <h4>Green Biophilic Office</h4>
+              <p>
+                Living walls and cascading greenery create a workspace that
+                breathes life into your team every day.
+              </p>
+              <div class="dtags">
+                <span class="dt">Biophilic</span
+                ><span class="dt">Living Walls</span
+                ><span class="dt">Wellness</span>
+              </div>
+            </div>
+            <div class="dcf">
+              <div class="dsqft">2,600 sq ft &bull; 20–30 seats</div>
+              <div class="dcf-btns">
+                <button
+                  class="dsv"
+                  onclick="
+                    saveD(
+                      this,
+                      'Green Biophilic Office',
+                      'Startup Office',
+                      'https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=400',
+                      '2,600 sq ft',
+                      '20–30',
+                      '₹20L–₹32L',
+                      ['Biophilic', 'Living Walls', 'Wellness'],
+                    )
+                  "
+                >
+                  &#9825;</button
+                ><button class="dvw" onclick="openModal('v2')">View</button>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="dc"
+            data-tags="hybrid open"
+            data-rat="4.6"
+            data-sqft="3100"
+            data-name="Hybrid Flex Hub"
+          >
+            <div class="dci">
+              <img
+                src="https://i.pinimg.com/1200x/59/ad/40/59ad40945d6d78b3fd361e67f18f4b72.jpg"
+                alt="Hybrid Flex Hub"
+              />
+              <div class="dco"></div>
+              <div class="dbgs"><span class="bdg b1">New</span></div>
+              <div class="drt"><em>&#9733;</em>4.6</div>
+            </div>
+            <div class="dcb">
+              <div class="dcb-cat">Hybrid Design &bull; Flexible</div>
+              <h4>Hybrid Flex Hub</h4>
+              <p>
+                Video-ready pods and phone booths for teams that blend remote
+                and in-person work seamlessly.
+              </p>
+              <div class="dtags">
+                <span class="dt">Hybrid</span><span class="dt">Video-Ready</span
+                ><span class="dt">Pods</span>
+              </div>
+            </div>
+            <div class="dcf">
+              <div class="dsqft">3,100 sq ft &bull; 20–40 seats</div>
+              <div class="dcf-btns">
+                <button
+                  class="dsv"
+                  onclick="
+                    saveD(
+                      this,
+                      'Hybrid Flex Hub',
+                      'Startup Office',
+                      'https://i.pinimg.com/1200x/59/ad/40/59ad40945d6d78b3fd361e67f18f4b72.jpg',
+                      '3,100 sq ft',
+                      '20–40',
+                      '₹24L–₹36L',
+                      ['Hybrid', 'Video-Ready', 'Pods'],
+                    )
+                  "
+                >
+                  &#9825;</button
+                ><button class="dvw" onclick="openModal('v3')">View</button>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="dc"
+            data-tags="loft industrial"
+            data-rat="4.7"
+            data-sqft="3500"
+            data-name="Creative Loft Space"
+          >
+            <div class="dci">
+              <img
+                src="https://images.unsplash.com/photo-1604328698692-f76ea9498e76?w=600&q=75"
+                alt="Creative Loft Space"
+              />
+              <div class="dco"></div>
+              <div class="dbgs"><span class="bdg b1">New</span></div>
+              <div class="drt"><em>&#9733;</em>4.7</div>
+            </div>
+            <div class="dcb">
+              <div class="dcb-cat">Loft Concept &bull; Industrial</div>
+              <h4>Creative Loft Space</h4>
+              <p>
+                Exposed ceilings, mezzanine chill zones, and dynamic pod
+                workstations for design-led startups.
+              </p>
+              <div class="dtags">
+                <span class="dt">Loft</span><span class="dt">Industrial</span
+                ><span class="dt">Mezzanine</span>
+              </div>
+            </div>
+            <div class="dcf">
+              <div class="dsqft">3,500 sq ft &bull; 25–45 seats</div>
+              <div class="dcf-btns">
+                <button
+                  class="dsv"
+                  onclick="
+                    saveD(
+                      this,
+                      'Creative Loft Space',
+                      'Startup Office',
+                      'https://images.unsplash.com/photo-1604328698692-f76ea9498e76?w=400',
+                      '3,500 sq ft',
+                      '25–45',
+                      '₹28L–₹42L',
+                      ['Loft', 'Industrial', 'Mezzanine'],
+                    )
+                  "
+                >
+                  &#9825;</button
+                ><button class="dvw" onclick="openModal('v4')">View</button>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="dc"
+            data-tags="open campus"
+            data-rat="4.7"
+            data-sqft="5000"
+            data-name="Co-Working Campus"
+          >
+            <div class="dci">
+              <img
+                src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&q=75"
+                alt="Co-Working Campus"
+              />
+              <div class="dco"></div>
+              <div class="dbgs"><span class="bdg b3">Trending</span></div>
+              <div class="drt"><em>&#9733;</em>4.7</div>
+            </div>
+            <div class="dcb">
+              <div class="dcb-cat">Campus Style &bull; Large</div>
+              <h4>Co-Working Campus</h4>
+              <p>
+                Multi-zone campus with team neighbourhoods, café commons, and a
+                rooftop deck concept.
+              </p>
+              <div class="dtags">
+                <span class="dt">Campus</span><span class="dt">Multi-Zone</span
+                ><span class="dt">Rooftop</span>
+              </div>
+            </div>
+            <div class="dcf">
+              <div class="dsqft">5,000 sq ft &bull; 50–80 seats</div>
+              <div class="dcf-btns">
+                <button
+                  class="dsv"
+                  onclick="
+                    saveD(
+                      this,
+                      'Co-Working Campus',
+                      'Startup Office',
+                      'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=400',
+                      '5,000 sq ft',
+                      '50–80',
+                      '₹45L–₹70L',
+                      ['Campus', 'Multi-Zone', 'Rooftop'],
+                    )
+                  "
+                >
+                  &#9825;</button
+                ><button class="dvw" onclick="openModal('v5')">View</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PHILOSOPHY -->
+        <div class="phi">
+          <div>
+            <h2>Built for Teams That <em>Move Fast</em></h2>
+            <p>
+              Startup offices aren't just workplaces — they're ecosystems. Every
+              design decision optimised for energy, communication, and growth
+              velocity.
+            </p>
+            <ul class="phi-list">
+              <li>
+                <div class="pc"><div class="pd"></div></div>
+                Modular furniture that adapts as your team scales
+              </li>
+              <li>
+                <div class="pc"><div class="pd"></div></div>
+                Acoustic zoning for both focus and loud collaboration
+              </li>
+              <li>
+                <div class="pc"><div class="pd"></div></div>
+                Smart power, data, and AV infrastructure everywhere
+              </li>
+              <li>
+                <div class="pc"><div class="pd"></div></div>
+                Wellness — ergonomics, natural light, air quality
+              </li>
+              <li>
+                <div class="pc"><div class="pd"></div></div>
+                Brand-forward spaces that reflect your company story
+              </li>
+            </ul>
+          </div>
+          <div class="phi-img">
+            <img
+              src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=700&q=80"
+              alt=""
+            />
+          </div>
+        </div>
+
+        <!-- MATERIALS WITH WORKING SWATCHES -->
+        <div class="sh">
+          <h2>Signature Materials</h2>
+          <p>Click any colour swatch to preview how it changes the space.</p>
+          <div class="shline"></div>
+        </div>
+        <div class="mat-grid">
+          <div class="mc">
+            <div class="mc-img-wrap">
+              <img
+                class="mc-main-img"
+                id="mat-img-0"
+                src="https://i.pinimg.com/736x/05/f7/8c/05f78cd8ef90294fcd50657e127fb6e6.jpg"
+                alt="Concrete Steel"
+              />
+            </div>
+            <div class="mc-body">
+              <h4>Raw Concrete &amp; Matte Steel</h4>
+              <p>
+                Honest industrial materials that signal ambition without
+                pretension.
+              </p>
+              <div class="swatches">
+                <div
+                  class="sw-item active"
+                  onclick="
+                    changeMat(
+                      0,
+                      this,
+                      'https://i.pinimg.com/736x/05/f7/8c/05f78cd8ef90294fcd50657e127fb6e6.jpg',
+                      'Slate — Dark charcoal concrete',
+                    )
+                  "
+                >
+                  <div class="sw" style="background: #3d3d3d"></div>
+                  <div class="sw-lbl">Slate</div>
+                </div>
+                <div
+                  class="sw-item"
+                  onclick="
+                    changeMat(
+                      0,
+                      this,
+                      'https://i.pinimg.com/1200x/38/7d/93/387d93ee4bfb8525ad982549f9a81666.jpg',
+                      'Fog — Light grey matte steel',
+                    )
+                  "
+                >
+                  <div class="sw" style="background: #8c8c8c"></div>
+                  <div class="sw-lbl">Fog</div>
+                </div>
+                <div
+                  class="sw-item"
+                  onclick="
+                    changeMat(
+                      0,
+                      this,
+                      'https://i.pinimg.com/1200x/45/4b/66/454b669bb08877418ee6ae69819bb794.jpg',
+                      'Navy — Deep navy feature wall',
+                    )
+                  "
+                >
+                  <div class="sw" style="background: #152636"></div>
+                  <div class="sw-lbl">Navy</div>
+                </div>
+                <div
+                  class="sw-item"
+                  onclick="
+                    changeMat(
+                      0,
+                      this,
+                      'https://i.pinimg.com/1200x/72/b1/1f/72b11fbd81ce11e135c54422b9d24101.jpg',
+                      'Teal — Teal accent panel',
+                    )
+                  "
+                >
+                  <div class="sw" style="background: #0abfbf"></div>
+                  <div class="sw-lbl">Teal</div>
+                </div>
+              </div>
+              <div class="mat-desc" id="mat-label-0">
+                Slate — Dark charcoal concrete
+              </div>
+            </div>
+          </div>
+
+          <div class="mc">
+            <div class="mc-img-wrap">
+              <img
+                class="mc-main-img"
+                id="mat-img-1"
+                src="https://i.pinimg.com/736x/2a/89/0f/2a890fa640182e69f40df0cc039552fa.jpg"
+                alt="Warm Oak"
+              />
+            </div>
+            <div class="mc-body">
+              <h4>Warm Oak &amp; Natural Timber</h4>
+              <p>
+                Light oak and plywood bring warmth to dark, industrial
+                structures.
+              </p>
+              <div class="swatches">
+                <div
+                  class="sw-item active"
+                  onclick="
+                    changeMat(
+                      1,
+                      this,
+                      'https://i.pinimg.com/736x/2a/89/0f/2a890fa640182e69f40df0cc039552fa.jpg',
+                      'Sand Oak — Light birch plywood',
+                    )
+                  "
+                >
+                  <div class="sw" style="background: #c8a97a"></div>
+                  <div class="sw-lbl">Sand</div>
+                </div>
+                <div
+                  class="sw-item"
+                  onclick="
+                    changeMat(
+                      1,
+                      this,
+                      'https://i.pinimg.com/736x/2e/20/ad/2e20ad68dc57af7efa9e87f24c3f81a1.jpg',
+                      'Walnut — Rich dark walnut veneer',
+                    )
+                  "
+                >
+                  <div class="sw" style="background: #8b6340"></div>
+                  <div class="sw-lbl">Walnut</div>
+                </div>
+                <div
+                  class="sw-item"
+                  onclick="
+                    changeMat(
+                      1,
+                      this,
+                      'https://i.pinimg.com/1200x/13/76/91/137691353e442bf3ce10182a489af861.jpg',
+                      'Timber — Raw reclaimed boards',
+                    )
+                  "
+                >
+                  <div class="sw" style="background: #5c3d1e"></div>
+                  <div class="sw-lbl">Timber</div>
+                </div>
+                <div
+                  class="sw-item"
+                  onclick="
+                    changeMat(
+                      1,
+                      this,
+                      'https://i.pinimg.com/736x/22/8b/df/228bdf2116a1a00ba662623af11b700f.jpg',
+                      'Teal — Teal-stained wood accent',
+                    )
+                  "
+                >
+                  <div class="sw" style="background: #0abfbf"></div>
+                  <div class="sw-lbl">Teal</div>
+                </div>
+              </div>
+              <div class="mat-desc" id="mat-label-1">
+                Sand Oak — Light birch plywood
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <footer>
+      &copy; 2025 <strong>ArchiNova</strong> &bull; Architectural Design &amp;
+      Innovation Recommendation System
+    </footer>
+    <div class="toastwrap">
+      <div class="toast" id="toast">
+        <div class="tdot"></div>
+        <span id="tmsg">Saved!</span>
+      </div>
+    </div>
+
+    <script>
+      var KEY = "archinova_wishlist";
+      function getWL() {
+        try {
+          return JSON.parse(localStorage.getItem(KEY) || "[]");
+        } catch (e) {
+          return [];
+        }
+      }
+      function setWL(l) {
+        localStorage.setItem(KEY, JSON.stringify(l));
+      }
+
+      function updateBadge() {
+        var b = document.getElementById("wcount");
+        var l = getWL();
+        if (l.length) {
+          b.style.display = "inline";
+          b.textContent = l.length;
+        } else {
+          b.style.display = "none";
+        }
+      }
+      function showToast(msg) {
+        var t = document.getElementById("toast");
+        document.getElementById("tmsg").textContent = msg;
+        t.classList.add("show");
+        clearTimeout(t._to);
+        t._to = setTimeout(function () {
+          t.classList.remove("show");
+        }, 3000);
+      }
+      function openModal(id) {
+        document.getElementById("m-" + id).classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+      function closeModal(id) {
+        document.getElementById("m-" + id).classList.remove("open");
+        document.body.style.overflow = "";
+      }
+      function ovClick(e, id) {
+        if (e.target === document.getElementById("m-" + id)) closeModal(id);
+      }
+      function submitForm(id, msg) {
+        closeModal(id);
+        showToast(msg);
+      }
+      function triggerDownload() {
+        closeModal("lookbook");
+        showToast("Lookbook download starting...");
+      }
+
+      function saveD(btn, name, section, img, area, cap, budget, tags) {
+        var wl = getWL();
+        var idx = wl.findIndex(function (d) {
+          return d.id === name;
+        });
+        if (idx === -1) {
+          wl.push({
+            id: name,
+            title: name,
+            section: section,
+            badge: section,
+            img: img,
+            area: area,
+            cap: cap,
+            budget: budget,
+            tags: tags,
+            desc: "A curated ArchiNova " + section + " design.",
+            savedAt: new Date().toISOString(),
+          });
+          setWL(wl);
+          btn.classList.add("saved");
+          btn.innerHTML = "&#9829;";
+          showToast('"' + name + '" saved to Wishlist!');
+        } else {
+          wl.splice(idx, 1);
+          setWL(wl);
+          btn.classList.remove("saved");
+          btn.innerHTML = "&#9825;";
+          showToast('"' + name + '" removed from Wishlist.');
+        }
+        updateBadge();
+      }
+
+      var curTag = "all";
+      function setTag(btn, tag) {
+        document.querySelectorAll(".fb").forEach(function (b) {
+          b.classList.remove("on");
+        });
+        btn.classList.add("on");
+        curTag = tag;
+        doFilter();
+      }
+      function doFilter() {
+        var q = document.getElementById("si").value.toLowerCase().trim();
+        var cards = document.querySelectorAll(".dc");
+        var vis = 0;
+        cards.forEach(function (c) {
+          var tags = c.dataset.tags;
+          var txt = c.querySelector(".dcb").textContent.toLowerCase();
+          var nm = c.dataset.name.toLowerCase();
+          var tagOk =
+            curTag === "all" || tags.includes(curTag) || txt.includes(curTag);
+          var qOk = !q || nm.includes(q) || txt.includes(q) || tags.includes(q);
+          if (tagOk && qOk) {
+            c.style.display = "flex";
+            vis++;
+          } else {
+            c.style.display = "none";
+          }
+        });
+        var nr = document.getElementById("nores");
+        if (vis === 0) {
+          if (!nr) {
+            var d = document.createElement("div");
+            d.id = "nores";
+            d.className = "nores";
+            d.innerHTML =
+              "<h3>No designs found</h3><p>Try a different keyword or filter.</p>";
+            document.getElementById("dg").appendChild(d);
+          }
+        } else {
+          if (nr) nr.remove();
+        }
+      }
+      function doSort(v) {
+        var g = document.getElementById("dg");
+        var cs = Array.from(g.querySelectorAll(".dc"));
+        cs.sort(function (a, b) {
+          if (v === "rat")
+            return parseFloat(b.dataset.rat) - parseFloat(a.dataset.rat);
+          if (v === "sa")
+            return parseInt(a.dataset.sqft) - parseInt(b.dataset.sqft);
+          if (v === "la")
+            return parseInt(b.dataset.sqft) - parseInt(a.dataset.sqft);
+          return 0;
+        });
+        cs.forEach(function (c) {
+          g.appendChild(c);
+        });
+        document.getElementById("sortSel").value = v;
+      }
+
+      function changeMat(idx, swItem, imgUrl, label) {
+        var wrap = swItem.closest(".swatches");
+        wrap.querySelectorAll(".sw-item").forEach(function (s) {
+          s.classList.remove("active");
+        });
+        swItem.classList.add("active");
+        var img = document.getElementById("mat-img-" + idx);
+        img.style.opacity = "0";
+        setTimeout(function () {
+          img.src = imgUrl;
+          img.onload = function () {
+            img.style.opacity = "1";
+          };
+        }, 250);
+        document.getElementById("mat-label-" + idx).textContent = label;
+      }
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          document.querySelectorAll(".ov.open").forEach(function (m) {
+            m.classList.remove("open");
+            document.body.style.overflow = "";
+          });
+        }
+      });
+      window.addEventListener("DOMContentLoaded", function () {
+        updateBadge();
+        var wl = getWL();
+        wl.forEach(function (item) {
+          document.querySelectorAll(".dsv").forEach(function (btn) {
+            var card = btn.closest(".dc");
+            if (card && card.dataset.name === item.id) {
+              btn.classList.add("saved");
+              btn.innerHTML = "&#9829;";
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
