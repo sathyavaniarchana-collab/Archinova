@@ -1,88 +1,709 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Eco-Friendly House — Interior Experience | Archinova</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<style>
-*{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}body{font-family:'DM Sans',sans-serif;background:linear-gradient(135deg,#050d1a,#0b1c2d,#08121f);color:#e8e2d9;min-height:100vh;overflow-x:hidden;}canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;}header{position:sticky;top:0;z-index:100;background:rgba(7,13,26,0.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(26,158,143,0.25);}.navbar{display:flex;justify-content:space-between;align-items:center;padding:16px 48px;max-width:1400px;margin:auto;}.logo{display:flex;align-items:center;gap:10px;font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;letter-spacing:0.08em;color:#e8edf5;text-decoration:none;}.logo img{width:38px;height:38px;object-fit:contain;border-radius:4px;}.back-link{display:inline-flex;align-items:center;gap:8px;color:rgba(232,226,217,0.5);text-decoration:none;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.25s;}.back-link:hover{color:#1a9e8f;}.hero{position:relative;z-index:1;text-align:center;padding:70px 24px 50px;}.hero-eyebrow{font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:#1a9e8f;display:block;margin-bottom:14px;}.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,6vw,64px);font-weight:300;line-height:1.1;color:#e8e2d9;}.hero h1 em{color:#1a9e8f;font-style:italic;}.hero-divider{width:56px;height:1px;background:linear-gradient(90deg,transparent,#1a9e8f,transparent);margin:20px auto 14px;}.hero-sub{font-size:14px;color:rgba(232,226,217,0.45);letter-spacing:0.04em;}.chips-wrap{position:relative;z-index:1;display:flex;flex-wrap:wrap;justify-content:center;gap:12px;padding:0 24px 52px;}.chip{display:inline-flex;align-items:center;gap:8px;padding:12px 26px;border:1.5px solid rgba(26,158,143,0.4);border-radius:999px;background:rgba(26,158,143,0.07);color:#1a9e8f;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all 0.25s;}.chip:hover,.chip.active{background:#1a9e8f;color:white;border-color:#1a9e8f;transform:translateY(-3px);box-shadow:0 8px 22px rgba(26,158,143,0.35);}.room-section{display:none;position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:0 32px 80px;animation:fadeUp 0.5s ease both;}.room-section.active{display:block;}@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}.room-header{text-align:center;margin-bottom:40px;}.room-header h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:#e8e2d9;}.room-header h2 em{color:#1a9e8f;font-style:italic;}.room-header p{font-size:13px;color:rgba(232,226,217,0.4);margin-top:6px;}.img-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;}.img-card{border-radius:8px;overflow:hidden;border:1px solid rgba(232,226,217,0.07);background:rgba(255,255,255,0.025);transition:all 0.35s;}.img-card:hover{transform:translateY(-7px);border-color:rgba(26,158,143,0.35);box-shadow:0 22px 55px rgba(0,0,0,0.45);}.img-card img{width:100%;height:240px;object-fit:cover;display:block;transition:transform 0.5s ease;}.img-card:hover img{transform:scale(1.05);}.img-caption{padding:16px 18px 18px;}.img-caption h4{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;color:#1a9e8f;margin-bottom:5px;}.img-caption p{font-size:12px;color:rgba(232,226,217,0.45);line-height:1.65;}.detail-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}.dtag{padding:3px 11px;background:rgba(26,158,143,0.1);border:1px solid rgba(26,158,143,0.25);border-radius:999px;font-size:11px;color:#1a9e8f;}.cta-bar{position:relative;z-index:1;text-align:center;padding:40px;border:1px solid rgba(26,158,143,0.2);border-radius:8px;background:rgba(26,158,143,0.05);max-width:1280px;margin:0 auto 80px;}.cta-bar h3{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:#e8e2d9;margin-bottom:8px;}.cta-bar p{font-size:13px;color:rgba(232,226,217,0.4);margin-bottom:22px;}.cta-btn{display:inline-flex;align-items:center;gap:10px;padding:14px 36px;background:linear-gradient(135deg,#1a9e8f,#0d6e63);border:none;border-radius:4px;color:white;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;transition:all 0.3s;}.cta-btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(26,158,143,0.4);}@media(max-width:640px){.navbar{padding:14px 20px;}.hero{padding:50px 16px 36px;}.chips-wrap{padding:0 16px 36px;}.room-section{padding:0 16px 60px;}.img-grid{grid-template-columns:1fr;}}
-</style>
-</head>
-<body>
-<canvas id="bg"></canvas>
-<header>
-  <div class="navbar">
-    <a href="home.html" class="logo"><img src="logo.jpeg" alt="Archinova"> Archinova</a>
-    <a href="ecofriendly.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Eco-Friendly House</a>
-  </div>
-</header>
-<div class="hero">
-  <span class="hero-eyebrow">Interior Experience</span>
-  <h1>Eco-Friendly <em>House</em> Interiors</h1>
-  <div class="hero-divider"></div>
-  <p class="hero-sub">Solar powered · Rainwater harvesting · Natural materials · Choose a room below</p>
-</div>
-<div class="chips-wrap">
-  <button class="chip active" onclick="showRoom('living',this)"><i class="fa-solid fa-couch"></i> Living Room</button>
-  <button class="chip" onclick="showRoom('bedroom',this)"><i class="fa-solid fa-bed"></i> Bedroom</button>
-  <button class="chip" onclick="showRoom('kitchen',this)"><i class="fa-solid fa-kitchen-set"></i> Kitchen</button>
-  <button class="chip" onclick="showRoom('bathroom',this)"><i class="fa-solid fa-bath"></i> Bathroom</button>
-</div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eco-Friendly House — Interior Experience | Archinova</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: linear-gradient(135deg, #050d1a, #0b1c2d, #08121f);
+        color: #e8e2d9;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+      canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        pointer-events: none;
+      }
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(7, 13, 26, 0.92);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(26, 158, 143, 0.25);
+      }
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 48px;
+        max-width: 1400px;
+        margin: auto;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 20px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        color: #e8edf5;
+        text-decoration: none;
+      }
+      .logo img {
+        width: 38px;
+        height: 38px;
+        object-fit: contain;
+        border-radius: 4px;
+      }
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: rgba(232, 226, 217, 0.5);
+        text-decoration: none;
+        font-size: 12px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        transition: color 0.25s;
+      }
+      .back-link:hover {
+        color: #1a9e8f;
+      }
+      .hero {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        padding: 70px 24px 50px;
+      }
+      .hero-eyebrow {
+        font-size: 11px;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: #1a9e8f;
+        display: block;
+        margin-bottom: 14px;
+      }
+      .hero h1 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(36px, 6vw, 64px);
+        font-weight: 300;
+        line-height: 1.1;
+        color: #e8e2d9;
+      }
+      .hero h1 em {
+        color: #1a9e8f;
+        font-style: italic;
+      }
+      .hero-divider {
+        width: 56px;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, #1a9e8f, transparent);
+        margin: 20px auto 14px;
+      }
+      .hero-sub {
+        font-size: 14px;
+        color: rgba(232, 226, 217, 0.45);
+        letter-spacing: 0.04em;
+      }
+      .chips-wrap {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+        padding: 0 24px 52px;
+      }
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 26px;
+        border: 1.5px solid rgba(26, 158, 143, 0.4);
+        border-radius: 999px;
+        background: rgba(26, 158, 143, 0.07);
+        color: #1a9e8f;
+        font-family: "DM Sans", sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.25s;
+      }
+      .chip:hover,
+      .chip.active {
+        background: #1a9e8f;
+        color: white;
+        border-color: #1a9e8f;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 22px rgba(26, 158, 143, 0.35);
+      }
+      .room-section {
+        display: none;
+        position: relative;
+        z-index: 1;
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 32px 80px;
+        animation: fadeUp 0.5s ease both;
+      }
+      .room-section.active {
+        display: block;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .room-header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+      .room-header h2 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 32px;
+        font-weight: 300;
+        color: #e8e2d9;
+      }
+      .room-header h2 em {
+        color: #1a9e8f;
+        font-style: italic;
+      }
+      .room-header p {
+        font-size: 13px;
+        color: rgba(232, 226, 217, 0.4);
+        margin-top: 6px;
+      }
+      .img-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 22px;
+      }
+      .img-card {
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid rgba(232, 226, 217, 0.07);
+        background: rgba(255, 255, 255, 0.025);
+        transition: all 0.35s;
+      }
+      .img-card:hover {
+        transform: translateY(-7px);
+        border-color: rgba(26, 158, 143, 0.35);
+        box-shadow: 0 22px 55px rgba(0, 0, 0, 0.45);
+      }
+      .img-card img {
+        width: 100%;
+        height: 240px;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.5s ease;
+      }
+      .img-card:hover img {
+        transform: scale(1.05);
+      }
+      .img-caption {
+        padding: 16px 18px 18px;
+      }
+      .img-caption h4 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 18px;
+        font-weight: 400;
+        color: #1a9e8f;
+        margin-bottom: 5px;
+      }
+      .img-caption p {
+        font-size: 12px;
+        color: rgba(232, 226, 217, 0.45);
+        line-height: 1.65;
+      }
+      .detail-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 10px;
+      }
+      .dtag {
+        padding: 3px 11px;
+        background: rgba(26, 158, 143, 0.1);
+        border: 1px solid rgba(26, 158, 143, 0.25);
+        border-radius: 999px;
+        font-size: 11px;
+        color: #1a9e8f;
+      }
+      .cta-bar {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        padding: 40px;
+        border: 1px solid rgba(26, 158, 143, 0.2);
+        border-radius: 8px;
+        background: rgba(26, 158, 143, 0.05);
+        max-width: 1280px;
+        margin: 0 auto 80px;
+      }
+      .cta-bar h3 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 26px;
+        font-weight: 300;
+        color: #e8e2d9;
+        margin-bottom: 8px;
+      }
+      .cta-bar p {
+        font-size: 13px;
+        color: rgba(232, 226, 217, 0.4);
+        margin-bottom: 22px;
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 36px;
+        background: linear-gradient(135deg, #1a9e8f, #0d6e63);
+        border: none;
+        border-radius: 4px;
+        color: white;
+        font-family: "DM Sans", sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        text-decoration: none;
+        transition: all 0.3s;
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 28px rgba(26, 158, 143, 0.4);
+      }
+      @media (max-width: 640px) {
+        .navbar {
+          padding: 14px 20px;
+        }
+        .hero {
+          padding: 50px 16px 36px;
+        }
+        .chips-wrap {
+          padding: 0 16px 36px;
+        }
+        .room-section {
+          padding: 0 16px 60px;
+        }
+        .img-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="bg"></canvas>
+    <header>
+      <div class="navbar">
+        <a href="index.html" class="logo"
+          ><img src="logo.jpeg" alt="Archinova" /> Archinova</a
+        >
+        <a href="ecofriendly.html" class="back-link"
+          ><i class="fa-solid fa-arrow-left"></i> Back to Eco-Friendly House</a
+        >
+      </div>
+    </header>
+    <div class="hero">
+      <span class="hero-eyebrow">Interior Experience</span>
+      <h1>Eco-Friendly <em>House</em> Interiors</h1>
+      <div class="hero-divider"></div>
+      <p class="hero-sub">
+        Solar powered · Rainwater harvesting · Natural materials · Choose a room
+        below
+      </p>
+    </div>
+    <div class="chips-wrap">
+      <button class="chip active" onclick="showRoom('living', this)">
+        <i class="fa-solid fa-couch"></i> Living Room
+      </button>
+      <button class="chip" onclick="showRoom('bedroom', this)">
+        <i class="fa-solid fa-bed"></i> Bedroom
+      </button>
+      <button class="chip" onclick="showRoom('kitchen', this)">
+        <i class="fa-solid fa-kitchen-set"></i> Kitchen
+      </button>
+      <button class="chip" onclick="showRoom('bathroom', this)">
+        <i class="fa-solid fa-bath"></i> Bathroom
+      </button>
+    </div>
 
-<!-- LIVING -->
-<div class="room-section active" id="room-living">
-  <div class="room-header"><h2>Living Room — <em>Eco-Friendly House</em></h2><p>Reclaimed wood, green walls, natural light harvesting · ₹80K – ₹1.5L</p></div>
-  <div class="img-grid">
-    <div class="img-card"><img src="mv\biolr.jpg" alt=""><div class="img-caption"><h4>Biophilic Living Room</h4><p>Living moss wall panel, reclaimed timber floor, jute sofa, solar-powered skylights and zero-VOC paint walls.</p><div class="detail-tags"><span class="dtag">Moss Wall</span><span class="dtag">Reclaimed Timber</span><span class="dtag">Solar Skylight</span></div></div></div>
-    <div class="img-card"><img src="mv\ecolr.jpg" alt=""><div class="img-caption"><h4>Earthy Eco Lounge</h4><p>Rammed earth feature wall, bamboo furniture, natural linen upholstery, passive cooling through design.</p><div class="detail-tags"><span class="dtag">Rammed Earth</span><span class="dtag">Bamboo</span><span class="dtag">Passive Cooling</span></div></div></div>
-    <div class="img-card"><img src="mv\greenlr.jpg" alt=""><div class="img-caption"><h4>Green Living Space</h4><p>Vertical garden partition, cork flooring, upcycled furniture pieces, LED solar lighting strips.</p><div class="detail-tags"><span class="dtag">Vertical Garden</span><span class="dtag">Cork Floor</span><span class="dtag">Upcycled</span></div></div></div>
-    <div class="img-card"><img src="mv\netlr.jpg" alt=""><div class="img-caption"><h4>Net Zero Living</h4><p>Thermal mass walls, manually operable clerestory windows, hand-woven rug, reclaimed brick feature wall.</p><div class="detail-tags"><span class="dtag">Thermal Mass</span><span class="dtag">Clerestory</span><span class="dtag">Reclaimed Brick</span></div></div></div>
-  </div>
-</div>
+    <!-- LIVING -->
+    <div class="room-section active" id="room-living">
+      <div class="room-header">
+        <h2>Living Room — <em>Eco-Friendly House</em></h2>
+        <p>
+          Reclaimed wood, green walls, natural light harvesting · ₹80K – ₹1.5L
+        </p>
+      </div>
+      <div class="img-grid">
+        <div class="img-card">
+          <img src="mv\biolr.jpg" alt="" />
+          <div class="img-caption">
+            <h4>Biophilic Living Room</h4>
+            <p>
+              Living moss wall panel, reclaimed timber floor, jute sofa,
+              solar-powered skylights and zero-VOC paint walls.
+            </p>
+            <div class="detail-tags">
+              <span class="dtag">Moss Wall</span
+              ><span class="dtag">Reclaimed Timber</span
+              ><span class="dtag">Solar Skylight</span>
+            </div>
+          </div>
+        </div>
+        <div class="img-card">
+          <img src="mv\ecolr.jpg" alt="" />
+          <div class="img-caption">
+            <h4>Earthy Eco Lounge</h4>
+            <p>
+              Rammed earth feature wall, bamboo furniture, natural linen
+              upholstery, passive cooling through design.
+            </p>
+            <div class="detail-tags">
+              <span class="dtag">Rammed Earth</span
+              ><span class="dtag">Bamboo</span
+              ><span class="dtag">Passive Cooling</span>
+            </div>
+          </div>
+        </div>
+        <div class="img-card">
+          <img src="mv\greenlr.jpg" alt="" />
+          <div class="img-caption">
+            <h4>Green Living Space</h4>
+            <p>
+              Vertical garden partition, cork flooring, upcycled furniture
+              pieces, LED solar lighting strips.
+            </p>
+            <div class="detail-tags">
+              <span class="dtag">Vertical Garden</span
+              ><span class="dtag">Cork Floor</span
+              ><span class="dtag">Upcycled</span>
+            </div>
+          </div>
+        </div>
+        <div class="img-card">
+          <img src="mv\netlr.jpg" alt="" />
+          <div class="img-caption">
+            <h4>Net Zero Living</h4>
+            <p>
+              Thermal mass walls, manually operable clerestory windows,
+              hand-woven rug, reclaimed brick feature wall.
+            </p>
+            <div class="detail-tags">
+              <span class="dtag">Thermal Mass</span
+              ><span class="dtag">Clerestory</span
+              ><span class="dtag">Reclaimed Brick</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<!-- BEDROOM -->
-<div class="room-section" id="room-bedroom">
-  <div class="room-header"><h2>Bedroom — <em>Eco-Friendly House</em></h2><p>Organic cotton, natural ventilation, non-toxic finishes · ₹70K – ₹1.5L</p></div>
-  <div class="img-grid">
-    <div class="img-card"><img src="mv\organicbr.jpg" alt=""><div class="img-caption"><h4>Organic Bedroom</h4><p>GOTS-certified organic cotton bedding, bamboo bed frame, non-toxic beeswax wood finish, plant-filtered air.</p><div class="detail-tags"><span class="dtag">Organic Cotton</span><span class="dtag">Bamboo Frame</span><span class="dtag">Non-Toxic</span></div></div></div>
-    <div class="img-card"><img src="mv\forestbr.jpg" alt=""><div class="img-caption"><h4>Forest Bedroom</h4><p>Live-edge walnut headboard, fern planters on shelf, wool blanket, passive solar window seat.</p><div class="detail-tags"><span class="dtag">Live Edge</span><span class="dtag">Fern Planters</span><span class="dtag">Wool Blanket</span></div></div></div>
-    <div class="img-card"><img src="mv\claybr.jpg" alt=""><div class="img-caption"><h4>Clay & Cane Bedroom</h4><p>Clay plaster walls (natural humidity regulation), cane headboard, jute lampshade, hand-block print curtains.</p><div class="detail-tags"><span class="dtag">Clay Plaster</span><span class="dtag">Cane</span><span class="dtag">Block Print</span></div></div></div>
-    <div class="img-card"><img src="mv\offbr.jpg" alt=""><div class="img-caption"><h4>Off-Grid Bedroom</h4><p>Solar-charged reading lamp, reclaimed pallet bed, open wardrobe with hemp hangers, mushroom insulation walls.</p><div class="detail-tags"><span class="dtag">Solar Lamp</span><span class="dtag">Pallet Bed</span><span class="dtag">Hemp Insulation</span></div></div></div>
-  </div>
-</div>
+    <!-- BEDROOM -->
+    <div class="room-section" id="room-bedroom">
+      <div class="room-header">
+        <h2>Bedroom — <em>Eco-Friendly House</em></h2>
+        <p>
+          Organic cotton, natural ventilation, non-toxic finishes · ₹70K – ₹1.5L
+        </p>
+      </div>
+      <div class="img-grid">
+        <div class="img-card">
+          <img src="mv\organicbr.jpg" alt="" />
+          <div class="img-caption">
+            <h4>Organic Bedroom</h4>
+            <p>
+              GOTS-certified organic cotton bedding, bamboo bed frame, non-toxic
+              beeswax wood finish, plant-filtered air.
+            </p>
+            <div class="detail-tags">
+              <span class="dtag">Organic Cotton</span
+              ><span class="dtag">Bamboo Frame</span
+              ><span class="dtag">Non-Toxic</span>
+            </div>
+          </div>
+        </div>
+        <div class="img-card">
+          <img src="mv\forestbr.jpg" alt="" />
+          <div class="img-caption">
+            <h4>Forest Bedroom</h4>
+            <p>
+              Live-edge walnut headboard, fern planters on shelf, wool blanket,
+              passive solar window seat.
+            </p>
+            <div class="detail-tags">
+              <span class="dtag">Live Edge</span
+              ><span class="dtag">Fern Planters</span
+              ><span class="dtag">Wool Blanket</span>
+            </div>
+          </div>
+        </div>
+        <div class="img-card">
+          <img src="mv\claybr.jpg" alt="" />
+          <div class="img-caption">
+            <h4>Clay & Cane Bedroom</h4>
+            <p>
+              Clay plaster walls (natural humidity regulation), cane headboard,
+              jute lampshade, hand-block print curtains.
+            </p>
+            <div class="detail-tags">
+              <span class="dtag">Clay Plaster</span
+              ><span class="dtag">Cane</span
+              ><span class="dtag">Block Print</span>
+            </div>
+          </div>
+        </div>
+        <div class="img-card">
+          <img src="mv\offbr.jpg" alt="" />
+          <div class="img-caption">
+            <h4>Off-Grid Bedroom</h4>
+            <p>
+              Solar-charged reading lamp, reclaimed pallet bed, open wardrobe
+              with hemp hangers, mushroom insulation walls.
+            </p>
+            <div class="detail-tags">
+              <span class="dtag">Solar Lamp</span
+              ><span class="dtag">Pallet Bed</span
+              ><span class="dtag">Hemp Insulation</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<!-- KITCHEN -->
-<div class="room-section" id="room-kitchen">
-  <div class="room-header"><h2>Kitchen — <em>Eco-Friendly House</em></h2><p>Rainwater tap, compost system, reclaimed wood shelves · ₹80K – ₹1.5L</p></div>
-  <div class="img-grid">
-    <div class="img-card"><img src="mv\zerokit.jpg" alt=""><div class="img-caption"><h4>Zero Waste Kitchen</h4><p>Integrated compost bin, rainwater-fed tap, bamboo drawer organizers, zero-VOC cabinet paint, induction hob.</p><div class="detail-tags"><span class="dtag">Compost Bin</span><span class="dtag">Rainwater Tap</span><span class="dtag">Bamboo</span></div></div></div>
-    <div class="img-card"><img src="mv\rekit.jpg" alt=""><div class="img-caption"><h4>Reclaimed Kitchen</h4><p>Reclaimed scaffold board shelves, recycled glass splashback, salvaged stone counter, energy-A++ appliances.</p><div class="detail-tags"><span class="dtag">Reclaimed Wood</span><span class="dtag">Recycled Glass</span><span class="dtag">A++ Appliances</span></div></div></div>
-    <div class="img-card"><img src="mv\herbkit.jpg" alt=""><div class="img-caption"><h4>Herb Garden Kitchen</h4><p>Window herb garden, clay pot storage, natural beeswax countertop finish, handmade ceramic sink.</p><div class="detail-tags"><span class="dtag">Herb Garden</span><span class="dtag">Beeswax Finish</span><span class="dtag">Ceramic Sink</span></div></div></div>
-    <div class="img-card"><img src="mv\solarkit.jpg" alt=""><div class="img-caption"><h4>Solar Kitchen</h4><p>Solar-heated water, passive ventilation chimney above hob, natural clay tile floor, wicker basket pantry.</p><div class="detail-tags"><span class="dtag">Solar Water</span><span class="dtag">Passive Vent</span><span class="dtag">Clay Tile</span></div></div></div>
-  </div>
-</div>
+    <!-- KITCHEN -->
+    <div class="room-section" id="room-kitchen">
+      <div class="room-header">
+        <h2>Kitchen — <em>Eco-Friendly House</em></h2>
+        <p>
+          Rainwater tap, compost system, reclaimed wood shelves · ₹80K – ₹1.5L
+        </p>
+      </div>
+      <div class="img-grid">
+        <div class="img-card">
+          <img src="mv\zerokit.jpg" alt="" />
+          <div class="img-caption">
+            <h4>Zero Waste Kitchen</h4>
+            <p>
+              Integrated compost bin, rainwater-fed tap, bamboo drawer
+              organizers, zero-VOC cabinet paint, induction hob.
+            </p>
+            <div class="detail-tags">
+              <span class="dtag">Compost Bin</span
+              ><span class="dtag">Rainwater Tap</span
+              ><span class="dtag">Bamboo</span>
+            </div>
+          </div>
+        </div>
+        <div class="img-card">
+          <img src="mv\rekit.jpg" alt="" />
+          <div class="img-caption">
+            <h4>Reclaimed Kitchen</h4>
+            <p>
+              Reclaimed scaffold board shelves, recycled glass splashback,
+              salvaged stone counter, energy-A++ appliances.
+            </p>
+            <div class="detail-tags">
+              <span class="dtag">Reclaimed Wood</span
+              ><span class="dtag">Recycled Glass</span
+              ><span class="dtag">A++ Appliances</span>
+            </div>
+          </div>
+        </div>
+        <div class="img-card">
+          <img src="mv\herbkit.jpg" alt="" />
+          <div class="img-caption">
+            <h4>Herb Garden Kitchen</h4>
+            <p>
+              Window herb garden, clay pot storage, natural beeswax countertop
+              finish, handmade ceramic sink.
+            </p>
+            <div class="detail-tags">
+              <span class="dtag">Herb Garden</span
+              ><span class="dtag">Beeswax Finish</span
+              ><span class="dtag">Ceramic Sink</span>
+            </div>
+          </div>
+        </div>
+        <div class="img-card">
+          <img src="mv\solarkit.jpg" alt="" />
+          <div class="img-caption">
+            <h4>Solar Kitchen</h4>
+            <p>
+              Solar-heated water, passive ventilation chimney above hob, natural
+              clay tile floor, wicker basket pantry.
+            </p>
+            <div class="detail-tags">
+              <span class="dtag">Solar Water</span
+              ><span class="dtag">Passive Vent</span
+              ><span class="dtag">Clay Tile</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<!-- BATHROOM -->
-<div class="room-section" id="room-bathroom">
-  <div class="room-header"><h2>Bathroom — <em>Eco-Friendly House</em></h2><p>Low-flow fixtures, natural stone, grey water recycling · ₹40K – ₹90K</p></div>
-  <div class="img-grid">
-    <div class="img-card"><img src="mv\greybar.jpg" alt=""><div class="img-caption"><h4>Grey Water Bathroom</h4><p>Low-flow rainfall shower, grey water recycling system, reclaimed wood vanity, recycled glass basin.</p><div class="detail-tags"><span class="dtag">Low Flow</span><span class="dtag">Grey Water</span><span class="dtag">Recycled Glass</span></div></div></div>
-    <div class="img-card"><img src="mv\naturalbar.jpg" alt=""><div class="img-caption"><h4>Natural Stone Bath</h4><p>Hand-cut local stone tiles, copper soaking tub, beeswax wood floor, living fern wall for humidity balance.</p><div class="detail-tags"><span class="dtag">Local Stone</span><span class="dtag">Copper Tub</span><span class="dtag">Fern Wall</span></div></div></div>
-    <div class="img-card"><img src="mv\bamboobar.jpg" alt=""><div class="img-caption"><h4>Bamboo Bathroom</h4><p>Bamboo flooring, hemp shower curtain, solid bamboo vanity, neem wood accessories, solar warm-water system.</p><div class="detail-tags"><span class="dtag">Bamboo Floor</span><span class="dtag">Hemp Curtain</span><span class="dtag">Solar Water</span></div></div></div>
-    <div class="img-card"><img src="mv\earthbar.jpg" alt=""><div class="img-caption"><h4>Earthship Bathroom</h4><p>Bottle-wall light filter, rammed earth counter, composting toilet option, open skylight for natural ventilation.</p><div class="detail-tags"><span class="dtag">Bottle Wall</span><span class="dtag">Rammed Earth</span><span class="dtag">Skylight</span></div></div></div>
-  </div>
-</div>
+    <!-- BATHROOM -->
+    <div class="room-section" id="room-bathroom">
+      <div class="room-header">
+        <h2>Bathroom — <em>Eco-Friendly House</em></h2>
+        <p>
+          Low-flow fixtures, natural stone, grey water recycling · ₹40K – ₹90K
+        </p>
+      </div>
+      <div class="img-grid">
+        <div class="img-card">
+          <img src="mv\greybar.jpg" alt="" />
+          <div class="img-caption">
+            <h4>Grey Water Bathroom</h4>
+            <p>
+              Low-flow rainfall shower, grey water recycling system, reclaimed
+              wood vanity, recycled glass basin.
+            </p>
+            <div class="detail-tags">
+              <span class="dtag">Low Flow</span
+              ><span class="dtag">Grey Water</span
+              ><span class="dtag">Recycled Glass</span>
+            </div>
+          </div>
+        </div>
+        <div class="img-card">
+          <img src="mv\naturalbar.jpg" alt="" />
+          <div class="img-caption">
+            <h4>Natural Stone Bath</h4>
+            <p>
+              Hand-cut local stone tiles, copper soaking tub, beeswax wood
+              floor, living fern wall for humidity balance.
+            </p>
+            <div class="detail-tags">
+              <span class="dtag">Local Stone</span
+              ><span class="dtag">Copper Tub</span
+              ><span class="dtag">Fern Wall</span>
+            </div>
+          </div>
+        </div>
+        <div class="img-card">
+          <img src="mv\bamboobar.jpg" alt="" />
+          <div class="img-caption">
+            <h4>Bamboo Bathroom</h4>
+            <p>
+              Bamboo flooring, hemp shower curtain, solid bamboo vanity, neem
+              wood accessories, solar warm-water system.
+            </p>
+            <div class="detail-tags">
+              <span class="dtag">Bamboo Floor</span
+              ><span class="dtag">Hemp Curtain</span
+              ><span class="dtag">Solar Water</span>
+            </div>
+          </div>
+        </div>
+        <div class="img-card">
+          <img src="mv\earthbar.jpg" alt="" />
+          <div class="img-caption">
+            <h4>Earthship Bathroom</h4>
+            <p>
+              Bottle-wall light filter, rammed earth counter, composting toilet
+              option, open skylight for natural ventilation.
+            </p>
+            <div class="detail-tags">
+              <span class="dtag">Bottle Wall</span
+              ><span class="dtag">Rammed Earth</span
+              ><span class="dtag">Skylight</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<div class="cta-bar">
-  <h3>Want to customise your <em style="color:#1a9e8f;font-style:italic">own interior?</em></h3>
-  <p>Use the full AI Interior Builder to pick your region, climate, room and style</p>
-  <a href="interior.html" class="cta-btn"><i class="fa-solid fa-wand-magic-sparkles"></i> Open Interior Builder</a>
-</div>
-<script>
-function showRoom(id,el){document.querySelectorAll('.room-section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));document.getElementById('room-'+id).classList.add('active');el.classList.add('active');document.getElementById('room-'+id).scrollIntoView({behavior:'smooth',block:'start'});}
-const canvas=document.getElementById('bg'),ctx=canvas.getContext('2d');canvas.width=window.innerWidth;canvas.height=window.innerHeight;window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});const pts=Array.from({length:70},()=>({x:Math.random()*canvas.width,y:Math.random()*canvas.height,vx:(Math.random()-.5)*.9,vy:(Math.random()-.5)*.9}));(function draw(){ctx.clearRect(0,0,canvas.width,canvas.height);pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>canvas.width)p.vx*=-1;if(p.y<0||p.y>canvas.height)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,1.8,0,Math.PI*2);ctx.fillStyle='#1a9e8f';ctx.fill();});for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y;if(Math.sqrt(dx*dx+dy*dy)<110){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle='rgba(26,158,143,0.08)';ctx.stroke();}}requestAnimationFrame(draw);})();
-</script>
-</body>
+    <div class="cta-bar">
+      <h3>
+        Want to customise your
+        <em style="color: #1a9e8f; font-style: italic">own interior?</em>
+      </h3>
+      <p>
+        Use the full AI Interior Builder to pick your region, climate, room and
+        style
+      </p>
+      <a href="interior.html" class="cta-btn"
+        ><i class="fa-solid fa-wand-magic-sparkles"></i> Open Interior
+        Builder</a
+      >
+    </div>
+    <script>
+      function showRoom(id, el) {
+        document
+          .querySelectorAll(".room-section")
+          .forEach((s) => s.classList.remove("active"));
+        document
+          .querySelectorAll(".chip")
+          .forEach((c) => c.classList.remove("active"));
+        document.getElementById("room-" + id).classList.add("active");
+        el.classList.add("active");
+        document
+          .getElementById("room-" + id)
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+      const canvas = document.getElementById("bg"),
+        ctx = canvas.getContext("2d");
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      window.addEventListener("resize", () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      });
+      const pts = Array.from({ length: 70 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.9,
+        vy: (Math.random() - 0.5) * 0.9,
+      }));
+      (function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        pts.forEach((p) => {
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+          if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, 1.8, 0, Math.PI * 2);
+          ctx.fillStyle = "#1a9e8f";
+          ctx.fill();
+        });
+        for (let i = 0; i < pts.length; i++)
+          for (let j = i + 1; j < pts.length; j++) {
+            const dx = pts[i].x - pts[j].x,
+              dy = pts[i].y - pts[j].y;
+            if (Math.sqrt(dx * dx + dy * dy) < 110) {
+              ctx.beginPath();
+              ctx.moveTo(pts[i].x, pts[i].y);
+              ctx.lineTo(pts[j].x, pts[j].y);
+              ctx.strokeStyle = "rgba(26,158,143,0.08)";
+              ctx.stroke();
+            }
+          }
+        requestAnimationFrame(draw);
+      })();
+    </script>
+  </body>
 </html>
