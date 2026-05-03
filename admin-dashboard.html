@@ -447,6 +447,76 @@
         color: var(--red);
       }
 
+
+      /* PACKAGE REQUESTS */
+      #pkgContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .pkg-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 22px 26px;
+        backdrop-filter: blur(16px);
+        transition: border-color 0.2s;
+      }
+      .pkg-card:hover { border-color: rgba(0,201,167,0.3); }
+      .pkg-card.pkg-pending { border-left: 3px solid var(--gold); }
+      .pkg-card.pkg-done    { border-left: 3px solid var(--teal); }
+      .pkg-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+      .pkg-name  { font-weight: 500; font-size: 15px; }
+      .pkg-meta  { font-size: 12px; color: var(--muted); margin-top: 3px; display: flex; gap: 14px; flex-wrap: wrap; }
+      .pkg-meta i { color: var(--teal); margin-right: 4px; }
+      .pkg-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; flex-shrink: 0; }
+      .pkg-time  { font-size: 11px; color: var(--muted); white-space: nowrap; }
+      .badge-pending { background: rgba(245,197,66,0.12); color: var(--gold); border: 1px solid rgba(245,197,66,0.3); }
+      .badge-done    { background: rgba(0,201,167,0.12); color: var(--teal); border: 1px solid rgba(0,201,167,0.25); }
+      .pkg-designs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+      .pkg-design-thumb {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255,255,255,0.04);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 6px 10px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .pkg-design-thumb img {
+        width: 32px; height: 32px;
+        border-radius: 4px;
+        object-fit: cover;
+      }
+      .pkg-design-thumb span { color: var(--text); font-weight: 500; }
+      .pkg-info-row {
+        display: flex;
+        gap: 18px;
+        flex-wrap: wrap;
+        margin-bottom: 14px;
+        font-size: 13px;
+        color: rgba(232,237,245,0.7);
+      }
+      .pkg-info-row b { color: var(--teal); margin-right: 4px; }
+      .pkg-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+      .btn-action.pkg-done-btn  { border-color: rgba(0,201,167,0.2); }
+      .btn-action.pkg-done-btn:hover { background: rgba(0,201,167,0.1); color: var(--teal); }
+      .btn-action.pkg-del-btn   { border-color: rgba(239,68,68,0.2); }
+      .btn-action.pkg-del-btn:hover  { background: rgba(239,68,68,0.1); color: var(--red); }
+
       /* CHART */
       .chart-card {
         background: var(--surface);
@@ -817,6 +887,9 @@
         <button class="dash-tab" id="tabUsers" onclick="switchTab('Users')">
           <i class="fa-solid fa-users"></i> Users &amp; Designs
         </button>
+        <button class="dash-tab" id="tabPackages" onclick="switchTab('Packages')">
+          <i class="fa-solid fa-box-open"></i> Package Requests
+        </button>
       </div>
 
       <!-- ══ MESSAGES TAB ══ -->
@@ -969,6 +1042,39 @@
           </div>
         </div>
       </div>
+
+      <!-- ══ PACKAGE REQUESTS TAB ══ -->
+      <div class="tab-pane" id="panePackages">
+        <div class="stats-row cols-3">
+          <div class="stat-card ac-gold">
+            <div class="stat-icon gold"><i class="fa-solid fa-box-open"></i></div>
+            <div class="stat-label">Total Requests</div>
+            <div class="stat-value gold" id="pkgStatTotal">—</div>
+          </div>
+          <div class="stat-card ac-red">
+            <div class="stat-icon red"><i class="fa-solid fa-hourglass-half"></i></div>
+            <div class="stat-label">Pending</div>
+            <div class="stat-value red" id="pkgStatPending">—</div>
+          </div>
+          <div class="stat-card ac-teal">
+            <div class="stat-icon teal"><i class="fa-solid fa-circle-check"></i></div>
+            <div class="stat-label">Completed</div>
+            <div class="stat-value" id="pkgStatDone">—</div>
+          </div>
+        </div>
+        <div class="section-header">
+          <div class="section-title"><i class="fa-solid fa-box-open"></i> Package Requests</div>
+          <div class="filter-row">
+            <button class="filter-btn active" onclick="setPkgFilter('all',this)">All</button>
+            <button class="filter-btn" onclick="setPkgFilter('pending',this)">Pending</button>
+            <button class="filter-btn" onclick="setPkgFilter('done',this)">Completed</button>
+          </div>
+        </div>
+        <div id="pkgContainer">
+          <div class="state-msg"><i class="fa-solid fa-spinner fa-spin"></i> Loading requests…</div>
+        </div>
+      </div>
+
       <!-- /paneUsers -->
     </div>
     <!-- /page -->
@@ -990,7 +1096,8 @@
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
     <script>
-      // Single app — archinova-41427 — auth, users, designs AND messages
+      // Default app (archinova-41427) — auth + users/designs
+      // Must be the DEFAULT app so auth session persists from login page
       if (!firebase.apps.length)
         firebase.initializeApp({
           apiKey: "AIzaSyAgcKYuy18C6lEvfxhI_Ir_9AWPtyWj7WM",
@@ -1003,8 +1110,8 @@
         });
 
       const auth = firebase.auth();
-      const db = firebase.firestore();   // users, designs AND messages — all in archinova
-      const msgDb = db;                  // alias — same project, no second app needed
+      const db = firebase.firestore();
+      const msgDb = db; // messages now in same archinova-41427 project
 
       let allMessages = [],
         currentFilter = "all",
@@ -1014,6 +1121,7 @@
         usersData = [],
         designFilter = "all";
       let usersLoaded = false;
+      let pkgLoaded = false, allPkgRequests = [], pkgFilter = "all";
 
       // ── AUTH GUARD ──────────────────────────────────────────────
       auth.onAuthStateChanged(async (user) => {
@@ -1042,6 +1150,7 @@
         document.getElementById("tab" + name).classList.add("active");
         document.getElementById("pane" + name).classList.add("active");
         if (name === "Users" && !usersLoaded) loadUsersTab();
+        if (name === "Packages" && !pkgLoaded) loadPackages();
       }
 
       // ══════════════════════════════════════════════
@@ -1495,6 +1604,109 @@
       }
 
       // ── HELPERS ─────────────────────────────────────────────────
+
+      // ══════════════════════════════════════════════
+      // PACKAGE REQUESTS
+      // ══════════════════════════════════════════════
+      function loadPackages() {
+        pkgLoaded = true;
+        db.collection("package_requests")
+          .orderBy("requestedAt", "desc")
+          .onSnapshot(function(snap) {
+            allPkgRequests = snap.docs.map(function(d) { return Object.assign({ id: d.id }, d.data()); });
+            renderPackages();
+          }, function(err) {
+            console.error(err);
+            document.getElementById("pkgContainer").innerHTML =
+              '<div class="state-msg">Failed to load requests.</div>';
+          });
+      }
+
+      function setPkgFilter(f, btn) {
+        pkgFilter = f;
+        document.querySelectorAll("#panePackages .filter-btn")
+          .forEach(function(b) { b.classList.remove("active"); });
+        btn.classList.add("active");
+        renderPackages();
+      }
+
+      function renderPackages() {
+        var list = pkgFilter === "all"
+          ? allPkgRequests
+          : allPkgRequests.filter(function(r) { return r.status === pkgFilter; });
+
+        var total   = allPkgRequests.length;
+        var pending = allPkgRequests.filter(function(r) { return r.status === "pending"; }).length;
+        var done    = allPkgRequests.filter(function(r) { return r.status === "done"; }).length;
+        document.getElementById("pkgStatTotal").textContent   = total;
+        document.getElementById("pkgStatPending").textContent = pending;
+        document.getElementById("pkgStatDone").textContent    = done;
+
+        var c = document.getElementById("pkgContainer");
+        if (!list.length) {
+          c.innerHTML = '<div class="state-msg"><i class="fa-solid fa-inbox"></i> No requests found.</div>';
+          return;
+        }
+
+        c.innerHTML = list.map(function(r) {
+          var ts = (r.requestedAt && r.requestedAt.toDate)
+            ? r.requestedAt.toDate().toLocaleString("en-IN", { day:"numeric", month:"short", year:"numeric", hour:"2-digit", minute:"2-digit" })
+            : "—";
+          var isPending = r.status !== "done";
+          var statusBadge = isPending
+            ? '<span class="badge badge-pending">Pending</span>'
+            : '<span class="badge badge-done">Completed</span>';
+          var designs = r.designs || [];
+          var thumbs = designs.map(function(d) {
+            return '<div class="pkg-design-thumb">' +
+              (d.img ? '<img src="' + esc(d.img) + '" alt="' + esc(d.title) + '" onerror="this.onerror=null;this.remove()">' : '') +
+              '<span>' + esc(d.title || "Design") + '</span>' +
+              (d.budget ? '<span style="color:var(--gold);font-size:11px;">' + esc(d.budget) + '</span>' : '') +
+              '</div>';
+          }).join("");
+
+          return '<div class="pkg-card ' + (isPending ? 'pkg-pending' : 'pkg-done') + '" id="pkg-' + r.id + '">' +
+            '<div class="pkg-header">' +
+              '<div>' +
+                '<div class="pkg-name">' + esc(r.name || "—") + '</div>' +
+                '<div class="pkg-meta">' +
+                  '<span><i class="fa-solid fa-envelope"></i>' + esc(r.email || "—") + '</span>' +
+                  (r.company ? '<span><i class="fa-solid fa-building"></i>' + esc(r.company) + '</span>' : '') +
+                '</div>' +
+              '</div>' +
+              '<div class="pkg-right">' +
+                '<span class="pkg-time">' + ts + '</span>' +
+                statusBadge +
+              '</div>' +
+            '</div>' +
+            ((r.budget || r.timeline) ?
+              '<div class="pkg-info-row">' +
+                (r.budget   ? '<span><b>Budget: </b>' + esc(r.budget) + '</span>' : '') +
+                (r.timeline ? '<span><b>Timeline: </b>' + esc(r.timeline) + '</span>' : '') +
+                '<span><b>Designs: </b>' + designs.length + '</span>' +
+              '</div>' : '') +
+            (thumbs ? '<div class="pkg-designs">' + thumbs + '</div>' : '') +
+            '<div class="pkg-actions">' +
+              (isPending
+                ? '<button class="btn-action pkg-done-btn" onclick="markPkgDone(this.dataset.id)" data-id="' + r.id + '"><i class="fa-solid fa-circle-check"></i> Mark Complete</button>'
+                : '<button class="btn-action" onclick="markPkgPending(this.dataset.id)" data-id="' + r.id + '"><i class="fa-solid fa-rotate-left"></i> Mark Pending</button>') +
+              '<button class="btn-action pkg-del-btn" onclick="deletePkg(this.dataset.id)" data-id="' + r.id + '"><i class="fa-solid fa-trash"></i> Delete</button>' +
+            '</div>' +
+          '</div>';
+        }).join("");
+      }
+
+      function markPkgDone(id) {
+        db.collection("package_requests").doc(id).update({ status: "done" });
+      }
+      function markPkgPending(id) {
+        db.collection("package_requests").doc(id).update({ status: "pending" });
+      }
+      function deletePkg(id) {
+        if (!confirm("Delete this package request?")) return;
+        db.collection("package_requests").doc(id).delete();
+      }
+
       function esc(str) {
         if (!str) return "";
         return String(str)

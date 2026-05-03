@@ -1286,10 +1286,10 @@
       </div>
     </div>
 
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+    <!-- Firebase SDKs (compat v9) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
     <script>
       /* ── Neural canvas ── */
@@ -1377,22 +1377,8 @@
         .querySelectorAll(".stat-num[data-target]")
         .forEach((c) => countObs.observe(c));
 
-      /* ── Single Firebase app: archinova (auth + messages) ── */
-      const ARCHINOVA_CONFIG = {
-        apiKey: "AIzaSyAgcKYuy18C6lEvfxhI_Ir_9AWPtyWj7WM",
-        authDomain: "archinova-41427.firebaseapp.com",
-        projectId: "archinova-41427",
-        storageBucket: "archinova-41427.firebasestorage.app",
-        messagingSenderId: "710524988548",
-        appId: "1:710524988548:web:34526229a8ad3051c866d1",
-        measurementId: "G-NG36M26981",
-      };
-
-      // Initialise once — reuse if already initialised by inline nav script
-      if (!firebase.apps.length) firebase.initializeApp(ARCHINOVA_CONFIG);
-      const _db = firebase.firestore();
-
-      /* ── Form submit — writes to archinova/messages ── */
+      /* ── Form submit ── */
+      // Save messages to archinova-41427 (same project as auth)
       async function handleSubmit() {
         const fname = document.getElementById("fname").value.trim();
         const lname = document.getElementById("lname").value.trim();
@@ -1408,11 +1394,12 @@
 
         const btn = document.querySelector(".form-submit");
         btn.disabled = true;
-        btn.innerHTML =
-          '<i class="fa-solid fa-spinner fa-spin"></i> Sending\u2026';
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending…';
 
         try {
-          await _db.collection("messages").add({
+          const db = firebase.firestore();
+
+          await db.collection("messages").add({
             firstName: fname,
             lastName: lname,
             email: email,
@@ -1438,26 +1425,41 @@
             '<i class="fa-solid fa-paper-plane"></i> Send Message';
         }
       }
-
-      /* ── Auth Nav ── */
+    </script>
+    <script>
+      /* ── archinova Auth Nav ── */
       function archinovaLogout() {
-        firebase.auth().signOut().then(function () {
-          window.location.href = "login.html";
-        });
+        firebase
+          .auth()
+          .signOut()
+          .then(function () {
+            window.location.href = "login.html";
+          });
       }
-
-      firebase.auth().onAuthStateChanged(function (user) {
-        var li = document.getElementById("navAuthLi");
-        if (!li) return;
-        if (user) {
-          li.innerHTML =
-            '<a href="#" class="btn-login" onclick="archinovaLogout();return false;"><i class="fa-solid fa-right-from-bracket" style="margin-right:5px;"></i>Logout</a>';
-        } else {
-          li.innerHTML =
-            '<a href="login.html?from=about.html" class="btn-login">Login</a>';
-        }
-        li.style.visibility = "visible";
-      });
+      (function () {
+        if (!firebase.apps.length)
+          firebase.initializeApp({
+            apiKey: "AIzaSyAgcKYuy18C6lEvfxhI_Ir_9AWPtyWj7WM",
+            authDomain: "archinova-41427.firebaseapp.com",
+            projectId: "archinova-41427",
+            storageBucket: "archinova-41427.firebasestorage.app",
+            messagingSenderId: "710524988548",
+            appId: "1:710524988548:web:34526229a8ad3051c866d1",
+            measurementId: "G-NG36M26981",
+          });
+        firebase.auth().onAuthStateChanged(function (user) {
+          var li = document.getElementById("navAuthLi");
+          if (!li) return;
+          if (user) {
+            li.innerHTML =
+              '<a href="#" class="btn-login" onclick="archinovaLogout();return false;"><i class="fa-solid fa-right-from-bracket" style="margin-right:5px;"></i>Logout</a>';
+          } else {
+            li.innerHTML =
+              '<a href="login.html?from=about.html" class="btn-login">Login</a>';
+          }
+          li.style.visibility = "visible";
+        });
+      })();
     </script>
   </body>
 </html>
