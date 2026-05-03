@@ -1,589 +1,2284 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Gallery – ArchiNova</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --n1:#060F18;--n2:#0B1825;--n3:#102030;--n4:#162840;
-  --t:#0ABFBF;--t2:#08A8A8;--tdim:rgba(10,191,191,0.12);--tbrd:rgba(10,191,191,0.3);
-  --w:#fff;--w80:rgba(255,255,255,0.8);--w50:rgba(255,255,255,0.5);
-  --w10:rgba(255,255,255,0.1);--w06:rgba(255,255,255,0.06);
-  --brd:rgba(255,255,255,0.08);--brd2:rgba(255,255,255,0.16);
-  --r:12px;
-}
-html,body{font-family:'Outfit',sans-serif;background:var(--n1);color:var(--w);line-height:1.6;overflow-x:hidden}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Gallery – ArchiNova</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --n1: #060f18;
+        --n2: #0b1825;
+        --n3: #102030;
+        --n4: #162840;
+        --t: #0abfbf;
+        --t2: #08a8a8;
+        --tdim: rgba(10, 191, 191, 0.12);
+        --tbrd: rgba(10, 191, 191, 0.3);
+        --w: #fff;
+        --w80: rgba(255, 255, 255, 0.8);
+        --w50: rgba(255, 255, 255, 0.5);
+        --w10: rgba(255, 255, 255, 0.1);
+        --w06: rgba(255, 255, 255, 0.06);
+        --brd: rgba(255, 255, 255, 0.08);
+        --brd2: rgba(255, 255, 255, 0.16);
+        --r: 12px;
+      }
+      html,
+      body {
+        font-family: "Outfit", sans-serif;
+        background: var(--n1);
+        color: var(--w);
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
 
-/* ANIMATED BG */
-.bg-anim{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-.bg-anim span{position:absolute;border-radius:50%;animation:bgfloat linear infinite}
-.bg-anim span:nth-child(1){width:800px;height:800px;background:radial-gradient(circle,rgba(10,191,191,.05),transparent 65%);top:-300px;left:-250px;animation-duration:22s}
-.bg-anim span:nth-child(2){width:600px;height:600px;background:radial-gradient(circle,rgba(13,77,107,.07),transparent 65%);top:40%;right:-200px;animation-duration:28s;animation-delay:-9s}
-.bg-anim span:nth-child(3){width:500px;height:500px;background:radial-gradient(circle,rgba(10,191,191,.04),transparent 65%);bottom:-200px;left:40%;animation-duration:20s;animation-delay:-5s}
-@keyframes bgfloat{0%{transform:translateY(0) scale(1)}50%{transform:translateY(-60px) scale(1.07)}100%{transform:translateY(0) scale(1)}}
-
-/* NAV */
-nav{background:rgba(11,24,37,0.92);border-bottom:1px solid var(--brd);padding:0 2.5rem;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:500;backdrop-filter:blur(14px)}
-.logo{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:700;letter-spacing:.5px;color:var(--w)}.logo em{color:var(--t);font-style:normal}
-.nav-links{display:flex;gap:2rem;list-style:none}
-.nav-links a{color:var(--w50);text-decoration:none;font-size:.83rem;font-weight:400;transition:color .2s}
-.nav-links a:hover,.nav-links a.active{color:var(--w)}
-.nav-r{display:flex;gap:10px;align-items:center;position:relative}
-.nb{padding:7px 16px;border-radius:8px;font-size:.8rem;font-weight:500;cursor:pointer;border:1px solid var(--brd2);background:transparent;color:var(--w80);transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:6px;font-family:'Outfit',sans-serif}
-.nb:hover{border-color:var(--t);color:var(--t)}
-.nb-teal{background:var(--t);border-color:var(--t);color:var(--n1);font-weight:600}.nb-teal:hover{background:var(--t2);color:var(--n1)}
-.wcount{background:var(--t);color:var(--n1);border-radius:100px;padding:1px 6px;font-size:.65rem;margin-left:2px;display:none;font-weight:700}
-
-/* WISHLIST PANEL */
-.wp{position:absolute;top:calc(100% + 8px);right:0;width:290px;background:var(--n3);border:1px solid var(--tbrd);border-radius:var(--r);padding:1.2rem;display:none;z-index:800;max-height:380px;overflow-y:auto;box-shadow:0 16px 40px rgba(0,0,0,.4)}
-.wp.open{display:block}
-.wp h3{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--t);margin-bottom:.9rem;display:flex;align-items:center;gap:6px}
-.wp-empty{font-size:.8rem;color:var(--w50);text-align:center;padding:.8rem 0;font-weight:300}
-.wi{display:flex;justify-content:space-between;align-items:center;padding:.55rem 0;border-bottom:1px solid var(--brd);font-size:.8rem;color:var(--w80)}
-.wi-cat{font-size:.65rem;color:var(--w50);margin-top:1px}
-.wi-rm{background:transparent;border:none;color:var(--w50);cursor:pointer;font-size:.9rem;transition:color .2s;padding:2px}
-.wi-rm:hover{color:#F87171}
-.wp-link{display:block;margin-top:.9rem;text-align:center;font-size:.78rem;color:var(--t);text-decoration:none;font-weight:500;border-top:1px solid var(--brd);padding-top:.7rem;transition:opacity .2s}
-.wp-link:hover{opacity:.7}
-
-/* HERO */
-.hero{position:relative;z-index:10;background:rgba(11,24,37,0.55);border-bottom:1px solid var(--brd);padding:5rem 2.5rem 3.5rem;text-align:center;overflow:hidden}
-.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,5vw,4rem);font-weight:700;line-height:1.08;max-width:780px;margin:0 auto;letter-spacing:-.5px}
-.hero h1 em{color:var(--t);font-style:italic}
-.hero p{color:var(--w50);font-size:.92rem;max-width:560px;margin:1rem auto 0;line-height:1.75;font-weight:300}
-.hero-stats{display:flex;justify-content:center;gap:3rem;margin-top:2.5rem;flex-wrap:wrap}
-.hs{text-align:center}
-.hs-n{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:700;color:var(--t)}
-.hs-l{font-size:.7rem;color:var(--w50);margin-top:2px;font-weight:400;letter-spacing:.06em}
-.hero-cats{display:flex;justify-content:center;gap:.8rem;margin-top:2.5rem;flex-wrap:wrap}
-.hcat{padding:8px 22px;border-radius:100px;border:1px solid var(--brd2);background:transparent;color:var(--w50);font-size:.82rem;font-weight:500;cursor:pointer;transition:all .2s;text-decoration:none;font-family:'Outfit',sans-serif}
-.hcat:hover,.hcat.active{background:var(--tdim);border-color:var(--t);color:var(--t)}
-
-/* STICKY SEARCH BAR */
-.sbar{background:rgba(11,24,37,0.95);border-bottom:1px solid var(--brd);padding:.8rem 2.5rem;display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;position:sticky;top:64px;z-index:400;backdrop-filter:blur(12px)}
-.srch{display:flex;align-items:center;gap:8px;background:var(--n4);border:1px solid var(--brd2);border-radius:9px;padding:8px 13px;flex:1;max-width:380px}
-.srch svg{width:14px;height:14px;fill:var(--w50);flex-shrink:0}
-.srch input{background:transparent;border:none;outline:none;color:var(--w);font-size:.83rem;width:100%;font-family:'Outfit',sans-serif}
-.srch input::placeholder{color:var(--w50)}
-.sf-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
-.sf{padding:6px 14px;border-radius:8px;border:1px solid var(--brd2);background:transparent;color:var(--w50);font-size:.76rem;font-weight:500;cursor:pointer;transition:all .2s;font-family:'Outfit',sans-serif}
-.sf:hover{border-color:var(--t);color:var(--t)}
-.sf.on{background:var(--tdim);border-color:var(--t);color:var(--t)}
-.ss{background:var(--n4);border:1px solid var(--brd2);color:var(--w80);padding:6px 10px;border-radius:8px;font-size:.76rem;cursor:pointer;outline:none;font-family:'Outfit',sans-serif;margin-left:auto}
-.ss option{background:var(--n2)}
-
-/* MAIN */
-main{max-width:1320px;margin:0 auto;padding:2.5rem 2.5rem 5rem;position:relative;z-index:10}
-
-/* SECTION */
-.section{margin-bottom:3.5rem}
-.sec-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:.5rem}
-.sec-head h2{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:700;color:var(--w);display:flex;align-items:center;gap:10px;letter-spacing:-.2px}
-.sec-icon{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0}
-.si-h{background:rgba(10,191,191,.14);border:1px solid var(--tbrd)}
-.si-a{background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.3)}
-.si-o{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25)}
-.see-all{font-size:.78rem;color:var(--t);text-decoration:none;font-weight:500;transition:opacity .2s;font-family:'Outfit',sans-serif}
-.see-all:hover{opacity:.65}
-.shline{width:32px;height:2px;border-radius:2px;margin-top:.6rem}
-.shline-t{background:var(--t)}.shline-p{background:#7C3AED}.shline-a{background:#F59E0B}
-
-/* CARDS GRID */
-.cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
-
-/* DESIGN CARD */
-.card{background:var(--n3);border:1px solid var(--brd);border-radius:var(--r);overflow:hidden;transition:border-color .2s,transform .22s;display:flex;flex-direction:column}
-.card:hover{border-color:var(--tbrd);transform:translateY(-4px)}
-.card-img{position:relative;overflow:hidden;height:210px}
-.card-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .45s}
-.card:hover .card-img img{transform:scale(1.07)}
-.card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(6,15,24,.68) 0%,transparent 55%)}
-.card-badges{position:absolute;top:12px;left:12px;display:flex;gap:5px}
-.bdg{font-size:.62rem;font-weight:600;padding:2px 8px;border-radius:100px}
-.b-new{background:var(--t);color:var(--n1)}.b-pop{background:#F59E0B;color:#1a0f00}.b-trend{background:#8B5CF6;color:#fff}.b-feat{background:#EC4899;color:#fff}
-.card-rating{position:absolute;bottom:12px;right:12px;background:rgba(6,15,24,.88);border:1px solid var(--brd2);border-radius:7px;padding:2px 9px;font-size:.7rem;font-weight:600;display:flex;align-items:center;gap:3px}
-.card-rating em{color:#F59E0B;font-style:normal}
-.card-body{padding:1.1rem 1.1rem .5rem;flex:1}
-.card-cat{font-size:.64rem;text-transform:uppercase;letter-spacing:1px;color:var(--t);font-weight:600}
-.card-body h3{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;margin-top:3px;color:var(--w)}
-.card-body p{font-size:.77rem;color:var(--w50);margin-top:5px;line-height:1.6;font-weight:300}
-.card-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
-.ct{font-size:.62rem;background:var(--w06);border:1px solid var(--brd);color:var(--w50);padding:2px 7px;border-radius:100px}
-.card-foot{padding:.75rem 1.1rem 1rem;display:flex;justify-content:space-between;align-items:center;gap:6px;border-top:1px solid var(--brd)}
-.card-info{font-size:.72rem;color:var(--w50)}
-.card-btns{display:flex;gap:6px}
-.csave{padding:6px 9px;border-radius:7px;border:1px solid var(--brd2);background:transparent;color:var(--w50);cursor:pointer;font-size:.8rem;transition:all .2s}
-.csave:hover{border-color:var(--t);color:var(--t)}
-.csave.saved{background:var(--tdim);border-color:var(--t);color:var(--t)}
-.cview{padding:6px 16px;border-radius:7px;border:none;background:var(--t);color:var(--n1);font-size:.78rem;font-weight:600;cursor:pointer;transition:background .2s;text-decoration:none;display:inline-flex;align-items:center;font-family:'Outfit',sans-serif}
-.cview:hover{background:var(--t2)}
-
-/* OFFICE TYPE CARDS */
-.office-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
-.otype{background:var(--n3);border:1px solid var(--brd);border-radius:var(--r);overflow:hidden;transition:all .22s;text-decoration:none;display:block}
-.otype:hover{border-color:var(--tbrd);transform:translateY(-4px)}
-.otype-img{height:200px;overflow:hidden;position:relative}
-.otype-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .45s}
-.otype:hover .otype-img img{transform:scale(1.07)}
-.otype-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(6,15,24,.72) 0%,transparent 52%)}
-.otype-badge{position:absolute;top:12px;left:12px;font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:100px;text-transform:uppercase}
-.otype-body{padding:1.2rem}
-.otype-body h3{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:700;color:var(--w)}
-.otype-body p{font-size:.78rem;color:var(--w50);margin-top:4px;line-height:1.55;font-weight:300}
-.otype-foot{padding:0 1.2rem 1.2rem;display:flex;justify-content:space-between;align-items:center}
-.otype-count{font-size:.72rem;color:var(--w50)}
-.otype-btn{padding:6px 14px;border-radius:7px;border:none;background:var(--t);color:var(--n1);font-size:.75rem;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif}
-.otype:hover .otype-btn{background:var(--t2)}
-
-.nores{text-align:center;padding:3.5rem 1rem;color:var(--w50);grid-column:1/-1}
-.nores h3{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--w80);margin-bottom:.4rem}
-
-footer{background:var(--n2);border-top:1px solid var(--brd);color:var(--w50);text-align:center;padding:1.8rem;font-size:.75rem;position:relative;z-index:10}
-footer strong{color:var(--t)}
-.toastwrap{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);z-index:9999;pointer-events:none}
-.toast{background:var(--n3);border:1px solid var(--tbrd);color:var(--w);padding:10px 20px;border-radius:100px;font-size:.82rem;display:flex;align-items:center;gap:8px;opacity:0;transform:translateY(16px);transition:all .3s;white-space:nowrap;font-family:'Outfit',sans-serif}
-.toast.show{opacity:1;transform:translateY(0)}
-.tdot{width:6px;height:6px;border-radius:50%;background:var(--t)}
-
-@media(max-width:900px){.cards-grid,.office-grid{grid-template-columns:1fr 1fr}nav .nav-links{display:none}}
-@media(max-width:560px){.cards-grid,.office-grid{grid-template-columns:1fr}}
-</style>
-</head>
-<body>
-<div class="bg-anim"><span></span><span></span><span></span></div>
-
-<!-- NAV -->
-<nav>
-  <div class="logo">Archi<em>Nova</em></div>
-  <ul class="nav-links">
-    <li><a href="home.html">Home</a></li>
-    <li><a href="gallery.html" class="active">Gallery</a></li>
-    <li><a href="#">Recommend</a></li>
-    <li><a href="#">About</a></li>
-  </ul>
-  <div class="nav-r">
-    <button class="nb" onclick="toggleWP(event)">&#9825; Wishlist <span class="wcount" id="wcount">0</span></button>
-    <div class="wp" id="wp">
-      <h3>&#9829; Saved Designs</h3>
-      <div id="wpItems"><div class="wp-empty">No designs saved yet.</div></div>
-      <a href="wishlist.html" class="wp-link">View full wishlist →</a>
-    </div>
-  </div>
-</nav>
-
-<!-- HERO -->
-<div class="hero" style="position:relative;z-index:10">
-  <h1><em>Architecture</em> Design Gallery</h1>
-  <p>Explore hundreds of curated residential, apartment, and office designs. Filter by style, save favourites, and start your ArchiNova journey.</p>
-  <div class="hero-stats">
-    <div class="hs"><div class="hs-n">200+</div><div class="hs-l">Curated Designs</div></div>
-    <div class="hs"><div class="hs-n">3</div><div class="hs-l">Categories</div></div>
-    <div class="hs"><div class="hs-n">4.9</div><div class="hs-l">Avg Rating</div></div>
-    <div class="hs"><div class="hs-n">500+</div><div class="hs-l">Happy Clients</div></div>
-  </div>
-  <div class="hero-cats">
-    <button class="hcat active" onclick="filterSec('all',this)">All</button>
-    <button class="hcat" onclick="filterSec('house',this)">Houses</button>
-    <button class="hcat" onclick="filterSec('apartment',this)">Apartments</button>
-    <button class="hcat" onclick="filterSec('office',this)">Offices</button>
-  </div>
-</div>
-
-<!-- STICKY SEARCH BAR -->
-<div class="sbar">
-  <div class="srch">
-    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" fill="none"/><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
-    <input type="text" id="gsearch" placeholder="Search designs — Modern Villa, Loft, Futuristic..." oninput="applyFilters()"/>
-  </div>
-  <div class="sf-row">
-    <button class="sf on" onclick="setSF(this,'all')">All Styles</button>
-    <button class="sf" onclick="setSF(this,'modern')">Modern</button>
-    <button class="sf" onclick="setSF(this,'luxury')">Luxury</button>
-    <button class="sf" onclick="setSF(this,'minimal')">Minimal</button>
-    <button class="sf" onclick="setSF(this,'eco')">Eco</button>
-    <button class="sf" onclick="setSF(this,'futuristic')">Futuristic</button>
-  </div>
-  <select class="ss" id="galSort" onchange="applySort(this.value)">
-    <option value="def">Sort: Default</option>
-    <option value="rat">Highest Rated</option>
-    <option value="az">A – Z</option>
-  </select>
-</div>
-
-<main>
-
-<!-- HOUSES -->
-<div class="section" id="sec-house" data-sec="house">
-  <div class="sec-head">
-    <div><h2><div class="sec-icon si-h">&#127968;</div>Houses</h2><div class="shline shline-t"></div></div>
-    <a href="#" class="see-all">All 12 house designs ›</a>
-  </div>
-  <div class="cards-grid">
-    <div class="card" data-name="Modern Villa" data-tags="modern luxury villa glass" data-cat="house" data-rat="4.9">
-      <div class="card-img"><img src="gallery-images/modernvilla.jpg" onerror="this.src='https://images.unsplash.com/photo-1613977257363-707ba9348227?w=600&q=75'" alt="Modern Villa"/><div class="card-overlay"></div><div class="card-badges"><span class="bdg b-feat">Featured</span></div><div class="card-rating"><em>&#9733;</em>4.9</div></div>
-      <div class="card-body"><div class="card-cat">Residential &bull; Villa</div><h3>Modern Villa</h3><p>Sleek lines, floor-to-ceiling glass, and open-plan living spaces for the contemporary family.</p><div class="card-tags"><span class="ct">Modern</span><span class="ct">Glass Facade</span><span class="ct">Luxury</span></div></div>
-      <div class="card-foot"><div class="card-info">4–6 BHK &bull; 5,000+ sq ft</div><div class="card-btns"><button class="csave" onclick="saveCard(this,'Modern Villa','House','https://images.unsplash.com/photo-1613977257363-707ba9348227?w=400','5,000+ sq ft','Family','₹2.5Cr+',['Modern','Luxury','Glass'])">&#9825;</button><a href="modernvilla.html" class="cview">View →</a></div></div>
-    </div>
-    <div class="card" data-name="Minimal House" data-tags="minimal clean white calm" data-cat="house" data-rat="4.7">
-      <div class="card-img"><img src="gallery-images/minimalhouse.jpg" onerror="this.src='https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=75'" alt="Minimal House"/><div class="card-overlay"></div><div class="card-badges"><span class="bdg b-new">New</span></div><div class="card-rating"><em>&#9733;</em>4.7</div></div>
-      <div class="card-body"><div class="card-cat">Residential &bull; Minimal</div><h3>Minimal House</h3><p>Less is more — clean surfaces, natural light, and only what matters. A sanctuary of calm.</p><div class="card-tags"><span class="ct">Minimal</span><span class="ct">Neutral</span><span class="ct">Calm</span></div></div>
-      <div class="card-foot"><div class="card-info">3–4 BHK &bull; 2,800 sq ft</div><div class="card-btns"><button class="csave" onclick="saveCard(this,'Minimal House','House','https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400','2,800 sq ft','Family','₹85L–₹1.2Cr',['Minimal','Modern','Clean'])">&#9825;</button><a href="minimalhouse.html" class="cview">View →</a></div></div>
-    </div>
-    <div class="card" data-name="Luxury Duplex" data-tags="luxury duplex premium rooftop" data-cat="house" data-rat="4.8">
-      <div class="card-img"><img src="gallery-images/luxury.jpg" onerror="this.src='https://images.unsplash.com/photo-1560184897-ae75f418493e?w=600&q=75'" alt="Luxury Duplex"/><div class="card-overlay"></div><div class="card-badges"><span class="bdg b-pop">Popular</span></div><div class="card-rating"><em>&#9733;</em>4.8</div></div>
-      <div class="card-body"><div class="card-cat">Residential &bull; Duplex</div><h3>Luxury Duplex</h3><p>Double-storey grandeur with private terraces, home cinema, and a rooftop infinity pool.</p><div class="card-tags"><span class="ct">Luxury</span><span class="ct">Duplex</span><span class="ct">Rooftop Pool</span></div></div>
-      <div class="card-foot"><div class="card-info">5 BHK &bull; 7,000 sq ft</div><div class="card-btns"><button class="csave" onclick="saveCard(this,'Luxury Duplex','House','https://images.unsplash.com/photo-1560184897-ae75f418493e?w=400','7,000 sq ft','Family','₹3.5Cr+',['Luxury','Duplex','Pool'])">&#9825;</button><a href="luxuryduplex.html" class="cview">View →</a></div></div>
-    </div>
-    <div class="card" data-name="Traditional House" data-tags="traditional heritage classic courtyard" data-cat="house" data-rat="4.6">
-      <div class="card-img"><img src="gallery-images/traditional.jpg" onerror="this.src='https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&q=75'" alt="Traditional House"/><div class="card-overlay"></div><div class="card-rating"><em>&#9733;</em>4.6</div></div>
-      <div class="card-body"><div class="card-cat">Residential &bull; Traditional</div><h3>Traditional House</h3><p>Heritage craft meets modern comfort — carved woodwork, inner courtyards, and warm terracotta.</p><div class="card-tags"><span class="ct">Traditional</span><span class="ct">Heritage</span><span class="ct">Courtyard</span></div></div>
-      <div class="card-foot"><div class="card-info">4 BHK &bull; 3,500 sq ft</div><div class="card-btns"><button class="csave" onclick="saveCard(this,'Traditional House','House','https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=400','3,500 sq ft','Family','₹1Cr–₹1.5Cr',['Traditional','Heritage','Classic'])">&#9825;</button><a href="traditionalhouse.html" class="cview">View →</a></div></div>
-    </div>
-    <div class="card" data-name="Futuristic House" data-tags="futuristic tech modern smart" data-cat="house" data-rat="4.9">
-      <div class="card-img"><img src="gallery-images/futuristic.jpg" onerror="this.src='https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=75'" alt="Futuristic House"/><div class="card-overlay"></div><div class="card-badges"><span class="bdg b-trend">Trending</span></div><div class="card-rating"><em>&#9733;</em>4.9</div></div>
-      <div class="card-body"><div class="card-cat">Residential &bull; Futuristic</div><h3>Futuristic House</h3><p>AI-integrated smart systems, fluid organic forms, and holographic room controls.</p><div class="card-tags"><span class="ct">Futuristic</span><span class="ct">Smart Home</span><span class="ct">AI</span></div></div>
-      <div class="card-foot"><div class="card-info">4–5 BHK &bull; 4,500 sq ft</div><div class="card-btns"><button class="csave" onclick="saveCard(this,'Futuristic House','House','https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400','4,500 sq ft','Family','₹2Cr–₹3Cr',['Futuristic','AI','Smart'])">&#9825;</button><a href="futuristichouse.html" class="cview">View →</a></div></div>
-    </div>
-    <div class="card" data-name="Eco-Friendly House" data-tags="eco green sustainable solar" data-cat="house" data-rat="4.8">
-      <div class="card-img"><img src="gallery-images/ecofriendly.jpg" onerror="this.src='https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=600&q=75'" alt="Eco-Friendly House"/><div class="card-overlay"></div><div class="card-badges"><span class="bdg b-new">New</span></div><div class="card-rating"><em>&#9733;</em>4.8</div></div>
-      <div class="card-body"><div class="card-cat">Residential &bull; Eco</div><h3>Eco-Friendly House</h3><p>Net-zero living with solar roofing, rainwater harvesting, and a living green facade.</p><div class="card-tags"><span class="ct">Eco</span><span class="ct">Solar</span><span class="ct">Green Facade</span></div></div>
-      <div class="card-foot"><div class="card-info">3–4 BHK &bull; 3,200 sq ft</div><div class="card-btns"><button class="csave" onclick="saveCard(this,'Eco-Friendly House','House','https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400','3,200 sq ft','Family','₹90L–₹1.4Cr',['Eco','Green','Solar'])">&#9825;</button><a href="ecofriendly.html" class="cview">View →</a></div></div>
-    </div>
-  </div>
-</div>
-
-<!-- APARTMENTS -->
-<div class="section" id="sec-apartment" data-sec="apartment">
-  <div class="sec-head">
-    <div><h2><div class="sec-icon si-a">&#127970;</div>Apartments</h2><div class="shline shline-p"></div></div>
-    <a href="#" class="see-all">All 9 apartment designs ›</a>
-  </div>
-  <div class="cards-grid">
-    <div class="card" data-name="Modern Apartment" data-tags="modern apartment contemporary open" data-cat="apartment" data-rat="4.7">
-      <div class="card-img"><img src="gallery-images/modernapartment.jpg" onerror="this.src='https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&q=75'" alt="Modern Apartment"/><div class="card-overlay"></div><div class="card-badges"><span class="bdg b-pop">Popular</span></div><div class="card-rating"><em>&#9733;</em>4.7</div></div>
-      <div class="card-body"><div class="card-cat">Apartment &bull; Modern</div><h3>Modern Apartment</h3><p>City living reimagined — open layouts, statement lighting, and a curated material palette.</p><div class="card-tags"><span class="ct">Modern</span><span class="ct">City</span><span class="ct">Open Plan</span></div></div>
-      <div class="card-foot"><div class="card-info">2–3 BHK &bull; 1,400 sq ft</div><div class="card-btns"><button class="csave" onclick="saveCard(this,'Modern Apartment','Apartment','https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=400','1,400 sq ft','Urban','₹55L–₹85L',['Modern','City','Open'])">&#9825;</button><a href="modernappartment.html" class="cview">View →</a></div></div>
-    </div>
-    <div class="card" data-name="Luxury Apartment" data-tags="luxury apartment premium penthouse marble" data-cat="apartment" data-rat="4.9">
-      <div class="card-img"><img src="gallery-images/luxuryapartment.jpg" onerror="this.src='https://images.unsplash.com/photo-1484154218962-a197022b5858?w=600&q=75'" alt="Luxury Apartment"/><div class="card-overlay"></div><div class="card-badges"><span class="bdg b-feat">Featured</span></div><div class="card-rating"><em>&#9733;</em>4.9</div></div>
-      <div class="card-body"><div class="card-cat">Apartment &bull; Luxury</div><h3>Luxury Apartment</h3><p>Penthouse-level finishes — marble, warm brass, and a panoramic glass corner for city views.</p><div class="card-tags"><span class="ct">Luxury</span><span class="ct">Marble</span><span class="ct">Penthouse</span></div></div>
-      <div class="card-foot"><div class="card-info">3–4 BHK &bull; 2,800 sq ft</div><div class="card-btns"><button class="csave" onclick="saveCard(this,'Luxury Apartment','Apartment','https://images.unsplash.com/photo-1484154218962-a197022b5858?w=400','2,800 sq ft','Urban','₹1.5Cr–₹2.5Cr',['Luxury','Marble','Penthouse'])">&#9825;</button><a href="luxuryapartment.html" class="cview">View →</a></div></div>
-    </div>
-    <div class="card" data-name="Studio Apartment" data-tags="studio compact minimal smart storage" data-cat="apartment" data-rat="4.6">
-      <div class="card-img"><img src="gallery-images/studioapartment.jpg" onerror="this.src='https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=600&q=75'" alt="Studio Apartment"/><div class="card-overlay"></div><div class="card-badges"><span class="bdg b-new">New</span></div><div class="card-rating"><em>&#9733;</em>4.6</div></div>
-      <div class="card-body"><div class="card-cat">Apartment &bull; Studio</div><h3>Studio Apartment</h3><p>Every centimetre counts — convertible furniture, hidden storage, and multi-function zones.</p><div class="card-tags"><span class="ct">Studio</span><span class="ct">Compact</span><span class="ct">Smart Storage</span></div></div>
-      <div class="card-foot"><div class="card-info">Studio &bull; 650 sq ft</div><div class="card-btns"><button class="csave" onclick="saveCard(this,'Studio Apartment','Apartment','https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=400','650 sq ft','Solo','₹30L–₹45L',['Studio','Compact','Minimal'])">&#9825;</button><a href="studioapartment.html" class="cview">View →</a></div></div>
-    </div>
-  </div>
-</div>
-
-<!-- OFFICES -->
-<div class="section" id="sec-office" data-sec="office">
-  <div class="sec-head">
-    <div><h2><div class="sec-icon si-o">&#127970;</div>Offices</h2><div class="shline shline-a"></div></div>
-    <a href="#" class="see-all">All office types ›</a>
-  </div>
-  <div class="office-grid">
-    <a href="corporate-office.html" class="otype" data-cat="office" data-tags="corporate formal professional" data-name="Corporate Office">
-      <div class="otype-img"><img src="gallery-images/corporateoffice.jpg" onerror="this.src='https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=75'" alt="Corporate Office"/><div class="otype-ov"></div><div class="otype-badge" style="background:var(--t);color:var(--n1)">Corporate</div></div>
-      <div class="otype-body"><h3>Corporate Office</h3><p>Prestigious environments built for enterprise teams — boardrooms, executive suites, and branded reception areas.</p></div>
-      <div class="otype-foot"><div class="otype-count">8 designs &bull; 4.8 avg &#9733;</div><div class="otype-btn">Explore →</div></div>
-    </a>
-    <a href="startupoffice.html" class="otype" data-cat="office" data-tags="startup agile open creative" data-name="Startup Office">
-      <div class="otype-img"><img src="gallery-images/startupoffice.jpg" onerror="this.src='https://images.unsplash.com/photo-1556761175-4b46a572b786?w=600&q=75'" alt="Startup Office"/><div class="otype-ov"></div><div class="otype-badge" style="background:#8B5CF6;color:#fff">Startup</div></div>
-      <div class="otype-body"><h3>Startup Office</h3><p>Bold, agile, and built to scale — open floors, collaboration zones, and modular furniture for fast-moving teams.</p></div>
-      <div class="otype-foot"><div class="otype-count">6 designs &bull; 4.9 avg &#9733;</div><div class="otype-btn">Explore →</div></div>
-    </a>
-    <a href="futuristicoffice.html" class="otype" data-cat="office" data-tags="futuristic ai smart tech" data-name="Futuristic Office">
-      <div class="otype-img"><img src="gallery-images/futuristicoffice.jpg" onerror="this.src='https://images.unsplash.com/photo-1488998427799-e3362cec87c3?w=600&q=75'" alt="Futuristic Office"/><div class="otype-ov"></div><div class="otype-badge" style="background:#00E5FF;color:#04080F">Futuristic</div></div>
-      <div class="otype-body"><h3>Futuristic Office</h3><p>AI-orchestrated, sensor-responsive, and architecturally bold — spaces built for the next decade of work.</p></div>
-      <div class="otype-foot"><div class="otype-count">6 concepts &bull; 4.9 avg &#9733;</div><div class="otype-btn">Explore →</div></div>
-    </a>
-  </div>
-</div>
-
-</main>
-
-<footer>&copy; 2025 <strong>ArchiNova</strong> &bull; Architectural Design &amp; Innovation Recommendation System &bull; All rights reserved.</footer>
-<div class="toastwrap"><div class="toast" id="toast"><div class="tdot"></div><span id="tmsg">Saved!</span></div></div>
-
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-<script>
-/* ── FIREBASE INIT ── */
-const firebaseConfig = {
-  apiKey: "AIzaSyAgcKYuy18C6lEvfxhI_Ir_9AWPtyWj7WM",
-  authDomain: "archinova-41427.firebaseapp.com",
-  projectId: "archinova-41427",
-  storageBucket: "archinova-41427.firebasestorage.app",
-  messagingSenderId: "710524988548",
-  appId: "1:710524988548:web:34526229a8ad3051c866d1"
-};
-if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
-let currentUser = null;
-
-/* ── LOCAL STORAGE (offline fallback) ── */
-var KEY='archinova_wishlist';
-function getWL(){try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){return[]}}
-function setWL(l){localStorage.setItem(KEY,JSON.stringify(l))}
-
-/* ── TOAST ── */
-function showToast(msg){
-  var t=document.getElementById('toast');
-  document.getElementById('tmsg').textContent=msg;
-  t.classList.add('show');clearTimeout(t._to);
-  t._to=setTimeout(function(){t.classList.remove('show')},3000);
-}
-
-/* ── BADGE ── */
-function updateBadge(){
-  var b=document.getElementById('wcount');
-  if(currentUser){
-    db.collection('saved_designs')
-      .where('userId','==',currentUser.uid)
-      .where('source','==','gallery')
-      .get()
-      .then(function(snap){
-        if(snap.size){b.style.display='inline';b.textContent=snap.size}
-        else{b.style.display='none'}
-      }).catch(function(){
-        // fallback to localStorage
-        var wl=getWL();
-        if(wl.length){b.style.display='inline';b.textContent=wl.length}else{b.style.display='none'}
-      });
-  } else {
-    var wl=getWL();
-    if(wl.length){b.style.display='inline';b.textContent=wl.length}else{b.style.display='none'}
-  }
-}
-
-/* ── WISHLIST PANEL ── */
-function renderWP(){
-  var box=document.getElementById('wpItems');
-  if(currentUser){
-    box.innerHTML='<div class="wp-empty" style="font-size:.75rem;color:var(--t)">Loading…</div>';
-    db.collection('saved_designs')
-      .where('userId','==',currentUser.uid)
-      .where('source','==','gallery')
-      .get()
-      .then(function(snap){
-        if(!snap.size){box.innerHTML='<div class="wp-empty">No designs saved yet.</div>';return}
-        var html=snap.docs.slice(0,5).map(function(doc){
-          var d=doc.data();
-          return '<div class="wi"><div><div>'+d.title+'</div><div class="wi-cat">'+d.section+'</div></div>'
-            +'<button class="wi-rm" onclick="removeWI(\''+doc.id+'\',\''+d.title+'\')">&#10005;</button></div>';
-        }).join('');
-        if(snap.size>5) html+='<div style="font-size:.72rem;color:var(--w50);text-align:center;padding:.4rem 0">+'+(snap.size-5)+' more</div>';
-        box.innerHTML=html;
-      }).catch(function(){renderWPLocal()});
-  } else {
-    renderWPLocal();
-  }
-}
-
-function renderWPLocal(){
-  var wl=getWL();var box=document.getElementById('wpItems');
-  if(!wl.length){box.innerHTML='<div class="wp-empty">No designs saved yet.</div>';return}
-  box.innerHTML=wl.slice(0,5).map(function(d){
-    return '<div class="wi"><div><div>'+d.title+'</div><div class="wi-cat">'+d.section+'</div></div>'
-      +'<button class="wi-rm" onclick="removeWILocal(\''+d.id+'\')">&#10005;</button></div>';
-  }).join('')+(wl.length>5?'<div style="font-size:.72rem;color:var(--w50);text-align:center;padding:.4rem 0">+'+(wl.length-5)+' more</div>':'');
-}
-
-function removeWI(docId, name){
-  if(currentUser){
-    db.collection('saved_designs').doc(docId).delete().then(function(){
-      updateBadge();renderWP();
-      document.querySelectorAll('.csave').forEach(function(b){
-        var c=b.closest('.card');
-        if(c&&c.dataset.name===name){b.classList.remove('saved');b.innerHTML='&#9825;'}
-      });
-      showToast('Removed from Wishlist.');
-    });
-  }
-}
-
-function removeWILocal(id){
-  var wl=getWL().filter(function(d){return d.id!==id});setWL(wl);updateBadge();renderWPLocal();
-  document.querySelectorAll('.csave').forEach(function(b){
-    var c=b.closest('.card');if(c&&c.dataset.name===id){b.classList.remove('saved');b.innerHTML='&#9825;'}
-  });
-  showToast('Removed from Wishlist.');
-}
-
-function toggleWP(e){
-  e.stopPropagation();
-  var p=document.getElementById('wp');
-  p.classList.toggle('open');
-  if(p.classList.contains('open')) renderWP();
-}
-document.addEventListener('click',function(e){
-  var p=document.getElementById('wp');
-  if(p.classList.contains('open')&&!p.contains(e.target))p.classList.remove('open');
-});
-
-/* ── SAVE / UNSAVE CARD ── */
-function saveCard(btn,name,section,img,area,cap,budget,tags){
-  if(currentUser){
-    // Check if already saved in Firestore
-    db.collection('saved_designs')
-      .where('userId','==',currentUser.uid)
-      .where('title','==',name)
-      .where('source','==','gallery')
-      .get()
-      .then(function(snap){
-        if(snap.empty){
-          // Save to Firestore — structure matches dashboard's saved_designs
-          return db.collection('saved_designs').add({
-            userId: currentUser.uid,
-            title: name,
-            section: section,
-            room: section + ' — ' + name,
-            style: section,
-            imageUrl: img,
-            area: area,
-            cap: cap,
-            budget: budget ? budget.replace(/[^\d]/g,'') : '',
-            tags: tags,
-            source: 'gallery',
-            favourite: false,
-            savedAt: firebase.firestore.FieldValue.serverTimestamp()
-          }).then(function(){
-            btn.classList.add('saved');btn.innerHTML='&#9829;';
-            showToast('"'+name+'" saved to Dashboard!');
-            updateBadge();
-          });
-        } else {
-          // Already saved — remove it
-          return snap.docs[0].ref.delete().then(function(){
-            btn.classList.remove('saved');btn.innerHTML='&#9825;';
-            showToast('"'+name+'" removed from Wishlist.');
-            updateBadge();
-          });
+      /* ANIMATED BG */
+      .bg-anim {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .bg-anim span {
+        position: absolute;
+        border-radius: 50%;
+        animation: bgfloat linear infinite;
+      }
+      .bg-anim span:nth-child(1) {
+        width: 800px;
+        height: 800px;
+        background: radial-gradient(
+          circle,
+          rgba(10, 191, 191, 0.05),
+          transparent 65%
+        );
+        top: -300px;
+        left: -250px;
+        animation-duration: 22s;
+      }
+      .bg-anim span:nth-child(2) {
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(
+          circle,
+          rgba(13, 77, 107, 0.07),
+          transparent 65%
+        );
+        top: 40%;
+        right: -200px;
+        animation-duration: 28s;
+        animation-delay: -9s;
+      }
+      .bg-anim span:nth-child(3) {
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(
+          circle,
+          rgba(10, 191, 191, 0.04),
+          transparent 65%
+        );
+        bottom: -200px;
+        left: 40%;
+        animation-duration: 20s;
+        animation-delay: -5s;
+      }
+      @keyframes bgfloat {
+        0% {
+          transform: translateY(0) scale(1);
         }
-      }).catch(function(err){
-        console.warn('Firestore error, using localStorage:',err);
-        saveCardLocal(btn,name,section,img,area,cap,budget,tags);
-      });
-  } else {
-    saveCardLocal(btn,name,section,img,area,cap,budget,tags);
-  }
-}
+        50% {
+          transform: translateY(-60px) scale(1.07);
+        }
+        100% {
+          transform: translateY(0) scale(1);
+        }
+      }
 
-function saveCardLocal(btn,name,section,img,area,cap,budget,tags){
-  var wl=getWL();var idx=wl.findIndex(function(d){return d.id===name});
-  if(idx===-1){
-    wl.push({id:name,title:name,section:section,img:img,area:area,cap:cap,budget:budget,tags:tags,savedAt:new Date().toISOString()});
-    setWL(wl);btn.classList.add('saved');btn.innerHTML='&#9829;';
-    showToast('"'+name+'" saved to Wishlist!');
-  }else{
-    wl.splice(idx,1);setWL(wl);btn.classList.remove('saved');btn.innerHTML='&#9825;';
-    showToast('"'+name+'" removed from Wishlist.');
-  }
-  updateBadge();
-}
+      /* NAV */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: rgba(7, 13, 26, 0.92);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(26, 158, 143, 0.25);
+      }
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 48px;
+        max-width: 1400px;
+        margin: auto;
+      }
+      .logo {
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 22px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        color: #e8edf5;
+        text-decoration: none;
+        transition:
+          letter-spacing 0.35s ease,
+          color 0.35s ease;
+      }
+      .logo-img {
+        width: 44px;
+        height: 44px;
+        object-fit: contain;
+        border-radius: 20px;
+        margin-right: 8px;
+        filter: brightness(1.1);
+        transition:
+          transform 0.35s ease,
+          filter 0.35s ease;
+      }
+      .logo:hover .logo-img {
+        transform: scale(1.12) rotate(-3deg);
+        filter: brightness(1.3) drop-shadow(0 0 10px rgba(12, 185, 192, 0.6));
+      }
+      .logo:hover {
+        letter-spacing: 0.14em;
+        color: rgba(232, 237, 245, 0.9);
+      }
+      nav ul {
+        display: flex;
+        gap: 36px;
+        list-style: none;
+      }
+      nav a {
+        color: rgba(232, 237, 245, 0.45);
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 400;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        position: relative;
+        transition: color 0.3s;
+      }
+      nav a::after {
+        content: "";
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: #1a9e8f;
+        transform: scaleX(0);
+        transition: transform 0.3s;
+        transform-origin: left;
+      }
+      nav a:hover {
+        color: #e8edf5;
+      }
+      nav a:hover::after {
+        transform: scaleX(1);
+      }
+      nav a.active {
+        color: #1a9e8f;
+      }
+      nav a.active::after {
+        transform: scaleX(1);
+      }
+      nav a.btn-login {
+        background: linear-gradient(135deg, #3d0070, #00c9a7);
+        color: #fff !important;
+        padding: 8px 20px;
+        border-radius: 999px;
+        font-weight: 500;
+        letter-spacing: 0.05em;
+        transition: all 0.3s;
+      }
+      nav a.btn-login:hover {
+        background: #007a6b;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 20px rgba(0, 201, 167, 0.4);
+      }
+      nav a.btn-login::after {
+        display: none;
+      }
+      /* WISHLIST PANEL */
+      .wp {
+        position: absolute;
+        top: calc(100% + 12px);
+        right: 0;
+        width: 300px;
+        background: linear-gradient(160deg, var(--n3) 0%, var(--n2) 100%);
+        border: 1px solid var(--tbrd);
+        border-radius: var(--r);
+        padding: 1.25rem;
+        display: none;
+        z-index: 1100;
+        max-height: 400px;
+        overflow-y: auto;
+        box-shadow: 0 20px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(10,191,191,0.08);
+        animation: wpSlideIn 0.22s ease;
+      }
+      @keyframes wpSlideIn {
+        from { opacity: 0; transform: translateY(-8px) scale(0.97); }
+        to   { opacity: 1; transform: translateY(0)  scale(1); }
+      }
+      .wp.open {
+        display: block;
+      }
+      .wp h3 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--t);
+        margin-bottom: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .wp-empty {
+        font-size: 0.8rem;
+        color: var(--w50);
+        text-align: center;
+        padding: 0.8rem 0;
+        font-weight: 300;
+      }
+      .wi {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.55rem 0;
+        border-bottom: 1px solid var(--brd);
+        font-size: 0.8rem;
+        color: var(--w80);
+      }
+      .wi-cat {
+        font-size: 0.65rem;
+        color: var(--w50);
+        margin-top: 1px;
+      }
+      .wi-rm {
+        background: transparent;
+        border: none;
+        color: var(--w50);
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: color 0.2s;
+        padding: 2px;
+      }
+      .wi-rm:hover {
+        color: #f87171;
+      }
+      .wp-link {
+        display: block;
+        margin-top: 0.9rem;
+        text-align: center;
+        font-size: 0.78rem;
+        color: var(--t);
+        text-decoration: none;
+        font-weight: 500;
+        border-top: 1px solid var(--brd);
+        padding-top: 0.7rem;
+        transition: opacity 0.2s;
+      }
+      .wp-link:hover {
+        opacity: 0.7;
+      }
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        gap: 5px;
+        background: none;
+        border: none;
+        padding: 4px;
+        border-radius: 4px;
+        transition: background 0.3s;
+        z-index: 1100;
+      }
+      .hamburger:hover {
+        background: rgba(0, 201, 167, 0.08);
+      }
+      .hamburger span {
+        display: block;
+        width: 24px;
+        height: 1.5px;
+        background: #e8edf5;
+        border-radius: 2px;
+        transition:
+          transform 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+          opacity 0.3s,
+          width 0.3s;
+        transform-origin: center;
+      }
+      .hamburger.open span:nth-child(1) {
+        transform: translateY(6.5px) rotate(45deg);
+      }
+      .hamburger.open span:nth-child(2) {
+        opacity: 0;
+        width: 0;
+      }
+      .hamburger.open span:nth-child(3) {
+        transform: translateY(-6.5px) rotate(-45deg);
+      }
+      .mobile-nav {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 1050;
+        pointer-events: none;
+      }
+      .mobile-nav.open {
+        pointer-events: all;
+      }
+      .mobile-nav-backdrop {
+        position: absolute;
+        inset: 0;
+        background: rgba(14, 0, 32, 0.75);
+        backdrop-filter: blur(6px);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+      }
+      .mobile-nav.open .mobile-nav-backdrop {
+        opacity: 1;
+      }
+      .mobile-nav-panel {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: min(300px, 82vw);
+        height: 100%;
+        background: rgba(18, 5, 38, 0.98);
+        border-left: 1px solid rgba(0, 201, 167, 0.15);
+        display: flex;
+        flex-direction: column;
+        padding: 80px 32px 40px;
+        transform: translateX(100%);
+        transition: transform 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+        box-shadow: -20px 0 60px rgba(0, 0, 0, 0.5);
+      }
+      .mobile-nav.open .mobile-nav-panel {
+        transform: translateX(0);
+      }
+      .mobile-nav-close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: none;
+        border: none;
+        color: rgba(232, 237, 245, 0.45);
+        font-size: 20px;
+        cursor: pointer;
+        padding: 8px;
+        transition: color 0.3s;
+        line-height: 1;
+      }
+      .mobile-nav-close:hover {
+        color: #00c9a7;
+      }
+      .mobile-nav-logo {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 20px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        color: #e8edf5;
+        text-decoration: none;
+        margin-bottom: 44px;
+        display: block;
+      }
+      .mobile-nav-logo span {
+        color: #00c9a7;
+      }
+      .mobile-nav-links {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        flex: 1;
+      }
+      .mobile-nav-links li {
+        border-bottom: 1px solid rgba(232, 237, 245, 0.06);
+        transform: translateX(20px);
+        opacity: 0;
+        transition:
+          transform 0.4s ease,
+          opacity 0.4s ease;
+      }
+      .mobile-nav.open .mobile-nav-links li:nth-child(1) {
+        transition-delay: 0.08s;
+        transform: translateX(0);
+        opacity: 1;
+      }
+      .mobile-nav.open .mobile-nav-links li:nth-child(2) {
+        transition-delay: 0.14s;
+        transform: translateX(0);
+        opacity: 1;
+      }
+      .mobile-nav.open .mobile-nav-links li:nth-child(3) {
+        transition-delay: 0.2s;
+        transform: translateX(0);
+        opacity: 1;
+      }
+      .mobile-nav.open .mobile-nav-links li:nth-child(4) {
+        transition-delay: 0.26s;
+        transform: translateX(0);
+        opacity: 1;
+      }
+      .mobile-nav.open .mobile-nav-links li:nth-child(5) {
+        transition-delay: 0.32s;
+        transform: translateX(0);
+        opacity: 1;
+      }
+      .mobile-nav-links a {
+        display: block;
+        padding: 16px 0;
+        color: rgba(232, 237, 245, 0.45);
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 400;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        transition:
+          color 0.3s,
+          padding-left 0.3s;
+      }
+      .mobile-nav-links a:hover,
+      .mobile-nav-links a.active {
+        color: #00c9a7;
+        padding-left: 8px;
+      }
+      .mobile-nav-login {
+        display: block;
+        margin-top: 32px;
+        padding: 12px 28px;
+        background: linear-gradient(135deg, #3d0070, #00c9a7);
+        color: #fff !important;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        text-decoration: none;
+        text-align: center;
+        transition:
+          box-shadow 0.3s,
+          transform 0.3s;
+      }
+      .mobile-nav-login:hover {
+        box-shadow: 0 6px 20px rgba(0, 201, 167, 0.4);
+        transform: translateY(-1px);
+      }
+      @media (max-width: 768px) {
+        .hamburger {
+          display: flex;
+        }
+        nav {
+          display: none !important;
+        }
+        .mobile-nav {
+          display: block;
+        }
+        .navbar {
+          padding: 16px 20px !important;
+        }
+      }
+      /* WISHLIST NAV BUTTON */
+      .nav-wishlist-wrap {
+        position: relative;
+      }
+      .nav-wishlist-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: var(--tdim);
+        border: 1px solid var(--tbrd);
+        color: var(--t);
+        padding: 7px 14px 7px 10px;
+        border-radius: 100px;
+        font-family: "Outfit", sans-serif;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: background 0.25s, border-color 0.25s, box-shadow 0.25s, transform 0.2s;
+        white-space: nowrap;
+      }
+      .nav-wishlist-btn:hover {
+        background: rgba(10,191,191,0.22);
+        border-color: var(--t);
+        box-shadow: 0 0 14px rgba(10,191,191,0.25);
+        transform: translateY(-1px);
+      }
+      .wl-icon {
+        width: 15px;
+        height: 15px;
+        flex-shrink: 0;
+        transition: stroke 0.2s;
+      }
+      .nav-wishlist-btn:hover .wl-icon {
+        stroke: #fff;
+        filter: drop-shadow(0 0 4px rgba(10,191,191,0.6));
+      }
+      .wl-label {
+        line-height: 1;
+      }
+      .wcount {
+        background: var(--t);
+        color: var(--n1);
+        border-radius: 100px;
+        padding: 1px 6px;
+        font-size: 0.62rem;
+        display: none;
+        font-weight: 700;
+        line-height: 1.5;
+        min-width: 18px;
+        text-align: center;
+        animation: badgePop 0.3s ease;
+      }
+      @keyframes badgePop {
+        0% { transform: scale(0.5); }
+        70% { transform: scale(1.15); }
+        100% { transform: scale(1); }
+      }
 
-/* ── NAV USER PILL ── */
-auth.onAuthStateChanged(function(user){
-  currentUser=user;
-  var navR=document.querySelector('.nav-r');
-  var existing=document.getElementById('userPill');
-  if(existing) existing.remove();
-  if(user){
-    var pill=document.createElement('a');
-    pill.id='userPill';
-    pill.href='user-dashboard.html';
-    pill.className='nb nb-teal';
-    pill.style.fontSize='.75rem';
-    var initial=(user.displayName||user.email||'U').charAt(0).toUpperCase();
-    pill.innerHTML='<span style="width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.25);display:inline-flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700">'+initial+'</span> Dashboard';
-    navR.insertBefore(pill,navR.firstChild);
-  } else {
-    var loginBtn=document.createElement('a');
-    loginBtn.id='userPill';
-    loginBtn.href='login.html';
-    loginBtn.className='nb';
-    loginBtn.innerHTML='&#128100; Sign In';
-    navR.insertBefore(loginBtn,navR.firstChild);
-  }
-  updateBadge();
-  // Restore saved state on cards from Firestore or localStorage
-  restoreSavedState();
-});
+      /* HERO */
+      .hero {
+        position: relative;
+        z-index: 10;
+        background: rgba(11, 24, 37, 0.55);
+        border-bottom: 1px solid var(--brd);
+        padding: 5rem 2.5rem 3.5rem;
+        text-align: center;
+        overflow: hidden;
+      }
+      .hero h1 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(2.2rem, 5vw, 4rem);
+        font-weight: 700;
+        line-height: 1.08;
+        max-width: 780px;
+        margin: 0 auto;
+        letter-spacing: -0.5px;
+      }
+      .hero h1 em {
+        color: var(--t);
+        font-style: italic;
+      }
+      .hero p {
+        color: var(--w50);
+        font-size: 0.92rem;
+        max-width: 560px;
+        margin: 1rem auto 0;
+        line-height: 1.75;
+        font-weight: 300;
+      }
+      .hero-stats {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        margin-top: 2.5rem;
+        flex-wrap: wrap;
+      }
+      .hs {
+        text-align: center;
+      }
+      .hs-n {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 2.4rem;
+        font-weight: 700;
+        color: var(--t);
+      }
+      .hs-l {
+        font-size: 0.7rem;
+        color: var(--w50);
+        margin-top: 2px;
+        font-weight: 400;
+        letter-spacing: 0.06em;
+      }
+      .hero-cats {
+        display: flex;
+        justify-content: center;
+        gap: 0.8rem;
+        margin-top: 2.5rem;
+        flex-wrap: wrap;
+      }
+      .hcat {
+        padding: 8px 22px;
+        border-radius: 100px;
+        border: 1px solid var(--brd2);
+        background: transparent;
+        color: var(--w50);
+        font-size: 0.82rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-decoration: none;
+        font-family: "Outfit", sans-serif;
+      }
+      .hcat:hover,
+      .hcat.active {
+        background: var(--tdim);
+        border-color: var(--t);
+        color: var(--t);
+      }
 
-function restoreSavedState(){
-  if(currentUser){
-    db.collection('saved_designs')
-      .where('userId','==',currentUser.uid)
-      .where('source','==','gallery')
-      .get()
-      .then(function(snap){
-        var names=snap.docs.map(function(d){return d.data().title});
-        document.querySelectorAll('.csave').forEach(function(btn){
-          var card=btn.closest('.card');
-          if(card&&names.includes(card.dataset.name)){
-            btn.classList.add('saved');btn.innerHTML='&#9829;';
+      /* STICKY SEARCH BAR */
+      .sbar {
+        background: rgba(11, 24, 37, 0.95);
+        border-bottom: 1px solid var(--brd);
+        padding: 0.8rem 2.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        flex-wrap: wrap;
+        position: sticky;
+        top: 64px;
+        z-index: 400;
+        backdrop-filter: blur(12px);
+      }
+      .srch {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--n4);
+        border: 1px solid var(--brd2);
+        border-radius: 9px;
+        padding: 8px 13px;
+        flex: 1;
+        max-width: 380px;
+      }
+      .srch svg {
+        width: 14px;
+        height: 14px;
+        fill: var(--w50);
+        flex-shrink: 0;
+      }
+      .srch input {
+        background: transparent;
+        border: none;
+        outline: none;
+        color: var(--w);
+        font-size: 0.83rem;
+        width: 100%;
+        font-family: "Outfit", sans-serif;
+      }
+      .srch input::placeholder {
+        color: var(--w50);
+      }
+      .sf-row {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      .sf {
+        padding: 6px 14px;
+        border-radius: 8px;
+        border: 1px solid var(--brd2);
+        background: transparent;
+        color: var(--w50);
+        font-size: 0.76rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: "Outfit", sans-serif;
+      }
+      .sf:hover {
+        border-color: var(--t);
+        color: var(--t);
+      }
+      .sf.on {
+        background: var(--tdim);
+        border-color: var(--t);
+        color: var(--t);
+      }
+      .ss {
+        background: var(--n4);
+        border: 1px solid var(--brd2);
+        color: var(--w80);
+        padding: 6px 10px;
+        border-radius: 8px;
+        font-size: 0.76rem;
+        cursor: pointer;
+        outline: none;
+        font-family: "Outfit", sans-serif;
+        margin-left: auto;
+      }
+      .ss option {
+        background: var(--n2);
+      }
+
+      /* MAIN */
+      main {
+        max-width: 1320px;
+        margin: 0 auto;
+        padding: 2.5rem 2.5rem 5rem;
+        position: relative;
+        z-index: 10;
+      }
+
+      /* SECTION */
+      .section {
+        margin-bottom: 3.5rem;
+      }
+      .sec-head {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .sec-head h2 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.7rem;
+        font-weight: 700;
+        color: var(--w);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        letter-spacing: -0.2px;
+      }
+      .sec-icon {
+        width: 30px;
+        height: 30px;
+        border-radius: 7px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.95rem;
+        flex-shrink: 0;
+      }
+      .si-h {
+        background: rgba(10, 191, 191, 0.14);
+        border: 1px solid var(--tbrd);
+      }
+      .si-a {
+        background: rgba(124, 58, 237, 0.12);
+        border: 1px solid rgba(124, 58, 237, 0.3);
+      }
+      .si-o {
+        background: rgba(245, 158, 11, 0.1);
+        border: 1px solid rgba(245, 158, 11, 0.25);
+      }
+      .see-all {
+        font-size: 0.78rem;
+        color: var(--t);
+        text-decoration: none;
+        font-weight: 500;
+        transition: opacity 0.2s;
+        font-family: "Outfit", sans-serif;
+      }
+      .see-all:hover {
+        opacity: 0.65;
+      }
+      .shline {
+        width: 32px;
+        height: 2px;
+        border-radius: 2px;
+        margin-top: 0.6rem;
+      }
+      .shline-t {
+        background: var(--t);
+      }
+      .shline-p {
+        background: #7c3aed;
+      }
+      .shline-a {
+        background: #f59e0b;
+      }
+
+      /* CARDS GRID */
+      .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.4rem;
+      }
+
+      /* DESIGN CARD */
+      .card {
+        background: var(--n3);
+        border: 1px solid var(--brd);
+        border-radius: var(--r);
+        overflow: hidden;
+        transition:
+          border-color 0.2s,
+          transform 0.22s;
+        display: flex;
+        flex-direction: column;
+      }
+      .card:hover {
+        border-color: var(--tbrd);
+        transform: translateY(-4px);
+      }
+      .card-img {
+        position: relative;
+        overflow: hidden;
+        height: 210px;
+      }
+      .card-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.45s;
+      }
+      .card:hover .card-img img {
+        transform: scale(1.07);
+      }
+      .card-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to top,
+          rgba(6, 15, 24, 0.68) 0%,
+          transparent 55%
+        );
+      }
+      .card-badges {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        display: flex;
+        gap: 5px;
+      }
+      .bdg {
+        font-size: 0.62rem;
+        font-weight: 600;
+        padding: 2px 8px;
+        border-radius: 100px;
+      }
+      .b-new {
+        background: var(--t);
+        color: var(--n1);
+      }
+      .b-pop {
+        background: #f59e0b;
+        color: #1a0f00;
+      }
+      .b-trend {
+        background: #8b5cf6;
+        color: #fff;
+      }
+      .b-feat {
+        background: #ec4899;
+        color: #fff;
+      }
+      .card-rating {
+        position: absolute;
+        bottom: 12px;
+        right: 12px;
+        background: rgba(6, 15, 24, 0.88);
+        border: 1px solid var(--brd2);
+        border-radius: 7px;
+        padding: 2px 9px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 3px;
+      }
+      .card-rating em {
+        color: #f59e0b;
+        font-style: normal;
+      }
+      .card-body {
+        padding: 1.1rem 1.1rem 0.5rem;
+        flex: 1;
+      }
+      .card-cat {
+        font-size: 0.64rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--t);
+        font-weight: 600;
+      }
+      .card-body h3 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-top: 3px;
+        color: var(--w);
+      }
+      .card-body p {
+        font-size: 0.77rem;
+        color: var(--w50);
+        margin-top: 5px;
+        line-height: 1.6;
+        font-weight: 300;
+      }
+      .card-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        margin-top: 8px;
+      }
+      .ct {
+        font-size: 0.62rem;
+        background: var(--w06);
+        border: 1px solid var(--brd);
+        color: var(--w50);
+        padding: 2px 7px;
+        border-radius: 100px;
+      }
+      .card-foot {
+        padding: 0.75rem 1.1rem 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 6px;
+        border-top: 1px solid var(--brd);
+      }
+      .card-info {
+        font-size: 0.72rem;
+        color: var(--w50);
+      }
+      .card-btns {
+        display: flex;
+        gap: 6px;
+      }
+      .csave {
+        padding: 6px 9px;
+        border-radius: 7px;
+        border: 1px solid var(--brd2);
+        background: transparent;
+        color: var(--w50);
+        cursor: pointer;
+        font-size: 0.8rem;
+        transition: all 0.2s;
+      }
+      .csave:hover {
+        border-color: var(--t);
+        color: var(--t);
+      }
+      .csave.saved {
+        background: var(--tdim);
+        border-color: var(--t);
+        color: var(--t);
+      }
+      .cview {
+        padding: 6px 16px;
+        border-radius: 7px;
+        border: none;
+        background: var(--t);
+        color: var(--n1);
+        font-size: 0.78rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        font-family: "Outfit", sans-serif;
+      }
+      .cview:hover {
+        background: var(--t2);
+      }
+
+      /* OFFICE TYPE CARDS */
+      .office-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.4rem;
+      }
+      .otype {
+        background: var(--n3);
+        border: 1px solid var(--brd);
+        border-radius: var(--r);
+        overflow: hidden;
+        transition: all 0.22s;
+        text-decoration: none;
+        display: block;
+      }
+      .otype:hover {
+        border-color: var(--tbrd);
+        transform: translateY(-4px);
+      }
+      .otype-img {
+        height: 200px;
+        overflow: hidden;
+        position: relative;
+      }
+      .otype-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.45s;
+      }
+      .otype:hover .otype-img img {
+        transform: scale(1.07);
+      }
+      .otype-ov {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to top,
+          rgba(6, 15, 24, 0.72) 0%,
+          transparent 52%
+        );
+      }
+      .otype-badge {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        font-size: 0.65rem;
+        font-weight: 700;
+        padding: 3px 10px;
+        border-radius: 100px;
+        text-transform: uppercase;
+      }
+      .otype-body {
+        padding: 1.2rem;
+      }
+      .otype-body h3 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: var(--w);
+      }
+      .otype-body p {
+        font-size: 0.78rem;
+        color: var(--w50);
+        margin-top: 4px;
+        line-height: 1.55;
+        font-weight: 300;
+      }
+      .otype-foot {
+        padding: 0 1.2rem 1.2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .otype-count {
+        font-size: 0.72rem;
+        color: var(--w50);
+      }
+      .otype-btn {
+        padding: 6px 14px;
+        border-radius: 7px;
+        border: none;
+        background: var(--t);
+        color: var(--n1);
+        font-size: 0.75rem;
+        font-weight: 600;
+        cursor: pointer;
+        font-family: "Outfit", sans-serif;
+      }
+      .otype:hover .otype-btn {
+        background: var(--t2);
+      }
+
+      .nores {
+        text-align: center;
+        padding: 3.5rem 1rem;
+        color: var(--w50);
+        grid-column: 1/-1;
+      }
+      .nores h3 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.2rem;
+        color: var(--w80);
+        margin-bottom: 0.4rem;
+      }
+
+      footer {
+        background: var(--n2);
+        border-top: 1px solid var(--brd);
+        color: var(--w50);
+        text-align: center;
+        padding: 1.8rem;
+        font-size: 0.75rem;
+        position: relative;
+        z-index: 10;
+      }
+      footer strong {
+        color: var(--t);
+      }
+      .toastwrap {
+        position: fixed;
+        bottom: 1.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 9999;
+        pointer-events: none;
+      }
+      .toast {
+        background: var(--n3);
+        border: 1px solid var(--tbrd);
+        color: var(--w);
+        padding: 10px 20px;
+        border-radius: 100px;
+        font-size: 0.82rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        opacity: 0;
+        transform: translateY(16px);
+        transition: all 0.3s;
+        white-space: nowrap;
+        font-family: "Outfit", sans-serif;
+      }
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .tdot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--t);
+      }
+
+      @media (max-width: 900px) {
+        .cards-grid,
+        .office-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        nav .nav-links {
+          display: none;
+        }
+      }
+      @media (max-width: 560px) {
+        .cards-grid,
+        .office-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-anim"><span></span><span></span><span></span></div>
+
+    <!-- NAV -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <header>
+      <div class="navbar">
+        <a href="home.html" class="logo">
+          <img src="logo.jpeg" alt="Archinova Logo" class="logo-img" />
+          Archinova
+        </a>
+        <nav>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="gallery.html" class="active">Gallery</a></li>
+            <li><a href="interior.html">Interior</a></li>
+            <li id="navDashLi" style="display: none">
+              <a
+                href="user-dashboard.html"
+                style="
+                  color: #1a9e8f;
+                  font-size: 13px;
+                  font-weight: 500;
+                  letter-spacing: 0.06em;
+                  text-transform: uppercase;
+                  text-decoration: none;
+                  display: flex;
+                  align-items: center;
+                  gap: 6px;
+                "
+              >
+                <i class="fa-solid fa-user"></i> Dashboard
+              </a>
+            </li>
+            <li id="navAuthLi" style="visibility: hidden">
+              <a href="login.html" class="btn-login">Login</a>
+            </li>
+            <!-- Wishlist nav item -->
+            <li class="nav-wishlist-wrap">
+              <button class="nav-wishlist-btn" onclick="toggleWP(event)" aria-label="Wishlist">
+                <svg class="wl-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+                <span class="wl-label">Wishlist</span>
+                <span class="wcount" id="wcount">0</span>
+              </button>
+              <div class="wp" id="wp">
+                <h3>
+                  <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                  Saved Designs
+                </h3>
+                <div id="wpItems">
+                  <div class="wp-empty">No designs saved yet.</div>
+                </div>
+                <a href="wishlist.html" class="wp-link">View full wishlist →</a>
+              </div>
+            </li>
+          </ul>
+        </nav>
+        <button
+          class="hamburger"
+          id="hamburgerBtn"
+          aria-label="Open menu"
+          aria-expanded="false"
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Mobile Nav -->
+    <div class="mobile-nav" id="mobileNav">
+      <div class="mobile-nav-backdrop" onclick="closeMobileNav()"></div>
+      <div class="mobile-nav-panel">
+        <button class="mobile-nav-close" onclick="closeMobileNav()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <a href="home.html" class="mobile-nav-logo">Archi<span>nova</span></a>
+        <ul class="mobile-nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="gallery.html" class="active">Gallery</a></li>
+          <li><a href="interior.html">Interior</a></li>
+          <li id="mobileNavDashLi" style="display: none">
+            <a href="user-dashboard.html"
+              ><i class="fa-solid fa-user"></i> Dashboard</a
+            >
+          </li>
+        </ul>
+        <a href="login.html" class="mobile-nav-login" id="mobileNavLogin"
+          >Login</a
+        >
+      </div>
+    </div>
+
+   
+
+    <!-- HERO -->
+    <div class="hero" style="position: relative; z-index: 10">
+      <h1><em>Architecture</em> Design Gallery</h1>
+      <p>
+        Explore hundreds of curated residential, apartment, and office designs.
+        Filter by style, save favourites, and start your ArchiNova journey.
+      </p>
+      <div class="hero-stats">
+        <div class="hs">
+          <div class="hs-n">200+</div>
+          <div class="hs-l">Curated Designs</div>
+        </div>
+        <div class="hs">
+          <div class="hs-n">3</div>
+          <div class="hs-l">Categories</div>
+        </div>
+        <div class="hs">
+          <div class="hs-n">4.9</div>
+          <div class="hs-l">Avg Rating</div>
+        </div>
+        <div class="hs">
+          <div class="hs-n">500+</div>
+          <div class="hs-l">Happy Clients</div>
+        </div>
+      </div>
+      <div class="hero-cats">
+        <button class="hcat active" onclick="filterSec('all', this)">
+          All
+        </button>
+        <button class="hcat" onclick="filterSec('house', this)">Houses</button>
+        <button class="hcat" onclick="filterSec('apartment', this)">
+          Apartments
+        </button>
+        <button class="hcat" onclick="filterSec('office', this)">
+          Offices
+        </button>
+      </div>
+    </div>
+
+    <!-- STICKY SEARCH BAR -->
+    <div class="sbar">
+      <div class="srch">
+        <svg viewBox="0 0 24 24">
+          <circle
+            cx="11"
+            cy="11"
+            r="7"
+            stroke="currentColor"
+            stroke-width="2"
+            fill="none"
+          />
+          <path
+            d="M21 21l-4.35-4.35"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            fill="none"
+          />
+        </svg>
+        <input
+          type="text"
+          id="gsearch"
+          placeholder="Search designs — Modern Villa, Loft, Futuristic..."
+          oninput="applyFilters()"
+        />
+      </div>
+      <div class="sf-row">
+        <button class="sf on" onclick="setSF(this, 'all')">All Styles</button>
+        <button class="sf" onclick="setSF(this, 'modern')">Modern</button>
+        <button class="sf" onclick="setSF(this, 'luxury')">Luxury</button>
+        <button class="sf" onclick="setSF(this, 'minimal')">Minimal</button>
+        <button class="sf" onclick="setSF(this, 'eco')">Eco</button>
+        <button class="sf" onclick="setSF(this, 'futuristic')">
+          Futuristic
+        </button>
+      </div>
+      <select class="ss" id="galSort" onchange="applySort(this.value)">
+        <option value="def">Sort: Default</option>
+        <option value="rat">Highest Rated</option>
+        <option value="az">A – Z</option>
+      </select>
+    </div>
+
+    <main>
+      <!-- HOUSES -->
+      <div class="section" id="sec-house" data-sec="house">
+        <div class="sec-head">
+          <div>
+            <h2>
+              <div class="sec-icon si-h">&#127968;</div>
+              Houses
+            </h2>
+            <div class="shline shline-t"></div>
+          </div>
+          <a href="#" class="see-all">All 12 house designs ›</a>
+        </div>
+        <div class="cards-grid">
+          <div
+            class="card"
+            data-name="Modern Villa"
+            data-tags="modern luxury villa glass"
+            data-cat="house"
+            data-rat="4.9"
+          >
+            <div class="card-img">
+              <img
+                src="gallery-images/modernvilla.jpg"
+                onerror="
+                  this.src =
+                    'https://images.unsplash.com/photo-1613977257363-707ba9348227?w=600&q=75'
+                "
+                alt="Modern Villa"
+              />
+              <div class="card-overlay"></div>
+              <div class="card-badges">
+                <span class="bdg b-feat">Featured</span>
+              </div>
+              <div class="card-rating"><em>&#9733;</em>4.9</div>
+            </div>
+            <div class="card-body">
+              <div class="card-cat">Residential &bull; Villa</div>
+              <h3>Modern Villa</h3>
+              <p>
+                Sleek lines, floor-to-ceiling glass, and open-plan living spaces
+                for the contemporary family.
+              </p>
+              <div class="card-tags">
+                <span class="ct">Modern</span
+                ><span class="ct">Glass Facade</span
+                ><span class="ct">Luxury</span>
+              </div>
+            </div>
+            <div class="card-foot">
+              <div class="card-info">4–6 BHK &bull; 5,000+ sq ft</div>
+              <div class="card-btns">
+                <button
+                  class="csave"
+                  onclick="
+                    saveCard(
+                      this,
+                      'Modern Villa',
+                      'House',
+                      'https://images.unsplash.com/photo-1613977257363-707ba9348227?w=400',
+                      '5,000+ sq ft',
+                      'Family',
+                      '₹2.5Cr+',
+                      ['Modern', 'Luxury', 'Glass'],
+                    )
+                  "
+                >
+                  &#9825;</button
+                ><a href="mv.html" class="cview">View →</a>
+              </div>
+            </div>
+          </div>
+          <div
+            class="card"
+            data-name="Minimal House"
+            data-tags="minimal clean white calm"
+            data-cat="house"
+            data-rat="4.7"
+          >
+            <div class="card-img">
+              <img
+                src="gallery-images/minimalhouse.jpg"
+                onerror="
+                  this.src =
+                    'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=75'
+                "
+                alt="Minimal House"
+              />
+              <div class="card-overlay"></div>
+              <div class="card-badges"><span class="bdg b-new">New</span></div>
+              <div class="card-rating"><em>&#9733;</em>4.7</div>
+            </div>
+            <div class="card-body">
+              <div class="card-cat">Residential &bull; Minimal</div>
+              <h3>Minimal House</h3>
+              <p>
+                Less is more — clean surfaces, natural light, and only what
+                matters. A sanctuary of calm.
+              </p>
+              <div class="card-tags">
+                <span class="ct">Minimal</span><span class="ct">Neutral</span
+                ><span class="ct">Calm</span>
+              </div>
+            </div>
+            <div class="card-foot">
+              <div class="card-info">3–4 BHK &bull; 2,800 sq ft</div>
+              <div class="card-btns">
+                <button
+                  class="csave"
+                  onclick="
+                    saveCard(
+                      this,
+                      'Minimal House',
+                      'House',
+                      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400',
+                      '2,800 sq ft',
+                      'Family',
+                      '₹85L–₹1.2Cr',
+                      ['Minimal', 'Modern', 'Clean'],
+                    )
+                  "
+                >
+                  &#9825;</button
+                ><a href="minimalhouse.html" class="cview">View →</a>
+              </div>
+            </div>
+          </div>
+          <div
+            class="card"
+            data-name="Luxury Duplex"
+            data-tags="luxury duplex premium rooftop"
+            data-cat="house"
+            data-rat="4.8"
+          >
+            <div class="card-img">
+              <img
+                src="gallery-images/luxury.jpg"
+                onerror="
+                  this.src =
+                    'https://images.unsplash.com/photo-1560184897-ae75f418493e?w=600&q=75'
+                "
+                alt="Luxury Duplex"
+              />
+              <div class="card-overlay"></div>
+              <div class="card-badges">
+                <span class="bdg b-pop">Popular</span>
+              </div>
+              <div class="card-rating"><em>&#9733;</em>4.8</div>
+            </div>
+            <div class="card-body">
+              <div class="card-cat">Residential &bull; Duplex</div>
+              <h3>Luxury Duplex</h3>
+              <p>
+                Double-storey grandeur with private terraces, home cinema, and a
+                rooftop infinity pool.
+              </p>
+              <div class="card-tags">
+                <span class="ct">Luxury</span><span class="ct">Duplex</span
+                ><span class="ct">Rooftop Pool</span>
+              </div>
+            </div>
+            <div class="card-foot">
+              <div class="card-info">5 BHK &bull; 7,000 sq ft</div>
+              <div class="card-btns">
+                <button
+                  class="csave"
+                  onclick="
+                    saveCard(
+                      this,
+                      'Luxury Duplex',
+                      'House',
+                      'https://images.unsplash.com/photo-1560184897-ae75f418493e?w=400',
+                      '7,000 sq ft',
+                      'Family',
+                      '₹3.5Cr+',
+                      ['Luxury', 'Duplex', 'Pool'],
+                    )
+                  "
+                >
+                  &#9825;</button
+                ><a href="luxuryduplex.html" class="cview">View →</a>
+              </div>
+            </div>
+          </div>
+          <div
+            class="card"
+            data-name="Traditional House"
+            data-tags="traditional heritage classic courtyard"
+            data-cat="house"
+            data-rat="4.6"
+          >
+            <div class="card-img">
+              <img
+                src="gallery-images/traditional.jpg"
+                onerror="
+                  this.src =
+                    'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&q=75'
+                "
+                alt="Traditional House"
+              />
+              <div class="card-overlay"></div>
+              <div class="card-rating"><em>&#9733;</em>4.6</div>
+            </div>
+            <div class="card-body">
+              <div class="card-cat">Residential &bull; Traditional</div>
+              <h3>Traditional House</h3>
+              <p>
+                Heritage craft meets modern comfort — carved woodwork, inner
+                courtyards, and warm terracotta.
+              </p>
+              <div class="card-tags">
+                <span class="ct">Traditional</span
+                ><span class="ct">Heritage</span
+                ><span class="ct">Courtyard</span>
+              </div>
+            </div>
+            <div class="card-foot">
+              <div class="card-info">4 BHK &bull; 3,500 sq ft</div>
+              <div class="card-btns">
+                <button
+                  class="csave"
+                  onclick="
+                    saveCard(
+                      this,
+                      'Traditional House',
+                      'House',
+                      'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=400',
+                      '3,500 sq ft',
+                      'Family',
+                      '₹1Cr–₹1.5Cr',
+                      ['Traditional', 'Heritage', 'Classic'],
+                    )
+                  "
+                >
+                  &#9825;</button
+                ><a href="traditionalhouse.html" class="cview">View →</a>
+              </div>
+            </div>
+          </div>
+          <div
+            class="card"
+            data-name="Futuristic House"
+            data-tags="futuristic tech modern smart"
+            data-cat="house"
+            data-rat="4.9"
+          >
+            <div class="card-img">
+              <img
+                src="gallery-images/futuristic.jpg"
+                onerror="
+                  this.src =
+                    'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=75'
+                "
+                alt="Futuristic House"
+              />
+              <div class="card-overlay"></div>
+              <div class="card-badges">
+                <span class="bdg b-trend">Trending</span>
+              </div>
+              <div class="card-rating"><em>&#9733;</em>4.9</div>
+            </div>
+            <div class="card-body">
+              <div class="card-cat">Residential &bull; Futuristic</div>
+              <h3>Futuristic House</h3>
+              <p>
+                AI-integrated smart systems, fluid organic forms, and
+                holographic room controls.
+              </p>
+              <div class="card-tags">
+                <span class="ct">Futuristic</span
+                ><span class="ct">Smart Home</span><span class="ct">AI</span>
+              </div>
+            </div>
+            <div class="card-foot">
+              <div class="card-info">4–5 BHK &bull; 4,500 sq ft</div>
+              <div class="card-btns">
+                <button
+                  class="csave"
+                  onclick="
+                    saveCard(
+                      this,
+                      'Futuristic House',
+                      'House',
+                      'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400',
+                      '4,500 sq ft',
+                      'Family',
+                      '₹2Cr–₹3Cr',
+                      ['Futuristic', 'AI', 'Smart'],
+                    )
+                  "
+                >
+                  &#9825;</button
+                ><a href="futuristichouse.html" class="cview">View →</a>
+              </div>
+            </div>
+          </div>
+          <div
+            class="card"
+            data-name="Eco-Friendly House"
+            data-tags="eco green sustainable solar"
+            data-cat="house"
+            data-rat="4.8"
+          >
+            <div class="card-img">
+              <img
+                src="gallery-images/ecofriendly.jpg"
+                onerror="
+                  this.src =
+                    'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=600&q=75'
+                "
+                alt="Eco-Friendly House"
+              />
+              <div class="card-overlay"></div>
+              <div class="card-badges"><span class="bdg b-new">New</span></div>
+              <div class="card-rating"><em>&#9733;</em>4.8</div>
+            </div>
+            <div class="card-body">
+              <div class="card-cat">Residential &bull; Eco</div>
+              <h3>Eco-Friendly House</h3>
+              <p>
+                Net-zero living with solar roofing, rainwater harvesting, and a
+                living green facade.
+              </p>
+              <div class="card-tags">
+                <span class="ct">Eco</span><span class="ct">Solar</span
+                ><span class="ct">Green Facade</span>
+              </div>
+            </div>
+            <div class="card-foot">
+              <div class="card-info">3–4 BHK &bull; 3,200 sq ft</div>
+              <div class="card-btns">
+                <button
+                  class="csave"
+                  onclick="
+                    saveCard(
+                      this,
+                      'Eco-Friendly House',
+                      'House',
+                      'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400',
+                      '3,200 sq ft',
+                      'Family',
+                      '₹90L–₹1.4Cr',
+                      ['Eco', 'Green', 'Solar'],
+                    )
+                  "
+                >
+                  &#9825;</button
+                ><a href="ecofriendly.html" class="cview">View →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- APARTMENTS -->
+      <div class="section" id="sec-apartment" data-sec="apartment">
+        <div class="sec-head">
+          <div>
+            <h2>
+              <div class="sec-icon si-a">&#127970;</div>
+              Apartments
+            </h2>
+            <div class="shline shline-p"></div>
+          </div>
+          <a href="#" class="see-all">All 9 apartment designs ›</a>
+        </div>
+        <div class="cards-grid">
+          <div
+            class="card"
+            data-name="Modern Apartment"
+            data-tags="modern apartment contemporary open"
+            data-cat="apartment"
+            data-rat="4.7"
+          >
+            <div class="card-img">
+              <img
+                src="gallery-images/modernapartment.jpg"
+                onerror="
+                  this.src =
+                    'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&q=75'
+                "
+                alt="Modern Apartment"
+              />
+              <div class="card-overlay"></div>
+              <div class="card-badges">
+                <span class="bdg b-pop">Popular</span>
+              </div>
+              <div class="card-rating"><em>&#9733;</em>4.7</div>
+            </div>
+            <div class="card-body">
+              <div class="card-cat">Apartment &bull; Modern</div>
+              <h3>Modern Apartment</h3>
+              <p>
+                City living reimagined — open layouts, statement lighting, and a
+                curated material palette.
+              </p>
+              <div class="card-tags">
+                <span class="ct">Modern</span><span class="ct">City</span
+                ><span class="ct">Open Plan</span>
+              </div>
+            </div>
+            <div class="card-foot">
+              <div class="card-info">2–3 BHK &bull; 1,400 sq ft</div>
+              <div class="card-btns">
+                <button
+                  class="csave"
+                  onclick="
+                    saveCard(
+                      this,
+                      'Modern Apartment',
+                      'Apartment',
+                      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=400',
+                      '1,400 sq ft',
+                      'Urban',
+                      '₹55L–₹85L',
+                      ['Modern', 'City', 'Open'],
+                    )
+                  "
+                >
+                  &#9825;</button
+                ><a href="modernappartment.html" class="cview">View →</a>
+              </div>
+            </div>
+          </div>
+          <div
+            class="card"
+            data-name="Luxury Apartment"
+            data-tags="luxury apartment premium penthouse marble"
+            data-cat="apartment"
+            data-rat="4.9"
+          >
+            <div class="card-img">
+              <img
+                src="gallery-images/luxuryapartment.jpg"
+                onerror="
+                  this.src =
+                    'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=600&q=75'
+                "
+                alt="Luxury Apartment"
+              />
+              <div class="card-overlay"></div>
+              <div class="card-badges">
+                <span class="bdg b-feat">Featured</span>
+              </div>
+              <div class="card-rating"><em>&#9733;</em>4.9</div>
+            </div>
+            <div class="card-body">
+              <div class="card-cat">Apartment &bull; Luxury</div>
+              <h3>Luxury Apartment</h3>
+              <p>
+                Penthouse-level finishes — marble, warm brass, and a panoramic
+                glass corner for city views.
+              </p>
+              <div class="card-tags">
+                <span class="ct">Luxury</span><span class="ct">Marble</span
+                ><span class="ct">Penthouse</span>
+              </div>
+            </div>
+            <div class="card-foot">
+              <div class="card-info">3–4 BHK &bull; 2,800 sq ft</div>
+              <div class="card-btns">
+                <button
+                  class="csave"
+                  onclick="
+                    saveCard(
+                      this,
+                      'Luxury Apartment',
+                      'Apartment',
+                      'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=400',
+                      '2,800 sq ft',
+                      'Urban',
+                      '₹1.5Cr–₹2.5Cr',
+                      ['Luxury', 'Marble', 'Penthouse'],
+                    )
+                  "
+                >
+                  &#9825;</button
+                ><a href="luxuryapartment.html" class="cview">View →</a>
+              </div>
+            </div>
+          </div>
+          <div
+            class="card"
+            data-name="Studio Apartment"
+            data-tags="studio compact minimal smart storage"
+            data-cat="apartment"
+            data-rat="4.6"
+          >
+            <div class="card-img">
+              <img
+                src="gallery-images/studioapartment.jpg"
+                onerror="
+                  this.src =
+                    'https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=600&q=75'
+                "
+                alt="Studio Apartment"
+              />
+              <div class="card-overlay"></div>
+              <div class="card-badges"><span class="bdg b-new">New</span></div>
+              <div class="card-rating"><em>&#9733;</em>4.6</div>
+            </div>
+            <div class="card-body">
+              <div class="card-cat">Apartment &bull; Studio</div>
+              <h3>Studio Apartment</h3>
+              <p>
+                Every centimetre counts — convertible furniture, hidden storage,
+                and multi-function zones.
+              </p>
+              <div class="card-tags">
+                <span class="ct">Studio</span><span class="ct">Compact</span
+                ><span class="ct">Smart Storage</span>
+              </div>
+            </div>
+            <div class="card-foot">
+              <div class="card-info">Studio &bull; 650 sq ft</div>
+              <div class="card-btns">
+                <button
+                  class="csave"
+                  onclick="
+                    saveCard(
+                      this,
+                      'Studio Apartment',
+                      'Apartment',
+                      'https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=400',
+                      '650 sq ft',
+                      'Solo',
+                      '₹30L–₹45L',
+                      ['Studio', 'Compact', 'Minimal'],
+                    )
+                  "
+                >
+                  &#9825;</button
+                ><a href="studioapartment.html" class="cview">View →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OFFICES -->
+      <div class="section" id="sec-office" data-sec="office">
+        <div class="sec-head">
+          <div>
+            <h2>
+              <div class="sec-icon si-o">&#127970;</div>
+              Offices
+            </h2>
+            <div class="shline shline-a"></div>
+          </div>
+          <a href="#" class="see-all">All office types ›</a>
+        </div>
+        <div class="office-grid">
+          <a
+            href="corporate-office.html"
+            class="otype"
+            data-cat="office"
+            data-tags="corporate formal professional"
+            data-name="Corporate Office"
+          >
+            <div class="otype-img">
+              <img
+                src="gallery-images/corporateoffice.jpg"
+                onerror="
+                  this.src =
+                    'https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=75'
+                "
+                alt="Corporate Office"
+              />
+              <div class="otype-ov"></div>
+              <div
+                class="otype-badge"
+                style="background: var(--t); color: var(--n1)"
+              >
+                Corporate
+              </div>
+            </div>
+            <div class="otype-body">
+              <h3>Corporate Office</h3>
+              <p>
+                Prestigious environments built for enterprise teams —
+                boardrooms, executive suites, and branded reception areas.
+              </p>
+            </div>
+            <div class="otype-foot">
+              <div class="otype-count">8 designs &bull; 4.8 avg &#9733;</div>
+              <div class="otype-btn">Explore →</div>
+            </div>
+          </a>
+          <a
+            href="startupoffice.html"
+            class="otype"
+            data-cat="office"
+            data-tags="startup agile open creative"
+            data-name="Startup Office"
+          >
+            <div class="otype-img">
+              <img
+                src="gallery-images/startupoffice.jpg"
+                onerror="
+                  this.src =
+                    'https://images.unsplash.com/photo-1556761175-4b46a572b786?w=600&q=75'
+                "
+                alt="Startup Office"
+              />
+              <div class="otype-ov"></div>
+              <div class="otype-badge" style="background: #8b5cf6; color: #fff">
+                Startup
+              </div>
+            </div>
+            <div class="otype-body">
+              <h3>Startup Office</h3>
+              <p>
+                Bold, agile, and built to scale — open floors, collaboration
+                zones, and modular furniture for fast-moving teams.
+              </p>
+            </div>
+            <div class="otype-foot">
+              <div class="otype-count">6 designs &bull; 4.9 avg &#9733;</div>
+              <div class="otype-btn">Explore →</div>
+            </div>
+          </a>
+          <a
+            href="futuristicoffice.html"
+            class="otype"
+            data-cat="office"
+            data-tags="futuristic ai smart tech"
+            data-name="Futuristic Office"
+          >
+            <div class="otype-img">
+              <img
+                src="gallery-images/futuristicoffice.jpg"
+                onerror="
+                  this.src =
+                    'https://images.unsplash.com/photo-1488998427799-e3362cec87c3?w=600&q=75'
+                "
+                alt="Futuristic Office"
+              />
+              <div class="otype-ov"></div>
+              <div
+                class="otype-badge"
+                style="background: #00e5ff; color: #04080f"
+              >
+                Futuristic
+              </div>
+            </div>
+            <div class="otype-body">
+              <h3>Futuristic Office</h3>
+              <p>
+                AI-orchestrated, sensor-responsive, and architecturally bold —
+                spaces built for the next decade of work.
+              </p>
+            </div>
+            <div class="otype-foot">
+              <div class="otype-count">6 concepts &bull; 4.9 avg &#9733;</div>
+              <div class="otype-btn">Explore →</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      &copy; 2025 <strong>ArchiNova</strong> &bull; Architectural Design &amp;
+      Innovation Recommendation System &bull; All rights reserved.
+    </footer>
+    <div class="toastwrap">
+      <div class="toast" id="toast">
+        <div class="tdot"></div>
+        <span id="tmsg">Saved!</span>
+      </div>
+    </div>
+
+    <script>
+      var KEY = "archinova_wishlist";
+      function getWL() {
+        try {
+          return JSON.parse(localStorage.getItem(KEY) || "[]");
+        } catch (e) {
+          return [];
+        }
+      }
+      function setWL(l) {
+        localStorage.setItem(KEY, JSON.stringify(l));
+      }
+
+      function updateBadge() {
+        var wl = getWL();
+        var b = document.getElementById("wcount");
+        if (wl.length) {
+          b.style.display = "inline";
+          b.textContent = wl.length;
+        } else {
+          b.style.display = "none";
+        }
+      }
+      function showToast(msg) {
+        var t = document.getElementById("toast");
+        document.getElementById("tmsg").textContent = msg;
+        t.classList.add("show");
+        clearTimeout(t._to);
+        t._to = setTimeout(function () {
+          t.classList.remove("show");
+        }, 3000);
+      }
+
+      function renderWP() {
+        var wl = getWL();
+        var box = document.getElementById("wpItems");
+        if (!wl.length) {
+          box.innerHTML = '<div class="wp-empty">No designs saved yet.</div>';
+          return;
+        }
+        box.innerHTML =
+          wl
+            .slice(0, 5)
+            .map(function (d, i) {
+              return (
+                '<div class="wi"><div><div>' +
+                d.title +
+                '</div><div class="wi-cat">' +
+                d.section +
+                '</div></div><button class="wi-rm" onclick="removeWI(\'' +
+                d.id +
+                "')\">&#10005;</button></div>"
+              );
+            })
+            .join("") +
+          (wl.length > 5
+            ? '<div style="font-size:.72rem;color:var(--w50);text-align:center;padding:.4rem 0">+' +
+              (wl.length - 5) +
+              " more</div>"
+            : "");
+      }
+      function removeWI(id) {
+        var wl = getWL().filter(function (d) {
+          return d.id !== id;
+        });
+        setWL(wl);
+        updateBadge();
+        renderWP();
+        document.querySelectorAll(".csave").forEach(function (b) {
+          var c = b.closest(".card");
+          if (c && c.dataset.name === id) {
+            b.classList.remove("saved");
+            b.innerHTML = "&#9825;";
           }
         });
-      }).catch(function(){restoreSavedStateLocal()});
-  } else {
-    restoreSavedStateLocal();
-  }
-}
+        showToast("Removed from Wishlist.");
+      }
+      function toggleWP(e) {
+        e.stopPropagation();
+        var p = document.getElementById("wp");
+        p.classList.toggle("open");
+        if (p.classList.contains("open")) renderWP();
+      }
+      document.addEventListener("click", function (e) {
+        var p = document.getElementById("wp");
+        if (p.classList.contains("open") && !p.contains(e.target))
+          p.classList.remove("open");
+      });
 
-function restoreSavedStateLocal(){
-  var wl=getWL();
-  wl.forEach(function(item){
-    document.querySelectorAll('.csave').forEach(function(btn){
-      var card=btn.closest('.card');
-      if(card&&card.dataset.name===item.id){btn.classList.add('saved');btn.innerHTML='&#9829;'}
-    });
-  });
-}
+      function saveCard(btn, name, section, img, area, cap, budget, tags) {
+        var wl = getWL();
+        var idx = wl.findIndex(function (d) {
+          return d.id === name;
+        });
+        if (idx === -1) {
+          wl.push({
+            id: name,
+            title: name,
+            section: section,
+            badge: section,
+            img: img,
+            area: area,
+            cap: cap,
+            budget: budget,
+            tags: tags,
+            desc: "ArchiNova " + section + " design.",
+            savedAt: new Date().toISOString(),
+          });
+          setWL(wl);
+          btn.classList.add("saved");
+          btn.innerHTML = "&#9829;";
+          showToast('"' + name + '" saved to Wishlist!');
+        } else {
+          wl.splice(idx, 1);
+          setWL(wl);
+          btn.classList.remove("saved");
+          btn.innerHTML = "&#9825;";
+          showToast('"' + name + '" removed from Wishlist.');
+        }
+        updateBadge();
+      }
 
-/* ── FILTERS / SORT (unchanged) ── */
-var activeSec='all',activeSF='all';
-function filterSec(sec,btn){
-  activeSec=sec;
-  document.querySelectorAll('.hcat').forEach(function(b){b.classList.remove('active')});
-  btn.classList.add('active');applyFilters();
-}
-function setSF(btn,tag){
-  document.querySelectorAll('.sf').forEach(function(b){b.classList.remove('on')});
-  btn.classList.add('on');activeSF=tag;applyFilters();
-}
-function applyFilters(){
-  var q=document.getElementById('gsearch').value.toLowerCase().trim();
-  document.querySelectorAll('.section').forEach(function(sec){
-    var st=sec.dataset.sec;
-    sec.style.display=(activeSec==='all'||activeSec===st)?'':'none';
-  });
-  document.querySelectorAll('.card').forEach(function(c){
-    var tags=c.dataset.tags||'';var nm=(c.dataset.name||'').toLowerCase();var txt=c.querySelector('.card-body').textContent.toLowerCase();
-    var sfOk=activeSF==='all'||tags.includes(activeSF)||txt.includes(activeSF);
-    var qOk=!q||nm.includes(q)||txt.includes(q)||tags.includes(q);
-    c.style.display=(sfOk&&qOk)?'flex':'none';
-  });
-}
-function applySort(v){
-  var grids=document.querySelectorAll('.cards-grid');
-  grids.forEach(function(g){
-    var cs=Array.from(g.querySelectorAll('.card'));
-    cs.sort(function(a,b){
-      if(v==='rat')return parseFloat(b.dataset.rat||0)-parseFloat(a.dataset.rat||0);
-      if(v==='az')return (a.dataset.name||'').localeCompare(b.dataset.name||'');
-      return 0;
-    });
-    cs.forEach(function(c){g.appendChild(c)});
-  });
-}
-</script>
-</body>
+      var activeSec = "all",
+        activeSF = "all";
+
+      function filterSec(sec, btn) {
+        activeSec = sec;
+        document.querySelectorAll(".hcat").forEach(function (b) {
+          b.classList.remove("active");
+        });
+        btn.classList.add("active");
+        applyFilters();
+      }
+
+      function setSF(btn, tag) {
+        document.querySelectorAll(".sf").forEach(function (b) {
+          b.classList.remove("on");
+        });
+        btn.classList.add("on");
+        activeSF = tag;
+        applyFilters();
+      }
+
+      function applyFilters() {
+        var q = document.getElementById("gsearch").value.toLowerCase().trim();
+        document.querySelectorAll(".section").forEach(function (sec) {
+          var st = sec.dataset.sec;
+          sec.style.display =
+            activeSec === "all" || activeSec === st ? "" : "none";
+        });
+        document.querySelectorAll(".card").forEach(function (c) {
+          var tags = c.dataset.tags || "";
+          var nm = (c.dataset.name || "").toLowerCase();
+          var txt = c.querySelector(".card-body").textContent.toLowerCase();
+          var sfOk =
+            activeSF === "all" ||
+            tags.includes(activeSF) ||
+            txt.includes(activeSF);
+          var qOk = !q || nm.includes(q) || txt.includes(q) || tags.includes(q);
+          c.style.display = sfOk && qOk ? "flex" : "none";
+        });
+      }
+
+      function applySort(v) {
+        var grids = document.querySelectorAll(".cards-grid");
+        grids.forEach(function (g) {
+          var cs = Array.from(g.querySelectorAll(".card"));
+          cs.sort(function (a, b) {
+            if (v === "rat")
+              return (
+                parseFloat(b.dataset.rat || 0) - parseFloat(a.dataset.rat || 0)
+              );
+            if (v === "az")
+              return (a.dataset.name || "").localeCompare(b.dataset.name || "");
+            return 0;
+          });
+          cs.forEach(function (c) {
+            g.appendChild(c);
+          });
+        });
+      }
+
+      window.addEventListener("DOMContentLoaded", function () {
+        updateBadge();
+        var wl = getWL();
+        wl.forEach(function (item) {
+          document.querySelectorAll(".csave").forEach(function (btn) {
+            var card = btn.closest(".card");
+            if (card && card.dataset.name === item.id) {
+              btn.classList.add("saved");
+              btn.innerHTML = "&#9829;";
+            }
+          });
+        });
+      });
+    </script>
+    <script>
+      var hamburgerBtn = document.getElementById("hamburgerBtn");
+      var mobileNav = document.getElementById("mobileNav");
+      function openMobileNav() {
+        mobileNav.classList.add("open");
+        hamburgerBtn.classList.add("open");
+      }
+      function closeMobileNav() {
+        mobileNav.classList.remove("open");
+        hamburgerBtn.classList.remove("open");
+      }
+      hamburgerBtn.addEventListener("click", function () {
+        mobileNav.classList.contains("open")
+          ? closeMobileNav()
+          : openMobileNav();
+      });
+
+      function ArchinovaLogout() {
+        firebase
+          .auth()
+          .signOut()
+          .then(function () {
+            window.location.href = "login.html";
+          });
+      }
+      (function () {
+        if (!firebase.apps.length)
+          firebase.initializeApp({
+            apiKey: "AIzaSyAgcKYuy18C6lEvfxhI_Ir_9AWPtyWj7WM",
+            authDomain: "archinova-41427.firebaseapp.com",
+            projectId: "archinova-41427",
+            storageBucket: "archinova-41427.firebasestorage.app",
+            messagingSenderId: "710524988548",
+            appId: "1:710524988548:web:34526229a8ad3051c866d1",
+          });
+        firebase.auth().onAuthStateChanged(function (user) {
+          var li = document.getElementById("navAuthLi");
+          var dashLi = document.getElementById("navDashLi");
+          var mobileDashLi = document.getElementById("mobileNavDashLi");
+          var mobileLogin = document.getElementById("mobileNavLogin");
+          if (!li) return;
+          if (user) {
+            li.innerHTML =
+              '<a href="#" class="btn-login" onclick="ArchinovaLogout();return false;"><i class="fa-solid fa-right-from-bracket" style="margin-right:5px;"></i>Logout</a>';
+            if (dashLi) dashLi.style.display = "list-item";
+            if (mobileDashLi) mobileDashLi.style.display = "list-item";
+            if (mobileLogin) {
+              mobileLogin.textContent = "Logout";
+              mobileLogin.onclick = function () {
+                ArchinovaLogout();
+                return false;
+              };
+            }
+          } else {
+            li.innerHTML =
+              '<a href="login.html?from=gallery.html" class="btn-login">Login</a>';
+            if (dashLi) dashLi.style.display = "none";
+            if (mobileDashLi) mobileDashLi.style.display = "none";
+          }
+          li.style.visibility = "visible";
+        });
+      })();
+    </script>
+  </body>
 </html>

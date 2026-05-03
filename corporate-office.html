@@ -1,591 +1,2209 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>ArchiNova — Corporate Office</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-:root{--navy:#071525;--navy2:#0b1e35;--navy3:#132848;--teal:#0d9488;--teal2:#14b8a6;--white:#fff;--muted:#6b8fa3;--light:#c0dde0}
-body{background:var(--navy);color:var(--white);font-family:'Outfit',sans-serif;overflow-x:hidden}
-::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--navy)}::-webkit-scrollbar-thumb{background:var(--teal);border-radius:3px}
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:999;display:flex;align-items:center;justify-content:space-between;padding:0 4rem;height:72px;background:rgba(7,21,37,.93);border-bottom:1px solid rgba(13,148,136,.18);backdrop-filter:blur(20px)}
-.logo{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:700;color:#fff;text-decoration:none;letter-spacing:1px}
-.logo span{color:var(--teal2)}
-.breadcrumb{font-family:'Space Mono',monospace;font-size:.7rem;color:var(--muted);display:flex;align-items:center;gap:.4rem}
-.breadcrumb a{color:var(--muted);text-decoration:none}.breadcrumb a:hover{color:var(--teal2)}
-.breadcrumb .sep{color:var(--teal)}.breadcrumb b{color:var(--teal2)}
-.nav-r{display:flex;align-items:center;gap:1rem}
-.wl-btn{display:flex;align-items:center;gap:.5rem;color:var(--muted);font-size:.78rem;font-weight:500;text-decoration:none;border:1px solid rgba(255,255,255,.1);padding:.42rem 1rem;border-radius:4px;transition:all .2s;position:relative}
-.wl-btn:hover{color:var(--teal2);border-color:rgba(13,148,136,.35)}
-.wl-count{display:none;position:absolute;top:-6px;right:-6px;background:var(--teal);color:#fff;font-size:.58rem;font-weight:700;font-family:'Space Mono',monospace;width:17px;height:17px;border-radius:50%;align-items:center;justify-content:center}
-.wl-count.show{display:flex}
-.btn-p{background:var(--teal);color:#fff;border:none;padding:.6rem 1.5rem;border-radius:4px;font-size:.8rem;font-weight:600;cursor:pointer;letter-spacing:.05em;transition:all .2s}
-.btn-p:hover{background:var(--teal2);transform:translateY(-1px)}
-.btn-g{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.2);padding:.6rem 1.5rem;border-radius:4px;font-size:.8rem;font-weight:500;cursor:pointer;transition:all .2s}
-.btn-g:hover{border-color:var(--teal2);color:var(--teal2)}
-.btn-o{background:transparent;color:var(--light);border:1px solid rgba(255,255,255,.18);padding:.65rem 1.8rem;border-radius:4px;font-size:.82rem;font-weight:500;cursor:pointer;transition:all .2s}
-.btn-o:hover{border-color:var(--teal2);color:var(--teal2)}
-.btn-save{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,.12);padding:.5rem 1rem;border-radius:4px;font-size:.78rem;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:.4rem;transition:all .25s;white-space:nowrap}
-.btn-save:hover{border-color:rgba(239,68,68,.4);color:#f87171}
-.btn-save.saved{border-color:rgba(239,68,68,.5);color:#f87171;background:rgba(239,68,68,.08)}
-/* HERO */
-.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden;padding-top:72px}
-.hero-glow{position:absolute;inset:0;pointer-events:none}
-.hero-glow::before{content:'';position:absolute;top:-200px;right:-100px;width:700px;height:700px;background:radial-gradient(circle,rgba(13,148,136,.12) 0%,transparent 65%);border-radius:50%}
-.hero-left{display:flex;flex-direction:column;justify-content:center;padding:4rem 3.5rem 4rem 5rem;position:relative;z-index:2}
-.eyebrow-row{display:flex;align-items:center;gap:.7rem;margin-bottom:2rem}
-.eyebrow-line{width:32px;height:1.5px;background:var(--teal2)}
-.eyebrow-txt{font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--teal2)}
-.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,5.5vw,5.8rem);font-weight:700;line-height:1.0;letter-spacing:-1px;margin-bottom:1.8rem}
-.hero h1 em{font-style:italic;color:var(--teal2)}
-.hero-sub{font-size:.95rem;line-height:1.8;color:var(--light);font-weight:300;max-width:400px;margin-bottom:2.8rem}
-.hero-actions{display:flex;gap:1rem;margin-bottom:3.5rem}
-.hero-stats{display:flex;gap:2.5rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,.07)}
-.stat-n{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:700;line-height:1}
-.stat-l{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500}
-.hero-right{position:relative;overflow:hidden}
-.mosaic{display:grid;grid-template-columns:1.2fr 1fr;grid-template-rows:1fr .85fr .85fr;height:100%;gap:3px}
-.mc{overflow:hidden;position:relative;transition:transform .6s ease}
-.mc:hover{z-index:2;transform:scale(1.03)}
-.mc.sp{grid-row:span 2}
-.mc img{width:100%;height:100%;object-fit:cover;filter:brightness(.8);transition:filter .5s;display:block}
-.mc:hover img{filter:brightness(.95)}
-.mc::after{content:'';position:absolute;inset:0;background:linear-gradient(160deg,transparent 40%,rgba(7,21,37,.6) 100%);pointer-events:none}
-.hero-right::before{content:'';position:absolute;top:0;left:0;bottom:0;width:120px;background:linear-gradient(90deg,var(--navy) 0%,transparent 100%);z-index:3;pointer-events:none}
-.hero-right::after{content:'';position:absolute;bottom:0;left:0;right:0;height:160px;background:linear-gradient(0deg,var(--navy) 0%,transparent 100%);z-index:3;pointer-events:none}
-/* SECTION LABEL */
-.sec-label{text-align:center;margin-bottom:3.5rem}
-.sec-eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--teal2);margin-bottom:.9rem}
-.sec-eyebrow::before,.sec-eyebrow::after{content:'';display:inline-block;width:20px;height:1px;background:var(--teal2)}
-.sec-label h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,3.5vw,3.2rem);font-weight:700;letter-spacing:-.5px;color:#fff;line-height:1.1}
-.sec-label h2 em{font-style:italic;color:var(--teal2)}
-.sec-label p{color:var(--light);font-size:.9rem;font-weight:300;line-height:1.75;max-width:480px;margin:1rem auto 0}
-/* FEATURED */
-.feat-sec{padding:6rem 5rem 5rem;position:relative;z-index:1}
-.feat-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:2px;border-radius:14px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.5)}
-.fc{position:relative;overflow:hidden;cursor:pointer;background:var(--navy2)}
-.fc.tall{grid-row:span 2;min-height:580px}
-.fc.half{min-height:285px}
-.fc img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s ease,filter .5s;filter:brightness(.75)}
-.fc:hover img{transform:scale(1.07);filter:brightness(.88)}
-.fc-grad{position:absolute;inset:0;background:linear-gradient(0deg,rgba(7,21,37,.95) 0%,rgba(7,21,37,.3) 55%,transparent 100%)}
-.fc-info{position:absolute;bottom:0;left:0;right:0;padding:1.8rem;transform:translateY(4px);transition:transform .3s}
-.fc:hover .fc-info{transform:translateY(0)}
-.fc-type{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--teal2);margin-bottom:.4rem}
-.fc-name{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;color:#fff;margin-bottom:.5rem;line-height:1.2}
-.fc.tall .fc-name{font-size:2rem}
-.fc-meta{font-size:.75rem;color:var(--light);display:flex;gap:1rem;margin-bottom:.7rem;font-weight:300}
-.fc-tags{display:flex;flex-wrap:wrap;gap:.4rem}
-.ftag{background:rgba(13,148,136,.15);border:1px solid rgba(13,148,136,.3);color:var(--teal2);font-size:.6rem;padding:.18rem .55rem;border-radius:2px;font-family:'Space Mono',monospace}
-.fc-heart{position:absolute;top:1rem;right:1rem;width:34px;height:34px;border-radius:50%;background:rgba(7,21,37,.7);border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;color:var(--muted);opacity:0;transform:scale(.8);transition:all .3s;cursor:pointer;backdrop-filter:blur(8px)}
-.fc:hover .fc-heart{opacity:1;transform:scale(1)}
-.fc-heart:hover{border-color:rgba(239,68,68,.5);color:#f87171}
-.fc-heart.saved{opacity:1;transform:scale(1);color:#f87171;border-color:rgba(239,68,68,.5);background:rgba(239,68,68,.1)}
-.fc-heart svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
-.fc-heart.saved svg{fill:currentColor}
-/* GALLERY */
-.gal-sec{padding:2rem 5rem 6rem;position:relative;z-index:1}
-.filter-row{display:flex;justify-content:center;gap:.5rem;margin-bottom:3rem;flex-wrap:wrap}
-.ftab{padding:.45rem 1.2rem;border-radius:3px;border:1px solid rgba(13,148,136,.2);background:transparent;color:var(--muted);font-family:'Outfit',sans-serif;font-size:.78rem;font-weight:500;cursor:pointer;transition:all .2s}
-.ftab:hover,.ftab.on{background:rgba(13,148,136,.12);border-color:var(--teal);color:var(--teal2)}
-.gal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.gc{position:relative;overflow:hidden;border-radius:10px;cursor:pointer;background:var(--navy2);border:1px solid rgba(255,255,255,.04);transition:border-color .3s,transform .3s}
-.gc:hover{border-color:rgba(13,148,136,.35);transform:translateY(-4px)}
-.gc-img{width:100%;aspect-ratio:4/3;overflow:hidden;position:relative}
-.gc-img img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.78);transition:transform .6s ease,filter .5s}
-.gc:hover .gc-img img{transform:scale(1.06);filter:brightness(.9)}
-.gc-heart{position:absolute;top:.7rem;right:.7rem;width:30px;height:30px;border-radius:50%;background:rgba(7,21,37,.8);border:1px solid rgba(255,255,255,.15);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(.7);transition:all .25s}
-.gc:hover .gc-heart{opacity:1;transform:scale(1)}
-.gc-heart:hover,.gc-heart.saved{color:#f87171;border-color:rgba(239,68,68,.5)}
-.gc-heart.saved{opacity:1;transform:scale(1);background:rgba(239,68,68,.1)}
-.gc-heart svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2}
-.gc-heart.saved svg{fill:currentColor}
-.gc-body{padding:1.2rem 1.3rem 1.4rem}
-.gc-label{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal2);margin-bottom:.5rem}
-.gc-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:.5rem;line-height:1.2}
-.gc-desc{font-size:.78rem;color:var(--muted);line-height:1.6;font-weight:300;margin-bottom:.9rem}
-.gc-row{display:flex;align-items:center;justify-content:space-between}
-.gc-specs{display:flex;gap:1rem}
-.gc-spec{font-size:.7rem;color:var(--light);font-weight:300}
-.gc-spec b{font-weight:600;color:#fff;display:block;font-size:.78rem}
-.gc-view{background:rgba(13,148,136,.12);border:1px solid rgba(13,148,136,.25);color:var(--teal2);font-size:.7rem;font-weight:600;padding:.35rem .9rem;border-radius:3px;cursor:pointer;transition:all .2s;font-family:'Outfit',sans-serif}
-.gc-view:hover{background:var(--teal);color:#fff;border-color:var(--teal)}
-/* SPEC STRIP */
-.spec-strip{margin:0 5rem 6rem;background:linear-gradient(135deg,var(--navy3) 0%,#0c2535 100%);border:1px solid rgba(13,148,136,.2);border-radius:16px;padding:4rem;position:relative;overflow:hidden;z-index:1}
-.spec-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;margin-top:3.5rem}
-.spec-box{padding:1.8rem;border:1px solid rgba(13,148,136,.14);border-radius:10px;background:rgba(255,255,255,.02);transition:all .3s;position:relative;overflow:hidden}
-.spec-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal),var(--teal2));transform:scaleX(0);transition:transform .35s;transform-origin:left}
-.spec-box:hover{border-color:rgba(13,148,136,.38);background:rgba(13,148,136,.04)}
-.spec-box:hover::before{transform:scaleX(1)}
-.spec-icon{width:40px;height:40px;border-radius:8px;background:rgba(13,148,136,.1);border:1px solid rgba(13,148,136,.2);display:flex;align-items:center;justify-content:center;margin-bottom:1.2rem}
-.spec-icon svg{width:18px;height:18px;stroke:var(--teal2);fill:none;stroke-width:1.8}
-.spec-box h3{font-size:.95rem;font-weight:600;color:#fff;margin-bottom:.5rem}
-.spec-box p{font-size:.78rem;color:var(--muted);line-height:1.65;font-weight:300}
-/* PROCESS */
-.proc-sec{padding:0 5rem 6rem;position:relative;z-index:1}
-.proc-row{display:grid;grid-template-columns:repeat(4,1fr);margin-top:4rem;position:relative}
-.proc-row::before{content:'';position:absolute;top:26px;left:calc(12.5% + 16px);width:calc(75% - 32px);height:1px;background:linear-gradient(90deg,transparent,var(--teal),var(--teal),transparent);opacity:.3}
-.p-step{padding:0 1.8rem;text-align:center}
-.p-num{width:52px;height:52px;border-radius:50%;border:1.5px solid var(--teal);background:var(--navy2);color:var(--teal2);font-family:'Space Mono',monospace;font-size:.8rem;display:flex;align-items:center;justify-content:center;margin:0 auto 1.4rem;position:relative;z-index:1}
-.p-step h3{font-size:.92rem;font-weight:600;color:#fff;margin-bottom:.5rem}
-.p-step p{font-size:.78rem;color:var(--muted);line-height:1.65;font-weight:300}
-/* CTA */
-.cta-sec{margin:0 5rem 6rem;border-radius:16px;background:linear-gradient(135deg,#0d3d50 0%,#0a2e45 40%,#112040 100%);border:1px solid rgba(13,148,136,.25);padding:4.5rem;display:flex;align-items:center;justify-content:space-between;gap:3rem;position:relative;overflow:hidden;z-index:1}
-.cta-sec::before{content:'';position:absolute;right:-60px;top:-60px;width:300px;height:300px;background:radial-gradient(circle,rgba(13,148,136,.2) 0%,transparent 65%);border-radius:50%;pointer-events:none}
-.cta-left h2{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:700;letter-spacing:-.5px;color:#fff;margin-bottom:.6rem;line-height:1.15}
-.cta-left p{color:var(--light);font-size:.88rem;font-weight:300;line-height:1.7}
-.cta-btns{display:flex;gap:1rem;flex-shrink:0;position:relative;z-index:1}
-/* FOOTER */
-footer{border-top:1px solid rgba(13,148,136,.15);padding:2rem 5rem;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1}
-footer p{font-size:.73rem;color:var(--muted);font-family:'Space Mono',monospace}
-.foot-links{display:flex;gap:2rem}
-.foot-links a{font-size:.73rem;color:var(--muted);text-decoration:none;font-family:'Space Mono',monospace;transition:color .2s}
-.foot-links a:hover{color:var(--teal2)}
-/* MODAL */
-.mwrap{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;background:rgba(4,10,18,.88);backdrop-filter:blur(16px);opacity:0;pointer-events:none;transition:opacity .3s}
-.mwrap.open{opacity:1;pointer-events:all}
-.mbox{background:var(--navy2);border:1px solid rgba(13,148,136,.25);border-radius:16px;width:92%;max-height:90vh;overflow-y:auto;transform:translateY(24px);transition:transform .35s;position:relative}
-.mwrap.open .mbox{transform:translateY(0)}
-.mclose{position:absolute;top:1rem;right:1rem;background:rgba(7,21,37,.7);border:1px solid rgba(255,255,255,.1);width:34px;height:34px;border-radius:50%;color:var(--muted);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .2s;z-index:2}
-.mclose:hover{color:#fff}
-.mimg{width:100%;height:260px;object-fit:cover;display:block;border-radius:14px 14px 0 0;filter:brightness(.82)}
-.mbody{padding:2.2rem 2.5rem 2.5rem}
-.mbadge{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--teal2);margin-bottom:.5rem}
-.mbox h2{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:#fff;margin-bottom:1.4rem}
-.mspecs{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-bottom:1.5rem}
-.mspec{background:rgba(255,255,255,.03);border:1px solid rgba(13,148,136,.15);border-radius:8px;padding:.9rem 1.1rem}
-.mspec-l{font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-family:'Space Mono',monospace;margin-bottom:.3rem}
-.mspec-v{font-size:1.05rem;font-weight:600;color:#fff;font-family:'Cormorant Garamond',serif}
-.mdesc{font-size:.85rem;color:var(--light);line-height:1.75;font-weight:300;margin-bottom:1.8rem}
-.mfoot{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
-.mtags{display:flex;gap:.4rem;flex-wrap:wrap}
-.mtag{background:rgba(13,148,136,.12);border:1px solid rgba(13,148,136,.25);color:var(--teal2);font-size:.62rem;padding:.2rem .6rem;border-radius:2px;font-family:'Space Mono',monospace}
-.mfoot-btns{display:flex;gap:.8rem;align-items:center;flex-shrink:0}
-/* FORM MODAL */
-.fmbox{max-width:500px}
-.fmbody{padding:2.5rem}
-.fl{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-family:'Space Mono',monospace;display:block;margin-bottom:.4rem}
-.fi{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(13,148,136,.25);border-radius:4px;padding:.65rem .9rem;color:#fff;font-size:.84rem;font-family:'Outfit',sans-serif;outline:none;margin-bottom:.9rem;transition:border-color .2s}
-.fi:focus{border-color:var(--teal2)}
-select.fi{background:#0b1e35;cursor:pointer}
-textarea.fi{resize:vertical}
-.frow{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:.9rem}
-.frow .fi{margin-bottom:0}
-.sbox{display:none;background:rgba(13,148,136,.12);border:1px solid rgba(13,148,136,.3);border-radius:8px;padding:1rem 1.2rem;font-size:.84rem;color:var(--teal2);font-weight:500;margin-bottom:1rem}
-.factions{display:flex;gap:.8rem}
-/* TOAST */
-#toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(90px);background:var(--navy2);border:1px solid rgba(13,148,136,.35);border-radius:8px;padding:.9rem 1.4rem;display:flex;align-items:center;gap:1rem;font-size:.84rem;color:#fff;box-shadow:0 12px 40px rgba(0,0,0,.4);z-index:9999;transition:transform .4s cubic-bezier(.34,1.56,.64,1),opacity .35s;opacity:0;pointer-events:none;white-space:nowrap}
-#toast a{color:var(--teal2);font-weight:600;text-decoration:none;font-size:.78rem;border:1px solid rgba(13,148,136,.35);padding:.22rem .65rem;border-radius:3px}
-/* REVEAL */
-.rev{opacity:0;transform:translateY(28px);transition:opacity .75s ease,transform .75s ease}
-.rev.in{opacity:1;transform:translateY(0)}
-@media(max-width:1100px){
-.hero{grid-template-columns:1fr}.hero-right{display:none}
-.feat-grid{grid-template-columns:1fr 1fr}.fc.tall{min-height:380px;grid-column:span 2}
-.gal-grid{display:grid;grid-template-columns:repeat(2,1fr)}
-.spec-grid,.proc-row{grid-template-columns:repeat(2,1fr)}.proc-row::before{display:none}
-nav,.feat-sec,.gal-sec,.proc-sec{padding-left:1.5rem;padding-right:1.5rem}
-.spec-strip,.cta-sec{margin-left:1.5rem;margin-right:1.5rem}
-.hero-left{padding:4rem 2rem 3rem}
-footer{flex-direction:column;gap:1rem;padding:1.5rem}
-}
-</style>
-</head>
-<body>
-<nav>
-  <a href="#" class="logo">Archi<span>Nova</span></a>
-  <div class="breadcrumb">
-    <a href="#">Gallery</a><span class="sep">/</span>
-    <a href="#">Office</a><span class="sep">/</span>
-    <b>Corporate</b>
-  </div>
-  <div class="nav-r">
-    <a href="wishlist.html" class="wl-btn">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
-      Wishlist <span class="wl-count" id="navCount"></span>
-    </a>
-    <button class="btn-p" onclick="openConsult()">Book Consultation</button>
-  </div>
-</nav>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>ArchiNova — Corporate Office</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      :root {
+        --navy: #071525;
+        --navy2: #0b1e35;
+        --navy3: #132848;
+        --teal: #0d9488;
+        --teal2: #14b8a6;
+        --white: #fff;
+        --muted: #6b8fa3;
+        --light: #c0dde0;
+      }
+      body {
+        background: var(--navy);
+        color: var(--white);
+        font-family: "Outfit", sans-serif;
+        overflow-x: hidden;
+      }
+      ::-webkit-scrollbar {
+        width: 5px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--navy);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--teal);
+        border-radius: 3px;
+      }
+      /* NAV */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 999;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 4rem;
+        height: 72px;
+        background: rgba(7, 21, 37, 0.93);
+        border-bottom: 1px solid rgba(13, 148, 136, 0.18);
+        backdrop-filter: blur(20px);
+      }
+      .logo {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.7rem;
+        font-weight: 700;
+        color: #fff;
+        text-decoration: none;
+        letter-spacing: 1px;
+      }
+      .logo span {
+        color: var(--teal2);
+      }
+      .breadcrumb {
+        font-family: "Space Mono", monospace;
+        font-size: 0.7rem;
+        color: var(--muted);
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+      .breadcrumb a {
+        color: var(--muted);
+        text-decoration: none;
+      }
+      .breadcrumb a:hover {
+        color: var(--teal2);
+      }
+      .breadcrumb .sep {
+        color: var(--teal);
+      }
+      .breadcrumb b {
+        color: var(--teal2);
+      }
+      .nav-r {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .wl-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--muted);
+        font-size: 0.78rem;
+        font-weight: 500;
+        text-decoration: none;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 0.42rem 1rem;
+        border-radius: 4px;
+        transition: all 0.2s;
+        position: relative;
+      }
+      .wl-btn:hover {
+        color: var(--teal2);
+        border-color: rgba(13, 148, 136, 0.35);
+      }
+      .wl-count {
+        display: none;
+        position: absolute;
+        top: -6px;
+        right: -6px;
+        background: var(--teal);
+        color: #fff;
+        font-size: 0.58rem;
+        font-weight: 700;
+        font-family: "Space Mono", monospace;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+      }
+      .wl-count.show {
+        display: flex;
+      }
+      .btn-p {
+        background: var(--teal);
+        color: #fff;
+        border: none;
+        padding: 0.6rem 1.5rem;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+        letter-spacing: 0.05em;
+        transition: all 0.2s;
+      }
+      .btn-p:hover {
+        background: var(--teal2);
+        transform: translateY(-1px);
+      }
+      .btn-g {
+        background: transparent;
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 0.6rem 1.5rem;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .btn-g:hover {
+        border-color: var(--teal2);
+        color: var(--teal2);
+      }
+      .btn-o {
+        background: transparent;
+        color: var(--light);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        padding: 0.65rem 1.8rem;
+        border-radius: 4px;
+        font-size: 0.82rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .btn-o:hover {
+        border-color: var(--teal2);
+        color: var(--teal2);
+      }
+      .btn-save {
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        font-size: 0.78rem;
+        font-weight: 500;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        transition: all 0.25s;
+        white-space: nowrap;
+      }
+      .btn-save:hover {
+        border-color: rgba(239, 68, 68, 0.4);
+        color: #f87171;
+      }
+      .btn-save.saved {
+        border-color: rgba(239, 68, 68, 0.5);
+        color: #f87171;
+        background: rgba(239, 68, 68, 0.08);
+      }
+      /* HERO */
+      .hero {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        position: relative;
+        overflow: hidden;
+        padding-top: 72px;
+      }
+      .hero-glow {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+      .hero-glow::before {
+        content: "";
+        position: absolute;
+        top: -200px;
+        right: -100px;
+        width: 700px;
+        height: 700px;
+        background: radial-gradient(
+          circle,
+          rgba(13, 148, 136, 0.12) 0%,
+          transparent 65%
+        );
+        border-radius: 50%;
+      }
+      .hero-left {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 4rem 3.5rem 4rem 5rem;
+        position: relative;
+        z-index: 2;
+      }
+      .eyebrow-row {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        margin-bottom: 2rem;
+      }
+      .eyebrow-line {
+        width: 32px;
+        height: 1.5px;
+        background: var(--teal2);
+      }
+      .eyebrow-txt {
+        font-family: "Space Mono", monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--teal2);
+      }
+      .hero h1 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(3rem, 5.5vw, 5.8rem);
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: -1px;
+        margin-bottom: 1.8rem;
+      }
+      .hero h1 em {
+        font-style: italic;
+        color: var(--teal2);
+      }
+      .hero-sub {
+        font-size: 0.95rem;
+        line-height: 1.8;
+        color: var(--light);
+        font-weight: 300;
+        max-width: 400px;
+        margin-bottom: 2.8rem;
+      }
+      .hero-actions {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 3.5rem;
+      }
+      .hero-stats {
+        display: flex;
+        gap: 2.5rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.07);
+      }
+      .stat-n {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 2.2rem;
+        font-weight: 700;
+        line-height: 1;
+      }
+      .stat-l {
+        font-size: 0.65rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+        font-weight: 500;
+      }
+      .hero-right {
+        position: relative;
+        overflow: hidden;
+      }
+      .mosaic {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        grid-template-rows: 1fr 0.85fr 0.85fr;
+        height: 100%;
+        gap: 3px;
+      }
+      .mc {
+        overflow: hidden;
+        position: relative;
+        transition: transform 0.6s ease;
+      }
+      .mc:hover {
+        z-index: 2;
+        transform: scale(1.03);
+      }
+      .mc.sp {
+        grid-row: span 2;
+      }
+      .mc img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(0.8);
+        transition: filter 0.5s;
+        display: block;
+      }
+      .mc:hover img {
+        filter: brightness(0.95);
+      }
+      .mc::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          160deg,
+          transparent 40%,
+          rgba(7, 21, 37, 0.6) 100%
+        );
+        pointer-events: none;
+      }
+      .hero-right::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 120px;
+        background: linear-gradient(90deg, var(--navy) 0%, transparent 100%);
+        z-index: 3;
+        pointer-events: none;
+      }
+      .hero-right::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 160px;
+        background: linear-gradient(0deg, var(--navy) 0%, transparent 100%);
+        z-index: 3;
+        pointer-events: none;
+      }
+      /* SECTION LABEL */
+      .sec-label {
+        text-align: center;
+        margin-bottom: 3.5rem;
+      }
+      .sec-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: "Space Mono", monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--teal2);
+        margin-bottom: 0.9rem;
+      }
+      .sec-eyebrow::before,
+      .sec-eyebrow::after {
+        content: "";
+        display: inline-block;
+        width: 20px;
+        height: 1px;
+        background: var(--teal2);
+      }
+      .sec-label h2 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        color: #fff;
+        line-height: 1.1;
+      }
+      .sec-label h2 em {
+        font-style: italic;
+        color: var(--teal2);
+      }
+      .sec-label p {
+        color: var(--light);
+        font-size: 0.9rem;
+        font-weight: 300;
+        line-height: 1.75;
+        max-width: 480px;
+        margin: 1rem auto 0;
+      }
+      /* FEATURED */
+      .feat-sec {
+        padding: 6rem 5rem 5rem;
+        position: relative;
+        z-index: 1;
+      }
+      .feat-grid {
+        display: grid;
+        grid-template-columns: 1.6fr 1fr 1fr;
+        gap: 2px;
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+      }
+      .fc {
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        background: var(--navy2);
+      }
+      .fc.tall {
+        grid-row: span 2;
+        min-height: 580px;
+      }
+      .fc.half {
+        min-height: 285px;
+      }
+      .fc img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition:
+          transform 0.7s ease,
+          filter 0.5s;
+        filter: brightness(0.75);
+      }
+      .fc:hover img {
+        transform: scale(1.07);
+        filter: brightness(0.88);
+      }
+      .fc-grad {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          0deg,
+          rgba(7, 21, 37, 0.95) 0%,
+          rgba(7, 21, 37, 0.3) 55%,
+          transparent 100%
+        );
+      }
+      .fc-info {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 1.8rem;
+        transform: translateY(4px);
+        transition: transform 0.3s;
+      }
+      .fc:hover .fc-info {
+        transform: translateY(0);
+      }
+      .fc-type {
+        font-family: "Space Mono", monospace;
+        font-size: 0.62rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--teal2);
+        margin-bottom: 0.4rem;
+      }
+      .fc-name {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 0.5rem;
+        line-height: 1.2;
+      }
+      .fc.tall .fc-name {
+        font-size: 2rem;
+      }
+      .fc-meta {
+        font-size: 0.75rem;
+        color: var(--light);
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 0.7rem;
+        font-weight: 300;
+      }
+      .fc-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+      }
+      .ftag {
+        background: rgba(13, 148, 136, 0.15);
+        border: 1px solid rgba(13, 148, 136, 0.3);
+        color: var(--teal2);
+        font-size: 0.6rem;
+        padding: 0.18rem 0.55rem;
+        border-radius: 2px;
+        font-family: "Space Mono", monospace;
+      }
+      .fc-heart {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: rgba(7, 21, 37, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--muted);
+        opacity: 0;
+        transform: scale(0.8);
+        transition: all 0.3s;
+        cursor: pointer;
+        backdrop-filter: blur(8px);
+      }
+      .fc:hover .fc-heart {
+        opacity: 1;
+        transform: scale(1);
+      }
+      .fc-heart:hover {
+        border-color: rgba(239, 68, 68, 0.5);
+        color: #f87171;
+      }
+      .fc-heart.saved {
+        opacity: 1;
+        transform: scale(1);
+        color: #f87171;
+        border-color: rgba(239, 68, 68, 0.5);
+        background: rgba(239, 68, 68, 0.1);
+      }
+      .fc-heart svg {
+        width: 14px;
+        height: 14px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 2;
+      }
+      .fc-heart.saved svg {
+        fill: currentColor;
+      }
+      /* GALLERY */
+      .gal-sec {
+        padding: 2rem 5rem 6rem;
+        position: relative;
+        z-index: 1;
+      }
+      .filter-row {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-bottom: 3rem;
+        flex-wrap: wrap;
+      }
+      .ftab {
+        padding: 0.45rem 1.2rem;
+        border-radius: 3px;
+        border: 1px solid rgba(13, 148, 136, 0.2);
+        background: transparent;
+        color: var(--muted);
+        font-family: "Outfit", sans-serif;
+        font-size: 0.78rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .ftab:hover,
+      .ftab.on {
+        background: rgba(13, 148, 136, 0.12);
+        border-color: var(--teal);
+        color: var(--teal2);
+      }
+      .gal-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+      .gc {
+        position: relative;
+        overflow: hidden;
+        border-radius: 10px;
+        cursor: pointer;
+        background: var(--navy2);
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        transition:
+          border-color 0.3s,
+          transform 0.3s;
+      }
+      .gc:hover {
+        border-color: rgba(13, 148, 136, 0.35);
+        transform: translateY(-4px);
+      }
+      .gc-img {
+        width: 100%;
+        aspect-ratio: 4/3;
+        overflow: hidden;
+        position: relative;
+      }
+      .gc-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        filter: brightness(0.78);
+        transition:
+          transform 0.6s ease,
+          filter 0.5s;
+      }
+      .gc:hover .gc-img img {
+        transform: scale(1.06);
+        filter: brightness(0.9);
+      }
+      .gc-heart {
+        position: absolute;
+        top: 0.7rem;
+        right: 0.7rem;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: rgba(7, 21, 37, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: var(--muted);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transform: scale(0.7);
+        transition: all 0.25s;
+      }
+      .gc:hover .gc-heart {
+        opacity: 1;
+        transform: scale(1);
+      }
+      .gc-heart:hover,
+      .gc-heart.saved {
+        color: #f87171;
+        border-color: rgba(239, 68, 68, 0.5);
+      }
+      .gc-heart.saved {
+        opacity: 1;
+        transform: scale(1);
+        background: rgba(239, 68, 68, 0.1);
+      }
+      .gc-heart svg {
+        width: 13px;
+        height: 13px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 2;
+      }
+      .gc-heart.saved svg {
+        fill: currentColor;
+      }
+      .gc-body {
+        padding: 1.2rem 1.3rem 1.4rem;
+      }
+      .gc-label {
+        font-family: "Space Mono", monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--teal2);
+        margin-bottom: 0.5rem;
+      }
+      .gc-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 0.5rem;
+        line-height: 1.2;
+      }
+      .gc-desc {
+        font-size: 0.78rem;
+        color: var(--muted);
+        line-height: 1.6;
+        font-weight: 300;
+        margin-bottom: 0.9rem;
+      }
+      .gc-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .gc-specs {
+        display: flex;
+        gap: 1rem;
+      }
+      .gc-spec {
+        font-size: 0.7rem;
+        color: var(--light);
+        font-weight: 300;
+      }
+      .gc-spec b {
+        font-weight: 600;
+        color: #fff;
+        display: block;
+        font-size: 0.78rem;
+      }
+      .gc-view {
+        background: rgba(13, 148, 136, 0.12);
+        border: 1px solid rgba(13, 148, 136, 0.25);
+        color: var(--teal2);
+        font-size: 0.7rem;
+        font-weight: 600;
+        padding: 0.35rem 0.9rem;
+        border-radius: 3px;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: "Outfit", sans-serif;
+      }
+      .gc-view:hover {
+        background: var(--teal);
+        color: #fff;
+        border-color: var(--teal);
+      }
+      /* SPEC STRIP */
+      .spec-strip {
+        margin: 0 5rem 6rem;
+        background: linear-gradient(135deg, var(--navy3) 0%, #0c2535 100%);
+        border: 1px solid rgba(13, 148, 136, 0.2);
+        border-radius: 16px;
+        padding: 4rem;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+      }
+      .spec-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+        margin-top: 3.5rem;
+      }
+      .spec-box {
+        padding: 1.8rem;
+        border: 1px solid rgba(13, 148, 136, 0.14);
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.02);
+        transition: all 0.3s;
+        position: relative;
+        overflow: hidden;
+      }
+      .spec-box::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, var(--teal), var(--teal2));
+        transform: scaleX(0);
+        transition: transform 0.35s;
+        transform-origin: left;
+      }
+      .spec-box:hover {
+        border-color: rgba(13, 148, 136, 0.38);
+        background: rgba(13, 148, 136, 0.04);
+      }
+      .spec-box:hover::before {
+        transform: scaleX(1);
+      }
+      .spec-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background: rgba(13, 148, 136, 0.1);
+        border: 1px solid rgba(13, 148, 136, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.2rem;
+      }
+      .spec-icon svg {
+        width: 18px;
+        height: 18px;
+        stroke: var(--teal2);
+        fill: none;
+        stroke-width: 1.8;
+      }
+      .spec-box h3 {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #fff;
+        margin-bottom: 0.5rem;
+      }
+      .spec-box p {
+        font-size: 0.78rem;
+        color: var(--muted);
+        line-height: 1.65;
+        font-weight: 300;
+      }
+      /* PROCESS */
+      .proc-sec {
+        padding: 0 5rem 6rem;
+        position: relative;
+        z-index: 1;
+      }
+      .proc-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        margin-top: 4rem;
+        position: relative;
+      }
+      .proc-row::before {
+        content: "";
+        position: absolute;
+        top: 26px;
+        left: calc(12.5% + 16px);
+        width: calc(75% - 32px);
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--teal),
+          var(--teal),
+          transparent
+        );
+        opacity: 0.3;
+      }
+      .p-step {
+        padding: 0 1.8rem;
+        text-align: center;
+      }
+      .p-num {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        border: 1.5px solid var(--teal);
+        background: var(--navy2);
+        color: var(--teal2);
+        font-family: "Space Mono", monospace;
+        font-size: 0.8rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.4rem;
+        position: relative;
+        z-index: 1;
+      }
+      .p-step h3 {
+        font-size: 0.92rem;
+        font-weight: 600;
+        color: #fff;
+        margin-bottom: 0.5rem;
+      }
+      .p-step p {
+        font-size: 0.78rem;
+        color: var(--muted);
+        line-height: 1.65;
+        font-weight: 300;
+      }
+      /* CTA */
+      .cta-sec {
+        margin: 0 5rem 6rem;
+        border-radius: 16px;
+        background: linear-gradient(
+          135deg,
+          #0d3d50 0%,
+          #0a2e45 40%,
+          #112040 100%
+        );
+        border: 1px solid rgba(13, 148, 136, 0.25);
+        padding: 4.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 3rem;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+      }
+      .cta-sec::before {
+        content: "";
+        position: absolute;
+        right: -60px;
+        top: -60px;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(
+          circle,
+          rgba(13, 148, 136, 0.2) 0%,
+          transparent 65%
+        );
+        border-radius: 50%;
+        pointer-events: none;
+      }
+      .cta-left h2 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 2.4rem;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        color: #fff;
+        margin-bottom: 0.6rem;
+        line-height: 1.15;
+      }
+      .cta-left p {
+        color: var(--light);
+        font-size: 0.88rem;
+        font-weight: 300;
+        line-height: 1.7;
+      }
+      .cta-btns {
+        display: flex;
+        gap: 1rem;
+        flex-shrink: 0;
+        position: relative;
+        z-index: 1;
+      }
+      /* FOOTER */
+      footer {
+        border-top: 1px solid rgba(13, 148, 136, 0.15);
+        padding: 2rem 5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        z-index: 1;
+      }
+      footer p {
+        font-size: 0.73rem;
+        color: var(--muted);
+        font-family: "Space Mono", monospace;
+      }
+      .foot-links {
+        display: flex;
+        gap: 2rem;
+      }
+      .foot-links a {
+        font-size: 0.73rem;
+        color: var(--muted);
+        text-decoration: none;
+        font-family: "Space Mono", monospace;
+        transition: color 0.2s;
+      }
+      .foot-links a:hover {
+        color: var(--teal2);
+      }
+      /* MODAL */
+      .mwrap {
+        position: fixed;
+        inset: 0;
+        z-index: 2000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(4, 10, 18, 0.88);
+        backdrop-filter: blur(16px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+      }
+      .mwrap.open {
+        opacity: 1;
+        pointer-events: all;
+      }
+      .mbox {
+        background: var(--navy2);
+        border: 1px solid rgba(13, 148, 136, 0.25);
+        border-radius: 16px;
+        width: 92%;
+        max-height: 90vh;
+        overflow-y: auto;
+        transform: translateY(24px);
+        transition: transform 0.35s;
+        position: relative;
+      }
+      .mwrap.open .mbox {
+        transform: translateY(0);
+      }
+      .mclose {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: rgba(7, 21, 37, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        color: var(--muted);
+        cursor: pointer;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        z-index: 2;
+      }
+      .mclose:hover {
+        color: #fff;
+      }
+      .mimg {
+        width: 100%;
+        height: 260px;
+        object-fit: cover;
+        display: block;
+        border-radius: 14px 14px 0 0;
+        filter: brightness(0.82);
+      }
+      .mbody {
+        padding: 2.2rem 2.5rem 2.5rem;
+      }
+      .mbadge {
+        font-family: "Space Mono", monospace;
+        font-size: 0.62rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--teal2);
+        margin-bottom: 0.5rem;
+      }
+      .mbox h2 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 2rem;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 1.4rem;
+      }
+      .mspecs {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.8rem;
+        margin-bottom: 1.5rem;
+      }
+      .mspec {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(13, 148, 136, 0.15);
+        border-radius: 8px;
+        padding: 0.9rem 1.1rem;
+      }
+      .mspec-l {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+        font-family: "Space Mono", monospace;
+        margin-bottom: 0.3rem;
+      }
+      .mspec-v {
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: #fff;
+        font-family: "Cormorant Garamond", serif;
+      }
+      .mdesc {
+        font-size: 0.85rem;
+        color: var(--light);
+        line-height: 1.75;
+        font-weight: 300;
+        margin-bottom: 1.8rem;
+      }
+      .mfoot {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .mtags {
+        display: flex;
+        gap: 0.4rem;
+        flex-wrap: wrap;
+      }
+      .mtag {
+        background: rgba(13, 148, 136, 0.12);
+        border: 1px solid rgba(13, 148, 136, 0.25);
+        color: var(--teal2);
+        font-size: 0.62rem;
+        padding: 0.2rem 0.6rem;
+        border-radius: 2px;
+        font-family: "Space Mono", monospace;
+      }
+      .mfoot-btns {
+        display: flex;
+        gap: 0.8rem;
+        align-items: center;
+        flex-shrink: 0;
+      }
+      /* FORM MODAL */
+      .fmbox {
+        max-width: 500px;
+      }
+      .fmbody {
+        padding: 2.5rem;
+      }
+      .fl {
+        font-size: 0.68rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+        font-family: "Space Mono", monospace;
+        display: block;
+        margin-bottom: 0.4rem;
+      }
+      .fi {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(13, 148, 136, 0.25);
+        border-radius: 4px;
+        padding: 0.65rem 0.9rem;
+        color: #fff;
+        font-size: 0.84rem;
+        font-family: "Outfit", sans-serif;
+        outline: none;
+        margin-bottom: 0.9rem;
+        transition: border-color 0.2s;
+      }
+      .fi:focus {
+        border-color: var(--teal2);
+      }
+      select.fi {
+        background: #0b1e35;
+        cursor: pointer;
+      }
+      textarea.fi {
+        resize: vertical;
+      }
+      .frow {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.8rem;
+        margin-bottom: 0.9rem;
+      }
+      .frow .fi {
+        margin-bottom: 0;
+      }
+      .sbox {
+        display: none;
+        background: rgba(13, 148, 136, 0.12);
+        border: 1px solid rgba(13, 148, 136, 0.3);
+        border-radius: 8px;
+        padding: 1rem 1.2rem;
+        font-size: 0.84rem;
+        color: var(--teal2);
+        font-weight: 500;
+        margin-bottom: 1rem;
+      }
+      .factions {
+        display: flex;
+        gap: 0.8rem;
+      }
+      /* TOAST */
+      #toast {
+        position: fixed;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%) translateY(90px);
+        background: var(--navy2);
+        border: 1px solid rgba(13, 148, 136, 0.35);
+        border-radius: 8px;
+        padding: 0.9rem 1.4rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        font-size: 0.84rem;
+        color: #fff;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        z-index: 9999;
+        transition:
+          transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+          opacity 0.35s;
+        opacity: 0;
+        pointer-events: none;
+        white-space: nowrap;
+      }
+      #toast a {
+        color: var(--teal2);
+        font-weight: 600;
+        text-decoration: none;
+        font-size: 0.78rem;
+        border: 1px solid rgba(13, 148, 136, 0.35);
+        padding: 0.22rem 0.65rem;
+        border-radius: 3px;
+      }
+      /* REVEAL */
+      .rev {
+        opacity: 0;
+        transform: translateY(28px);
+        transition:
+          opacity 0.75s ease,
+          transform 0.75s ease;
+      }
+      .rev.in {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      @media (max-width: 1100px) {
+        .hero {
+          grid-template-columns: 1fr;
+        }
+        .hero-right {
+          display: none;
+        }
+        .feat-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .fc.tall {
+          min-height: 380px;
+          grid-column: span 2;
+        }
+        .gal-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .spec-grid,
+        .proc-row {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .proc-row::before {
+          display: none;
+        }
+        nav,
+        .feat-sec,
+        .gal-sec,
+        .proc-sec {
+          padding-left: 1.5rem;
+          padding-right: 1.5rem;
+        }
+        .spec-strip,
+        .cta-sec {
+          margin-left: 1.5rem;
+          margin-right: 1.5rem;
+        }
+        .hero-left {
+          padding: 4rem 2rem 3rem;
+        }
+        footer {
+          flex-direction: column;
+          gap: 1rem;
+          padding: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="index.html" class="logo">Archi<span>Nova</span></a>
+      <div class="breadcrumb">
+        <a href="gallery.html">Gallery</a><span class="sep">/</span> <a href="office.html">Office</a>
+        ><span class="sep">/</span>
+        <b>Corporate</b>
+      </div>
+      <div class="nav-r">
+        <a href="wishlist.html" class="wl-btn">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"
+            />
+          </svg>
+          Wishlist <span class="wl-count" id="navCount"></span>
+        </a>
+      </div>
+    </nav>
 
-<section class="hero">
-  <div class="hero-glow"></div>
-  <div class="hero-left">
-    <div class="eyebrow-row"><div class="eyebrow-line"></div><span class="eyebrow-txt">Office Gallery &nbsp;·&nbsp; Corporate Series</span></div>
-    <h1>Where <em>Power</em><br>Meets<br>Precision</h1>
-    <p class="hero-sub">Curated corporate office designs for organisations that command attention — blending executive authority with intelligent spatial flow.</p>
-    <div class="hero-actions">
-      <button class="btn-p" onclick="document.getElementById('featured').scrollIntoView({behavior:'smooth'})">Explore Designs</button>
-      <button class="btn-g" onclick="openLookbook()">Download Lookbook</button>
-    </div>
-    <div class="hero-stats">
-      <div><div class="stat-n">48</div><div class="stat-l">Curated Designs</div></div>
-      <div><div class="stat-n">12</div><div class="stat-l">Lead Architects</div></div>
-      <div><div class="stat-n">5&#9733;</div><div class="stat-l">Client Rating</div></div>
-    </div>
-  </div>
-  <div class="hero-right">
-    <div class="mosaic">
-      <div class="mc sp"><img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&q=80" alt="Executive"/></div>
-      <div class="mc"><img src="https://images.unsplash.com/photo-1604328698692-f76ea9498e76?w=600&q=80" alt="Boardroom"/></div>
-      <div class="mc"><img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=600&q=80" alt="Open Plan"/></div>
-      <div class="mc"><img src="https://images.unsplash.com/photo-1527192491265-7e15c55b1ed2?w=600&q=80" alt="Lounge"/></div>
-    </div>
-  </div>
-</section>
-
-<section class="feat-sec rev" id="featured">
-  <div class="sec-label">
-    <div class="sec-eyebrow">Signature Collection</div>
-    <h2>Featured <em>Corporate</em> Designs</h2>
-    <p>Hand-selected flagship designs from our top architectural contributors.</p>
-  </div>
-  <div class="feat-grid" id="featGrid"></div>
-</section>
-
-<section class="gal-sec rev">
-  <div class="sec-label">
-    <div class="sec-eyebrow">Full Collection</div>
-    <h2>Browse <em>All</em> Corporate Designs</h2>
-    <p>48 curated spaces — filter by type to find your perfect match.</p>
-  </div>
-  <div class="filter-row">
-    <button class="ftab on" onclick="filter(this,'all')">All Designs</button>
-    <button class="ftab" onclick="filter(this,'executive')">Executive Suite</button>
-    <button class="ftab" onclick="filter(this,'boardroom')">Boardroom</button>
-    <button class="ftab" onclick="filter(this,'openplan')">Open Plan</button>
-    <button class="ftab" onclick="filter(this,'lobby')">Lobby &amp; Reception</button>
-    <button class="ftab" onclick="filter(this,'lounge')">Lounge</button>
-  </div>
-  <div class="gal-grid" id="galGrid"></div>
-</section>
-
-<div class="spec-strip rev">
-  <div class="sec-label" style="margin-bottom:0">
-    <div class="sec-eyebrow">What's Included</div>
-    <h2>Every Design, <em>Fully Specified</em></h2>
-    <p>Complete documentation, 3D renders, materials boards and architect access in every package.</p>
-  </div>
-  <div class="spec-grid">
-    <div class="spec-box"><div class="spec-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div><h3>Floor Plan Documents</h3><p>Full-scale CAD and PDF drawings including electrical, HVAC and furniture layout specifications.</p></div>
-    <div class="spec-box"><div class="spec-icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg></div><h3>3D Walkthroughs</h3><p>Photorealistic render packages and interactive 3D tours, VR-headset compatible.</p></div>
-    <div class="spec-box"><div class="spec-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><h3>Materials &amp; Finishes</h3><p>Curated materials board with alternatives at three price points, including sustainable variants.</p></div>
-    <div class="spec-box"><div class="spec-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div><h3>Architect Consultation</h3><p>One-to-one session for customisation, local code review and contractor briefings.</p></div>
-  </div>
-</div>
-
-<section class="proc-sec rev">
-  <div class="sec-label">
-    <div class="sec-eyebrow">How It Works</div>
-    <h2>From <em>Inspiration</em> to Move-In</h2>
-  </div>
-  <div class="proc-row">
-    <div class="p-step"><div class="p-num">01</div><h3>Browse &amp; Shortlist</h3><p>Explore the gallery, save favourites to your wishlist and filter by size, type and budget.</p></div>
-    <div class="p-step"><div class="p-num">02</div><h3>Request Full Package</h3><p>Unlock complete documentation — drawings, renders and specification sheets.</p></div>
-    <div class="p-step"><div class="p-num">03</div><h3>Consult &amp; Customise</h3><p>Work with the architect to adapt the design to your exact space and brand identity.</p></div>
-    <div class="p-step"><div class="p-num">04</div><h3>Build &amp; Transform</h3><p>Receive contractor-ready documentation and ongoing support through construction.</p></div>
-  </div>
-</section>
-
-<div class="cta-sec rev">
-  <div class="cta-left">
-    <h2>Ready to Reimagine<br>Your Corporate Space?</h2>
-    <p>Talk to an ArchiNova specialist and receive a personalised design shortlist within 48 hours.</p>
-  </div>
-  <div class="cta-btns">
-    <button class="btn-p" onclick="openConsult()">Book a Consultation</button>
-    <button class="btn-o" onclick="openLookbook()">Download Lookbook</button>
-  </div>
-</div>
-
-<footer>
-  <p>&#169; 2025 ArchiNova &middot; Architectural Design &amp; Innovation</p>
-  <div class="foot-links">
-    <a href="#">Gallery</a><a href="#">About</a><a href="wishlist.html">Wishlist</a><a href="#">Contact</a>
-  </div>
-</footer>
-
-<!-- DESIGN MODAL -->
-<div class="mwrap" id="dm" onclick="if(event.target===this)closeDM()">
-  <div class="mbox" style="max-width:780px">
-    <button class="mclose" onclick="closeDM()">&#10005;</button>
-    <img class="mimg" id="dm-img" src="" alt=""/>
-    <div class="mbody">
-      <div class="mbadge" id="dm-badge"></div>
-      <h2 id="dm-title"></h2>
-      <div class="mspecs" id="dm-specs"></div>
-      <p class="mdesc" id="dm-desc"></p>
-      <div class="mfoot">
-        <div class="mtags" id="dm-tags"></div>
-        <div class="mfoot-btns">
-          <button class="btn-p" onclick="openReqPkg()">Request Package</button>
-          <button class="btn-save" id="dm-save" onclick="toggleWL()">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
-            <span id="dm-save-lbl">Save to Wishlist</span>
+    <section class="hero">
+      <div class="hero-glow"></div>
+      <div class="hero-left">
+        <div class="eyebrow-row">
+          <div class="eyebrow-line"></div>
+          <span class="eyebrow-txt"
+            >Office Gallery &nbsp;·&nbsp; Corporate Series</span
+          >
+        </div>
+        <h1>Where <em>Power</em><br />Meets<br />Precision</h1>
+        <p class="hero-sub">
+          Curated corporate office designs for organisations that command
+          attention — blending executive authority with intelligent spatial
+          flow.
+        </p>
+        <div class="hero-actions">
+          <button
+            class="btn-p"
+            onclick="
+              document
+                .getElementById('featured')
+                .scrollIntoView({ behavior: 'smooth' })
+            "
+          >
+            Explore Designs
           </button>
-          <button class="btn-g" onclick="closeDM()">Close</button>
+          <button class="btn-g" onclick="openLookbook()">
+            Download Lookbook
+          </button>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="stat-n">48</div>
+            <div class="stat-l">Curated Designs</div>
+          </div>
+          <div>
+            <div class="stat-n">12</div>
+            <div class="stat-l">Lead Architects</div>
+          </div>
+          <div>
+            <div class="stat-n">5&#9733;</div>
+            <div class="stat-l">Client Rating</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="mosaic">
+          <div class="mc sp">
+            <img
+              src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&q=80"
+              alt="Executive"
+            />
+          </div>
+          <div class="mc">
+            <img
+              src="https://images.unsplash.com/photo-1604328698692-f76ea9498e76?w=600&q=80"
+              alt="Boardroom"
+            />
+          </div>
+          <div class="mc">
+            <img
+              src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=600&q=80"
+              alt="Open Plan"
+            />
+          </div>
+          <div class="mc">
+            <img
+              src="https://images.unsplash.com/photo-1527192491265-7e15c55b1ed2?w=600&q=80"
+              alt="Lounge"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="feat-sec rev" id="featured">
+      <div class="sec-label">
+        <div class="sec-eyebrow">Signature Collection</div>
+        <h2>Featured <em>Corporate</em> Designs</h2>
+        <p>
+          Hand-selected flagship designs from our top architectural
+          contributors.
+        </p>
+      </div>
+      <div class="feat-grid" id="featGrid"></div>
+    </section>
+
+    <section class="gal-sec rev">
+      <div class="sec-label">
+        <div class="sec-eyebrow">Full Collection</div>
+        <h2>Browse <em>All</em> Corporate Designs</h2>
+        <p>48 curated spaces — filter by type to find your perfect match.</p>
+      </div>
+      <div class="filter-row">
+        <button class="ftab on" onclick="filter(this, 'all')">
+          All Designs
+        </button>
+        <button class="ftab" onclick="filter(this, 'executive')">
+          Executive Suite
+        </button>
+        <button class="ftab" onclick="filter(this, 'boardroom')">
+          Boardroom
+        </button>
+        <button class="ftab" onclick="filter(this, 'openplan')">
+          Open Plan
+        </button>
+        <button class="ftab" onclick="filter(this, 'lobby')">
+          Lobby &amp; Reception
+        </button>
+        <button class="ftab" onclick="filter(this, 'lounge')">Lounge</button>
+      </div>
+      <div class="gal-grid" id="galGrid"></div>
+    </section>
+
+    <div class="spec-strip rev">
+      <div class="sec-label" style="margin-bottom: 0">
+        <div class="sec-eyebrow">What's Included</div>
+        <h2>Every Design, <em>Fully Specified</em></h2>
+        <p>
+          Complete documentation, 3D renders, materials boards and architect
+          access in every package.
+        </p>
+      </div>
+      <div class="spec-grid">
+        <div class="spec-box">
+          <div class="spec-icon">
+            <svg viewBox="0 0 24 24">
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+              <path d="M3 9h18M9 21V9" />
+            </svg>
+          </div>
+          <h3>Floor Plan Documents</h3>
+          <p>
+            Full-scale CAD and PDF drawings including electrical, HVAC and
+            furniture layout specifications.
+          </p>
+        </div>
+        <div class="spec-box">
+          <div class="spec-icon">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"
+              />
+            </svg>
+          </div>
+          <h3>3D Walkthroughs</h3>
+          <p>
+            Photorealistic render packages and interactive 3D tours, VR-headset
+            compatible.
+          </p>
+        </div>
+        <div class="spec-box">
+          <div class="spec-icon">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
+              />
+            </svg>
+          </div>
+          <h3>Materials &amp; Finishes</h3>
+          <p>
+            Curated materials board with alternatives at three price points,
+            including sustainable variants.
+          </p>
+        </div>
+        <div class="spec-box">
+          <div class="spec-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
+            </svg>
+          </div>
+          <h3>Architect Consultation</h3>
+          <p>
+            One-to-one session for customisation, local code review and
+            contractor briefings.
+          </p>
         </div>
       </div>
     </div>
-  </div>
-</div>
 
-<!-- REQUEST PACKAGE MODAL -->
-<div class="mwrap" id="rm" onclick="if(event.target===this)closeRM()">
-  <div class="mbox fmbox">
-    <button class="mclose" onclick="closeRM()">&#10005;</button>
-    <div class="fmbody">
-      <div class="mbadge">Design Package &middot; Full Documentation</div>
-      <h2 id="rm-title" style="margin-bottom:.5rem;font-size:1.6rem"></h2>
-      <p style="font-size:.82rem;color:var(--light);font-weight:300;line-height:1.7;margin-bottom:1.5rem">We'll send the complete package — floor plans, 3D renders, materials board and architect contact — within 48 hours.</p>
-      <div class="frow"><div><label class="fl">Full Name</label><input id="r-name" type="text" class="fi" placeholder="Your name"/></div><div><label class="fl">Company</label><input id="r-co" type="text" class="fi" placeholder="Company name"/></div></div>
-      <label class="fl">Email Address</label><input id="r-email" type="email" class="fi" placeholder="your@company.com"/>
-      <div class="frow"><div><label class="fl">Budget</label><select id="r-budget" class="fi"><option>Under $500K</option><option>$500K-$1M</option><option>$1M-$2M</option><option>$2M+</option></select></div><div><label class="fl">Timeline</label><select id="r-time" class="fi"><option>ASAP</option><option>1-3 months</option><option>3-6 months</option><option>6+ months</option></select></div></div>
-      <div class="sbox" id="r-ok">&#10003; &nbsp;Package request sent! You'll hear from us within 48 hours.</div>
-      <div class="factions"><button class="btn-p" style="flex:1" onclick="submitReq()">Send Request</button><button class="btn-g" onclick="closeRM()">Cancel</button></div>
-    </div>
-  </div>
-</div>
-
-<!-- CONSULTATION MODAL -->
-<div class="mwrap" id="cm" onclick="if(event.target===this)closeCM()">
-  <div class="mbox fmbox">
-    <button class="mclose" onclick="closeCM()">&#10005;</button>
-    <div class="fmbody">
-      <div class="mbadge">ArchiNova &middot; Free Consultation</div>
-      <h2 style="margin-bottom:.5rem;font-size:1.6rem">Book a Consultation</h2>
-      <p style="font-size:.82rem;color:var(--light);font-weight:300;line-height:1.7;margin-bottom:1.5rem">A specialist will reach out within 24 hours with a personalised design shortlist.</p>
-      <div class="frow"><div><label class="fl">First Name</label><input id="c-first" type="text" class="fi" placeholder="First name"/></div><div><label class="fl">Last Name</label><input id="c-last" type="text" class="fi" placeholder="Last name"/></div></div>
-      <label class="fl">Email Address</label><input id="c-email" type="email" class="fi" placeholder="your@company.com"/>
-      <label class="fl">Office Type</label>
-      <select id="c-type" class="fi"><option value="">Select a category...</option><option>Executive Suite</option><option>Boardroom</option><option>Open Plan Office</option><option>Lobby &amp; Reception</option><option>Executive Lounge</option><option>Full Floor Design</option></select>
-      <label class="fl" style="margin-top:.9rem">Message (optional)</label>
-      <textarea id="c-msg" rows="3" class="fi" placeholder="Tell us about your space or budget..."></textarea>
-      <div class="sbox" id="c-ok">&#10003; &nbsp;Request submitted! A specialist will contact you within 24 hours.</div>
-      <div class="factions"><button class="btn-p" style="flex:1" onclick="submitConsult()">Send Request</button><button class="btn-g" onclick="closeCM()">Cancel</button></div>
-    </div>
-  </div>
-</div>
-
-<!-- LOOKBOOK MODAL -->
-<div class="mwrap" id="lm" onclick="if(event.target===this)closeLM()">
-  <div class="mbox fmbox" style="max-width:440px">
-    <button class="mclose" onclick="closeLM()">&#10005;</button>
-    <div class="fmbody" style="text-align:center">
-      <div style="width:58px;height:58px;background:rgba(13,148,136,.12);border:1px solid rgba(13,148,136,.25);border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 1.2rem">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--teal2)" stroke-width="1.8"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    <section class="proc-sec rev">
+      <div class="sec-label">
+        <div class="sec-eyebrow">How It Works</div>
+        <h2>From <em>Inspiration</em> to Move-In</h2>
       </div>
-      <div class="mbadge" style="display:block;text-align:center">ArchiNova &middot; 2025 Edition</div>
-      <h2 style="margin-bottom:.5rem;font-size:1.6rem">Corporate Lookbook</h2>
-      <p style="font-size:.82rem;color:var(--light);font-weight:300;line-height:1.7;margin-bottom:1.4rem">48 pages of curated designs, materials guides and expert insights — free.</p>
-      <div style="background:rgba(255,255,255,.03);border:1px solid rgba(13,148,136,.15);border-radius:8px;padding:.9rem 1rem;margin-bottom:.7rem;display:flex;justify-content:space-between;font-size:.78rem"><span style="color:var(--muted)">Format</span><span style="color:#fff;font-weight:500">PDF &middot; 48 pages</span></div>
-      <div style="background:rgba(255,255,255,.03);border:1px solid rgba(13,148,136,.15);border-radius:8px;padding:.9rem 1rem;margin-bottom:1.3rem;display:flex;justify-content:space-between;font-size:.78rem"><span style="color:var(--muted)">File size</span><span style="color:#fff;font-weight:500">14.2 MB</span></div>
-      <label class="fl" style="text-align:left">Email Address</label>
-      <input id="l-email" type="email" class="fi" placeholder="Enter your email"/>
-      <div class="sbox" id="l-ok" style="text-align:left">&#10003; &nbsp;Lookbook link sent to your email!</div>
-      <button class="btn-p" style="width:100%" onclick="submitLookbook()">Download Lookbook</button>
+      <div class="proc-row">
+        <div class="p-step">
+          <div class="p-num">01</div>
+          <h3>Browse &amp; Shortlist</h3>
+          <p>
+            Explore the gallery, save favourites to your wishlist and filter by
+            size, type and budget.
+          </p>
+        </div>
+        <div class="p-step">
+          <div class="p-num">02</div>
+          <h3>Request Full Package</h3>
+          <p>
+            Unlock complete documentation — drawings, renders and specification
+            sheets.
+          </p>
+        </div>
+        <div class="p-step">
+          <div class="p-num">03</div>
+          <h3>Consult &amp; Customise</h3>
+          <p>
+            Work with the architect to adapt the design to your exact space and
+            brand identity.
+          </p>
+        </div>
+        <div class="p-step">
+          <div class="p-num">04</div>
+          <h3>Build &amp; Transform</h3>
+          <p>
+            Receive contractor-ready documentation and ongoing support through
+            construction.
+          </p>
+        </div>
+      </div>
+    </section>
+
+
+    <footer>
+      <p>
+        &#169; 2025 ArchiNova &middot; Architectural Design &amp; Innovation
+      </p>
+      <div class="foot-links">
+        <a href="gallery.html">Gallery</a><a href="#">About</a
+        ><a href="wishlist.html">Wishlist</a><a href="#">Contact</a>
+      </div>
+    </footer>
+
+    <!-- DESIGN MODAL -->
+    <div class="mwrap" id="dm" onclick="if (event.target === this) closeDM();">
+      <div class="mbox" style="max-width: 780px">
+        <button class="mclose" onclick="closeDM()">&#10005;</button>
+        <img class="mimg" id="dm-img" src="" alt="" />
+        <div class="mbody">
+          <div class="mbadge" id="dm-badge"></div>
+          <h2 id="dm-title"></h2>
+          <div class="mspecs" id="dm-specs"></div>
+          <p class="mdesc" id="dm-desc"></p>
+          <div class="mfoot">
+            <div class="mtags" id="dm-tags"></div>
+            <div class="mfoot-btns">
+              <button class="btn-p" onclick="openReqPkg()">
+                Request Package
+              </button>
+              <button class="btn-save" id="dm-save" onclick="toggleWL()">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"
+                  />
+                </svg>
+                <span id="dm-save-lbl">Save to Wishlist</span>
+              </button>
+              <button class="btn-g" onclick="closeDM()">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 
-<div id="toast"><span id="toast-msg"></span><a href="wishlist.html" id="toast-link">View Wishlist &#8594;</a></div>
+    <!-- REQUEST PACKAGE MODAL -->
+    <div class="mwrap" id="rm" onclick="if (event.target === this) closeRM();">
+      <div class="mbox fmbox">
+        <button class="mclose" onclick="closeRM()">&#10005;</button>
+        <div class="fmbody">
+          <div class="mbadge">Design Package &middot; Full Documentation</div>
+          <h2
+            id="rm-title"
+            style="margin-bottom: 0.5rem; font-size: 1.6rem"
+          ></h2>
+          <p
+            style="
+              font-size: 0.82rem;
+              color: var(--light);
+              font-weight: 300;
+              line-height: 1.7;
+              margin-bottom: 1.5rem;
+            "
+          >
+            We'll send the complete package — floor plans, 3D renders, materials
+            board and architect contact — within 48 hours.
+          </p>
+          <div class="frow">
+            <div>
+              <label class="fl">Full Name</label
+              ><input
+                id="r-name"
+                type="text"
+                class="fi"
+                placeholder="Your name"
+              />
+            </div>
+            <div>
+              <label class="fl">Company</label
+              ><input
+                id="r-co"
+                type="text"
+                class="fi"
+                placeholder="Company name"
+              />
+            </div>
+          </div>
+          <label class="fl">Email Address</label
+          ><input
+            id="r-email"
+            type="email"
+            class="fi"
+            placeholder="your@company.com"
+          />
+          <div class="frow">
+            <div>
+              <label class="fl">Budget</label
+              ><select id="r-budget" class="fi">
+                <option>Under $500K</option>
+                <option>$500K-$1M</option>
+                <option>$1M-$2M</option>
+                <option>$2M+</option>
+              </select>
+            </div>
+            <div>
+              <label class="fl">Timeline</label
+              ><select id="r-time" class="fi">
+                <option>ASAP</option>
+                <option>1-3 months</option>
+                <option>3-6 months</option>
+                <option>6+ months</option>
+              </select>
+            </div>
+          </div>
+          <div class="sbox" id="r-ok">
+            &#10003; &nbsp;Package request sent! You'll hear from us within 48
+            hours.
+          </div>
+          <div class="factions">
+            <button class="btn-p" style="flex: 1" onclick="submitReq()">
+              Send Request</button
+            ><button class="btn-g" onclick="closeRM()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<script>
-// ── DESIGN DATA ──
-const DS = [
-  {id:'meridian',title:'The Meridian Tower Suite',badge:'Corporate Executive',desc:'A full-floor executive suite spanning 8,200 sq ft with panoramic city views, custom walnut millwork, integrated smart building controls, and a private boardroom annexe. Designed for Fortune 500 headquarters requiring both gravitas and flexibility.',area:'8,200 sq ft',cap:'36 Workstations',budget:'$2.4M',tags:['Executive','Smart Building','Award Winner'],img:'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=85',section:'Corporate Office',cat:'executive',featured:true},
-  {id:'atlas',title:'The Atlas Boardroom',badge:'Corporate Boardroom',desc:'An intimidating yet inviting boardroom for 20-seat executive meetings. Features floor-to-ceiling tinted glass, custom leather seating, embedded AV, and a wall-length credenza with integrated lighting.',area:'3,100 sq ft',cap:'20 Seats',budget:'$890K',tags:['Boardroom','AV Integrated','Custom Millwork'],img:'https://images.unsplash.com/photo-1604328698692-f76ea9498e76?w=900&q=85',section:'Corporate Office',cat:'boardroom',featured:true},
-  {id:'cascade',title:'Cascade Open Floor',badge:'Open Plan Office',desc:'A flowing open-plan design for 120+ employees built around natural movement paths, acoustic zones and flexible collaboration pods. Biophilic elements throughout — living walls, natural light channels and organic materials.',area:'12,400 sq ft',cap:'120 Workstations',budget:'$1.1M',tags:['Open Plan','Biophilic','Collaborative'],img:'https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=900&q=85',section:'Corporate Office',cat:'openplan',featured:true},
-  {id:'helix',title:'Helix Reception',badge:'Premium Reception',desc:'A monument to brand identity — double-height lobby with 9-metre ceilings, backlit stone panels, a 4-metre illuminated brand wall, and a concierge desk that doubles as an architectural sculpture.',area:'5,800 sq ft',cap:'Reception',budget:'$720K',tags:['Lobby','Brand Identity','Monumental'],img:'https://images.unsplash.com/photo-1527192491265-7e15c55b1ed2?w=900&q=85',section:'Corporate Office',cat:'lobby',featured:true},
-  {id:'strata',title:'Strata Executive Lounge',badge:'Executive Lounge',desc:'A tiered executive lounge with ergonomic seating clusters, a private bar with backlit display, 4K ambient screens and an integrated AV system. Fully sound-isolated from the main floor.',area:'2,200 sq ft',cap:'40 Capacity',budget:'$540K',tags:['Lounge','Private Bar','Acoustic Design'],img:'https://images.unsplash.com/photo-1568992688065-536aad8a12f6?w=900&q=85',section:'Corporate Office',cat:'lounge',featured:true},
-  {id:'obsidian',title:'Obsidian Executive',badge:'Executive Suite',desc:'A monolithic executive suite in dark stone and brushed steel. Private meeting alcove, motorized blinds, integrated ambient sound and a 270 degree city view floor-to-ceiling window wall.',area:'4,600 sq ft',cap:'1 Principal',budget:'$1.6M',tags:['Executive','Bespoke','City View'],img:'https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=900&q=85',section:'Corporate Office',cat:'executive'},
-  {id:'vault',title:'The Vault Lobby',badge:'Corporate Lobby',desc:'A monumental double-height lobby with terrazzo floors, a living green wall and an illuminated reception desk that doubles as a brand installation. Designed to impress every visitor.',area:'5,200 sq ft',cap:'Reception',budget:'$680K',tags:['Lobby','Living Wall','Monumental'],img:'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&q=85',section:'Corporate Office',cat:'lobby'},
-  {id:'prism',title:'Prism Meeting Hub',badge:'Meeting Hub',desc:'Six bookable rooms from 2 to 12-person capacity with sliding glass walls for rapid reconfiguration. Each room is independently sound-isolated. Town-hall mode opens the full floor for 200+ events.',area:'6,000 sq ft',cap:'6 Rooms',budget:'$890K',tags:['Boardroom','Modular','AV Integrated'],img:'https://images.unsplash.com/photo-1517502884422-41eaead166d4?w=900&q=85',section:'Corporate Office',cat:'boardroom'},
-  {id:'apex',title:'Apex Hybrid Workspace',badge:'Hybrid Workspace',desc:'A next-gen hybrid workspace for 80 hot-deskers. Biometric booking stations, acoustic focus pods and a central collaboration zone with writable glass walls.',area:'9,500 sq ft',cap:'80 Hot Desks',budget:'$1.3M',tags:['Open Plan','Hot Desking','Focus Pods'],img:'https://images.unsplash.com/photo-1497215842964-222b430dc094?w=900&q=85',section:'Corporate Office',cat:'openplan'},
-  {id:'meridian2',title:'Meridian Boardroom Suite',badge:'Boardroom Suite',desc:'A two-room boardroom suite — a 30-seat primary room and a 12-seat pre-meeting lounge sharing a private catering pantry and an external view corridor. Full 8K video conferencing built in.',area:'4,800 sq ft',cap:'42 Seats',budget:'$1.1M',tags:['Boardroom','Conference Suite','Catering Ready'],img:'https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=900&q=85',section:'Corporate Office',cat:'boardroom'},
-  {id:'zenith',title:'Zenith Corner Office',badge:'Corner Executive',desc:'Single-occupancy corner office with floor-to-ceiling glass on two walls, a custom wood-steel desk, integrated shelving wall and a 4-person meeting nook.',area:'1,800 sq ft',cap:'1 Principal',budget:'$420K',tags:['Executive','Intimate','Natural Light'],img:'https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=900&q=85',section:'Corporate Office',cat:'executive'},
-  {id:'aurora',title:'Aurora Lounge Bar',badge:'Executive Lounge',desc:'A sophisticated lounge-bar hybrid with dramatic pendant lighting, velvet seating, a custom-built brass bar and an integrated AV wall for executive presentations and informal networking events.',area:'1,600 sq ft',cap:'30 Capacity',budget:'$480K',tags:['Lounge','Bar','Premium AV'],img:'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=900&q=85',section:'Corporate Office',cat:'lounge'}
-];
 
-// ── WISHLIST (shared key across all pages) ──
-const WL_KEY = 'archinova_wishlist';
-function getWL(){try{return JSON.parse(localStorage.getItem(WL_KEY)||'[]');}catch(e){return[];}}
-function setWL(l){localStorage.setItem(WL_KEY,JSON.stringify(l));}
-function inWL(id){return getWL().some(d=>d.id===id);}
-function addWL(d){const l=getWL();if(!inWL(d.id)){l.push({...d,savedAt:new Date().toISOString()});setWL(l);}}
-function remWL(id){setWL(getWL().filter(d=>d.id!==id));}
-function updateNav(){const n=getWL().length;const el=document.getElementById('navCount');el.textContent=n;el.className=n?'wl-count show':'wl-count';}
+    <!-- LOOKBOOK MODAL -->
+    <div class="mwrap" id="lm" onclick="if (event.target === this) closeLM();">
+      <div class="mbox fmbox" style="max-width: 440px">
+        <button class="mclose" onclick="closeLM()">&#10005;</button>
+        <div class="fmbody" style="text-align: center">
+          <div
+            style="
+              width: 58px;
+              height: 58px;
+              background: rgba(13, 148, 136, 0.12);
+              border: 1px solid rgba(13, 148, 136, 0.25);
+              border-radius: 12px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              margin: 0 auto 1.2rem;
+            "
+          >
+            <svg
+              width="26"
+              height="26"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="var(--teal2)"
+              stroke-width="1.8"
+            >
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+          </div>
+          <div class="mbadge" style="display: block; text-align: center">
+            ArchiNova &middot; 2025 Edition
+          </div>
+          <h2 style="margin-bottom: 0.5rem; font-size: 1.6rem">
+            Corporate Lookbook
+          </h2>
+          <p
+            style="
+              font-size: 0.82rem;
+              color: var(--light);
+              font-weight: 300;
+              line-height: 1.7;
+              margin-bottom: 1.4rem;
+            "
+          >
+            48 pages of curated designs, materials guides and expert insights —
+            free.
+          </p>
+          <div
+            style="
+              background: rgba(255, 255, 255, 0.03);
+              border: 1px solid rgba(13, 148, 136, 0.15);
+              border-radius: 8px;
+              padding: 0.9rem 1rem;
+              margin-bottom: 0.7rem;
+              display: flex;
+              justify-content: space-between;
+              font-size: 0.78rem;
+            "
+          >
+            <span style="color: var(--muted)">Format</span
+            ><span style="color: #fff; font-weight: 500"
+              >PDF &middot; 48 pages</span
+            >
+          </div>
+          <div
+            style="
+              background: rgba(255, 255, 255, 0.03);
+              border: 1px solid rgba(13, 148, 136, 0.15);
+              border-radius: 8px;
+              padding: 0.9rem 1rem;
+              margin-bottom: 1.3rem;
+              display: flex;
+              justify-content: space-between;
+              font-size: 0.78rem;
+            "
+          >
+            <span style="color: var(--muted)">File size</span
+            ><span style="color: #fff; font-weight: 500">14.2 MB</span>
+          </div>
+          <label class="fl" style="text-align: left">Email Address</label>
+          <input
+            id="l-email"
+            type="email"
+            class="fi"
+            placeholder="Enter your email"
+          />
+          <div class="sbox" id="l-ok" style="text-align: left">
+            &#10003; &nbsp;Lookbook link sent to your email!
+          </div>
+          <button class="btn-p" style="width: 100%" onclick="submitLookbook()">
+            Download Lookbook
+          </button>
+        </div>
+      </div>
+    </div>
 
-// ── FEATURED GRID ──
-function buildFeatured(){
-  const fd = DS.filter(d=>d.featured);
-  const g = document.getElementById('featGrid');
-  g.innerHTML = `
+    <div id="toast">
+      <span id="toast-msg"></span
+      ><a href="wishlist.html" id="toast-link">View Wishlist &#8594;</a>
+    </div>
+
+    <script>
+      // ── DESIGN DATA ──
+      const DS = [
+        {
+          id: "meridian",
+          title: "The Meridian Tower Suite",
+          badge: "Corporate Executive",
+          desc: "A full-floor executive suite spanning 8,200 sq ft with panoramic city views, custom walnut millwork, integrated smart building controls, and a private boardroom annexe. Designed for Fortune 500 headquarters requiring both gravitas and flexibility.",
+          area: "8,200 sq ft",
+          cap: "36 Workstations",
+          budget: "$2.4M",
+          tags: ["Executive", "Smart Building", "Award Winner"],
+          img: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=85",
+          section: "Corporate Office",
+          cat: "executive",
+          featured: true,
+        },
+        {
+          id: "atlas",
+          title: "The Atlas Boardroom",
+          badge: "Corporate Boardroom",
+          desc: "An intimidating yet inviting boardroom for 20-seat executive meetings. Features floor-to-ceiling tinted glass, custom leather seating, embedded AV, and a wall-length credenza with integrated lighting.",
+          area: "3,100 sq ft",
+          cap: "20 Seats",
+          budget: "$890K",
+          tags: ["Boardroom", "AV Integrated", "Custom Millwork"],
+          img: "https://images.unsplash.com/photo-1604328698692-f76ea9498e76?w=900&q=85",
+          section: "Corporate Office",
+          cat: "boardroom",
+          featured: true,
+        },
+        {
+          id: "cascade",
+          title: "Cascade Open Floor",
+          badge: "Open Plan Office",
+          desc: "A flowing open-plan design for 120+ employees built around natural movement paths, acoustic zones and flexible collaboration pods. Biophilic elements throughout — living walls, natural light channels and organic materials.",
+          area: "12,400 sq ft",
+          cap: "120 Workstations",
+          budget: "$1.1M",
+          tags: ["Open Plan", "Biophilic", "Collaborative"],
+          img: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=900&q=85",
+          section: "Corporate Office",
+          cat: "openplan",
+          featured: true,
+        },
+        {
+          id: "helix",
+          title: "Helix Reception",
+          badge: "Premium Reception",
+          desc: "A monument to brand identity — double-height lobby with 9-metre ceilings, backlit stone panels, a 4-metre illuminated brand wall, and a concierge desk that doubles as an architectural sculpture.",
+          area: "5,800 sq ft",
+          cap: "Reception",
+          budget: "$720K",
+          tags: ["Lobby", "Brand Identity", "Monumental"],
+          img: "https://images.unsplash.com/photo-1527192491265-7e15c55b1ed2?w=900&q=85",
+          section: "Corporate Office",
+          cat: "lobby",
+          featured: true,
+        },
+        {
+          id: "strata",
+          title: "Strata Executive Lounge",
+          badge: "Executive Lounge",
+          desc: "A tiered executive lounge with ergonomic seating clusters, a private bar with backlit display, 4K ambient screens and an integrated AV system. Fully sound-isolated from the main floor.",
+          area: "2,200 sq ft",
+          cap: "40 Capacity",
+          budget: "$540K",
+          tags: ["Lounge", "Private Bar", "Acoustic Design"],
+          img: "https://images.unsplash.com/photo-1568992688065-536aad8a12f6?w=900&q=85",
+          section: "Corporate Office",
+          cat: "lounge",
+          featured: true,
+        },
+        {
+          id: "obsidian",
+          title: "Obsidian Executive",
+          badge: "Executive Suite",
+          desc: "A monolithic executive suite in dark stone and brushed steel. Private meeting alcove, motorized blinds, integrated ambient sound and a 270 degree city view floor-to-ceiling window wall.",
+          area: "4,600 sq ft",
+          cap: "1 Principal",
+          budget: "$1.6M",
+          tags: ["Executive", "Bespoke", "City View"],
+          img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=900&q=85",
+          section: "Corporate Office",
+          cat: "executive",
+        },
+        {
+          id: "vault",
+          title: "The Vault Lobby",
+          badge: "Corporate Lobby",
+          desc: "A monumental double-height lobby with terrazzo floors, a living green wall and an illuminated reception desk that doubles as a brand installation. Designed to impress every visitor.",
+          area: "5,200 sq ft",
+          cap: "Reception",
+          budget: "$680K",
+          tags: ["Lobby", "Living Wall", "Monumental"],
+          img: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&q=85",
+          section: "Corporate Office",
+          cat: "lobby",
+        },
+        {
+          id: "prism",
+          title: "Prism Meeting Hub",
+          badge: "Meeting Hub",
+          desc: "Six bookable rooms from 2 to 12-person capacity with sliding glass walls for rapid reconfiguration. Each room is independently sound-isolated. Town-hall mode opens the full floor for 200+ events.",
+          area: "6,000 sq ft",
+          cap: "6 Rooms",
+          budget: "$890K",
+          tags: ["Boardroom", "Modular", "AV Integrated"],
+          img: "https://images.unsplash.com/photo-1517502884422-41eaead166d4?w=900&q=85",
+          section: "Corporate Office",
+          cat: "boardroom",
+        },
+        {
+          id: "apex",
+          title: "Apex Hybrid Workspace",
+          badge: "Hybrid Workspace",
+          desc: "A next-gen hybrid workspace for 80 hot-deskers. Biometric booking stations, acoustic focus pods and a central collaboration zone with writable glass walls.",
+          area: "9,500 sq ft",
+          cap: "80 Hot Desks",
+          budget: "$1.3M",
+          tags: ["Open Plan", "Hot Desking", "Focus Pods"],
+          img: "https://images.unsplash.com/photo-1497215842964-222b430dc094?w=900&q=85",
+          section: "Corporate Office",
+          cat: "openplan",
+        },
+        {
+          id: "meridian2",
+          title: "Meridian Boardroom Suite",
+          badge: "Boardroom Suite",
+          desc: "A two-room boardroom suite — a 30-seat primary room and a 12-seat pre-meeting lounge sharing a private catering pantry and an external view corridor. Full 8K video conferencing built in.",
+          area: "4,800 sq ft",
+          cap: "42 Seats",
+          budget: "$1.1M",
+          tags: ["Boardroom", "Conference Suite", "Catering Ready"],
+          img: "https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=900&q=85",
+          section: "Corporate Office",
+          cat: "boardroom",
+        },
+        {
+          id: "zenith",
+          title: "Zenith Corner Office",
+          badge: "Corner Executive",
+          desc: "Single-occupancy corner office with floor-to-ceiling glass on two walls, a custom wood-steel desk, integrated shelving wall and a 4-person meeting nook.",
+          area: "1,800 sq ft",
+          cap: "1 Principal",
+          budget: "$420K",
+          tags: ["Executive", "Intimate", "Natural Light"],
+          img: "https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=900&q=85",
+          section: "Corporate Office",
+          cat: "executive",
+        },
+        {
+          id: "aurora",
+          title: "Aurora Lounge Bar",
+          badge: "Executive Lounge",
+          desc: "A sophisticated lounge-bar hybrid with dramatic pendant lighting, velvet seating, a custom-built brass bar and an integrated AV wall for executive presentations and informal networking events.",
+          area: "1,600 sq ft",
+          cap: "30 Capacity",
+          budget: "$480K",
+          tags: ["Lounge", "Bar", "Premium AV"],
+          img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=900&q=85",
+          section: "Corporate Office",
+          cat: "lounge",
+        },
+      ];
+
+      // ── WISHLIST (shared key across all pages) ──
+      const WL_KEY = "archinova_wishlist";
+      function getWL() {
+        try {
+          return JSON.parse(localStorage.getItem(WL_KEY) || "[]");
+        } catch (e) {
+          return [];
+        }
+      }
+      function setWL(l) {
+        localStorage.setItem(WL_KEY, JSON.stringify(l));
+      }
+      function inWL(id) {
+        return getWL().some((d) => d.id === id);
+      }
+      function addWL(d) {
+        const l = getWL();
+        if (!inWL(d.id)) {
+          l.push({ ...d, savedAt: new Date().toISOString() });
+          setWL(l);
+        }
+      }
+      function remWL(id) {
+        setWL(getWL().filter((d) => d.id !== id));
+      }
+      function updateNav() {
+        const n = getWL().length;
+        const el = document.getElementById("navCount");
+        el.textContent = n;
+        el.className = n ? "wl-count show" : "wl-count";
+      }
+
+      // ── FEATURED GRID ──
+      function buildFeatured() {
+        const fd = DS.filter((d) => d.featured);
+        const g = document.getElementById("featGrid");
+        g.innerHTML = `
     <div class="fc tall" onclick="openDM('${fd[0].id}')">
       <img src="${fd[0].img}" alt="${fd[0].title}"/>
       <div class="fc-grad"></div>
-      <button class="fc-heart${inWL(fd[0].id)?' saved':''}" id="fh-${fd[0].id}" onclick="event.stopPropagation();heartToggle('${fd[0].id}',this)"><svg viewBox="0 0 24 24" ${inWL(fd[0].id)?'style="fill:currentColor"':''}><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+      <button class="fc-heart${inWL(fd[0].id) ? " saved" : ""}" id="fh-${fd[0].id}" onclick="event.stopPropagation();heartToggle('${fd[0].id}',this)"><svg viewBox="0 0 24 24" ${inWL(fd[0].id) ? 'style="fill:currentColor"' : ""}><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
       <div class="fc-info">
         <div class="fc-type">${fd[0].badge}</div>
         <div class="fc-name">${fd[0].title}</div>
         <div class="fc-meta"><span>${fd[0].area}</span><span>·</span><span>${fd[0].cap}</span><span>·</span><span>${fd[0].budget}</span></div>
-        <div class="fc-tags">${fd[0].tags.map(t=>'<span class="ftag">'+t+'</span>').join('')}</div>
+        <div class="fc-tags">${fd[0].tags.map((t) => '<span class="ftag">' + t + "</span>").join("")}</div>
       </div>
     </div>
-    ${fd.slice(1).map(d=>`
+    ${fd
+      .slice(1)
+      .map(
+        (d) => `
     <div class="fc half" onclick="openDM('${d.id}')">
       <img src="${d.img}" alt="${d.title}"/>
       <div class="fc-grad"></div>
-      <button class="fc-heart${inWL(d.id)?' saved':''}" id="fh-${d.id}" onclick="event.stopPropagation();heartToggle('${d.id}',this)"><svg viewBox="0 0 24 24" ${inWL(d.id)?'style="fill:currentColor"':''}><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+      <button class="fc-heart${inWL(d.id) ? " saved" : ""}" id="fh-${d.id}" onclick="event.stopPropagation();heartToggle('${d.id}',this)"><svg viewBox="0 0 24 24" ${inWL(d.id) ? 'style="fill:currentColor"' : ""}><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
       <div class="fc-info">
         <div class="fc-type">${d.badge}</div>
         <div class="fc-name">${d.title}</div>
         <div class="fc-meta"><span>${d.area}</span><span>·</span><span>${d.cap}</span></div>
       </div>
-    </div>`).join('')}`;
-}
+    </div>`,
+      )
+      .join("")}`;
+      }
 
-// ── GALLERY GRID ──
-let curFilter='all';
-function buildGallery(f){
-  curFilter=f;
-  const items=DS.filter(d=>!d.featured&&(f==='all'||d.cat===f));
-  const g=document.getElementById('galGrid');
-  if(!items.length){g.innerHTML='<p style="color:var(--muted);font-size:.9rem;text-align:center;grid-column:1/-1;padding:3rem">No designs in this category yet.</p>';return;}
-  g.innerHTML=items.map(d=>`
+      // ── GALLERY GRID ──
+      let curFilter = "all";
+      function buildGallery(f) {
+        curFilter = f;
+        const items = DS.filter(
+          (d) => !d.featured && (f === "all" || d.cat === f),
+        );
+        const g = document.getElementById("galGrid");
+        if (!items.length) {
+          g.innerHTML =
+            '<p style="color:var(--muted);font-size:.9rem;text-align:center;grid-column:1/-1;padding:3rem">No designs in this category yet.</p>';
+          return;
+        }
+        g.innerHTML = items
+          .map(
+            (d) => `
     <div class="gc">
       <div class="gc-img">
         <img src="${d.img}" alt="${d.title}" loading="lazy"/>
-        <button class="gc-heart${inWL(d.id)?' saved':''}" id="gh-${d.id}" onclick="event.stopPropagation();heartToggle('${d.id}',this)"><svg viewBox="0 0 24 24" ${inWL(d.id)?'style="fill:currentColor"':''}><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+        <button class="gc-heart${inWL(d.id) ? " saved" : ""}" id="gh-${d.id}" onclick="event.stopPropagation();heartToggle('${d.id}',this)"><svg viewBox="0 0 24 24" ${inWL(d.id) ? 'style="fill:currentColor"' : ""}><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
       </div>
       <div class="gc-body">
         <div class="gc-label">${d.badge}</div>
         <div class="gc-title">${d.title}</div>
-        <div class="gc-desc">${d.desc.substring(0,90)}...</div>
+        <div class="gc-desc">${d.desc.substring(0, 90)}...</div>
         <div class="gc-row">
           <div class="gc-specs"><div class="gc-spec"><b>${d.area}</b>Area</div><div class="gc-spec"><b>${d.budget}</b>Budget</div></div>
           <button class="gc-view" onclick="openDM('${d.id}')">View Design</button>
         </div>
       </div>
-    </div>`).join('');
-}
-function filter(btn,f){
-  document.querySelectorAll('.ftab').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-  buildGallery(f);
-}
+    </div>`,
+          )
+          .join("");
+      }
+      function filter(btn, f) {
+        document
+          .querySelectorAll(".ftab")
+          .forEach((b) => b.classList.remove("on"));
+        btn.classList.add("on");
+        buildGallery(f);
+      }
 
-// ── HEART TOGGLE (card level) ──
-function heartToggle(id,btn){
-  const d=DS.find(x=>x.id===id);if(!d)return;
-  if(inWL(id)){remWL(id);btn.classList.remove('saved');btn.querySelector('svg').removeAttribute('style');showToast('Removed from wishlist',false);}
-  else{addWL(d);btn.classList.add('saved');btn.querySelector('svg').style.fill='currentColor';showToast('"'+d.title+'" saved!',true);}
-  updateNav();
-  // sync dm save btn if open
-  if(_active&&_active.id===id)refreshSaveBtn();
-}
+      // ── HEART TOGGLE (card level) ──
+      function heartToggle(id, btn) {
+        const d = DS.find((x) => x.id === id);
+        if (!d) return;
+        if (inWL(id)) {
+          remWL(id);
+          btn.classList.remove("saved");
+          btn.querySelector("svg").removeAttribute("style");
+          showToast("Removed from wishlist", false);
+        } else {
+          addWL(d);
+          btn.classList.add("saved");
+          btn.querySelector("svg").style.fill = "currentColor";
+          showToast('"' + d.title + '" saved!', true);
+        }
+        updateNav();
+        // sync dm save btn if open
+        if (_active && _active.id === id) refreshSaveBtn();
+      }
 
-// ── DESIGN MODAL ──
-let _active=null;
-function openDM(id){
-  _active=DS.find(d=>d.id===id);if(!_active)return;
-  document.getElementById('dm-img').src=_active.img;
-  document.getElementById('dm-badge').textContent=_active.badge;
-  document.getElementById('dm-title').textContent=_active.title;
-  document.getElementById('dm-desc').textContent=_active.desc;
-  document.getElementById('dm-specs').innerHTML=`<div class="mspec"><div class="mspec-l">Area</div><div class="mspec-v">${_active.area}</div></div><div class="mspec"><div class="mspec-l">Capacity</div><div class="mspec-v">${_active.cap}</div></div><div class="mspec"><div class="mspec-l">Est. Budget</div><div class="mspec-v">${_active.budget}</div></div>`;
-  document.getElementById('dm-tags').innerHTML=_active.tags.map(t=>'<span class="mtag">'+t+'</span>').join('');
-  refreshSaveBtn();
-  document.getElementById('dm').classList.add('open');
-  document.body.style.overflow='hidden';
-}
-function closeDM(){document.getElementById('dm').classList.remove('open');document.body.style.overflow='';_active=null;}
-function refreshSaveBtn(){
-  if(!_active)return;
-  const s=inWL(_active.id);
-  const b=document.getElementById('dm-save');
-  b.classList.toggle('saved',s);
-  document.getElementById('dm-save-lbl').textContent=s?'♥ Saved':'Save to Wishlist';
-}
-function toggleWL(){
-  if(!_active)return;
-  if(inWL(_active.id)){remWL(_active.id);showToast('Removed from wishlist',false);}
-  else{addWL(_active);showToast('"'+_active.title+'" saved!',true);}
-  refreshSaveBtn();updateNav();
-  // sync heart buttons on cards
-  const fh=document.getElementById('fh-'+_active.id);
-  const gh=document.getElementById('gh-'+_active.id);
-  const saved=inWL(_active.id);
-  [fh,gh].forEach(b=>{if(!b)return;b.classList.toggle('saved',saved);const svg=b.querySelector('svg');if(saved)svg.style.fill='currentColor';else svg.removeAttribute('style');});
-}
+      // ── DESIGN MODAL ──
+      let _active = null;
+      function openDM(id) {
+        _active = DS.find((d) => d.id === id);
+        if (!_active) return;
+        document.getElementById("dm-img").src = _active.img;
+        document.getElementById("dm-badge").textContent = _active.badge;
+        document.getElementById("dm-title").textContent = _active.title;
+        document.getElementById("dm-desc").textContent = _active.desc;
+        document.getElementById("dm-specs").innerHTML =
+          `<div class="mspec"><div class="mspec-l">Area</div><div class="mspec-v">${_active.area}</div></div><div class="mspec"><div class="mspec-l">Capacity</div><div class="mspec-v">${_active.cap}</div></div><div class="mspec"><div class="mspec-l">Est. Budget</div><div class="mspec-v">${_active.budget}</div></div>`;
+        document.getElementById("dm-tags").innerHTML = _active.tags
+          .map((t) => '<span class="mtag">' + t + "</span>")
+          .join("");
+        refreshSaveBtn();
+        document.getElementById("dm").classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+      function closeDM() {
+        document.getElementById("dm").classList.remove("open");
+        document.body.style.overflow = "";
+        _active = null;
+      }
+      function refreshSaveBtn() {
+        if (!_active) return;
+        const s = inWL(_active.id);
+        const b = document.getElementById("dm-save");
+        b.classList.toggle("saved", s);
+        document.getElementById("dm-save-lbl").textContent = s
+          ? "♥ Saved"
+          : "Save to Wishlist";
+      }
+      function toggleWL() {
+        if (!_active) return;
+        if (inWL(_active.id)) {
+          remWL(_active.id);
+          showToast("Removed from wishlist", false);
+        } else {
+          addWL(_active);
+          showToast('"' + _active.title + '" saved!', true);
+        }
+        refreshSaveBtn();
+        updateNav();
+        // sync heart buttons on cards
+        const fh = document.getElementById("fh-" + _active.id);
+        const gh = document.getElementById("gh-" + _active.id);
+        const saved = inWL(_active.id);
+        [fh, gh].forEach((b) => {
+          if (!b) return;
+          b.classList.toggle("saved", saved);
+          const svg = b.querySelector("svg");
+          if (saved) svg.style.fill = "currentColor";
+          else svg.removeAttribute("style");
+        });
+      }
 
-// ── REQUEST PACKAGE ──
-function openReqPkg(){
-  if(!_active)return;
-  document.getElementById('rm-title').textContent=_active.title;
-  document.getElementById('r-ok').style.display='none';
-  ['r-name','r-email','r-co'].forEach(i=>document.getElementById(i).value='');
-  document.getElementById('rm').classList.add('open');
-}
-function closeRM(){document.getElementById('rm').classList.remove('open');}
-function submitReq(){
-  if(!document.getElementById('r-name').value.trim()||!document.getElementById('r-email').value.trim()){alert('Please fill in your name and email.');return;}
-  document.getElementById('r-ok').style.display='block';
-  setTimeout(()=>closeRM(),2400);
-}
+      // ── REQUEST PACKAGE ──
+      function openReqPkg() {
+        if (!_active) return;
+        document.getElementById("rm-title").textContent = _active.title;
+        document.getElementById("r-ok").style.display = "none";
+        ["r-name", "r-email", "r-co"].forEach(
+          (i) => (document.getElementById(i).value = ""),
+        );
+        document.getElementById("rm").classList.add("open");
+      }
+      function closeRM() {
+        document.getElementById("rm").classList.remove("open");
+      }
+      function submitReq() {
+        if (
+          !document.getElementById("r-name").value.trim() ||
+          !document.getElementById("r-email").value.trim()
+        ) {
+          alert("Please fill in your name and email.");
+          return;
+        }
+        document.getElementById("r-ok").style.display = "block";
+        setTimeout(() => closeRM(), 2400);
+      }
 
-// ── CONSULTATION ──
-function openConsult(){
-  document.getElementById('c-ok').style.display='none';
-  ['c-first','c-last','c-email','c-msg'].forEach(i=>document.getElementById(i).value='');
-  document.getElementById('cm').classList.add('open');
-  document.body.style.overflow='hidden';
-}
-function closeCM(){document.getElementById('cm').classList.remove('open');document.body.style.overflow='';}
-function submitConsult(){
-  if(!document.getElementById('c-first').value.trim()||!document.getElementById('c-email').value.trim()){alert('Please fill in name and email.');return;}
-  document.getElementById('c-ok').style.display='block';
-  setTimeout(()=>closeCM(),2200);
-}
+      // ── CONSULTATION ──
+      function openConsult() {
+        document.getElementById("c-ok").style.display = "none";
+        ["c-first", "c-last", "c-email", "c-msg"].forEach(
+          (i) => (document.getElementById(i).value = ""),
+        );
+        document.getElementById("cm").classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+      function closeCM() {
+        document.getElementById("cm").classList.remove("open");
+        document.body.style.overflow = "";
+      }
+      function submitConsult() {
+        if (
+          !document.getElementById("c-first").value.trim() ||
+          !document.getElementById("c-email").value.trim()
+        ) {
+          alert("Please fill in name and email.");
+          return;
+        }
+        document.getElementById("c-ok").style.display = "block";
+        setTimeout(() => closeCM(), 2200);
+      }
 
-// ── LOOKBOOK ──
-function openLookbook(){
-  document.getElementById('l-ok').style.display='none';
-  document.getElementById('l-email').value='';
-  document.getElementById('lm').classList.add('open');
-  document.body.style.overflow='hidden';
-}
-function closeLM(){document.getElementById('lm').classList.remove('open');document.body.style.overflow='';}
-function submitLookbook(){
-  if(!document.getElementById('l-email').value.trim()){alert('Please enter your email.');return;}
-  document.getElementById('l-ok').style.display='block';
-  setTimeout(()=>closeLM(),2200);
-}
+      // ── LOOKBOOK ──
+      function openLookbook() {
+        document.getElementById("l-ok").style.display = "none";
+        document.getElementById("l-email").value = "";
+        document.getElementById("lm").classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+      function closeLM() {
+        document.getElementById("lm").classList.remove("open");
+        document.body.style.overflow = "";
+      }
+      function submitLookbook() {
+        if (!document.getElementById("l-email").value.trim()) {
+          alert("Please enter your email.");
+          return;
+        }
+        document.getElementById("l-ok").style.display = "block";
+        setTimeout(() => closeLM(), 2200);
+      }
 
-// ── TOAST ──
-function showToast(msg,link){
-  const t=document.getElementById('toast');
-  document.getElementById('toast-msg').textContent=msg;
-  document.getElementById('toast-link').style.display=link?'inline':'none';
-  t.style.opacity='1';t.style.pointerEvents='all';t.style.transform='translateX(-50%) translateY(0)';
-  clearTimeout(t._t);t._t=setTimeout(()=>{t.style.opacity='0';t.style.pointerEvents='none';t.style.transform='translateX(-50%) translateY(90px)';},3200);
-}
+      // ── TOAST ──
+      function showToast(msg, link) {
+        const t = document.getElementById("toast");
+        document.getElementById("toast-msg").textContent = msg;
+        document.getElementById("toast-link").style.display = link
+          ? "inline"
+          : "none";
+        t.style.opacity = "1";
+        t.style.pointerEvents = "all";
+        t.style.transform = "translateX(-50%) translateY(0)";
+        clearTimeout(t._t);
+        t._t = setTimeout(() => {
+          t.style.opacity = "0";
+          t.style.pointerEvents = "none";
+          t.style.transform = "translateX(-50%) translateY(90px)";
+        }, 3200);
+      }
 
-// ── SCROLL REVEAL ──
-const ro=new IntersectionObserver(entries=>entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),i*60);ro.unobserve(e.target);}}),{threshold:.08});
-document.querySelectorAll('.rev').forEach(r=>ro.observe(r));
+      // ── SCROLL REVEAL ──
+      const ro = new IntersectionObserver(
+        (entries) =>
+          entries.forEach((e, i) => {
+            if (e.isIntersecting) {
+              setTimeout(() => e.target.classList.add("in"), i * 60);
+              ro.unobserve(e.target);
+            }
+          }),
+        { threshold: 0.08 },
+      );
+      document.querySelectorAll(".rev").forEach((r) => ro.observe(r));
 
-// ── ESC ──
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDM();closeRM();closeCM();closeLM();}});
+      // ── ESC ──
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          closeDM();
+          closeRM();
+          closeCM();
+          closeLM();
+        }
+      });
 
-// ── INIT ──
-buildFeatured();
-buildGallery('all');
-updateNav();
-</script>
-</body>
+      // ── INIT ──
+      buildFeatured();
+      buildGallery("all");
+      updateNav();
+    </script>
+  </body>
 </html>
