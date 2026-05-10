@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-  <head>
+  <head><link rel="icon" type="image/png" href="logo.jpeg" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login | Archinova</title>
@@ -856,7 +856,7 @@
       <div class="orb orb-2"></div>
     </div>
 
-    <header>
+    <header><link rel="icon" type="image/png" href="logo.jpeg" />
       <div class="navbar">
         <a href="index.html" class="logo">
           <img src="logo.jpeg" alt="Archinova Logo" class="logo-img" />
@@ -1302,16 +1302,8 @@
           showAlert("Please enter a valid email address.");
           return;
         }
-        if (password.length < 8) {
-          showAlert("Password must be at least 8 characters.");
-          return;
-        }
-        if (!/[A-Z]/.test(password)) {
-          showAlert("Password must contain at least one uppercase letter.");
-          return;
-        }
-        if (!/[!@#$%^&*()_+\-=\[\]{};':"|,.<>/?]/.test(password)) {
-          showAlert("Password must contain at least one special character.");
+        if (password.length < 8 || password.length > 12 || !/[A-Z]/.test(password) || !/[!@#$%^&*()_+\-=\[\]{};':\"|,.<>/?]/.test(password)) {
+          showAlert("Password must be 8–12 characters with at least one uppercase letter and one special character.");
           return;
         }
         setLoading(true);
