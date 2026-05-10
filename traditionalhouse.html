@@ -678,9 +678,9 @@ Area:2200sqft<br>Floors:G+1<br>3BHK Traditional
     ❤️
 </button>
 </div>
-<a href="https://app.sketchup.com/app" target="_blank">
-<button class="btn">View Full Details</button>
-</a>
+<button class="btn" onclick="openModel('https://sketchfab.com/models/138d2586d63a458bb26028a9e38aedb2')">
+View 3D Model
+</button>
 </div>
 </div>
 
@@ -699,9 +699,9 @@ Area:2800sqft<br>Floors:G+2<br>4BHK
     ❤️
 </button>
 </div>
-<a href="https://app.sketchup.com/app" target="_blank">
-<button class="btn">View Full Details</button>
-</a>
+<button class="btn" onclick="openModel('https://sketchfab.com/models/73da55c2e940462b9359b0bf0281096b')">
+View 3D Model
+</button>
 </div>
 </div>
 
@@ -720,9 +720,9 @@ Area:3000sqft<br>Floors:G+1<br>Luxury
     ❤️
 </button>
 </div>
-<a href="https://app.sketchup.com/app" target="_blank">
-<button class="btn">View Full Details</button>
-</a>
+<button class="btn" onclick="openModel('https://sketchfab.com/models/957d48d19d99479d9102ce51f4aa662c')">
+View 3D Model
+</button>
 </div>
 </div>
 
@@ -741,9 +741,9 @@ Area:2700sqft<br>Floors:G+1<br>Glass Elevation
     ❤️
 </button>
 </div>
-<a href="https://app.sketchup.com/app" target="_blank">
-<button class="btn">View Full Details</button>
-</a>
+<button class="btn" onclick="openModel('https://sketchfab.com/models/af71940329ee4d27bb4fe5dcc0173616')">
+View 3D Model
+</button>
 </div>
 </div>
 
@@ -762,9 +762,9 @@ Area:3200sqft<br>Floors:G+2<br>Luxury Modern
     ❤️
 </button>
 </div>
-<a href="https://app.sketchup.com/app" target="_blank">
-<button class="btn">View Full Details</button>
-</a>
+<button class="btn" onclick="openModel('https://sketchfab.com/models/31df235365f94887a8c419ab4a7abec2')">
+View 3D Model
+</button>
 </div>
 </div>
 
@@ -783,9 +783,9 @@ Area:2400sqft<br>Floors:G+1<br>Minimal
     ❤️
 </button>
 </div>
-<a href="https://app.sketchup.com/app" target="_blank">
-<button class="btn">View Full Details</button>
-</a>
+<button class="btn" onclick="openModel('https://sketchfab.com/models/9e9195dc0a6f44b2baea0def83602dc7')">
+View 3D Model
+</button>
 </div>
 </div>
 
@@ -804,9 +804,9 @@ Area:2400sqft<br>Floors:G+1<br>Minimal
     ❤️
 </button>
 </div>
-<a href="https://app.sketchup.com/app" target="_blank">
-<button class="btn">View Full Details</button>
-</a>
+<button class="btn" onclick="openModel('https://sketchfab.com/models/f6d93a7d88334717a7131842bb9f6e69')">
+View 3D Model
+</button>
 </div>
 </div>
 
@@ -825,9 +825,9 @@ Area:2400sqft<br>Floors:G+1<br>Minimal
     ❤️
 </button>
 </div>
-<a href="https://app.sketchup.com/app" target="_blank">
-<button class="btn">View Full Details</button>
-</a>
+<button class="btn" onclick="openModel('https://sketchfab.com/models/f8013d345db2425b820a21d57c941050')">
+View 3D Model
+</button>
 </div>
 </div>
 
@@ -846,9 +846,9 @@ Area:2400sqft<br>Floors:G+1<br>Minimal
     ❤️
 </button>
 </div>
-<a href="https://app.sketchup.com/app" target="_blank">
-<button class="btn">View Full Details</button>
-</a>
+<button class="btn" onclick="openModel('https://sketchfab.com/models/ce2d67f6faa54039a8e9dcbe8c74c527')">
+View 3D Model
+</button>
 </div>
 </div>
 
@@ -867,9 +867,9 @@ Area:2400sqft<br>Floors:G+1<br>Minimal
     ❤️
 </button>
 </div>
-<a href="https://app.sketchup.com/app" target="_blank">
-<button class="btn">View Full Details</button>
-</a>
+<button class="btn" onclick="openModel('https://sketchfab.com/models/324987abba61418c8dd5906f79ab24ce')">
+View 3D Model
+</button>
 </div>
 </div>
 
@@ -982,6 +982,10 @@ Area:2400sqft<br>Floors:G+1<br>Minimal
 <h3>Suggested Materials</h3>
 <p>Wood • Clay Tiles • Stone • Lime Plaster • Natural Paint</p>
 </div>
+<button class="btn" onclick="location.href='traditionalhouse-interior.html'">
+  🛋 View Interior Experience
+</button>
+</div>
 </div>
 <div id="toastBox" style="
     position: fixed;
@@ -997,11 +1001,42 @@ Area:2400sqft<br>Floors:G+1<br>Minimal
     z-index: 9999;
 ">
 </div>
+<div id="modelPopup" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.9);
+z-index:99999;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+">
 
+<button onclick="closeModel()" style="
+position:absolute;
+top:20px;
+right:20px;
+padding:10px 15px;
+background:red;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+">Close ✖</button>
 
-<button class="btn" onclick="location.href='traditionalhouse-interior.html'">
-  🛋 View Interior Experience
-</button>
+<iframe id="modelFrame"
+width="80%"
+height="80%"
+frameborder="0"
+allowfullscreen
+allow="autoplay; fullscreen; xr-spatial-tracking"
+></iframe>
+
+</div>
+
 
 <script>
 function searchDesign(){
@@ -1012,10 +1047,18 @@ function searchDesign(){
     card.style.display = title.includes(input) ? "block" : "none";
   });
 }
+function openModel(modelUrl){
+    document.getElementById("modelPopup").style.display = "flex";
+    document.getElementById("modelFrame").src = modelUrl + "/embed";
+}
 
+function closeModel(){
+    document.getElementById("modelPopup").style.display = "none";
+    document.getElementById("modelFrame").src = "";
+}
 const floorData = {
     ground: {
-        video: "ground-floor-video.mp4",
+        video: "gallery-images/ground-floor-video.mp4",
         area: "1200 sq.ft",
         living: "Central Courtyard",
         kitchen: "Traditional 10x12 ft",
@@ -1029,7 +1072,7 @@ const floorData = {
         ]
     },
     first: {
-        video: "first-floor-video.mp4",
+        video: "gallery-images/first-floor-video.mp4",
         area: "1000 sq.ft",
         living: "Veranda Seating",
         kitchen: "Utility Kitchen",
@@ -1043,7 +1086,7 @@ const floorData = {
         ]
     },
     terrace: {
-        video: "terrace-video.mp4",
+        video: "gallery-images/terrace-video.mp4",
         area: "500 sq.ft",
         living: "Open Roof Space",
         kitchen: "Traditional Cooking Area",

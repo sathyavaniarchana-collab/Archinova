@@ -851,8 +851,45 @@
       .fa-spin {
         animation: spin 1s linear infinite;
       }
+      /* ── CONSULTATION CARDS ── */
+      #consultationsContainer { display: flex; flex-direction: column; gap: 14px; }
+      .consult-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 22px 26px;
+        backdrop-filter: blur(16px);
+        transition: border-color 0.2s;
+      }
+      .consult-card:hover { border-color: rgba(0,201,167,0.3); }
+      .consult-card.c-new { border-left: 3px solid var(--teal); }
+      .consult-header {
+        display: flex; align-items: flex-start;
+        justify-content: space-between; gap: 12px; margin-bottom: 12px;
+      }
+      .consult-name { font-weight: 500; font-size: 15px; }
+      .consult-meta {
+        font-size: 12px; color: var(--muted);
+        margin-top: 3px; display: flex; gap: 14px; flex-wrap: wrap;
+      }
+      .consult-meta i { color: var(--teal); margin-right: 4px; }
+      .consult-right {
+        display: flex; flex-direction: column;
+        align-items: flex-end; gap: 8px; flex-shrink: 0;
+      }
+      .consult-time { font-size: 11px; color: var(--muted); white-space: nowrap; }
+      .consult-details {
+        font-size: 13px; color: rgba(232,237,245,0.7);
+        line-height: 1.6; margin-bottom: 14px;
+        padding: 10px 14px;
+        background: rgba(0,0,0,0.2);
+        border-radius: 8px;
+        border-left: 2px solid rgba(0,201,167,0.2);
+      }
+      .consult-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+      .badge-new-c { background: rgba(0,201,167,0.12); color: var(--teal); border: 1px solid rgba(0,201,167,0.25); }
+      .badge-reviewed { background: rgba(232,237,245,0.06); color: var(--muted); border: 1px solid rgba(232,237,245,0.1); }
     </style>
-  </head>
   <body>
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
@@ -889,6 +926,9 @@
         </button>
         <button class="dash-tab" id="tabPackages" onclick="switchTab('Packages')">
           <i class="fa-solid fa-box-open"></i> Package Requests
+        </button>
+        <button class="dash-tab" id="tabConsultations" onclick="switchTab('Consultations')">
+          <i class="fa-solid fa-calendar-check"></i> Consultations
         </button>
       </div>
 
@@ -1077,6 +1117,47 @@
 
       <!-- /paneUsers -->
     </div>
+
+      <!-- ══ CONSULTATIONS TAB ══ -->
+      <div class="tab-pane" id="paneConsultations">
+        <div class="stats-row cols-3">
+          <div class="stat-card ac-teal">
+            <div class="stat-icon teal"><i class="fa-solid fa-calendar-check"></i></div>
+            <div class="stat-label">Total Bookings</div>
+            <div class="stat-value" id="cStatTotal">—</div>
+          </div>
+          <div class="stat-card ac-red">
+            <div class="stat-icon red"><i class="fa-solid fa-bell"></i></div>
+            <div class="stat-label">New / Unreviewed</div>
+            <div class="stat-value red" id="cStatNew">—</div>
+          </div>
+          <div class="stat-card ac-gold">
+            <div class="stat-icon gold"><i class="fa-solid fa-circle-check"></i></div>
+            <div class="stat-label">Reviewed</div>
+            <div class="stat-value gold" id="cStatReviewed">—</div>
+          </div>
+        </div>
+        <div class="section-header">
+          <div class="section-title">
+            <i class="fa-solid fa-calendar-days"></i> All Consultation Bookings
+          </div>
+          <div class="filter-row">
+            <button class="filter-btn active" onclick="setCFilter('all',this)">All</button>
+            <button class="filter-btn" onclick="setCFilter('new',this)">New</button>
+            <button class="filter-btn" onclick="setCFilter('reviewed',this)">Reviewed</button>
+          </div>
+        </div>
+        <div class="search-bar">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="cSearch" placeholder="Search by name, email or builder…" oninput="renderConsultations()">
+        </div>
+        <div id="consultationsContainer">
+          <div class="state-msg"><i class="fa-solid fa-spinner fa-spin"></i>Loading consultations…</div>
+        </div>
+      </div>
+      <!-- /paneConsultations -->
+
+    </div>
     <!-- /page -->
 
     <!-- MODAL -->
@@ -1122,6 +1203,7 @@
         designFilter = "all";
       let usersLoaded = false;
       let pkgLoaded = false, allPkgRequests = [], pkgFilter = "all";
+      let consultationsLoaded = false, allConsultations = [], cFilter = "all", unsubConsult = null;
 
       // ── AUTH GUARD ──────────────────────────────────────────────
       auth.onAuthStateChanged(async (user) => {
@@ -1151,6 +1233,7 @@
         document.getElementById("pane" + name).classList.add("active");
         if (name === "Users" && !usersLoaded) loadUsersTab();
         if (name === "Packages" && !pkgLoaded) loadPackages();
+        if (name === "Consultations" && !consultationsLoaded) loadConsultationsTab();
       }
 
       // ══════════════════════════════════════════════
@@ -1598,6 +1681,7 @@
       // ── LOGOUT ──────────────────────────────────────────────────
       function logout() {
         if (unsubscribe) unsubscribe();
+        if (unsubConsult) unsubConsult();
         auth.signOut().then(() => {
           window.location.href = "login.html";
         });
@@ -1705,6 +1789,101 @@
       function deletePkg(id) {
         if (!confirm("Delete this package request?")) return;
         db.collection("package_requests").doc(id).delete();
+      }
+
+      // ══════════════════════════════════════════════
+      // CONSULTATIONS TAB
+      // ══════════════════════════════════════════════
+      function loadConsultationsTab() {
+        consultationsLoaded = true;
+        if (unsubConsult) unsubConsult();
+        document.getElementById("consultationsContainer").innerHTML =
+          '<div class="state-msg"><i class="fa-solid fa-spinner fa-spin"></i>Loading consultations…</div>';
+        unsubConsult = db.collection("consultations")
+          .orderBy("createdAt", "desc")
+          .onSnapshot(function(snap) {
+            allConsultations = snap.docs.map(function(d) { return Object.assign({ id: d.id }, d.data()); });
+            updateCStats();
+            renderConsultations();
+          }, function(err) {
+            console.error(err);
+            document.getElementById("consultationsContainer").innerHTML =
+              '<div class="state-msg"><i class="fa-solid fa-triangle-exclamation" style="color:var(--red)"></i>Failed to load. Check Firestore rules.</div>';
+          });
+      }
+
+      function updateCStats() {
+        var total    = allConsultations.length;
+        var newCount = allConsultations.filter(function(c) { return c.status === "new"; }).length;
+        document.getElementById("cStatTotal").textContent    = total;
+        document.getElementById("cStatNew").textContent      = newCount;
+        document.getElementById("cStatReviewed").textContent = total - newCount;
+      }
+
+      function setCFilter(f, btn) {
+        cFilter = f;
+        document.querySelectorAll("#paneConsultations .filter-btn")
+          .forEach(function(b) { b.classList.remove("active"); });
+        btn.classList.add("active");
+        renderConsultations();
+      }
+
+      function renderConsultations() {
+        var q = (document.getElementById("cSearch") ? document.getElementById("cSearch").value : "").toLowerCase();
+        var list = cFilter === "all"
+          ? allConsultations
+          : allConsultations.filter(function(c) {
+              return cFilter === "new" ? c.status === "new" : c.status !== "new";
+            });
+        if (q) {
+          list = list.filter(function(c) {
+            return (c.name  || "").toLowerCase().includes(q)
+                || (c.email || "").toLowerCase().includes(q)
+                || (c.builder || "").toLowerCase().includes(q);
+          });
+        }
+        var cont = document.getElementById("consultationsContainer");
+        if (!list.length) {
+          cont.innerHTML = '<div class="state-msg"><i class="fa-solid fa-calendar-xmark"></i>No consultations found.</div>';
+          return;
+        }
+        cont.innerHTML = list.map(function(c) {
+          var isNew = c.status === "new";
+          var date  = (c.createdAt && c.createdAt.toDate)
+            ? c.createdAt.toDate().toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })
+            : "Just now";
+          var prefDate = c.date ? '<span><i class="fa-solid fa-calendar"></i>' + esc(c.date) + "</span>" : "";
+          return (
+            '<div class="consult-card ' + (isNew ? "c-new" : "") + '" id="con-' + c.id + '">' +
+            '<div class="consult-header"><div>' +
+            '<div class="consult-name">' + esc(c.name) + "</div>" +
+            '<div class="consult-meta">' +
+            '<span><i class="fa-solid fa-envelope"></i>' + esc(c.email) + "</span>" +
+            '<span><i class="fa-solid fa-phone"></i>' + esc(c.phone) + "</span>" +
+            '<span><i class="fa-solid fa-building"></i>' + esc(c.builder) + (c.city ? " · " + esc(c.city) : "") + "</span>" +
+            '<span><i class="fa-solid fa-briefcase"></i>' + esc(c.projectType) + "</span>" +
+            prefDate +
+            "</div></div>" +
+            '<div class="consult-right">' +
+            '<span class="consult-time"><i class="fa-regular fa-clock" style="margin-right:4px;"></i>' + date + "</span>" +
+            '<span class="badge ' + (isNew ? "badge-new-c" : "badge-reviewed") + '">' + (isNew ? "New" : "Reviewed") + "</span>" +
+            "</div></div>" +
+            (c.details ? '<div class="consult-details">' + esc(c.details) + "</div>" : "") +
+            '<div class="consult-actions">' +
+            (isNew
+              ? '<button class="btn-action mark-read" onclick="markConsultReviewed(\'' + c.id + '\')"><i class="fa-solid fa-check"></i> Mark Reviewed</button>'
+              : '<button class="btn-action mark-read" onclick="markConsultNew(\''      + c.id + '\')"><i class="fa-solid fa-rotate-left"></i> Mark New</button>') +
+            '<button class="btn-action delete-msg" onclick="deleteConsult(\'' + c.id + '\')"><i class="fa-solid fa-trash"></i> Delete</button>' +
+            "</div></div>"
+          );
+        }).join("");
+      }
+
+      function markConsultReviewed(id) { db.collection("consultations").doc(id).update({ status: "reviewed" }); }
+      function markConsultNew(id)      { db.collection("consultations").doc(id).update({ status: "new" }); }
+      function deleteConsult(id) {
+        if (!confirm("Delete this consultation booking?")) return;
+        db.collection("consultations").doc(id).delete();
       }
 
       function esc(str) {

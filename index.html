@@ -191,6 +191,24 @@
       nav a.active::after {
         transform: scaleX(1);
       }
+      nav a.btn-builder {
+        background: linear-gradient(135deg, #3d0070, #00c9a7);
+        color: #fff !important;
+        padding: 8px 20px;
+        border-radius: 999px;
+        font-weight: 500;
+        letter-spacing: 0.05em;
+        transition: all 0.3s;
+      }
+      nav a.btn-builder:hover {
+        background: #007a6b;
+        color: #ffffff !important;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 20px rgba(0, 201, 167, 0.4);
+      }
+      nav a.btn-builder::after {
+        display: none;
+      }
       nav a.btn-login {
         background: linear-gradient(135deg, #3d0070, #00c9a7);
         color: #fff !important;
@@ -577,22 +595,22 @@
         z-index: 4;
       }
       .slide:nth-child(1) {
-        background-image: url("Images/modernvilla.jpg.jpeg");
+        background-image: url("images/modernvilla.jpg");
       }
       .slide:nth-child(2) {
-        background-image: url("Images/minimalhouse.jpg.jpeg");
+        background-image: url("images/minimalhouse.jpg");
       }
       .slide:nth-child(3) {
-        background-image: url("Images/luxury.jpg.jpeg");
+        background-image: url("images/luxury.jpg");
       }
       .slide:nth-child(4) {
-        background-image: url("Images/traditional.jpg.jpeg");
+        background-image: url("images/traditional.jpg");
       }
       .slide:nth-child(5) {
-        background-image: url("Images/futuristic.jpg.jpeg");
+        background-image: url("images/futuristic.jpg");
       }
       .slide:nth-child(6) {
-        background-image: url("Images/eco.jpg.jpeg");
+        background-image: url("images/eco.jpg");
       }
       .slide-nav {
         background: rgba(25, 8, 45, 0.7);
@@ -1101,6 +1119,9 @@
             <li><a href="about.html">About Us</a></li>
             <li><a href="gallery.html">Gallery</a></li>
             <li><a href="interior.html">Interior</a></li>
+            <li><a href="builders.html" class="btn-builder">👷 Connect With Builders
+</a></li>
+
             <li id="navDashLi" style="display: none">
               <a
                 href="user-dashboard.html"

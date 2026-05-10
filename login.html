@@ -1302,6 +1302,18 @@
           showAlert("Please enter a valid email address.");
           return;
         }
+        if (password.length < 8) {
+          showAlert("Password must be at least 8 characters.");
+          return;
+        }
+        if (!/[A-Z]/.test(password)) {
+          showAlert("Password must contain at least one uppercase letter.");
+          return;
+        }
+        if (!/[!@#$%^&*()_+\-=\[\]{};':"|,.<>/?]/.test(password)) {
+          showAlert("Password must contain at least one special character.");
+          return;
+        }
         setLoading(true);
         // don't wait for UI repaint — fire Firebase immediately
         setTimeout(function () {

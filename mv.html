@@ -62,6 +62,15 @@ color:#00ffd5;
 .hero p{
 font-size:20px;
 }
+.hero video{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+object-fit:cover;
+z-index:-1;
+}
 
 /* ===== SEARCH BAR ===== */
 
@@ -324,6 +333,7 @@ font-weight:bold;
 cursor:pointer;
 transition:0.3s;
 }
+
 
 .btn:hover{
 box-shadow:0 0 20px #00f5d4;
@@ -669,7 +679,9 @@ Area:2500sqft<br>Floors:G+1<br>3BHK Modern
     ❤️
 </button>
 </div>
-<button class="btn">View Full Details</button>
+<button class="btn" onclick="openModel('https://sketchfab.com/models/b79b7ec9a19e463392c435fb5dd7cd08')">
+View 3D Model
+</button>
 </div>
 </div>
 
@@ -688,7 +700,9 @@ Area:2800sqft<br>Floors:G+2<br>4BHK
     ❤️
 </button>
 </div>
-<button class="btn">View Full Details</button>
+<button class="btn" onclick="openModel('https://sketchfab.com/models/ae2b92adc95a4f42963462e79384286b')">
+View 3D Model
+</button>
 </div>
 </div>
 
@@ -707,7 +721,9 @@ Area:3000sqft<br>Floors:G+1<br>Luxury
     ❤️
 </button>
 </div>
-<button class="btn">View Full Details</button>
+<button class="btn" onclick="openModel('https://sketchfab.com/models/e376e5bce4964822a6eb66eb666d3a8e')">
+View 3D Model
+</button>
 </div>
 </div>
 
@@ -726,7 +742,9 @@ Area:2700sqft<br>Floors:G+1<br>Glass Elevation
     ❤️
 </button>
 </div>
-<button class="btn">View Full Details</button>
+<button class="btn" onclick="openModel('https://sketchfab.com/models/39177ad7f302433e8a8af343bc5a5d1a')">
+View 3D Model
+</button>
 </div>
 </div>
 
@@ -745,7 +763,9 @@ Area:3200sqft<br>Floors:G+2<br>Luxury Modern
     ❤️
 </button>
 </div>
-<button class="btn">View Full Details</button>
+<button class="btn" onclick="openModel('https://sketchfab.com/models/35c6623880304df1adb10177a31dcc21')">
+View 3D Model
+</button>
 </div>
 </div>
 
@@ -764,7 +784,9 @@ Area:2400sqft<br>Floors:G+1<br>Minimal
     ❤️
 </button>
 </div>
-<button class="btn">View Full Details</button>
+<button class="btn" onclick="openModel('https://sketchfab.com/models/36483636eb5840afadb32ed22c783614')">
+View 3D Model
+</button>
 </div>
 </div>
 
@@ -783,7 +805,9 @@ Area:2400sqft<br>Floors:G+1<br>Minimal
     ❤️
 </button>
 </div>
-<button class="btn">View Full Details</button>
+<button class="btn" onclick="openModel('https://sketchfab.com/models/b7e969cc15bd4f33b2d0780ea65b9be1')">
+View 3D Model
+</button>
 </div>
 </div>
 
@@ -802,7 +826,9 @@ Area:2400sqft<br>Floors:G+1<br>Minimal
     ❤️
 </button>
 </div>
-<button class="btn">View Full Details</button>
+<button class="btn" onclick="openModel('https://sketchfab.com/models/2f1a4c8a3cf0478bb000fe40ef4888de')">
+View 3D Model
+</button>
 </div>
 </div>
 
@@ -821,7 +847,9 @@ Area:2400sqft<br>Floors:G+1<br>Minimal
     ❤️
 </button>
 </div>
-<button class="btn">View Full Details</button>
+<button class="btn" onclick="openModel('https://sketchfab.com/models/ececbc0627d54471880ae442ef61fc47')">
+View 3D Model
+</button>
 </div>
 </div>
 
@@ -840,7 +868,9 @@ Area:2400sqft<br>Floors:G+1<br>Minimal
     ❤️
 </button>
 </div>
-<button class="btn">View Full Details</button>
+<button class="btn" onclick="openModel('https://sketchfab.com/models/8cc3fadb2cd043358590afe21e63c0c5')">
+View 3D Model
+</button>
 </div>
 </div>
 
@@ -953,6 +983,10 @@ Area:2400sqft<br>Floors:G+1<br>Minimal
 <h3>Suggested Materials</h3>
 <p>AAC Blocks • Glass Panels • Cement Cladding • Weatherproof Paint</p>
 </div>
+<button class="btn" onclick="location.href='modernvilla-interior.html'">
+  🛋 View Interior Experience
+</button>
+</div>
 </div>
 <div id="toastBox" style="
     position: fixed;
@@ -969,10 +1003,41 @@ Area:2400sqft<br>Floors:G+1<br>Minimal
 ">
 </div>
 
+<div id="modelPopup" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.9);
+z-index:99999;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+">
 
-<button class="btn" onclick="location.href='modernvilla-interior.html'">
-  🛋 View Interior Experience
-</button>
+<button onclick="closeModel()" style="
+position:absolute;
+top:20px;
+right:20px;
+padding:10px 15px;
+background:red;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+">Close ✖</button>
+
+<iframe id="modelFrame"
+width="80%"
+height="80%"
+frameborder="0"
+allowfullscreen
+allow="autoplay; fullscreen; xr-spatial-tracking"
+></iframe>
+
+</div>
 
 <script>
 function searchDesign(){
@@ -983,7 +1048,15 @@ function searchDesign(){
     card.style.display = title.includes(input) ? "block" : "none";
   });
 }
+function openModel(modelUrl){
+    document.getElementById("modelPopup").style.display = "flex";
+    document.getElementById("modelFrame").src = modelUrl + "/embed";
+}
 
+function closeModel(){
+    document.getElementById("modelPopup").style.display = "none";
+    document.getElementById("modelFrame").src = "";
+}
 const floorData = {
     ground: {
         video: "gallery-images/ground-floor-video.mp4",
@@ -1074,5 +1147,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
 <div id="toastBox"></div>
 <script src="wishlist.js"></script>
+
 </body>
 </html>

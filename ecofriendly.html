@@ -678,9 +678,9 @@ Area:1800sqft<br>Floors:G+1<br>Eco 3BHK
     ❤️
 </button>
 </div>
-<a href="https://app.sketchup.com/app" target="_blank">
-<button class="btn">View Full Details</button>
-</a>
+<button class="btn" onclick="openModel('https://sketchfab.com/models/c6ffed9f5cf14a2791ba8a9311bd2b6f')">
+View 3D Model
+</button>
 </div>
 </div>
 
@@ -699,9 +699,9 @@ Area:2800sqft<br>Floors:G+2<br>4BHK
     ❤️
 </button>
 </div>
-<a href="https://app.sketchup.com/app" target="_blank">
-<button class="btn">View Full Details</button>
-</a>
+<button class="btn" onclick="openModel('https://sketchfab.com/models/f489a72ef1094e5198d34f3c6848e148')">
+View 3D Model
+</button>
 </div>
 </div>
 
@@ -720,9 +720,9 @@ Area:3000sqft<br>Floors:G+1<br>Luxury
     ❤️
 </button>
 </div>
-<a href="https://app.sketchup.com/app" target="_blank">
-<button class="btn">View Full Details</button>
-</a>
+<button class="btn" onclick="openModel('https://sketchfab.com/models/1ca413a4fe994a998751e8cf9022027d')">
+View 3D Model
+</button>
 </div>
 </div>
 
@@ -741,9 +741,9 @@ Area:2700sqft<br>Floors:G+1<br>Glass Elevation
     ❤️
 </button>
 </div>
-<a href="https://app.sketchup.com/app" target="_blank">
-<button class="btn">View Full Details</button>
-</a>
+<button class="btn" onclick="openModel('https://sketchfab.com/models/1aa6498d58bb41989881122985f7346b')">
+View 3D Model
+</button>
 </div>
 </div>
 
@@ -762,9 +762,9 @@ Area:3200sqft<br>Floors:G+2<br>Luxury Modern
     ❤️
 </button>
 </div>
-<a href="https://app.sketchup.com/app" target="_blank">
-<button class="btn">View Full Details</button>
-</a>
+<button class="btn" onclick="openModel('https://sketchfab.com/models/f489a72ef1094e5198d34f3c6848e148')">
+View 3D Model
+</button>
 </div>
 </div>
 
@@ -783,9 +783,9 @@ Area:2400sqft<br>Floors:G+1<br>Minimal
     ❤️
 </button>
 </div>
-<a href="https://app.sketchup.com/app" target="_blank">
-<button class="btn">View Full Details</button>
-</a>
+<button class="btn" onclick="openModel('https://sketchfab.com/models/f489a72ef1094e5198d34f3c6848e148')">
+View 3D Model
+</button>
 </div>
 </div>
 
@@ -804,9 +804,9 @@ Area:2400sqft<br>Floors:G+1<br>Minimal
     ❤️
 </button>
 </div>
-<a href="https://app.sketchup.com/app" target="_blank">
-<button class="btn">View Full Details</button>
-</a>
+<button class="btn" onclick="openModel('https://sketchfab.com/models/f489a72ef1094e5198d34f3c6848e148')">
+View 3D Model
+</button>
 </div>
 </div>
 
@@ -825,9 +825,9 @@ Area:2400sqft<br>Floors:G+1<br>Minimal
     ❤️
 </button>
 </div>
-<a href="https://app.sketchup.com/app" target="_blank">
-<button class="btn">View Full Details</button>
-</a>
+<button class="btn" onclick="openModel('https://sketchfab.com/models/f489a72ef1094e5198d34f3c6848e148')">
+View 3D Model
+</button>
 </div>
 </div>
 
@@ -846,9 +846,9 @@ Area:2400sqft<br>Floors:G+1<br>Minimal
     ❤️
 </button>
 </div>
-<a href="https://app.sketchup.com/app" target="_blank">
-<button class="btn">View Full Details</button>
-</a>
+<button class="btn" onclick="openModel('https://sketchfab.com/models/cd2127ac8165432297ad34aed7db66e1')">
+View 3D Model
+</button>
 </div>
 </div>
 
@@ -867,9 +867,9 @@ Area:2400sqft<br>Floors:G+1<br>Minimal
     ❤️
 </button>
 </div>
-<a href="https://app.sketchup.com/app" target="_blank">
-<button class="btn">View Full Details</button>
-</a>
+<button class="btn" onclick="openModel('https://sketchfab.com/models/f489a72ef1094e5198d34f3c6848e148')">
+View 3D Model
+</button>
 </div>
 </div>
 
@@ -982,6 +982,10 @@ Area:2400sqft<br>Floors:G+1<br>Minimal
 <h3>Suggested Materials</h3>
 <p>Bamboo • Recycled Wood • Clay • Solar Panels • Eco Concrete</p>
 </div>
+<button class="btn" onclick="location.href='ecofriendly-interior.html'">
+  🛋 View Interior Experience
+</button>
+</div>
 </div>
 <div id="toastBox" style="
     position: fixed;
@@ -997,11 +1001,41 @@ Area:2400sqft<br>Floors:G+1<br>Minimal
     z-index: 9999;
 ">
 </div>
+<div id="modelPopup" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.9);
+z-index:99999;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+">
 
+<button onclick="closeModel()" style="
+position:absolute;
+top:20px;
+right:20px;
+padding:10px 15px;
+background:red;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+">Close ✖</button>
 
-<button class="btn" onclick="location.href='ecofriendly-interior.html'">
-  🛋 View Interior Experience
-</button>
+<iframe id="modelFrame"
+width="80%"
+height="80%"
+frameborder="0"
+allowfullscreen
+allow="autoplay; fullscreen; xr-spatial-tracking"
+></iframe>
+
+</div>
 
 <script>
 function searchDesign(){
@@ -1012,7 +1046,15 @@ function searchDesign(){
     card.style.display = title.includes(input) ? "block" : "none";
   });
 }
+function openModel(modelUrl){
+    document.getElementById("modelPopup").style.display = "flex";
+    document.getElementById("modelFrame").src = modelUrl + "/embed";
+}
 
+function closeModel(){
+    document.getElementById("modelPopup").style.display = "none";
+    document.getElementById("modelFrame").src = "";
+}
 const floorData = {
     ground: {
         video: "gallery-images/ground-floor-video.mp4",
