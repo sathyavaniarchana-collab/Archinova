@@ -1,917 +1,2069 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head><link rel="icon" type="image/png" href="logo.jpeg" />
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Archinova – Builders & Engineers</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
+  <head>
+    <link rel="icon" type="image/png" href="logo.jpeg" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Archinova – Builders & Engineers</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-body{
-  font-family:'Outfit',sans-serif;
-  background:#040d18;
-  color:#fff;
-  min-height:100vh;
-  overflow-x:hidden;
-}
+      body {
+        font-family: "Outfit", sans-serif;
+        background: #040d18;
+        color: #fff;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
 
-/* ── ANIMATED BG ── */
-#bg-canvas{
-  position:fixed;
-  inset:0;
-  z-index:0;
-  pointer-events:none;
-}
+      /* ── ANIMATED BG ── */
+      #bg-canvas {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+      }
 
-.page-wrap{position:relative;z-index:1}
+      .page-wrap {
+        position: relative;
+        z-index: 1;
+      }
 
-/* ── NAV ── */
-nav{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:18px 44px;
-  border-bottom:1px solid rgba(0,255,213,.1);
-  background:rgba(4,13,24,.75);
-  backdrop-filter:blur(20px);
-  position:sticky;top:0;z-index:200;
-}
-.nav-logo{
-  font-family:'Cormorant Garamond',serif;
-  font-size:26px;font-weight:700;
-  color:#00ffd5;letter-spacing:3px;
-}
-.nav-back{
-  display:flex;align-items:center;gap:8px;
-  color:rgba(255,255,255,.6);
-  text-decoration:none;font-size:13px;
-  font-weight:400;letter-spacing:.5px;
-  transition:.2s;
-}
-.nav-back:hover{color:#00ffd5}
-.nav-badge{
-  background:rgba(0,255,213,.08);
-  border:1px solid rgba(0,255,213,.25);
-  color:#00ffd5;font-size:11px;
-  letter-spacing:1px;padding:6px 16px;
-  border-radius:20px;font-weight:500;
-}
+      /* ── NAV ── */
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 18px 44px;
+        border-bottom: 1px solid rgba(0, 255, 213, 0.1);
+        background: rgba(4, 13, 24, 0.75);
+        backdrop-filter: blur(20px);
+        position: sticky;
+        top: 0;
+        z-index: 200;
+      }
+      .nav-logo {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 26px;
+        font-weight: 700;
+        color: #00ffd5;
+        letter-spacing: 3px;
+      }
+      .nav-back {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: rgba(255, 255, 255, 0.6);
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 400;
+        letter-spacing: 0.5px;
+        transition: 0.2s;
+      }
+      .nav-back:hover {
+        color: #00ffd5;
+      }
+      .nav-badge {
+        background: rgba(0, 255, 213, 0.08);
+        border: 1px solid rgba(0, 255, 213, 0.25);
+        color: #00ffd5;
+        font-size: 11px;
+        letter-spacing: 1px;
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-weight: 500;
+      }
 
-/* ── HERO ── */
-.hero{
-  text-align:center;
-  padding:72px 20px 44px;
-}
-.hero-eyebrow{
-  display:inline-block;
-  font-size:11px;letter-spacing:3px;
-  text-transform:uppercase;
-  color:#00ffd5;opacity:.8;
-  margin-bottom:18px;
-}
-.hero h1{
-  font-family:'Cormorant Garamond',serif;
-  font-size:58px;font-weight:700;
-  line-height:1.08;margin-bottom:16px;
-  color:#fff;
-}
-.hero h1 em{
-  font-style:italic;color:#00ffd5;
-}
-.hero-sub{
-  font-size:15px;font-weight:300;
-  opacity:.55;max-width:480px;
-  margin:0 auto 40px;line-height:1.8;
-  letter-spacing:.3px;
-}
-.stats-row{
-  display:flex;justify-content:center;
-  gap:48px;flex-wrap:wrap;
-}
-.stat-num{
-  font-family:'Cormorant Garamond',serif;
-  font-size:36px;font-weight:700;
-  color:#00ffd5;line-height:1;
-}
-.stat-label{
-  font-size:11px;letter-spacing:1px;
-  text-transform:uppercase;
-  opacity:.45;margin-top:4px;
-}
+      /* ── HERO ── */
+      .hero {
+        text-align: center;
+        padding: 72px 20px 44px;
+      }
+      .hero-eyebrow {
+        display: inline-block;
+        font-size: 11px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: #00ffd5;
+        opacity: 0.8;
+        margin-bottom: 18px;
+      }
+      .hero h1 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 58px;
+        font-weight: 700;
+        line-height: 1.08;
+        margin-bottom: 16px;
+        color: #fff;
+      }
+      .hero h1 em {
+        font-style: italic;
+        color: #00ffd5;
+      }
+      .hero-sub {
+        font-size: 15px;
+        font-weight: 300;
+        opacity: 0.55;
+        max-width: 480px;
+        margin: 0 auto 40px;
+        line-height: 1.8;
+        letter-spacing: 0.3px;
+      }
+      .stats-row {
+        display: flex;
+        justify-content: center;
+        gap: 48px;
+        flex-wrap: wrap;
+      }
+      .stat-num {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 36px;
+        font-weight: 700;
+        color: #00ffd5;
+        line-height: 1;
+      }
+      .stat-label {
+        font-size: 11px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        opacity: 0.45;
+        margin-top: 4px;
+      }
 
-/* ── FILTERS ── */
-.filters{
-  display:flex;justify-content:center;
-  gap:10px;flex-wrap:wrap;
-  padding:28px 40px 40px;
-}
-.filter-btn{
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.1);
-  color:rgba(255,255,255,.6);
-  padding:9px 24px;border-radius:30px;
-  font-size:12px;letter-spacing:.8px;
-  text-transform:uppercase;
-  cursor:pointer;transition:.25s;
-  font-family:'Outfit',sans-serif;
-}
-.filter-btn:hover,.filter-btn.active{
-  background:rgba(0,255,213,.12);
-  border-color:rgba(0,255,213,.35);
-  color:#00ffd5;
-}
+      /* ── FILTERS ── */
+      .filters {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        padding: 28px 40px 40px;
+      }
+      .filter-btn {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.6);
+        padding: 9px 24px;
+        border-radius: 30px;
+        font-size: 12px;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: 0.25s;
+        font-family: "Outfit", sans-serif;
+      }
+      .filter-btn:hover,
+      .filter-btn.active {
+        background: rgba(0, 255, 213, 0.12);
+        border-color: rgba(0, 255, 213, 0.35);
+        color: #00ffd5;
+      }
 
-/* ── GRID ── */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(330px,1fr));
-  gap:28px;padding:0 40px 72px;
-  max-width:1320px;margin:0 auto;
-}
+      /* ── GRID ── */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+        gap: 28px;
+        padding: 0 40px 72px;
+        max-width: 1320px;
+        margin: 0 auto;
+      }
 
-/* ── CARD ── */
-.card{
-  background:rgba(255,255,255,.045);
-  backdrop-filter:blur(18px);
-  border:1px solid rgba(255,255,255,.09);
-  border-radius:22px;overflow:hidden;
-  transition:.38s cubic-bezier(.25,.8,.25,1);
-  position:relative;
-}
-.card::before{
-  content:'';
-  position:absolute;inset:0;
-  border-radius:22px;
-  background:linear-gradient(135deg,rgba(0,255,213,.05) 0%,transparent 60%);
-  opacity:0;transition:.38s;pointer-events:none;z-index:0;
-}
-.card:hover{
-  transform:translateY(-9px);
-  border-color:rgba(0,255,213,.3);
-  box-shadow:0 24px 60px rgba(0,255,213,.1);
-}
-.card:hover::before{opacity:1}
+      /* ── CARD ── */
+      .card {
+        background: rgba(255, 255, 255, 0.045);
+        backdrop-filter: blur(18px);
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        border-radius: 22px;
+        overflow: hidden;
+        transition: 0.38s cubic-bezier(0.25, 0.8, 0.25, 1);
+        position: relative;
+      }
+      .card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 22px;
+        background: linear-gradient(
+          135deg,
+          rgba(0, 255, 213, 0.05) 0%,
+          transparent 60%
+        );
+        opacity: 0;
+        transition: 0.38s;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .card:hover {
+        transform: translateY(-9px);
+        border-color: rgba(0, 255, 213, 0.3);
+        box-shadow: 0 24px 60px rgba(0, 255, 213, 0.1);
+      }
+      .card:hover::before {
+        opacity: 1;
+      }
 
-.card-img{
-  width:100%;height:210px;
-  object-fit:cover;display:block;
-  filter:brightness(.85) saturate(1.1);
-  transition:.38s;
-}
-.card:hover .card-img{
-  filter:brightness(.95) saturate(1.2);
-}
+      .card-img {
+        width: 100%;
+        height: 210px;
+        object-fit: cover;
+        display: block;
+        filter: brightness(0.85) saturate(1.1);
+        transition: 0.38s;
+      }
+      .card:hover .card-img {
+        filter: brightness(0.95) saturate(1.2);
+      }
 
-.badge-row{
-  display:flex;gap:8px;
-  padding:14px 18px 0;flex-wrap:wrap;
-  position:relative;z-index:1;
-}
-.badge{
-  font-size:10px;padding:4px 12px;
-  border-radius:20px;font-weight:600;
-  letter-spacing:.8px;text-transform:uppercase;
-}
-.badge-verified{background:rgba(0,255,213,.12);color:#00ffd5;border:1px solid rgba(0,255,213,.22)}
-.badge-top{background:rgba(255,195,60,.1);color:#ffc83c;border:1px solid rgba(255,195,60,.22)}
-.badge-new{background:rgba(168,130,255,.12);color:#b49dff;border:1px solid rgba(168,130,255,.22)}
+      .badge-row {
+        display: flex;
+        gap: 8px;
+        padding: 14px 18px 0;
+        flex-wrap: wrap;
+        position: relative;
+        z-index: 1;
+      }
+      .badge {
+        font-size: 10px;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-weight: 600;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+      }
+      .badge-verified {
+        background: rgba(0, 255, 213, 0.12);
+        color: #00ffd5;
+        border: 1px solid rgba(0, 255, 213, 0.22);
+      }
+      .badge-top {
+        background: rgba(255, 195, 60, 0.1);
+        color: #ffc83c;
+        border: 1px solid rgba(255, 195, 60, 0.22);
+      }
+      .badge-new {
+        background: rgba(168, 130, 255, 0.12);
+        color: #b49dff;
+        border: 1px solid rgba(168, 130, 255, 0.22);
+      }
 
-.card-body{padding:16px 20px 22px;position:relative;z-index:1}
+      .card-body {
+        padding: 16px 20px 22px;
+        position: relative;
+        z-index: 1;
+      }
 
-.card-body h2{
-  font-family:'Cormorant Garamond',serif;
-  font-size:22px;font-weight:700;
-  color:#fff;margin-bottom:3px;
-  letter-spacing:.3px;
-}
-.card-specialty{
-  font-size:12px;font-weight:300;
-  opacity:.5;margin-bottom:14px;
-  letter-spacing:.4px;
-}
+      .card-body h2 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 22px;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 3px;
+        letter-spacing: 0.3px;
+      }
+      .card-specialty {
+        font-size: 12px;
+        font-weight: 300;
+        opacity: 0.5;
+        margin-bottom: 14px;
+        letter-spacing: 0.4px;
+      }
 
-.rating-row{
-  display:flex;align-items:center;
-  gap:7px;margin-bottom:14px;
-}
-.stars{color:#ffc83c;font-size:13px;letter-spacing:1px}
-.rating-num{font-size:13px;font-weight:600;color:#ffc83c}
-.rating-count{font-size:11px;opacity:.4}
+      .rating-row {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        margin-bottom: 14px;
+      }
+      .stars {
+        color: #ffc83c;
+        font-size: 13px;
+        letter-spacing: 1px;
+      }
+      .rating-num {
+        font-size: 13px;
+        font-weight: 600;
+        color: #ffc83c;
+      }
+      .rating-count {
+        font-size: 11px;
+        opacity: 0.4;
+      }
 
-.meta{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:7px;margin-bottom:16px;
-}
-.meta-item{
-  display:flex;align-items:center;gap:6px;
-  font-size:12px;opacity:.6;font-weight:300;
-}
-.meta-item svg{width:13px;height:13px;opacity:.7;flex-shrink:0}
+      .meta {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 7px;
+        margin-bottom: 16px;
+      }
+      .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+        opacity: 0.6;
+        font-weight: 300;
+      }
+      .meta-item svg {
+        width: 13px;
+        height: 13px;
+        opacity: 0.7;
+        flex-shrink: 0;
+      }
 
-.divider{height:1px;background:rgba(255,255,255,.07);margin-bottom:15px}
+      .divider {
+        height: 1px;
+        background: rgba(255, 255, 255, 0.07);
+        margin-bottom: 15px;
+      }
 
-.contact-row{
-  display:flex;gap:8px;margin-bottom:15px;
-}
-.contact-chip{
-  display:flex;align-items:center;gap:6px;
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.09);
-  padding:7px 10px;border-radius:10px;
-  font-size:11px;opacity:.65;flex:1;
-  overflow:hidden;white-space:nowrap;
-  text-overflow:ellipsis;
-}
-.contact-chip svg{width:13px;height:13px;flex-shrink:0}
+      .contact-row {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 15px;
+      }
+      .contact-chip {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        padding: 7px 10px;
+        border-radius: 10px;
+        font-size: 11px;
+        opacity: 0.65;
+        flex: 1;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      .contact-chip svg {
+        width: 13px;
+        height: 13px;
+        flex-shrink: 0;
+      }
 
-.btn-row{display:flex;gap:10px}
-.btn-book{
-  flex:1;background:#00ffd5;
-  color:#040d18;border:none;
-  padding:12px;border-radius:30px;
-  font-weight:700;font-size:13px;
-  cursor:pointer;transition:.25s;
-  letter-spacing:.5px;
-  font-family:'Outfit',sans-serif;
-}
-.btn-book:hover{
-  background:#33ffe0;
-  box-shadow:0 0 20px rgba(0,255,213,.3);
-}
-.btn-call{
-  padding:12px 16px;
-  border:1px solid rgba(0,255,213,.3);
-  background:transparent;
-  color:#00ffd5;border-radius:30px;
-  font-size:13px;cursor:pointer;
-  transition:.25s;display:flex;
-  align-items:center;gap:5px;
-  font-family:'Outfit',sans-serif;
-  text-decoration:none;
-}
-.btn-call:hover{background:rgba(0,255,213,.08)}
-.btn-call svg{width:14px;height:14px}
+      .btn-row {
+        display: flex;
+        gap: 10px;
+      }
+      .btn-book {
+        flex: 1;
+        background: #00ffd5;
+        color: #040d18;
+        border: none;
+        padding: 12px;
+        border-radius: 30px;
+        font-weight: 700;
+        font-size: 13px;
+        cursor: pointer;
+        transition: 0.25s;
+        letter-spacing: 0.5px;
+        font-family: "Outfit", sans-serif;
+      }
+      .btn-book:hover {
+        background: #33ffe0;
+        box-shadow: 0 0 20px rgba(0, 255, 213, 0.3);
+      }
+      .btn-call {
+        padding: 12px 16px;
+        border: 1px solid rgba(0, 255, 213, 0.3);
+        background: transparent;
+        color: #00ffd5;
+        border-radius: 30px;
+        font-size: 13px;
+        cursor: pointer;
+        transition: 0.25s;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-family: "Outfit", sans-serif;
+        text-decoration: none;
+      }
+      .btn-call:hover {
+        background: rgba(0, 255, 213, 0.08);
+      }
+      .btn-call svg {
+        width: 14px;
+        height: 14px;
+      }
 
-/* ── MODAL OVERLAY ── */
-.overlay{
-  position:fixed;inset:0;
-  background:rgba(0,0,0,.88);
-  z-index:1000;display:none;
-  align-items:center;justify-content:center;
-  padding:20px;
-}
-.overlay.open{display:flex}
+      /* ── MODAL OVERLAY ── */
+      .overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.88);
+        z-index: 1000;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+      .overlay.open {
+        display: flex;
+      }
 
-.modal{
-  background:linear-gradient(145deg,#0a1c30,#081522);
-  border:1px solid rgba(0,255,213,.18);
-  border-radius:26px;padding:38px;
-  width:100%;max-width:490px;
-  position:relative;
-  animation:popIn .35s cubic-bezier(.34,1.56,.64,1);
-}
-@keyframes popIn{
-  from{transform:scale(.84) translateY(24px);opacity:0}
-  to{transform:scale(1) translateY(0);opacity:1}
-}
-.modal-close{
-  position:absolute;right:18px;top:16px;
-  background:rgba(255,255,255,.07);
-  border:none;color:rgba(255,255,255,.5);
-  width:32px;height:32px;border-radius:50%;
-  font-size:17px;cursor:pointer;
-  transition:.2s;display:flex;
-  align-items:center;justify-content:center;
-}
-.modal-close:hover{background:rgba(0,255,213,.12);color:#00ffd5}
-
-.modal-tag{
-  display:inline-flex;align-items:center;gap:8px;
-  background:rgba(0,255,213,.08);
-  border:1px solid rgba(0,255,213,.18);
-  padding:7px 16px;border-radius:20px;
-  margin-bottom:18px;
-}
-.modal-tag span{color:#00ffd5;font-size:12px;font-weight:500;letter-spacing:.5px}
-
-.modal h2{
-  font-family:'Cormorant Garamond',serif;
-  font-size:28px;font-weight:700;
-  margin-bottom:5px;
-}
-.modal-sub{font-size:13px;opacity:.45;margin-bottom:26px;font-weight:300}
-
-.form-group{margin-bottom:13px}
-.form-group label{
-  display:block;font-size:10px;
-  letter-spacing:1.2px;text-transform:uppercase;
-  opacity:.45;margin-bottom:7px;font-weight:500;
-}
-.form-group input,
-.form-group textarea,
-.form-group select{
-  width:100%;padding:13px 16px;
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.1);
-  border-radius:13px;color:#fff;
-  font-size:14px;font-family:'Outfit',sans-serif;
-  transition:.2s;outline:none;font-weight:300;
-}
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus{
-  border-color:rgba(0,255,213,.4);
-  background:rgba(0,255,213,.04);
-}
-.form-group textarea{height:88px;resize:none}
-.form-group select option{background:#0a1c30;color:#fff}
-
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-
-.submit-btn{
-  width:100%;padding:14px;
-  background:#00ffd5;color:#040d18;
-  border:none;border-radius:30px;
-  font-size:14px;font-weight:700;
-  cursor:pointer;margin-top:8px;
-  transition:.25s;letter-spacing:.5px;
-  font-family:'Outfit',sans-serif;
-}
-.submit-btn:hover{box-shadow:0 0 26px rgba(0,255,213,.35)}
-
-/* ── TOAST ── */
-.toast{
-  position:fixed;bottom:32px;right:32px;
-  background:linear-gradient(135deg,#00ffd5,#00c9a7);
-  color:#040d18;padding:14px 22px;
-  border-radius:14px;font-weight:700;
-  font-size:13px;z-index:9999;
-  transform:translateY(80px);opacity:0;
-  transition:.45s cubic-bezier(.34,1.56,.64,1);
-  display:flex;align-items:center;gap:10px;
-  letter-spacing:.3px;
-}
-.toast.show{transform:translateY(0);opacity:1}
-</style>
-</head>
-<body>
-
-<!-- CANVAS BACKGROUND -->
-<canvas id="bg-canvas"></canvas>
-
-<div class="page-wrap">
-
-<!-- NAV -->
-<nav>
-  <span class="nav-logo">ARCHINOVA</span>
-  <a href="modernvilla.html" class="nav-back">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    Back to Gallery
-  </a>
-  <span class="nav-badge">9 Verified Experts</span>
-</nav>
-
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-eyebrow">Archinova Partner Network</div>
-  <h1>Hire <em>Certified Builders</em><br>&amp; Engineers</h1>
-  <p class="hero-sub">Every professional is vetted, licensed, and has delivered 50+ successful residential projects across South India.</p>
-  <div class="stats-row">
-    <div class="stat"><div class="stat-num">450+</div><div class="stat-label">Projects Delivered</div></div>
-    <div class="stat"><div class="stat-num">9</div><div class="stat-label">Verified Experts</div></div>
-    <div class="stat"><div class="stat-num">4.8★</div><div class="stat-label">Avg Rating</div></div>
-    <div class="stat"><div class="stat-num">48hr</div><div class="stat-label">Response Time</div></div>
-  </div>
-</div>
-
-<!-- FILTERS -->
-<div class="filters">
-  <button class="filter-btn active" onclick="filterCards(this,'all')">All Experts</button>
-  <button class="filter-btn" onclick="filterCards(this,'bangalore')">Bangalore</button>
-  <button class="filter-btn" onclick="filterCards(this,'chennai')">Chennai</button>
-  <button class="filter-btn" onclick="filterCards(this,'hyderabad')">Hyderabad</button>
-  <button class="filter-btn" onclick="filterCards(this,'kerala')">Kerala</button>
-</div>
-
-<!-- GRID -->
-<div class="grid" id="builderGrid">
-
-  <!-- 1 – Arun Constructions -->
-  <div class="card" data-city="bangalore">
-    <img class="card-img" src="https://images.squarespace-cdn.com/content/v1/5b9e15d7cef3728f7d60a5d3/1574345499768-1MNXBQ88NQXB3WNQO6T7/image-asset.jpeg" onerror="this.src='https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&w=600'" alt="Arun Constructions – Modern Villa">
-    <div class="badge-row">
-      <span class="badge badge-verified">✔ Verified</span>
-      <span class="badge badge-top">Top Rated</span>
-    </div>
-    <div class="card-body">
-      <h2>Arun Constructions</h2>
-      <div class="card-specialty">Modern Villa &amp; Luxury Residences</div>
-      <div class="rating-row">
-        <span class="stars">★★★★★</span>
-        <span class="rating-num">4.9</span>
-        <span class="rating-count">(148 reviews)</span>
-      </div>
-      <div class="meta">
-        <div class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>Bangalore, KA</div>
-        <div class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>135+ Projects</div>
-        <div class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Est. 2008</div>
-        <div class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>Turnkey &amp; Design-Build</div>
-      </div>
-      <div class="divider"></div>
-      <div class="contact-row">
-        <div class="contact-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>+91 98765 43210</div>
-        <div class="contact-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>arun@arunconstructions.in</div>
-      </div>
-      <div class="btn-row">
-        <button class="btn-book" onclick="openModal('Arun Constructions','Bangalore')">Book Consultation</button>
-        <a class="btn-call" href="tel:+919876543210"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>Call</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- 2 – Skyline Engineers -->
-  <div class="card" data-city="chennai">
-    <img class="card-img" src="https://images.pexels.com/photos/1396132/pexels-photo-1396132.jpeg?auto=compress&w=600" onerror="this.src='https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&w=600'" alt="Skyline Engineers – Luxury Duplex">
-    <div class="badge-row">
-      <span class="badge badge-verified">✔ Verified</span>
-      <span class="badge badge-top">Top Rated</span>
-    </div>
-    <div class="card-body">
-      <h2>Skyline Engineers</h2>
-      <div class="card-specialty">Luxury Duplex &amp; High-End Interiors</div>
-      <div class="rating-row">
-        <span class="stars">★★★★★</span>
-        <span class="rating-num">4.8</span>
-        <span class="rating-count">(112 reviews)</span>
-      </div>
-      <div class="meta">
-        <div class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>Chennai, TN</div>
-        <div class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>98+ Projects</div>
-        <div class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Est. 2011</div>
-        <div class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>Duplex Specialists</div>
-      </div>
-      <div class="divider"></div>
-      <div class="contact-row">
-        <div class="contact-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>+91 99001 22334</div>
-        <div class="contact-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>info@skylineeng.in</div>
-      </div>
-      <div class="btn-row">
-        <button class="btn-book" onclick="openModal('Skyline Engineers','Chennai')">Book Consultation</button>
-        <a class="btn-call" href="tel:+919900122334"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>Call</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- 3 – Nova Architects -->
-  <div class="card" data-city="hyderabad">
-    <img class="card-img" src="https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&w=600" onerror="this.src='https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&w=600'" alt="Nova Architects – Smart Home">
-    <div class="badge-row">
-      <span class="badge badge-verified">✔ Verified</span>
-      <span class="badge badge-top">Top Rated</span>
-    </div>
-    <div class="card-body">
-      <h2>Nova Architects</h2>
-      <div class="card-specialty">Smart Home &amp; Automation Design</div>
-      <div class="rating-row">
-        <span class="stars">★★★★★</span>
-        <span class="rating-num">4.9</span>
-        <span class="rating-count">(201 reviews)</span>
-      </div>
-      <div class="meta">
-        <div class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>Hyderabad, TS</div>
-        <div class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>165+ Projects</div>
-        <div class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Est. 2015</div>
-        <div class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>IoT &amp; Smart Systems</div>
-      </div>
-      <div class="divider"></div>
-      <div class="contact-row">
-        <div class="contact-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>+91 88977 65432</div>
-        <div class="contact-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>hello@novaarchitects.in</div>
-      </div>
-      <div class="btn-row">
-        <button class="btn-book" onclick="openModal('Nova Architects','Hyderabad')">Book Consultation</button>
-        <a class="btn-call" href="tel:+918897765432"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>Call</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- 4 – GreenBuild Studio -->
-  <div class="card" data-city="bangalore">
-    <img class="card-img" src="https://images.pexels.com/photos/2476632/pexels-photo-2476632.jpeg?auto=compress&w=600" onerror="this.src='https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg?auto=compress&w=600'" alt="GreenBuild Studio – Eco Architecture">
-    <div class="badge-row">
-      <span class="badge badge-verified">✔ Verified</span>
-      <span class="badge badge-new">Eco Certified</span>
-    </div>
-    <div class="card-body">
-      <h2>GreenBuild Studio</h2>
-      <div class="card-specialty">Sustainable &amp; Eco-Friendly Architecture</div>
-      <div class="rating-row">
-        <span class="stars">★★★★★</span>
-        <span class="rating-num">4.8</span>
-        <span class="rating-count">(89 reviews)</span>
-      </div>
-      <div class="meta">
-        <div class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>Bangalore, KA</div>
-        <div class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>72+ Projects</div>
-        <div class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Est. 2016</div>
-        <div class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>GRIHA Rated Builds</div>
-      </div>
-      <div class="divider"></div>
-      <div class="contact-row">
-        <div class="contact-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>+91 80912 34567</div>
-        <div class="contact-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>studio@greenbuild.in</div>
-      </div>
-      <div class="btn-row">
-        <button class="btn-book" onclick="openModal('GreenBuild Studio','Bangalore')">Book Consultation</button>
-        <a class="btn-call" href="tel:+918091234567"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>Call</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- 5 – Zenith Civil Works -->
-  <div class="card" data-city="hyderabad">
-    <img class="card-img" src="https://images.pexels.com/photos/534151/pexels-photo-534151.jpeg?auto=compress&w=600" onerror="this.src='https://images.pexels.com/photos/2251247/pexels-photo-2251247.jpeg?auto=compress&w=600'" alt="Zenith Civil Works">
-    <div class="badge-row">
-      <span class="badge badge-verified">✔ Verified</span>
-    </div>
-    <div class="card-body">
-      <h2>Zenith Civil Works</h2>
-      <div class="card-specialty">Structural Engineering &amp; RCC Experts</div>
-      <div class="rating-row">
-        <span class="stars">★★★★☆</span>
-        <span class="rating-num">4.6</span>
-        <span class="rating-count">(76 reviews)</span>
-      </div>
-      <div class="meta">
-        <div class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>Hyderabad, TS</div>
-        <div class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>60+ Projects</div>
-        <div class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Est. 2013</div>
-        <div class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>RCC &amp; Steel Frame</div>
-      </div>
-      <div class="divider"></div>
-      <div class="contact-row">
-        <div class="contact-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>+91 77002 11890</div>
-        <div class="contact-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>projects@zenithcivil.in</div>
-      </div>
-      <div class="btn-row">
-        <button class="btn-book" onclick="openModal('Zenith Civil Works','Hyderabad')">Book Consultation</button>
-        <a class="btn-call" href="tel:+917700211890"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>Call</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- 6 – Prism Design & Build -->
-  <div class="card" data-city="chennai">
-    <img class="card-img" src="https://images.pexels.com/photos/1080721/pexels-photo-1080721.jpeg?auto=compress&w=600" onerror="this.src='https://images.pexels.com/photos/276724/pexels-photo-276724.jpeg?auto=compress&w=600'" alt="Prism Design – Contemporary Villa">
-    <div class="badge-row">
-      <span class="badge badge-verified">✔ Verified</span>
-      <span class="badge badge-new">Premium</span>
-    </div>
-    <div class="card-body">
-      <h2>Prism Design &amp; Build</h2>
-      <div class="card-specialty">Contemporary Minimalist Villas</div>
-      <div class="rating-row">
-        <span class="stars">★★★★★</span>
-        <span class="rating-num">4.9</span>
-        <span class="rating-count">(93 reviews)</span>
-      </div>
-      <div class="meta">
-        <div class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>Chennai, TN</div>
-        <div class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>82+ Projects</div>
-        <div class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Est. 2017</div>
-        <div class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>Interior Finish Experts</div>
-      </div>
-      <div class="divider"></div>
-      <div class="contact-row">
-        <div class="contact-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>+91 94400 55678</div>
-        <div class="contact-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>contact@prismdesign.in</div>
-      </div>
-      <div class="btn-row">
-        <button class="btn-book" onclick="openModal('Prism Design & Build','Chennai')">Book Consultation</button>
-        <a class="btn-call" href="tel:+919440055678"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>Call</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- 7 – Kerala Heritage Builders -->
-  <div class="card" data-city="kerala">
-    <img class="card-img" src="https://images.pexels.com/photos/5997996/pexels-photo-5997996.jpeg?auto=compress&w=600" onerror="this.src='https://images.pexels.com/photos/2102587/pexels-photo-2102587.jpeg?auto=compress&w=600'" alt="Kerala Heritage Builders">
-    <div class="badge-row">
-      <span class="badge badge-verified">✔ Verified</span>
-      <span class="badge badge-new">Heritage Expert</span>
-    </div>
-    <div class="card-body">
-      <h2>Kerala Heritage Builders</h2>
-      <div class="card-specialty">Traditional &amp; Colonial Kerala Style</div>
-      <div class="rating-row">
-        <span class="stars">★★★★★</span>
-        <span class="rating-num">4.9</span>
-        <span class="rating-count">(134 reviews)</span>
-      </div>
-      <div class="meta">
-        <div class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>Kochi, KL</div>
-        <div class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>110+ Projects</div>
-        <div class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Est. 2004</div>
-        <div class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>Nalukettu &amp; Tharavadu</div>
-      </div>
-      <div class="divider"></div>
-      <div class="contact-row">
-        <div class="contact-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>+91 98450 67321</div>
-        <div class="contact-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>build@keralaheritage.in</div>
-      </div>
-      <div class="btn-row">
-        <button class="btn-book" onclick="openModal('Kerala Heritage Builders','Kochi')">Book Consultation</button>
-        <a class="btn-call" href="tel:+919845067321"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>Call</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- 8 – Blueprint Associates -->
-  <div class="card" data-city="bangalore">
-    <img class="card-img" src="https://images.pexels.com/photos/3935350/pexels-photo-3935350.jpeg?auto=compress&w=600" onerror="this.src='https://images.pexels.com/photos/1457842/pexels-photo-1457842.jpeg?auto=compress&w=600'" alt="Blueprint Associates">
-    <div class="badge-row">
-      <span class="badge badge-verified">✔ Verified</span>
-    </div>
-    <div class="card-body">
-      <h2>Blueprint Associates</h2>
-      <div class="card-specialty">Custom Floor Plan &amp; Vastu Design</div>
-      <div class="rating-row">
-        <span class="stars">★★★★☆</span>
-        <span class="rating-num">4.7</span>
-        <span class="rating-count">(58 reviews)</span>
-      </div>
-      <div class="meta">
-        <div class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>Bangalore, KA</div>
-        <div class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>55+ Projects</div>
-        <div class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Est. 2019</div>
-        <div class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>CAD &amp; 3D Walkthroughs</div>
-      </div>
-      <div class="divider"></div>
-      <div class="contact-row">
-        <div class="contact-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>+91 90089 12300</div>
-        <div class="contact-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>design@blueprintassoc.in</div>
-      </div>
-      <div class="btn-row">
-        <button class="btn-book" onclick="openModal('Blueprint Associates','Bangalore')">Book Consultation</button>
-        <a class="btn-call" href="tel:+919008912300"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>Call</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- 9 – Apex Structures -->
-  <div class="card" data-city="kerala">
-    <img class="card-img" src="https://images.pexels.com/photos/323705/pexels-photo-323705.jpeg?auto=compress&w=600" onerror="this.src='https://images.pexels.com/photos/1643384/pexels-photo-1643384.jpeg?auto=compress&w=600'" alt="Apex Structures">
-    <div class="badge-row">
-      <span class="badge badge-verified">✔ Verified</span>
-      <span class="badge badge-new">New Partner</span>
-    </div>
-    <div class="card-body">
-      <h2>Apex Structures</h2>
-      <div class="card-specialty">High-Rise &amp; Complex Residential</div>
-      <div class="rating-row">
-        <span class="stars">★★★★★</span>
-        <span class="rating-num">4.8</span>
-        <span class="rating-count">(44 reviews)</span>
-      </div>
-      <div class="meta">
-        <div class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>Trivandrum, KL</div>
-        <div class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>48+ Projects</div>
-        <div class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Est. 2021</div>
-        <div class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>ISO 9001 Certified</div>
-      </div>
-      <div class="divider"></div>
-      <div class="contact-row">
-        <div class="contact-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>+91 95551 77899</div>
-        <div class="contact-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>enquiry@apexstructures.in</div>
-      </div>
-      <div class="btn-row">
-        <button class="btn-book" onclick="openModal('Apex Structures','Trivandrum')">Book Consultation</button>
-        <a class="btn-call" href="tel:+919555177899"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>Call</a>
-      </div>
-    </div>
-  </div>
-
-</div>
-</div>
-
-<!-- MODAL -->
-<div class="overlay" id="overlay">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <div class="modal-tag">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00ffd5" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
-      <span id="modalLabel">Builder Name</span>
-    </div>
-    <h2>Book a Free Consultation</h2>
-    <p class="modal-sub">Our team will confirm your slot within 24 hours</p>
-    <div class="form-row">
-      <div class="form-group">
-        <label>Your Name</label>
-        <input type="text" id="fName" placeholder="Rahul Sharma" required>
-      </div>
-      <div class="form-group">
-        <label>Phone Number</label>
-        <input type="tel" id="fPhone" placeholder="+91 98765 00000" required>
-      </div>
-    </div>
-    <div class="form-group">
-      <label>Email Address</label>
-      <input type="email" id="fEmail" placeholder="rahul@email.com" required>
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label>Project Type</label>
-        <select id="fType">
-          <option>Villa / Bungalow</option>
-          <option>Duplex Home</option>
-          <option>Independent House</option>
-          <option>Renovation / Extension</option>
-          <option>Commercial Space</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Preferred Date</label>
-        <input type="date" id="fDate">
-      </div>
-    </div>
-    <div class="form-group">
-      <label>Project Details (optional)</label>
-      <textarea id="fDetails" placeholder="Plot size, location, budget range, special requirements…"></textarea>
-    </div>
-    <button class="submit-btn" onclick="submitForm()">Confirm Booking →</button>
-  </div>
-</div>
-
-<div class="toast" id="toast">
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-  Booking confirmed! We'll contact you within 24 hours.
-</div>
-
-<!-- ── FIREBASE SDK ── -->
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-<script>
-  if (!firebase.apps.length)
-    firebase.initializeApp({
-      apiKey: "AIzaSyAgcKYuy18C6lEvfxhI_Ir_9AWPtyWj7WM",
-      authDomain: "archinova-41427.firebaseapp.com",
-      projectId: "archinova-41427",
-      storageBucket: "archinova-41427.firebasestorage.app",
-      messagingSenderId: "710524988548",
-      appId: "1:710524988548:web:34526229a8ad3051c866d1",
-    });
-  var _db = firebase.firestore();
-</script>
-
-<script>
-/* ── ANIMATED BACKGROUND ── */
-(function(){
-  var c=document.getElementById('bg-canvas');
-  var ctx=c.getContext('2d');
-  var W,H,pts=[],lines=[];
-
-  function resize(){
-    W=c.width=window.innerWidth;
-    H=c.height=document.body.scrollHeight||window.innerHeight;
-  }
-
-  function initPts(){
-    pts=[];
-    var n=Math.floor((W*H)/18000);
-    for(var i=0;i<n;i++){
-      pts.push({
-        x:Math.random()*W,
-        y:Math.random()*H,
-        vx:(Math.random()-.5)*.35,
-        vy:(Math.random()-.5)*.35,
-        r:Math.random()*1.5+.5,
-        a:Math.random()
-      });
-    }
-  }
-
-  var hue=180,hueDir=1;
-  var t=0;
-
-  function draw(){
-    t++;
-    ctx.clearRect(0,0,W,H);
-
-    /* soft gradient wash */
-    var grd=ctx.createRadialGradient(W*.5,H*.3,0,W*.5,H*.3,W*.7);
-    grd.addColorStop(0,'rgba(0,80,60,.18)');
-    grd.addColorStop(1,'rgba(4,13,24,0)');
-    ctx.fillStyle=grd;
-    ctx.fillRect(0,0,W,H);
-
-    /* moving orbs */
-    var ox1=W*.3+Math.sin(t*.003)*W*.15;
-    var oy1=H*.25+Math.cos(t*.004)*H*.08;
-    var g1=ctx.createRadialGradient(ox1,oy1,0,ox1,oy1,220);
-    g1.addColorStop(0,'rgba(0,255,213,.07)');
-    g1.addColorStop(1,'rgba(0,255,213,0)');
-    ctx.fillStyle=g1;ctx.beginPath();ctx.arc(ox1,oy1,220,0,Math.PI*2);ctx.fill();
-
-    var ox2=W*.7+Math.cos(t*.0025)*W*.12;
-    var oy2=H*.6+Math.sin(t*.003)*H*.1;
-    var g2=ctx.createRadialGradient(ox2,oy2,0,ox2,oy2,180);
-    g2.addColorStop(0,'rgba(80,60,255,.05)');
-    g2.addColorStop(1,'rgba(80,60,255,0)');
-    ctx.fillStyle=g2;ctx.beginPath();ctx.arc(ox2,oy2,180,0,Math.PI*2);ctx.fill();
-
-    /* update + draw particles */
-    for(var i=0;i<pts.length;i++){
-      var p=pts[i];
-      p.x+=p.vx; p.y+=p.vy;
-      if(p.x<0)p.x=W; if(p.x>W)p.x=0;
-      if(p.y<0)p.y=H; if(p.y>H)p.y=0;
-
-      ctx.beginPath();
-      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle='rgba(0,255,213,'+(p.a*.7)+')';
-      ctx.fill();
-
-      /* connect nearby */
-      for(var j=i+1;j<pts.length;j++){
-        var q=pts[j];
-        var dx=p.x-q.x,dy=p.y-q.y;
-        var d=Math.sqrt(dx*dx+dy*dy);
-        if(d<110){
-          ctx.beginPath();
-          ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);
-          ctx.strokeStyle='rgba(0,255,213,'+((.12*(1-d/110)))+')';
-          ctx.lineWidth=.5;
-          ctx.stroke();
+      .modal {
+        background: linear-gradient(145deg, #0a1c30, #081522);
+        border: 1px solid rgba(0, 255, 213, 0.18);
+        border-radius: 26px;
+        padding: 38px;
+        width: 100%;
+        max-width: 490px;
+        position: relative;
+        animation: popIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      @keyframes popIn {
+        from {
+          transform: scale(0.84) translateY(24px);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1) translateY(0);
+          opacity: 1;
         }
       }
-    }
-    requestAnimationFrame(draw);
-  }
+      .modal-close {
+        position: absolute;
+        right: 18px;
+        top: 16px;
+        background: rgba(255, 255, 255, 0.07);
+        border: none;
+        color: rgba(255, 255, 255, 0.5);
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        font-size: 17px;
+        cursor: pointer;
+        transition: 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .modal-close:hover {
+        background: rgba(0, 255, 213, 0.12);
+        color: #00ffd5;
+      }
 
-  resize();initPts();draw();
-  window.addEventListener('resize',function(){resize();initPts();});
-  /* recalc height on scroll to cover newly revealed content */
-  window.addEventListener('scroll',function(){
-    var newH=document.body.scrollHeight;
-    if(newH!==H){H=c.height=newH;}
-  });
-})();
+      .modal-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(0, 255, 213, 0.08);
+        border: 1px solid rgba(0, 255, 213, 0.18);
+        padding: 7px 16px;
+        border-radius: 20px;
+        margin-bottom: 18px;
+      }
+      .modal-tag span {
+        color: #00ffd5;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+      }
 
-/* ── MODAL ── */
-function openModal(name,city){
-  document.getElementById('overlay').classList.add('open');
-  document.getElementById('modalLabel').textContent=name+' · '+city;
-}
-function closeModal(){
-  document.getElementById('overlay').classList.remove('open');
-}
-document.getElementById('overlay').addEventListener('click',function(e){
-  if(e.target===this)closeModal();
-});
+      .modal h2 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 5px;
+      }
+      .modal-sub {
+        font-size: 13px;
+        opacity: 0.45;
+        margin-bottom: 26px;
+        font-weight: 300;
+      }
 
-/* ── SUBMIT ── */
-function submitForm(){
-  var n=document.getElementById('fName').value.trim();
-  var p=document.getElementById('fPhone').value.trim();
-  var e=document.getElementById('fEmail').value.trim();
-  if(!n||!p||!e){alert('Please fill in your name, phone, and email.');return;}
+      .form-group {
+        margin-bottom: 13px;
+      }
+      .form-group label {
+        display: block;
+        font-size: 10px;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+        opacity: 0.45;
+        margin-bottom: 7px;
+        font-weight: 500;
+      }
+      .form-group input,
+      .form-group textarea,
+      .form-group select {
+        width: 100%;
+        padding: 13px 16px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 13px;
+        color: #fff;
+        font-size: 14px;
+        font-family: "Outfit", sans-serif;
+        transition: 0.2s;
+        outline: none;
+        font-weight: 300;
+      }
+      .form-group input:focus,
+      .form-group textarea:focus,
+      .form-group select:focus {
+        border-color: rgba(0, 255, 213, 0.4);
+        background: rgba(0, 255, 213, 0.04);
+      }
+      .form-group textarea {
+        height: 88px;
+        resize: none;
+      }
+      .form-group select option {
+        background: #0a1c30;
+        color: #fff;
+      }
 
-  var builderLabel = document.getElementById('modalLabel').textContent || '';
-  var builderParts = builderLabel.split(' · ');
-  var builderName = builderParts[0] || builderLabel;
-  var builderCity = builderParts[1] || '';
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
 
-  var payload = {
-    name:        n,
-    phone:       p,
-    email:       e,
-    projectType: document.getElementById('fType').value,
-    date:        document.getElementById('fDate').value || '',
-    details:     document.getElementById('fDetails').value.trim(),
-    builder:     builderName,
-    city:        builderCity,
-    status:      'new',
-    createdAt:   firebase.firestore.FieldValue.serverTimestamp()
-  };
+      .submit-btn {
+        width: 100%;
+        padding: 14px;
+        background: #00ffd5;
+        color: #040d18;
+        border: none;
+        border-radius: 30px;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        margin-top: 8px;
+        transition: 0.25s;
+        letter-spacing: 0.5px;
+        font-family: "Outfit", sans-serif;
+      }
+      .submit-btn:hover {
+        box-shadow: 0 0 26px rgba(0, 255, 213, 0.35);
+      }
 
-  _db.collection('consultations').add(payload)
-    .catch(function(err){ console.error('Firestore save failed:', err); });
+      /* ── TOAST ── */
+      .toast {
+        position: fixed;
+        bottom: 32px;
+        right: 32px;
+        background: linear-gradient(135deg, #00ffd5, #00c9a7);
+        color: #040d18;
+        padding: 14px 22px;
+        border-radius: 14px;
+        font-weight: 700;
+        font-size: 13px;
+        z-index: 9999;
+        transform: translateY(80px);
+        opacity: 0;
+        transition: 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        letter-spacing: 0.3px;
+      }
+      .toast.show {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- CANVAS BACKGROUND -->
+    <canvas id="bg-canvas"></canvas>
 
-  closeModal();
-  var t=document.getElementById('toast');
-  t.classList.add('show');
-  setTimeout(function(){t.classList.remove('show');},4000);
-}
+    <div class="page-wrap">
+      <!-- NAV -->
+      <nav>
+        <span class="nav-logo">ARCHINOVA</span>
+        <a href="index.html" class="nav-back">
+          <svg
+            width="15"
+            height="15"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
+          Back to Home
+        </a>
+        <span class="nav-badge">9 Verified Experts</span>
+      </nav>
 
-/* ── FILTER ── */
-function filterCards(btn,city){
-  document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});
-  btn.classList.add('active');
-  document.querySelectorAll('.card').forEach(function(card){
-    card.style.display=(city==='all'||card.dataset.city===city)?'':'none';
-  });
-}
-</script>
-</body>
+      <!-- HERO -->
+      <div class="hero">
+        <div class="hero-eyebrow">Archinova Partner Network</div>
+        <h1>Hire <em>Certified Builders</em><br />&amp; Engineers</h1>
+        <p class="hero-sub">
+          Every professional is vetted, licensed, and has delivered 50+
+          successful residential projects across South India.
+        </p>
+        <div class="stats-row">
+          <div class="stat">
+            <div class="stat-num">450+</div>
+            <div class="stat-label">Projects Delivered</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">9</div>
+            <div class="stat-label">Verified Experts</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">4.8★</div>
+            <div class="stat-label">Avg Rating</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">48hr</div>
+            <div class="stat-label">Response Time</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FILTERS -->
+      <div class="filters">
+        <button class="filter-btn active" onclick="filterCards(this, 'all')">
+          All Experts
+        </button>
+        <button class="filter-btn" onclick="filterCards(this, 'bangalore')">
+          Bangalore
+        </button>
+        <button class="filter-btn" onclick="filterCards(this, 'chennai')">
+          Chennai
+        </button>
+        <button class="filter-btn" onclick="filterCards(this, 'hyderabad')">
+          Hyderabad
+        </button>
+        <button class="filter-btn" onclick="filterCards(this, 'kerala')">
+          Kerala
+        </button>
+      </div>
+
+      <!-- GRID -->
+      <div class="grid" id="builderGrid">
+        <!-- 1 – Arun Constructions -->
+        <div class="card" data-city="bangalore">
+          <img
+            class="card-img"
+            src="https://images.squarespace-cdn.com/content/v1/5b9e15d7cef3728f7d60a5d3/1574345499768-1MNXBQ88NQXB3WNQO6T7/image-asset.jpeg"
+            onerror="
+              this.src =
+                'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&w=600'
+            "
+            alt="Arun Constructions – Modern Villa"
+          />
+          <div class="badge-row">
+            <span class="badge badge-verified">✔ Verified</span>
+            <span class="badge badge-top">Top Rated</span>
+          </div>
+          <div class="card-body">
+            <h2>Arun Constructions</h2>
+            <div class="card-specialty">
+              Modern Villa &amp; Luxury Residences
+            </div>
+            <div class="rating-row">
+              <span class="stars">★★★★★</span>
+              <span class="rating-num">4.9</span>
+              <span class="rating-count">(148 reviews)</span>
+            </div>
+            <div class="meta">
+              <div class="meta-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+                  />
+                  <circle cx="12" cy="9" r="2.5" /></svg
+                >Bangalore, KA
+              </div>
+              <div class="meta-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                  <polyline points="9 22 9 12 15 12 15 22" /></svg
+                >135+ Projects
+              </div>
+              <div class="meta-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" /></svg
+                >Est. 2008
+              </div>
+              <div class="meta-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <rect x="2" y="3" width="20" height="14" rx="2" />
+                  <line x1="8" y1="21" x2="16" y2="21" />
+                  <line x1="12" y1="17" x2="12" y2="21" /></svg
+                >Turnkey &amp; Design-Build
+              </div>
+            </div>
+            <div class="divider"></div>
+            <div class="contact-row">
+              <div class="contact-chip">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"
+                  /></svg
+                >+91 98765 43210
+              </div>
+              <div class="contact-chip">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                  />
+                  <polyline points="22,6 12,13 2,6" /></svg
+                >arun@arunconstructions.in
+              </div>
+            </div>
+            <div class="btn-row">
+              <button
+                class="btn-book"
+                onclick="openModal('Arun Constructions', 'Bangalore')"
+              >
+                Book Consultation
+              </button>
+              <a class="btn-call" href="tel:+919876543210"
+                ><svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"
+                  /></svg
+                >Call</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- 2 – Skyline Engineers -->
+        <div class="card" data-city="chennai">
+          <img
+            class="card-img"
+            src="https://images.pexels.com/photos/1396132/pexels-photo-1396132.jpeg?auto=compress&w=600"
+            onerror="
+              this.src =
+                'https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&w=600'
+            "
+            alt="Skyline Engineers – Luxury Duplex"
+          />
+          <div class="badge-row">
+            <span class="badge badge-verified">✔ Verified</span>
+            <span class="badge badge-top">Top Rated</span>
+          </div>
+          <div class="card-body">
+            <h2>Skyline Engineers</h2>
+            <div class="card-specialty">
+              Luxury Duplex &amp; High-End Interiors
+            </div>
+            <div class="rating-row">
+              <span class="stars">★★★★★</span>
+              <span class="rating-num">4.8</span>
+              <span class="rating-count">(112 reviews)</span>
+            </div>
+            <div class="meta">
+              <div class="meta-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+                  />
+                  <circle cx="12" cy="9" r="2.5" /></svg
+                >Chennai, TN
+              </div>
+              <div class="meta-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                  <polyline points="9 22 9 12 15 12 15 22" /></svg
+                >98+ Projects
+              </div>
+              <div class="meta-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" /></svg
+                >Est. 2011
+              </div>
+              <div class="meta-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <rect x="2" y="3" width="20" height="14" rx="2" />
+                  <line x1="8" y1="21" x2="16" y2="21" />
+                  <line x1="12" y1="17" x2="12" y2="21" /></svg
+                >Duplex Specialists
+              </div>
+            </div>
+            <div class="divider"></div>
+            <div class="contact-row">
+              <div class="contact-chip">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"
+                  /></svg
+                >+91 99001 22334
+              </div>
+              <div class="contact-chip">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                  />
+                  <polyline points="22,6 12,13 2,6" /></svg
+                >info@skylineeng.in
+              </div>
+            </div>
+            <div class="btn-row">
+              <button
+                class="btn-book"
+                onclick="openModal('Skyline Engineers', 'Chennai')"
+              >
+                Book Consultation
+              </button>
+              <a class="btn-call" href="tel:+919900122334"
+                ><svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"
+                  /></svg
+                >Call</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 – Nova Architects -->
+        <div class="card" data-city="hyderabad">
+          <img
+            class="card-img"
+            src="https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&w=600"
+            onerror="
+              this.src =
+                'https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&w=600'
+            "
+            alt="Nova Architects – Smart Home"
+          />
+          <div class="badge-row">
+            <span class="badge badge-verified">✔ Verified</span>
+            <span class="badge badge-top">Top Rated</span>
+          </div>
+          <div class="card-body">
+            <h2>Nova Architects</h2>
+            <div class="card-specialty">Smart Home &amp; Automation Design</div>
+            <div class="rating-row">
+              <span class="stars">★★★★★</span>
+              <span class="rating-num">4.9</span>
+              <span class="rating-count">(201 reviews)</span>
+            </div>
+            <div class="meta">
+              <div class="meta-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+                  />
+                  <circle cx="12" cy="9" r="2.5" /></svg
+                >Hyderabad, TS
+              </div>
+              <div class="meta-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                  <polyline points="9 22 9 12 15 12 15 22" /></svg
+                >165+ Projects
+              </div>
+              <div class="meta-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" /></svg
+                >Est. 2015
+              </div>
+              <div class="meta-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <rect x="2" y="3" width="20" height="14" rx="2" />
+                  <line x1="8" y1="21" x2="16" y2="21" />
+                  <line x1="12" y1="17" x2="12" y2="21" /></svg
+                >IoT &amp; Smart Systems
+              </div>
+            </div>
+            <div class="divider"></div>
+            <div class="contact-row">
+              <div class="contact-chip">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"
+                  /></svg
+                >+91 88977 65432
+              </div>
+              <div class="contact-chip">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                  />
+                  <polyline points="22,6 12,13 2,6" /></svg
+                >hello@novaarchitects.in
+              </div>
+            </div>
+            <div class="btn-row">
+              <button
+                class="btn-book"
+                onclick="openModal('Nova Architects', 'Hyderabad')"
+              >
+                Book Consultation
+              </button>
+              <a class="btn-call" href="tel:+918897765432"
+                ><svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"
+                  /></svg
+                >Call</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 – GreenBuild Studio -->
+        <div class="card" data-city="bangalore">
+          <img
+            class="card-img"
+            src="https://images.pexels.com/photos/2476632/pexels-photo-2476632.jpeg?auto=compress&w=600"
+            onerror="
+              this.src =
+                'https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg?auto=compress&w=600'
+            "
+            alt="GreenBuild Studio – Eco Architecture"
+          />
+          <div class="badge-row">
+            <span class="badge badge-verified">✔ Verified</span>
+            <span class="badge badge-new">Eco Certified</span>
+          </div>
+          <div class="card-body">
+            <h2>GreenBuild Studio</h2>
+            <div class="card-specialty">
+              Sustainable &amp; Eco-Friendly Architecture
+            </div>
+            <div class="rating-row">
+              <span class="stars">★★★★★</span>
+              <span class="rating-num">4.8</span>
+              <span class="rating-count">(89 reviews)</span>
+            </div>
+            <div class="meta">
+              <div class="meta-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+                  />
+                  <circle cx="12" cy="9" r="2.5" /></svg
+                >Bangalore, KA
+              </div>
+              <div class="meta-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                  <polyline points="9 22 9 12 15 12 15 22" /></svg
+                >72+ Projects
+              </div>
+              <div class="meta-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" /></svg
+                >Est. 2016
+              </div>
+              <div class="meta-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <rect x="2" y="3" width="20" height="14" rx="2" />
+                  <line x1="8" y1="21" x2="16" y2="21" />
+                  <line x1="12" y1="17" x2="12" y2="21" /></svg
+                >GRIHA Rated Builds
+              </div>
+            </div>
+            <div class="divider"></div>
+            <div class="contact-row">
+              <div class="contact-chip">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"
+                  /></svg
+                >+91 80912 34567
+              </div>
+              <div class="contact-chip">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                  />
+                  <polyline points="22,6 12,13 2,6" /></svg
+                >studio@greenbuild.in
+              </div>
+            </div>
+            <div class="btn-row">
+              <button
+                class="btn-book"
+                onclick="openModal('GreenBuild Studio', 'Bangalore')"
+              >
+                Book Consultation
+              </button>
+              <a class="btn-call" href="tel:+918091234567"
+                ><svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"
+                  /></svg
+                >Call</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- 5 – Zenith Civil Works -->
+        <div class="card" data-city="hyderabad">
+          <img
+            class="card-img"
+            src="https://images.pexels.com/photos/534151/pexels-photo-534151.jpeg?auto=compress&w=600"
+            onerror="
+              this.src =
+                'https://images.pexels.com/photos/2251247/pexels-photo-2251247.jpeg?auto=compress&w=600'
+            "
+            alt="Zenith Civil Works"
+          />
+          <div class="badge-row">
+            <span class="badge badge-verified">✔ Verified</span>
+          </div>
+          <div class="card-body">
+            <h2>Zenith Civil Works</h2>
+            <div class="card-specialty">
+              Structural Engineering &amp; RCC Experts
+            </div>
+            <div class="rating-row">
+              <span class="stars">★★★★☆</span>
+              <span class="rating-num">4.6</span>
+              <span class="rating-count">(76 reviews)</span>
+            </div>
+            <div class="meta">
+              <div class="meta-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+                  />
+                  <circle cx="12" cy="9" r="2.5" /></svg
+                >Hyderabad, TS
+              </div>
+              <div class="meta-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                  <polyline points="9 22 9 12 15 12 15 22" /></svg
+                >60+ Projects
+              </div>
+              <div class="meta-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" /></svg
+                >Est. 2013
+              </div>
+              <div class="meta-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <rect x="2" y="3" width="20" height="14" rx="2" />
+                  <line x1="8" y1="21" x2="16" y2="21" />
+                  <line x1="12" y1="17" x2="12" y2="21" /></svg
+                >RCC &amp; Steel Frame
+              </div>
+            </div>
+            <div class="divider"></div>
+            <div class="contact-row">
+              <div class="contact-chip">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"
+                  /></svg
+                >+91 77002 11890
+              </div>
+              <div class="contact-chip">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                  />
+                  <polyline points="22,6 12,13 2,6" /></svg
+                >projects@zenithcivil.in
+              </div>
+            </div>
+            <div class="btn-row">
+              <button
+                class="btn-book"
+                onclick="openModal('Zenith Civil Works', 'Hyderabad')"
+              >
+                Book Consultation
+              </button>
+              <a class="btn-call" href="tel:+917700211890"
+                ><svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"
+                  /></svg
+                >Call</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- 6 – Prism Design & Build -->
+        <div class="card" data-city="chennai">
+          <img
+            class="card-img"
+            src="https://images.pexels.com/photos/1080721/pexels-photo-1080721.jpeg?auto=compress&w=600"
+            onerror="
+              this.src =
+                'https://images.pexels.com/photos/276724/pexels-photo-276724.jpeg?auto=compress&w=600'
+            "
+            alt="Prism Design – Contemporary Villa"
+          />
+          <div class="badge-row">
+            <span class="badge badge-verified">✔ Verified</span>
+            <span class="badge badge-new">Premium</span>
+          </div>
+          <div class="card-body">
+            <h2>Prism Design &amp; Build</h2>
+            <div class="card-specialty">Contemporary Minimalist Villas</div>
+            <div class="rating-row">
+              <span class="stars">★★★★★</span>
+              <span class="rating-num">4.9</span>
+              <span class="rating-count">(93 reviews)</span>
+            </div>
+            <div class="meta">
+              <div class="meta-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+                  />
+                  <circle cx="12" cy="9" r="2.5" /></svg
+                >Chennai, TN
+              </div>
+              <div class="meta-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                  <polyline points="9 22 9 12 15 12 15 22" /></svg
+                >82+ Projects
+              </div>
+              <div class="meta-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" /></svg
+                >Est. 2017
+              </div>
+              <div class="meta-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <rect x="2" y="3" width="20" height="14" rx="2" />
+                  <line x1="8" y1="21" x2="16" y2="21" />
+                  <line x1="12" y1="17" x2="12" y2="21" /></svg
+                >Interior Finish Experts
+              </div>
+            </div>
+            <div class="divider"></div>
+            <div class="contact-row">
+              <div class="contact-chip">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"
+                  /></svg
+                >+91 94400 55678
+              </div>
+              <div class="contact-chip">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                  />
+                  <polyline points="22,6 12,13 2,6" /></svg
+                >contact@prismdesign.in
+              </div>
+            </div>
+            <div class="btn-row">
+              <button
+                class="btn-book"
+                onclick="openModal('Prism Design & Build', 'Chennai')"
+              >
+                Book Consultation
+              </button>
+              <a class="btn-call" href="tel:+919440055678"
+                ><svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"
+                  /></svg
+                >Call</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- 7 – Kerala Heritage Builders -->
+        <div class="card" data-city="kerala">
+          <img
+            class="card-img"
+            src="https://images.pexels.com/photos/5997996/pexels-photo-5997996.jpeg?auto=compress&w=600"
+            onerror="
+              this.src =
+                'https://images.pexels.com/photos/2102587/pexels-photo-2102587.jpeg?auto=compress&w=600'
+            "
+            alt="Kerala Heritage Builders"
+          />
+          <div class="badge-row">
+            <span class="badge badge-verified">✔ Verified</span>
+            <span class="badge badge-new">Heritage Expert</span>
+          </div>
+          <div class="card-body">
+            <h2>Kerala Heritage Builders</h2>
+            <div class="card-specialty">
+              Traditional &amp; Colonial Kerala Style
+            </div>
+            <div class="rating-row">
+              <span class="stars">★★★★★</span>
+              <span class="rating-num">4.9</span>
+              <span class="rating-count">(134 reviews)</span>
+            </div>
+            <div class="meta">
+              <div class="meta-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+                  />
+                  <circle cx="12" cy="9" r="2.5" /></svg
+                >Kochi, KL
+              </div>
+              <div class="meta-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                  <polyline points="9 22 9 12 15 12 15 22" /></svg
+                >110+ Projects
+              </div>
+              <div class="meta-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" /></svg
+                >Est. 2004
+              </div>
+              <div class="meta-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <rect x="2" y="3" width="20" height="14" rx="2" />
+                  <line x1="8" y1="21" x2="16" y2="21" />
+                  <line x1="12" y1="17" x2="12" y2="21" /></svg
+                >Nalukettu &amp; Tharavadu
+              </div>
+            </div>
+            <div class="divider"></div>
+            <div class="contact-row">
+              <div class="contact-chip">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"
+                  /></svg
+                >+91 98450 67321
+              </div>
+              <div class="contact-chip">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                  />
+                  <polyline points="22,6 12,13 2,6" /></svg
+                >build@keralaheritage.in
+              </div>
+            </div>
+            <div class="btn-row">
+              <button
+                class="btn-book"
+                onclick="openModal('Kerala Heritage Builders', 'Kochi')"
+              >
+                Book Consultation
+              </button>
+              <a class="btn-call" href="tel:+919845067321"
+                ><svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"
+                  /></svg
+                >Call</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- 8 – Blueprint Associates -->
+        <div class="card" data-city="bangalore">
+          <img
+            class="card-img"
+            src="https://images.pexels.com/photos/3935350/pexels-photo-3935350.jpeg?auto=compress&w=600"
+            onerror="
+              this.src =
+                'https://images.pexels.com/photos/1457842/pexels-photo-1457842.jpeg?auto=compress&w=600'
+            "
+            alt="Blueprint Associates"
+          />
+          <div class="badge-row">
+            <span class="badge badge-verified">✔ Verified</span>
+          </div>
+          <div class="card-body">
+            <h2>Blueprint Associates</h2>
+            <div class="card-specialty">
+              Custom Floor Plan &amp; Vastu Design
+            </div>
+            <div class="rating-row">
+              <span class="stars">★★★★☆</span>
+              <span class="rating-num">4.7</span>
+              <span class="rating-count">(58 reviews)</span>
+            </div>
+            <div class="meta">
+              <div class="meta-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+                  />
+                  <circle cx="12" cy="9" r="2.5" /></svg
+                >Bangalore, KA
+              </div>
+              <div class="meta-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                  <polyline points="9 22 9 12 15 12 15 22" /></svg
+                >55+ Projects
+              </div>
+              <div class="meta-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" /></svg
+                >Est. 2019
+              </div>
+              <div class="meta-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <rect x="2" y="3" width="20" height="14" rx="2" />
+                  <line x1="8" y1="21" x2="16" y2="21" />
+                  <line x1="12" y1="17" x2="12" y2="21" /></svg
+                >CAD &amp; 3D Walkthroughs
+              </div>
+            </div>
+            <div class="divider"></div>
+            <div class="contact-row">
+              <div class="contact-chip">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"
+                  /></svg
+                >+91 90089 12300
+              </div>
+              <div class="contact-chip">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                  />
+                  <polyline points="22,6 12,13 2,6" /></svg
+                >design@blueprintassoc.in
+              </div>
+            </div>
+            <div class="btn-row">
+              <button
+                class="btn-book"
+                onclick="openModal('Blueprint Associates', 'Bangalore')"
+              >
+                Book Consultation
+              </button>
+              <a class="btn-call" href="tel:+919008912300"
+                ><svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"
+                  /></svg
+                >Call</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- 9 – Apex Structures -->
+        <div class="card" data-city="kerala">
+          <img
+            class="card-img"
+            src="https://images.pexels.com/photos/323705/pexels-photo-323705.jpeg?auto=compress&w=600"
+            onerror="
+              this.src =
+                'https://images.pexels.com/photos/1643384/pexels-photo-1643384.jpeg?auto=compress&w=600'
+            "
+            alt="Apex Structures"
+          />
+          <div class="badge-row">
+            <span class="badge badge-verified">✔ Verified</span>
+            <span class="badge badge-new">New Partner</span>
+          </div>
+          <div class="card-body">
+            <h2>Apex Structures</h2>
+            <div class="card-specialty">
+              High-Rise &amp; Complex Residential
+            </div>
+            <div class="rating-row">
+              <span class="stars">★★★★★</span>
+              <span class="rating-num">4.8</span>
+              <span class="rating-count">(44 reviews)</span>
+            </div>
+            <div class="meta">
+              <div class="meta-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+                  />
+                  <circle cx="12" cy="9" r="2.5" /></svg
+                >Trivandrum, KL
+              </div>
+              <div class="meta-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                  <polyline points="9 22 9 12 15 12 15 22" /></svg
+                >48+ Projects
+              </div>
+              <div class="meta-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" /></svg
+                >Est. 2021
+              </div>
+              <div class="meta-item">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <rect x="2" y="3" width="20" height="14" rx="2" />
+                  <line x1="8" y1="21" x2="16" y2="21" />
+                  <line x1="12" y1="17" x2="12" y2="21" /></svg
+                >ISO 9001 Certified
+              </div>
+            </div>
+            <div class="divider"></div>
+            <div class="contact-row">
+              <div class="contact-chip">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"
+                  /></svg
+                >+91 95551 77899
+              </div>
+              <div class="contact-chip">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                  />
+                  <polyline points="22,6 12,13 2,6" /></svg
+                >enquiry@apexstructures.in
+              </div>
+            </div>
+            <div class="btn-row">
+              <button
+                class="btn-book"
+                onclick="openModal('Apex Structures', 'Trivandrum')"
+              >
+                Book Consultation
+              </button>
+              <a class="btn-call" href="tel:+919555177899"
+                ><svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"
+                  /></svg
+                >Call</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL -->
+    <div class="overlay" id="overlay">
+      <div class="modal">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div class="modal-tag">
+          <svg
+            width="13"
+            height="13"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#00ffd5"
+            stroke-width="2"
+          >
+            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+          </svg>
+          <span id="modalLabel">Builder Name</span>
+        </div>
+        <h2>Book a Free Consultation</h2>
+        <p class="modal-sub">Our team will confirm your slot within 24 hours</p>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" id="fName" placeholder="Rahul Sharma" required />
+          </div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input
+              type="tel"
+              id="fPhone"
+              placeholder="+91 98765 00000"
+              required
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input
+            type="email"
+            id="fEmail"
+            placeholder="rahul@email.com"
+            required
+          />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Project Type</label>
+            <select id="fType">
+              <option>Villa / Bungalow</option>
+              <option>Duplex Home</option>
+              <option>Independent House</option>
+              <option>Renovation / Extension</option>
+              <option>Commercial Space</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Preferred Date</label>
+            <input type="date" id="fDate" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Project Details (optional)</label>
+          <textarea
+            id="fDetails"
+            placeholder="Plot size, location, budget range, special requirements…"
+          ></textarea>
+        </div>
+        <button class="submit-btn" onclick="submitForm()">
+          Confirm Booking →
+        </button>
+      </div>
+    </div>
+
+    <div class="toast" id="toast">
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.5"
+      >
+        <polyline points="20 6 9 17 4 12" />
+      </svg>
+      Booking confirmed! We'll contact you within 24 hours.
+    </div>
+
+    <!-- ── FIREBASE SDK ── -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+    <script>
+      if (!firebase.apps.length)
+        firebase.initializeApp({
+          apiKey: "AIzaSyAgcKYuy18C6lEvfxhI_Ir_9AWPtyWj7WM",
+          authDomain: "archinova-41427.firebaseapp.com",
+          projectId: "archinova-41427",
+          storageBucket: "archinova-41427.firebasestorage.app",
+          messagingSenderId: "710524988548",
+          appId: "1:710524988548:web:34526229a8ad3051c866d1",
+        });
+      var _db = firebase.firestore();
+    </script>
+
+    <script>
+      /* ── ANIMATED BACKGROUND ── */
+      (function () {
+        var c = document.getElementById("bg-canvas");
+        var ctx = c.getContext("2d");
+        var W,
+          H,
+          pts = [],
+          lines = [];
+
+        function resize() {
+          W = c.width = window.innerWidth;
+          H = c.height = document.body.scrollHeight || window.innerHeight;
+        }
+
+        function initPts() {
+          pts = [];
+          var n = Math.floor((W * H) / 18000);
+          for (var i = 0; i < n; i++) {
+            pts.push({
+              x: Math.random() * W,
+              y: Math.random() * H,
+              vx: (Math.random() - 0.5) * 0.35,
+              vy: (Math.random() - 0.5) * 0.35,
+              r: Math.random() * 1.5 + 0.5,
+              a: Math.random(),
+            });
+          }
+        }
+
+        var hue = 180,
+          hueDir = 1;
+        var t = 0;
+
+        function draw() {
+          t++;
+          ctx.clearRect(0, 0, W, H);
+
+          /* soft gradient wash */
+          var grd = ctx.createRadialGradient(
+            W * 0.5,
+            H * 0.3,
+            0,
+            W * 0.5,
+            H * 0.3,
+            W * 0.7,
+          );
+          grd.addColorStop(0, "rgba(0,80,60,.18)");
+          grd.addColorStop(1, "rgba(4,13,24,0)");
+          ctx.fillStyle = grd;
+          ctx.fillRect(0, 0, W, H);
+
+          /* moving orbs */
+          var ox1 = W * 0.3 + Math.sin(t * 0.003) * W * 0.15;
+          var oy1 = H * 0.25 + Math.cos(t * 0.004) * H * 0.08;
+          var g1 = ctx.createRadialGradient(ox1, oy1, 0, ox1, oy1, 220);
+          g1.addColorStop(0, "rgba(0,255,213,.07)");
+          g1.addColorStop(1, "rgba(0,255,213,0)");
+          ctx.fillStyle = g1;
+          ctx.beginPath();
+          ctx.arc(ox1, oy1, 220, 0, Math.PI * 2);
+          ctx.fill();
+
+          var ox2 = W * 0.7 + Math.cos(t * 0.0025) * W * 0.12;
+          var oy2 = H * 0.6 + Math.sin(t * 0.003) * H * 0.1;
+          var g2 = ctx.createRadialGradient(ox2, oy2, 0, ox2, oy2, 180);
+          g2.addColorStop(0, "rgba(80,60,255,.05)");
+          g2.addColorStop(1, "rgba(80,60,255,0)");
+          ctx.fillStyle = g2;
+          ctx.beginPath();
+          ctx.arc(ox2, oy2, 180, 0, Math.PI * 2);
+          ctx.fill();
+
+          /* update + draw particles */
+          for (var i = 0; i < pts.length; i++) {
+            var p = pts[i];
+            p.x += p.vx;
+            p.y += p.vy;
+            if (p.x < 0) p.x = W;
+            if (p.x > W) p.x = 0;
+            if (p.y < 0) p.y = H;
+            if (p.y > H) p.y = 0;
+
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fillStyle = "rgba(0,255,213," + p.a * 0.7 + ")";
+            ctx.fill();
+
+            /* connect nearby */
+            for (var j = i + 1; j < pts.length; j++) {
+              var q = pts[j];
+              var dx = p.x - q.x,
+                dy = p.y - q.y;
+              var d = Math.sqrt(dx * dx + dy * dy);
+              if (d < 110) {
+                ctx.beginPath();
+                ctx.moveTo(p.x, p.y);
+                ctx.lineTo(q.x, q.y);
+                ctx.strokeStyle =
+                  "rgba(0,255,213," + 0.12 * (1 - d / 110) + ")";
+                ctx.lineWidth = 0.5;
+                ctx.stroke();
+              }
+            }
+          }
+          requestAnimationFrame(draw);
+        }
+
+        resize();
+        initPts();
+        draw();
+        window.addEventListener("resize", function () {
+          resize();
+          initPts();
+        });
+        /* recalc height on scroll to cover newly revealed content */
+        window.addEventListener("scroll", function () {
+          var newH = document.body.scrollHeight;
+          if (newH !== H) {
+            H = c.height = newH;
+          }
+        });
+      })();
+
+      /* ── MODAL ── */
+      function openModal(name, city) {
+        document.getElementById("overlay").classList.add("open");
+        document.getElementById("modalLabel").textContent = name + " · " + city;
+      }
+      function closeModal() {
+        document.getElementById("overlay").classList.remove("open");
+      }
+      document
+        .getElementById("overlay")
+        .addEventListener("click", function (e) {
+          if (e.target === this) closeModal();
+        });
+
+      /* ── SUBMIT ── */
+      function submitForm() {
+        var n = document.getElementById("fName").value.trim();
+        var p = document.getElementById("fPhone").value.trim();
+        var e = document.getElementById("fEmail").value.trim();
+        if (!n || !p || !e) {
+          alert("Please fill in your name, phone, and email.");
+          return;
+        }
+
+        var builderLabel =
+          document.getElementById("modalLabel").textContent || "";
+        var builderParts = builderLabel.split(" · ");
+        var builderName = builderParts[0] || builderLabel;
+        var builderCity = builderParts[1] || "";
+
+        var payload = {
+          name: n,
+          phone: p,
+          email: e,
+          projectType: document.getElementById("fType").value,
+          date: document.getElementById("fDate").value || "",
+          details: document.getElementById("fDetails").value.trim(),
+          builder: builderName,
+          city: builderCity,
+          status: "new",
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        };
+
+        _db
+          .collection("consultations")
+          .add(payload)
+          .catch(function (err) {
+            console.error("Firestore save failed:", err);
+          });
+
+        closeModal();
+        var t = document.getElementById("toast");
+        t.classList.add("show");
+        setTimeout(function () {
+          t.classList.remove("show");
+        }, 4000);
+      }
+
+      /* ── FILTER ── */
+      function filterCards(btn, city) {
+        document.querySelectorAll(".filter-btn").forEach(function (b) {
+          b.classList.remove("active");
+        });
+        btn.classList.add("active");
+        document.querySelectorAll(".card").forEach(function (card) {
+          card.style.display =
+            city === "all" || card.dataset.city === city ? "" : "none";
+        });
+      }
+    </script>
+  </body>
 </html>
