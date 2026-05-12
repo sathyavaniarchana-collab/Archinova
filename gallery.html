@@ -1,8 +1,6 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    
-    <link rel="icon" type="image/png" href="logo.jpeg" />
+  <head><link rel="icon" type="image/png" href="logo.jpeg" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <title>Gallery – ArchiNova</title>
@@ -10,6 +8,7 @@
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
+    
     <style>
       *,
       *::before,
@@ -1175,7 +1174,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
 
-    <header>
+    <header><link rel="icon" type="image/png" href="logo.jpeg" />
       <div class="navbar">
         <a href="index.html" class="logo">
           <img src="logo.jpeg" alt="Archinova Logo" class="logo-img" />
@@ -1374,7 +1373,7 @@
           >
             <div class="card-img">
               <img
-                src="gallery-images/modernvilla.jpg"
+                src="gallery-Images/modernvilla.jpg"
                 onerror="
                   this.src =
                     'https://images.unsplash.com/photo-1613977257363-707ba9348227?w=600&q=75'
@@ -1432,7 +1431,7 @@
           >
             <div class="card-img">
               <img
-                src="gallery-images/minimalhouse.jpg"
+                src="gallery-Images/minimalhouse.jpg"
                 onerror="
                   this.src =
                     'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=75'
@@ -1487,7 +1486,7 @@
           >
             <div class="card-img">
               <img
-                src="gallery-images/luxury.jpg"
+                src="gallery-Images/luxury.jpg"
                 onerror="
                   this.src =
                     'https://images.unsplash.com/photo-1560184897-ae75f418493e?w=600&q=75'
@@ -1544,7 +1543,7 @@
           >
             <div class="card-img">
               <img
-                src="gallery-images/traditional.jpg"
+                src="gallery-Images/traditional.jpg"
                 onerror="
                   this.src =
                     'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&q=75'
@@ -1599,7 +1598,7 @@
           >
             <div class="card-img">
               <img
-                src="gallery-images/futuristic.jpg"
+                src="gallery-Images/futuristic.jpg"
                 onerror="
                   this.src =
                     'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=75'
@@ -1656,7 +1655,7 @@
           >
             <div class="card-img">
               <img
-                src="gallery-images/ecofriendly.jpg"
+                src="gallery-Images/ecofriendly.jpg"
                 onerror="
                   this.src =
                     'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=600&q=75'
@@ -1727,7 +1726,7 @@
           >
             <div class="card-img">
               <img
-                src="gallery-images/modernapartment.jpg"
+                src="gallery-Images/modernapartment.jpg"
                 onerror="
                   this.src =
                     'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&q=75'
@@ -1784,7 +1783,7 @@
           >
             <div class="card-img">
               <img
-                src="gallery-images/luxuryapartment.jpg"
+                src="gallery-Images/luxuryapartment.jpg"
                 onerror="
                   this.src =
                     'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=600&q=75'
@@ -1841,7 +1840,7 @@
           >
             <div class="card-img">
               <img
-                src="gallery-images/studioapartment.jpg"
+                src="gallery-Images/studioapartment.jpg"
                 onerror="
                   this.src =
                     'https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=600&q=75'
@@ -1912,7 +1911,7 @@
           >
             <div class="otype-img">
               <img
-                src="gallery-images/corporateoffice.jpg"
+                src="gallery-Images/corporateoffice.jpg"
                 onerror="
                   this.src =
                     'https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=75'
@@ -1981,7 +1980,7 @@
           >
             <div class="otype-img">
               <img
-                src="gallery-images/futuristicoffice.jpg"
+                src="gallery-Images/futuristicoffice.jpg"
                 onerror="
                   this.src =
                     'https://images.unsplash.com/photo-1488998427799-e3362cec87c3?w=600&q=75'
@@ -2282,5 +2281,116 @@
         });
       })();
     </script>
-  </body>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+    <script>
+    /* ══ DYNAMIC GALLERY — reads from Firestore "gallery_designs" collection ══ */
+    (function(){
+      var SECTION_IDS = {house:'sec-house',apartment:'sec-apartment',office:'sec-office'};
+
+      function getDB(){
+        if(!firebase.apps.length) firebase.initializeApp({
+          apiKey:"AIzaSyAgcKYuy18C6lEvfxhI_Ir_9AWPtyWj7WM",
+          authDomain:"archinova-41427.firebaseapp.com",
+          projectId:"archinova-41427",
+          storageBucket:"archinova-41427.firebasestorage.app",
+          messagingSenderId:"710524988548",
+          appId:"1:710524988548:web:34526229a8ad3051c866d1"
+        });
+        return firebase.firestore();
+      }
+
+      function badgeHTML(b){
+        var map={featured:'b-feat',new:'b-new',popular:'b-pop',trending:'b-trend'};
+        if(!b)return'';
+        return '<span class="bdg '+(map[b.toLowerCase()]||'b-new')+'">'+b+'</span>';
+      }
+
+      function buildCard(d){
+        var tagsArr = (d.tags||'').split(',').map(function(t){return t.trim();}).filter(Boolean);
+        var tagHTML = tagsArr.map(function(t){return '<span class="ct">'+t+'</span>';}).join('');
+        var rat = parseFloat(d.rating)||4.8;
+        return '<div class="card" data-name="'+d.title+'" data-tags="'+(d.tags||'').toLowerCase()+'" data-cat="'+(d.category||'house')+'" data-rat="'+rat+'" data-dynamic="1">'+
+          '<div class="card-img"><img src="'+d.imageUrl+'" onerror="this.src=\'https://images.unsplash.com/photo-1613977257363-707ba9348227?w=600&q=75\'" alt="'+d.title+'"/>'+
+          '<div class="card-overlay"></div>'+
+          '<div class="card-badges">'+badgeHTML(d.badge)+'</div>'+
+          '<div class="card-rating"><em>&#9733;</em>'+rat.toFixed(1)+'</div></div>'+
+          '<div class="card-body"><div class="card-cat">'+(d.category||'House')+' &bull; '+(d.style||'')+'</div>'+
+          '<h3>'+d.title+'</h3><p>'+(d.description||'')+'</p>'+
+          '<div class="card-tags">'+tagHTML+'</div></div>'+
+          '<div class="card-foot"><div class="card-info">'+(d.specs||'')+'</div>'+
+          '<div class="card-btns">'+
+          '<button class="csave" onclick="saveCard(this,\''+d.title+'\',\''+d.category+'\',\''+d.imageUrl+'\',\''+(d.area||'')+'\',\''+(d.capacity||'')+'\',\''+(d.budget||'')+'\','+JSON.stringify(tagsArr)+')">&#9825;</button>'+
+          (d.detailUrl?'<a href="'+d.detailUrl+'" class="cview">View &#8594;</a>':'<span style="font-size:.7rem;color:var(--w50)">Coming Soon</span>')+
+          '</div></div></div>';
+      }
+
+      function buildOfficeCard(d){
+        return '<a href="'+(d.detailUrl||'#')+'" class="otype" data-cat="office" data-tags="'+(d.tags||'').toLowerCase()+'" data-name="'+d.title+'" data-dynamic="1">'+
+          '<div class="otype-img"><img src="'+d.imageUrl+'" onerror="this.src=\'https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=75\'" alt="'+d.title+'"/>'+
+          '<div class="otype-ov"></div>'+
+          '<div class="otype-badge" style="background:var(--t);color:var(--n1)">'+d.badge+'</div></div>'+
+          '<div class="otype-body"><h3>'+d.title+'</h3><p>'+(d.description||'')+'</p></div>'+
+          '<div class="otype-foot"><div class="otype-count">'+(d.specs||'')+'</div>'+
+          '<div class="otype-btn">Explore &#8594;</div></div></a>';
+      }
+
+      function injectDynamic(docs){
+        var bySection={house:[],apartment:[],office:[]};
+        docs.forEach(function(d){
+          var cat=(d.category||'house').toLowerCase();
+          if(cat==='office') bySection.office.push(d);
+          else if(cat==='apartment') bySection.apartment.push(d);
+          else bySection.house.push(d);
+        });
+
+        ['house','apartment'].forEach(function(cat){
+          if(!bySection[cat].length) return;
+          var sec=document.getElementById(SECTION_IDS[cat]);
+          if(!sec) return;
+          var grid=sec.querySelector('.cards-grid');
+          if(!grid) return;
+          // Remove previously injected dynamic cards
+          grid.querySelectorAll('[data-dynamic]').forEach(function(el){el.remove();});
+          bySection[cat].forEach(function(d){
+            grid.insertAdjacentHTML('beforeend',buildCard(d));
+          });
+        });
+
+        if(bySection.office.length){
+          var sec=document.getElementById(SECTION_IDS.office);
+          if(sec){
+            var grid=sec.querySelector('.office-grid');
+            if(grid){
+              grid.querySelectorAll('[data-dynamic]').forEach(function(el){el.remove();});
+              bySection.office.forEach(function(d){
+                grid.insertAdjacentHTML('beforeend',buildOfficeCard(d));
+              });
+            }
+          }
+        }
+
+        // Re-sync wishlist saved state
+        var wl=getWL();
+        wl.forEach(function(item){
+          document.querySelectorAll('.csave').forEach(function(btn){
+            var card=btn.closest('.card');
+            if(card&&card.dataset.name===item.id){btn.classList.add('saved');btn.innerHTML='&#9829;';}
+          });
+        });
+      }
+
+      window.addEventListener('DOMContentLoaded',function(){
+        var db=getDB();
+        db.collection('gallery_designs').where('active','==',true).get()
+          .then(function(snap){
+            if(!snap.empty){
+              var docs=snap.docs.map(function(d){return Object.assign({id:d.id},d.data());});
+              docs.sort(function(a,b){return (a.order||0)-(b.order||0);});
+              injectDynamic(docs);
+            }
+          }).catch(function(){ /* no dynamic designs yet — static cards show */ });
+      });
+    })();
+    </script>
+</body>
 </html>
