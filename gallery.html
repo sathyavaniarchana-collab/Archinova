@@ -2381,14 +2381,15 @@
 
       window.addEventListener('DOMContentLoaded',function(){
         var db=getDB();
-        db.collection('gallery_designs').where('active','==',true).get()
-          .then(function(snap){
-            if(!snap.empty){
-              var docs=snap.docs.map(function(d){return Object.assign({id:d.id},d.data());});
-              docs.sort(function(a,b){return (a.order||0)-(b.order||0);});
-              injectDynamic(docs);
-            }
-          }).catch(function(){ /* no dynamic designs yet — static cards show */ });
+        /* Use onSnapshot so any admin add/edit/hide is pushed to the gallery
+           in real-time without the visitor needing to reload the page.        */
+        db.collection('gallery_designs')
+          .where('active','==',true)
+          .onSnapshot(function(snap){
+            var docs=snap.docs.map(function(d){return Object.assign({id:d.id},d.data());});
+            docs.sort(function(a,b){return (a.order||0)-(b.order||0);});
+            injectDynamic(docs);
+          }, function(){ /* Firestore unavailable — static placeholder cards remain */ });
       });
     })();
     </script>
