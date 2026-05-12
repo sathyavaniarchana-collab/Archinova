@@ -1,8 +1,6 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    
-    <link rel="icon" type="image/png" href="logo.jpeg" />
+  <head><link rel="icon" type="image/png" href="logo.jpeg" />
     <meta charset="UTF-8" />
     <title>Archinova Smart Layout Builder</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -1218,7 +1216,7 @@
     <canvas id="neural"></canvas>
 
     <!-- Header -->
-    <header>
+    <header><link rel="icon" type="image/png" href="logo.jpeg" />
       <div class="navbar">
         <a href="home.html" class="logo">
           <img src="logo.jpeg" alt="Archinova Logo" class="logo-img" />
@@ -2892,6 +2890,79 @@ Rules:
           }
         }
       }
+    </script>
+
+    <!-- ══ DYNAMIC INTERIOR FEATURED DESIGNS ══ -->
+    <style>
+      .int-featured-section{max-width:1200px;margin:0 auto;padding:48px 32px 64px;position:relative;z-index:10}
+      .int-featured-section h2{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:12px}
+      .int-featured-section h2 em{color:var(--teal,#1a9e8f);font-style:italic}
+      .int-sec-line{width:40px;height:2px;background:var(--teal,#1a9e8f);border-radius:2px;margin-bottom:28px}
+      .int-feat-subtitle{font-size:.88rem;color:rgba(232,237,245,.5);margin-bottom:28px;font-weight:300;line-height:1.7}
+      .int-feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+      .int-feat-card{background:rgba(13,30,54,.8);border:1px solid rgba(232,237,245,.08);border-radius:14px;overflow:hidden;transition:all .25s;cursor:pointer}
+      .int-feat-card:hover{border-color:rgba(26,158,143,.4);transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.4)}
+      .int-feat-card img{width:100%;height:180px;object-fit:cover;display:block;transition:transform .45s}
+      .int-feat-card:hover img{transform:scale(1.06)}
+      .int-feat-body{padding:14px 16px 16px}
+      .int-feat-room{font-size:.62rem;text-transform:uppercase;letter-spacing:1px;color:var(--teal,#1a9e8f);font-weight:600;margin-bottom:4px}
+      .int-feat-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:#e8edf5;margin-bottom:5px}
+      .int-feat-desc{font-size:.76rem;color:rgba(232,237,245,.5);line-height:1.6;font-weight:300;margin-bottom:10px}
+      .int-feat-tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px}
+      .int-feat-tag{font-size:.6rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(232,237,245,.5);padding:2px 8px;border-radius:100px}
+      .int-feat-foot{display:flex;justify-content:space-between;align-items:center;font-size:.72rem;color:rgba(232,237,245,.4);border-top:1px solid rgba(255,255,255,.06);padding-top:10px}
+      .int-feat-budget{color:var(--teal,#1a9e8f);font-weight:600}
+      .int-feat-empty{grid-column:1/-1;text-align:center;padding:48px;color:rgba(232,237,245,.3);font-size:.88rem}
+      @media(max-width:900px){.int-feat-grid{grid-template-columns:1fr 1fr}}
+      @media(max-width:560px){.int-feat-grid{grid-template-columns:1fr}}
+    </style>
+    <div class="int-featured-section" id="interiorFeaturedSection" style="display:none">
+      <h2>Featured <em>Interior Designs</em></h2>
+      <div class="int-sec-line"></div>
+      <p class="int-feat-subtitle">Curated interior design inspiration — added by our team and updated regularly.</p>
+      <div class="int-feat-grid" id="interiorFeatGrid">
+        <div class="int-feat-empty">Loading designs…</div>
+      </div>
+    </div>
+
+    <script>
+    /* ══ DYNAMIC INTERIOR DESIGNS from Firestore ══ */
+    (function(){
+      function loadInteriorDesigns(){
+        var db;
+        if(!firebase.apps.length) firebase.initializeApp({
+          apiKey:"AIzaSyAgcKYuy18C6lEvfxhI_Ir_9AWPtyWj7WM",
+          authDomain:"archinova-41427.firebaseapp.com",
+          projectId:"archinova-41427",
+          storageBucket:"archinova-41427.firebasestorage.app",
+          messagingSenderId:"710524988548",
+          appId:"1:710524988548:web:34526229a8ad3051c866d1"
+        });
+        db=firebase.firestore();
+        db.collection('interior_designs').where('active','==',true).onSnapshot(function(snap){
+          if(snap.empty){document.getElementById('interiorFeaturedSection').style.display='none';return;}
+          document.getElementById('interiorFeaturedSection').style.display='block';
+          var docs=snap.docs.map(function(doc){return Object.assign({id:doc.id},doc.data());});
+          docs.sort(function(a,b){return (a.order||0)-(b.order||0);});
+          var html=docs.map(function(d){
+            var tagsArr=(d.tags||'').split(',').map(function(t){return t.trim();}).filter(Boolean);
+            return '<div class="int-feat-card">'+
+              '<img src="'+d.imageUrl+'" alt="'+d.title+'" onerror="this.src=\'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&q=75\'"/>'+
+              '<div class="int-feat-body">'+
+              '<div class="int-feat-room">'+(d.room||'Interior')+' &bull; '+(d.style||'')+'</div>'+
+              '<div class="int-feat-title">'+d.title+'</div>'+
+              '<div class="int-feat-desc">'+(d.description||'')+'</div>'+
+              '<div class="int-feat-tags">'+tagsArr.map(function(t){return'<span class="int-feat-tag">'+t+'</span>';}).join('')+'</div>'+
+              '<div class="int-feat-foot"><span>'+(d.specs||'')+'</span><span class="int-feat-budget">'+(d.budget||'')+'</span></div>'+
+              '</div></div>';
+          }).join('');
+          document.getElementById('interiorFeatGrid').innerHTML=html||'<div class="int-feat-empty">No featured designs yet.</div>';
+        },function(){
+          document.getElementById('interiorFeaturedSection').style.display='none';
+        });
+      }
+      window.addEventListener('DOMContentLoaded',loadInteriorDesigns);
+    })();
     </script>
   </body>
 </html>
