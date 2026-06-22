@@ -889,45 +889,185 @@
       .consult-actions { display: flex; gap: 10px; flex-wrap: wrap; }
       .badge-new-c { background: rgba(0,201,167,0.12); color: var(--teal); border: 1px solid rgba(0,201,167,0.25); }
       .badge-reviewed { background: rgba(232,237,245,0.06); color: var(--muted); border: 1px solid rgba(232,237,245,0.1); }
-      /* ── DESIGN MANAGER CARDS ── */
-      .dm-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:all .2s;position:relative}
-      .dm-card:hover{border-color:rgba(0,201,167,.3);transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,0,0,.4)}
-      .dm-card.dm-hidden{opacity:.55}
-      .dm-card-img{position:relative;height:160px;overflow:hidden;background:rgba(0,0,0,.2)}
-      .dm-card-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
-      .dm-card:hover .dm-card-img img{transform:scale(1.06)}
-      .dm-card-page{position:absolute;top:10px;left:10px;font-size:9px;font-weight:700;padding:3px 9px;border-radius:100px;letter-spacing:.1em;text-transform:uppercase}
-      .dm-page-gallery{background:rgba(10,191,191,.9);color:#04080f}
-      .dm-page-interior{background:rgba(139,92,246,.9);color:#fff}
-      .dm-card-badge{position:absolute;top:10px;right:10px;font-size:9px;font-weight:700;padding:3px 9px;border-radius:100px;background:rgba(245,158,11,.9);color:#1a0f00}
-      .dm-card-hidden-ov{position:absolute;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;font-size:.7rem;color:rgba(232,237,245,.7);letter-spacing:.1em;text-transform:uppercase;gap:6px}
-      .dm-card-body{padding:14px 16px}
-      .dm-card-cat{font-size:.6rem;text-transform:uppercase;letter-spacing:1px;color:var(--teal);font-weight:600;margin-bottom:3px}
-      .dm-card-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:4px}
-      .dm-card-desc{font-size:.75rem;color:var(--muted);line-height:1.55;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-      .dm-card-meta{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
-      .dm-meta-tag{font-size:.6rem;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--muted);padding:2px 7px;border-radius:100px}
-      .dm-card-info{display:flex;justify-content:space-between;align-items:center;font-size:.72rem;color:var(--muted);border-top:1px solid var(--border);padding-top:10px}
-      .dm-card-budget{color:var(--teal);font-weight:600}
-      .dm-card-actions{display:flex;gap:7px;margin-top:10px;flex-wrap:wrap}
-      .dm-btn{padding:6px 13px;border-radius:7px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;border:1px solid var(--border);background:transparent;color:var(--muted);transition:all .2s;display:inline-flex;align-items:center;gap:5px}
-      .dm-btn:hover{border-color:var(--teal);color:var(--teal);background:rgba(0,201,167,.06)}
-      .dm-btn-del{border-color:rgba(248,113,113,.2)}
-      .dm-btn-del:hover{border-color:rgba(248,113,113,.5);color:#f87171;background:rgba(248,113,113,.08)}
-      .dm-btn-hide{border-color:rgba(245,197,66,.2)}
-      .dm-btn-hide:hover{border-color:rgba(245,197,66,.5);color:#f5c542;background:rgba(245,197,66,.08)}
-      .dm-rating{color:#f59e0b;font-weight:600}
-      /* toast for design manager */
-      #dmToast{position:fixed;bottom:24px;right:24px;z-index:9999;background:rgba(12,22,44,.98);border:1px solid rgba(0,201,167,.3);border-radius:10px;padding:12px 18px;font-size:13px;color:var(--text);box-shadow:0 8px 30px rgba(0,0,0,.5);display:flex;align-items:center;gap:10px;opacity:0;transform:translateY(20px);transition:all .35s;pointer-events:none;max-width:340px}
-      #dmToast.show{opacity:1;transform:translateY(0)}
-      #dmToast i{font-size:14px;color:var(--teal)}
-      #dmToast.err{border-color:rgba(248,113,113,.4)}
-      #dmToast.err i{color:#f87171}
-      /* Style adjustments for extra tab */
-      .dash-tabs { overflow-x: auto; }
-      .dash-tab { white-space: nowrap; min-width: 110px; }
-      .stats-row.cols-4 { grid-template-columns: repeat(4,1fr); }
-      @media(max-width:700px){.stats-row.cols-4{grid-template-columns:1fr 1fr}}
+
+      /* ── GALLERY MANAGER TAB ── */
+      .gallery-layout { display: grid; grid-template-columns: 290px 1fr; gap: 24px; align-items: start; }
+      @media (max-width: 800px) { .gallery-layout { grid-template-columns: 1fr; } }
+
+      .gallery-sidebar {
+        background: var(--surface); border: 1px solid var(--border);
+        border-radius: 16px; padding: 22px; backdrop-filter: blur(16px);
+        position: sticky; top: 80px;
+      }
+      .gallery-sidebar-title {
+        font-family: "Cormorant Garamond", serif; font-size: 17px;
+        margin-bottom: 18px; display: flex; align-items: center; gap: 8px; color: var(--text);
+      }
+      .gallery-sidebar-title i { color: var(--teal); font-size: 14px; }
+
+      .gal-form-group { margin-bottom: 13px; }
+      .gal-label { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; display: block; }
+      .gal-input, .gal-select, .gal-textarea {
+        width: 100%; background: rgba(0,0,0,.3); border: 1px solid var(--border);
+        border-radius: 8px; color: var(--text); font-family: "DM Sans", sans-serif;
+        font-size: 13px; padding: 8px 11px; outline: none; transition: border-color .2s;
+      }
+      .gal-input:focus, .gal-select:focus, .gal-textarea:focus { border-color: rgba(0,201,167,.4); }
+      .gal-textarea { resize: vertical; min-height: 68px; }
+      .gal-select option { background: #0a1628; }
+
+      .btn-gal-add {
+        width: 100%; padding: 11px; border-radius: 10px;
+        background: linear-gradient(135deg, #3d0070, #00c9a7); border: none; color: #fff;
+        font-family: "DM Sans", sans-serif; font-size: 13px; font-weight: 500;
+        cursor: pointer; display: flex; align-items: center; justify-content: center;
+        gap: 8px; transition: opacity .2s, transform .15s; margin-top: 6px;
+      }
+      .btn-gal-add:hover { opacity: .88; transform: translateY(-1px); }
+      .btn-gal-add:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+      .gal-divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+      .gal-edit-hint { font-size: 11px; color: var(--muted); text-align: center; line-height: 1.5; }
+
+      /* img preview */
+      #galImgPreviewWrap { display: none; margin-bottom: 12px; }
+      #galImgPreview { width: 100%; border-radius: 8px; border: 1px solid var(--border); max-height: 120px; object-fit: cover; }
+
+      /* Main panel */
+      .gallery-top-bar { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; flex-wrap: wrap; }
+      .gal-search-wrap { flex: 1; min-width: 170px; position: relative; }
+      .gal-search-wrap i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 12px; }
+      .gal-search-wrap input {
+        width: 100%; background: rgba(0,0,0,.3); border: 1px solid var(--border);
+        border-radius: 999px; color: var(--text); font-family: "DM Sans", sans-serif;
+        font-size: 13px; padding: 8px 14px 8px 35px; outline: none; transition: border-color .2s;
+      }
+      .gal-search-wrap input:focus { border-color: rgba(0,201,167,.35); }
+
+      .gal-cat-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+      .gal-cat-tab {
+        padding: 6px 13px; border-radius: 999px; font-size: 11px; letter-spacing: .07em;
+        cursor: pointer; border: 1px solid var(--border); background: transparent;
+        color: var(--muted); font-family: "DM Sans", sans-serif;
+        transition: all .2s; text-transform: uppercase;
+      }
+      .gal-cat-tab.active, .gal-cat-tab:hover {
+        background: rgba(0,201,167,.1); border-color: rgba(0,201,167,.3); color: var(--teal);
+      }
+
+      /* Stats row */
+      .gal-stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 22px; }
+      @media (max-width: 700px) { .gal-stats-row { grid-template-columns: 1fr 1fr; } }
+
+      /* Cards grid */
+      .gallery-cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(195px, 1fr)); gap: 16px; }
+      .gal-card {
+        background: var(--surface); border: 1px solid var(--border);
+        border-radius: 14px; overflow: hidden; backdrop-filter: blur(16px);
+        transition: border-color .2s, transform .2s; position: relative;
+      }
+      .gal-card:hover { border-color: rgba(0,201,167,.35); transform: translateY(-2px); }
+      .gal-card.editing { border-color: rgba(0,201,167,.65); box-shadow: 0 0 0 2px rgba(0,201,167,.12); }
+
+      .gal-card-img-wrap { position: relative; aspect-ratio: 4/3; overflow: hidden; background: rgba(0,0,0,.3); }
+      .gal-card-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .35s ease; }
+      .gal-card:hover .gal-card-img-wrap img { transform: scale(1.06); }
+      .gal-card-img-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 28px; }
+
+      .gal-card-overlay {
+        position: absolute; inset: 0;
+        background: linear-gradient(to top, rgba(0,0,0,.75) 0%, transparent 55%);
+        opacity: 0; transition: opacity .25s; display: flex;
+        align-items: flex-end; padding: 10px; gap: 6px;
+      }
+      .gal-card:hover .gal-card-overlay { opacity: 1; }
+      .gal-overlay-btn {
+        padding: 6px 12px; border-radius: 7px; font-size: 11px; border: none;
+        cursor: pointer; font-family: "DM Sans", sans-serif; font-weight: 500;
+        display: flex; align-items: center; gap: 5px; transition: filter .15s;
+      }
+      .gal-overlay-btn.edit { background: rgba(0,201,167,.9); color: #000; }
+      .gal-overlay-btn.del  { background: rgba(239,68,68,.85); color: #fff; }
+      .gal-overlay-btn:hover { filter: brightness(1.15); }
+
+      .gal-card-body { padding: 12px 14px; }
+      .gal-card-name { font-weight: 500; font-size: 13px; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .gal-card-meta { font-size: 11px; color: var(--muted); display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+      .gal-cat-badge {
+        font-size: 9px; letter-spacing: .09em; text-transform: uppercase;
+        padding: 2px 8px; border-radius: 999px;
+        background: rgba(0,201,167,.1); color: var(--teal); border: 1px solid rgba(0,201,167,.2);
+      }
+      .gal-cat-badge.interior  { background: rgba(140,80,255,.1);  color: #c4a0ff; border-color: rgba(140,80,255,.25); }
+      .gal-cat-badge.exterior  { background: rgba(26,158,143,.1);  color: var(--teal); border-color: rgba(26,158,143,.25); }
+      .gal-cat-badge.commercial{ background: rgba(245,197,66,.1); color: var(--gold); border-color: rgba(245,197,66,.25); }
+      .gal-cat-badge.landscape { background: rgba(74,222,128,.12); color: #4ade80; border-color: rgba(74,222,128,.2); }
+
+      /* Inline edit */
+      .gal-inline-edit {
+        padding: 14px; border-top: 1px solid var(--border);
+        display: none; flex-direction: column; gap: 8px;
+        animation: galFadeIn .2s ease;
+      }
+      .gal-card.editing .gal-inline-edit { display: flex; }
+      @keyframes galFadeIn { from { opacity:0; transform:translateY(-5px); } to { opacity:1; transform:translateY(0); } }
+      .gal-inline-edit .gal-input, .gal-inline-edit .gal-select { font-size: 12px; padding: 7px 10px; }
+      .gal-inline-actions { display: flex; gap: 6px; }
+      .btn-gal-save {
+        flex: 1; padding: 7px; border-radius: 7px;
+        background: rgba(0,201,167,.15); border: 1px solid rgba(0,201,167,.3);
+        color: var(--teal); font-size: 11px; font-weight: 500;
+        font-family: "DM Sans", sans-serif; cursor: pointer; transition: all .2s;
+      }
+      .btn-gal-save:hover { background: rgba(0,201,167,.25); }
+      .btn-gal-cancel {
+        padding: 7px 12px; border-radius: 7px;
+        background: transparent; border: 1px solid var(--border);
+        color: var(--muted); font-size: 11px;
+        font-family: "DM Sans", sans-serif; cursor: pointer; transition: all .2s;
+      }
+      .btn-gal-cancel:hover { border-color: rgba(239,68,68,.3); color: var(--red); }
+
+      /* Bulk bar */
+      .gal-bulk-bar {
+        display: none; align-items: center; gap: 12px;
+        padding: 11px 16px; background: rgba(0,201,167,.07);
+        border: 1px solid rgba(0,201,167,.2); border-radius: 10px;
+        margin-bottom: 14px; font-size: 13px;
+      }
+      .gal-bulk-bar.show { display: flex; }
+      .btn-bulk { padding: 6px 14px; border-radius: 7px; font-size: 12px; font-family: "DM Sans",sans-serif; cursor: pointer; transition: all .2s; display: flex; align-items: center; gap: 6px; }
+      .btn-bulk.del  { background: rgba(239,68,68,.1); border: 1px solid rgba(239,68,68,.25); color: var(--red); }
+      .btn-bulk.del:hover { background: rgba(239,68,68,.2); }
+      .btn-bulk.draft{ background: rgba(245,197,66,.1); border: 1px solid rgba(245,197,66,.25); color: var(--gold); }
+      .btn-bulk.draft:hover{ background: rgba(245,197,66,.2); }
+      .btn-bulk.pub  { background: rgba(0,201,167,.1); border: 1px solid rgba(0,201,167,.25); color: var(--teal); }
+      .btn-bulk.pub:hover { background: rgba(0,201,167,.2); }
+
+      /* Checkbox on card */
+      .gal-check {
+        width: 15px; height: 15px; accent-color: var(--teal); cursor: pointer;
+        position: absolute; top: 8px; left: 8px; z-index: 2;
+        opacity: 0; transition: opacity .2s;
+      }
+      .gal-card:hover .gal-check, .gal-check:checked { opacity: 1; }
+
+      /* Toast */
+      .gal-toast {
+        position: fixed; bottom: 26px; right: 26px; z-index: 9999;
+        background: linear-gradient(135deg, #0d6e63, #1a9e8f); color: #fff;
+        padding: 13px 20px; border-radius: 12px; font-size: 13px; font-weight: 500;
+        display: flex; align-items: center; gap: 9px;
+        box-shadow: 0 8px 32px rgba(0,0,0,.4);
+        transform: translateY(80px); opacity: 0;
+        transition: all .32s cubic-bezier(.34,1.56,.64,1); pointer-events: none;
+      }
+      .gal-toast.show { transform: translateY(0); opacity: 1; }
+      .gal-toast.err  { background: linear-gradient(135deg,#7f1d1d,#ef4444); }
+
+      /* Empty state */
+      .gal-empty { grid-column: 1/-1; text-align: center; padding: 60px 20px; color: var(--muted); font-size: 14px; }
+      .gal-empty i { display: block; font-size: 36px; margin-bottom: 14px; color: rgba(0,201,167,.2); }
+
     </style>
   <body>
     <div class="orb orb-1"></div>
@@ -969,8 +1109,8 @@
         <button class="dash-tab" id="tabConsultations" onclick="switchTab('Consultations')">
           <i class="fa-solid fa-calendar-check"></i> Consultations
         </button>
-        <button class="dash-tab" id="tabDesigns" onclick="switchTab('Designs')">
-          <i class="fa-solid fa-layer-group"></i> Design Manager
+        <button class="dash-tab" id="tabGallery" onclick="switchTab('Gallery')">
+          <i class="fa-solid fa-photo-film"></i> Gallery &amp; Interior
         </button>
       </div>
 
@@ -1020,7 +1160,6 @@
           </div>
         </div>
       </div>
-      <!-- /paneMessages -->
 
       <!-- ══ USERS & DESIGNS TAB ══ -->
       <div class="tab-pane" id="paneUsers">
@@ -1125,7 +1264,6 @@
           </div>
         </div>
       </div>
-      <!-- /paneUsers -->
 
       <!-- ══ PACKAGE REQUESTS TAB ══ -->
       <div class="tab-pane" id="panePackages">
@@ -1158,7 +1296,9 @@
           <div class="state-msg"><i class="fa-solid fa-spinner fa-spin"></i> Loading requests…</div>
         </div>
       </div>
-      <!-- /panePackages -->
+
+      <!-- /paneUsers -->
+    </div>
 
       <!-- ══ CONSULTATIONS TAB ══ -->
       <div class="tab-pane" id="paneConsultations">
@@ -1199,65 +1339,208 @@
       </div>
       <!-- /paneConsultations -->
 
-      <!-- ══ DESIGN MANAGER TAB ══ -->
-      <div class="tab-pane" id="paneDesigns">
+      <!-- ══ GALLERY & INTERIOR MANAGER TAB ══ -->
+      <div class="tab-pane" id="paneGallery">
 
         <!-- Stats row -->
-        <div class="stats-row cols-4" id="dmStats">
+        <div class="gal-stats-row">
           <div class="stat-card ac-teal">
-            <div class="stat-icon teal"><i class="fa-solid fa-images"></i></div>
-            <div class="stat-label">Gallery Designs</div>
-            <div class="stat-value" id="dmGalleryCount">—</div>
+            <div class="stat-icon teal"><i class="fa-solid fa-image"></i></div>
+            <div class="stat-label">Total Designs</div>
+            <div class="stat-value" id="galStatTotal">—</div>
           </div>
           <div class="stat-card ac-purple">
-            <div class="stat-icon purple"><i class="fa-solid fa-couch"></i></div>
-            <div class="stat-label">Interior Designs</div>
-            <div class="stat-value purple" id="dmInteriorCount">—</div>
+            <div class="stat-icon purple"><i class="fa-solid fa-house"></i></div>
+            <div class="stat-label">Houses</div>
+            <div class="stat-value purple" id="galStatHouse">—</div>
+          </div>
+          <div class="stat-card ac-teal">
+            <div class="stat-icon teal"><i class="fa-solid fa-building"></i></div>
+            <div class="stat-label">Apartments</div>
+            <div class="stat-value" id="galStatApt">—</div>
           </div>
           <div class="stat-card ac-gold">
-            <div class="stat-icon gold"><i class="fa-solid fa-eye"></i></div>
-            <div class="stat-label">Active / Visible</div>
-            <div class="stat-value gold" id="dmActiveCount">—</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon teal"><i class="fa-solid fa-eye-slash"></i></div>
-            <div class="stat-label">Hidden</div>
-            <div class="stat-value" id="dmHiddenCount">—</div>
+            <div class="stat-icon gold"><i class="fa-solid fa-briefcase"></i></div>
+            <div class="stat-label">Offices</div>
+            <div class="stat-value gold" id="galStatOffice">—</div>
           </div>
         </div>
 
-        <!-- Toolbar -->
-        <div class="section-header" style="margin-bottom:10px">
-          <div class="section-title"><i class="fa-solid fa-layer-group"></i> Design Manager</div>
-          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-            <div style="position:relative">
-              <i class="fa-solid fa-magnifying-glass" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:12px;pointer-events:none"></i>
-              <input type="text" id="dmSearch" placeholder="Search designs…" oninput="dmFilter()" style="background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:8px 12px 8px 32px;outline:none;width:220px;transition:border-color .25s" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--border)'"/>
+        <p style="font-size:12px;color:var(--muted);margin:-8px 0 18px;line-height:1.6;max-width:640px;">
+          <i class="fa-solid fa-circle-info" style="color:var(--teal);margin-right:5px;"></i>
+          These designs are pulled live by <strong>gallery.html</strong> from Firestore (<code>gallery_designs</code>) and appear
+          alongside the existing static cards. Toggle <strong>Active</strong> off to hide a design without deleting it.
+        </p>
+
+        <div class="gallery-layout">
+
+          <!-- Sidebar: Add / Edit Form -->
+          <div class="gallery-sidebar">
+            <div class="gallery-sidebar-title">
+              <i class="fa-solid fa-circle-plus"></i>
+              <span id="galFormTitle">Add New Design</span>
             </div>
-            <div class="filter-row">
-              <button class="filter-btn active" id="dmf-all" onclick="setDmFilter('all',this)">All</button>
-              <button class="filter-btn" id="dmf-gallery" onclick="setDmFilter('gallery',this)">Gallery</button>
-              <button class="filter-btn" id="dmf-interior" onclick="setDmFilter('interior',this)">Interior</button>
-              <button class="filter-btn" id="dmf-active" onclick="setDmFilter('active',this)">Active</button>
-              <button class="filter-btn" id="dmf-hidden" onclick="setDmFilter('hidden',this)">Hidden</button>
+
+            <div class="gal-form-group">
+              <label class="gal-label">Title *</label>
+              <input class="gal-input" id="galFTitle" placeholder="e.g. Coastal Villa" />
             </div>
-            <button onclick="openDesignModal()" style="padding:9px 18px;border-radius:9px;background:linear-gradient(135deg,#3d0070,#00c9a7);color:#fff;border:none;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:7px;transition:opacity .2s" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
-              <i class="fa-solid fa-plus"></i> Add Design
+            <div class="gal-form-group">
+              <label class="gal-label">Category *</label>
+              <select class="gal-select" id="galFCategory">
+                <option value="">— Select —</option>
+                <option value="house">House</option>
+                <option value="apartment">Apartment</option>
+                <option value="office">Office</option>
+              </select>
+            </div>
+            <div class="gal-form-group">
+              <label class="gal-label">Style / Sub-type</label>
+              <input class="gal-input" id="galFStyle" placeholder="e.g. Villa, Penthouse, Coworking" />
+            </div>
+            <div class="gal-form-group">
+              <label class="gal-label">Image URL *</label>
+              <input class="gal-input" id="galFImg" placeholder="https:// or gallery-Images/file.jpg" oninput="galPreviewImg(this.value)" />
+            </div>
+            <div id="galImgPreviewWrap">
+              <img id="galImgPreview" alt="preview" />
+            </div>
+            <div class="gal-form-group">
+              <label class="gal-label">Short Description</label>
+              <textarea class="gal-textarea" id="galFDesc" placeholder="One or two lines shown on the card…"></textarea>
+            </div>
+            <div class="gal-form-group">
+              <label class="gal-label">Tags (comma-separated)</label>
+              <input class="gal-input" id="galFTags" placeholder="Modern, Luxury, Glass" />
+            </div>
+            <div class="gal-form-group">
+              <label class="gal-label">Badge</label>
+              <select class="gal-select" id="galFBadge">
+                <option value="">— None —</option>
+                <option value="Featured">Featured</option>
+                <option value="New">New</option>
+                <option value="Popular">Popular</option>
+                <option value="Trending">Trending</option>
+              </select>
+            </div>
+            <div class="gal-form-group">
+              <label class="gal-label">Rating (1–5)</label>
+              <input class="gal-input" id="galFRating" type="number" min="1" max="5" step="0.1" placeholder="4.8" />
+            </div>
+            <div class="gal-form-group">
+              <label class="gal-label">Specs / Card Info Line</label>
+              <input class="gal-input" id="galFSpecs" placeholder="e.g. 4–6 BHK • 5,000+ sq ft" />
+            </div>
+            <div class="gal-form-group">
+              <label class="gal-label">Area</label>
+              <input class="gal-input" id="galFArea" placeholder="e.g. 5,000+ sq ft" />
+            </div>
+            <div class="gal-form-group">
+              <label class="gal-label">Capacity / Occupancy</label>
+              <input class="gal-input" id="galFCapacity" placeholder="e.g. Family, 4 Seats, 50+ Desks" />
+            </div>
+            <div class="gal-form-group">
+              <label class="gal-label">Budget</label>
+              <input class="gal-input" id="galFBudget" placeholder="e.g. ₹2.5Cr+" />
+            </div>
+            <div class="gal-form-group">
+              <label class="gal-label">Detail Page URL</label>
+              <input class="gal-input" id="galFDetailUrl" placeholder="e.g. mv.html (optional)" />
+            </div>
+            <div class="gal-form-group">
+              <label class="gal-label">Display Order</label>
+              <input class="gal-input" id="galFOrder" type="number" min="0" placeholder="0" />
+            </div>
+            <div class="gal-form-group" style="display:flex;align-items:center;gap:9px;">
+              <input type="checkbox" id="galFActive" checked style="width:16px;height:16px;accent-color:var(--teal);cursor:pointer;" />
+              <label class="gal-label" style="margin:0;" for="galFActive">Active (visible on live site)</label>
+            </div>
+
+            <input type="hidden" id="galEditId" value="" />
+            <button class="btn-gal-add" id="galSubmitBtn" onclick="galSubmit()">
+              <i class="fa-solid fa-circle-plus"></i>
+              <span id="galSubmitLabel">Add to Gallery</span>
             </button>
+            <hr class="gal-divider" />
+            <p class="gal-edit-hint" id="galHint">
+              Click the ✏️ Edit button on any card to modify it inline,<br />or fill this form to add a new design.
+            </p>
+            <hr class="gal-divider" />
+            <button class="btn-gal-add" id="galMigrateBtn" onclick="galMigrateStatic()"
+              style="background:linear-gradient(135deg,#5a3d00,#b8860b);font-size:12px;">
+              <i class="fa-solid fa-database"></i>
+              <span id="galMigrateLabel">Import 12 Existing Static Designs</span>
+            </button>
+            <p class="gal-edit-hint" style="margin-top:8px;">
+              One-time import of the designs currently hardcoded in gallery.html (Modern Villa, Minimal House, etc.)
+              so you can edit/delete them here too. Safe to click once — already-imported designs are skipped.
+            </p>
           </div>
-        </div>
 
-        <!-- Design cards grid -->
-        <div id="dmGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:8px">
-          <div class="state-msg" style="grid-column:1/-1"><i class="fa-solid fa-spinner fa-spin"></i>Loading designs…</div>
+          <!-- Main gallery panel -->
+          <div class="gallery-main">
+
+            <!-- Top bar: search + category tabs -->
+            <div class="gallery-top-bar">
+              <div class="gal-search-wrap">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="galSearch" placeholder="Search title, tags, style…" oninput="galRender()" />
+              </div>
+              <div class="gal-cat-tabs">
+                <button class="gal-cat-tab active" onclick="galSetCat('all',this)">All</button>
+                <button class="gal-cat-tab" onclick="galSetCat('house',this)">House</button>
+                <button class="gal-cat-tab" onclick="galSetCat('apartment',this)">Apartment</button>
+                <button class="gal-cat-tab" onclick="galSetCat('office',this)">Office</button>
+              </div>
+            </div>
+
+            <!-- Bulk action bar -->
+            <div class="gal-bulk-bar" id="galBulkBar">
+              <i class="fa-solid fa-layer-group" style="color:var(--teal)"></i>
+              <span id="galBulkCount" style="color:var(--text);font-weight:500;">0 selected</span>
+              <button class="btn-bulk del"   onclick="galBulkDelete()"><i class="fa-solid fa-trash"></i> Delete</button>
+              <button class="btn-bulk draft" onclick="galBulkActive(false)"><i class="fa-solid fa-eye-slash"></i> Set Inactive</button>
+              <button class="btn-bulk pub"   onclick="galBulkActive(true)"><i class="fa-solid fa-eye"></i> Set Active</button>
+              <span style="margin-left:auto;font-size:11px;color:var(--muted);cursor:pointer" onclick="galClearSel()">Clear ✕</span>
+            </div>
+
+            <!-- Status filter row -->
+            <div style="display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;align-items:center;">
+              <button class="filter-btn active" onclick="galSetStatus('all',this)">All</button>
+              <button class="filter-btn" onclick="galSetStatus('active',this)">
+                <i class="fa-solid fa-eye" style="color:var(--teal);margin-right:4px;font-size:10px"></i>Active
+              </button>
+              <button class="filter-btn" onclick="galSetStatus('inactive',this)">
+                <i class="fa-solid fa-eye-slash" style="color:var(--muted);margin-right:4px;font-size:10px"></i>Inactive
+              </button>
+              <button class="filter-btn" style="margin-left:auto" onclick="galToggleSort()">
+                <i class="fa-solid fa-arrow-up-wide-short" id="galSortIcon"></i> Sort A–Z
+              </button>
+            </div>
+
+            <!-- Cards -->
+            <div class="gallery-cards-grid" id="galGrid">
+              <div class="gal-empty">
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                Loading gallery designs…
+              </div>
+            </div>
+
+          </div><!-- /gallery-main -->
+        </div><!-- /gallery-layout -->
+
+        <!-- Toast notification -->
+        <div class="gal-toast" id="galToast">
+          <i id="galToastIcon" class="fa-solid fa-circle-check"></i>
+          <span id="galToastMsg">Done!</span>
         </div>
       </div>
-      <!-- /paneDesigns -->
+      <!-- /paneGallery -->
 
     </div>
     <!-- /page -->
 
-    <!-- USER DESIGNS MODAL -->
+    <!-- MODAL -->
     <div class="modal-overlay" id="userModal" onclick="closeModalBg(event)">
       <div class="modal">
         <div class="modal-header">
@@ -1268,115 +1551,6 @@
         </div>
         <div id="modalBody"></div>
       </div>
-    </div>
-
-    <!-- DESIGN ADD/EDIT MODAL — placed at body level so it's never clipped -->
-    <div class="modal-overlay" id="designModal" onclick="if(event.target===this)closeDesignModal()">
-      <div class="modal" style="max-width:680px">
-        <div class="modal-header">
-          <div class="modal-title" id="dmModalTitle">Add New Design</div>
-          <button class="modal-close" onclick="closeDesignModal()"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        <div id="dmModalBody">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
-            <div>
-              <label style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px">Page *</label>
-              <select id="dm-page" style="width:100%;background:rgba(0,0,0,.35);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:10px 12px;outline:none" onchange="toggleOfficeField()">
-                <option value="gallery">Gallery Page</option>
-                <option value="interior">Interior Page</option>
-              </select>
-            </div>
-            <div id="dm-cat-wrap">
-              <label style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px">Category *</label>
-              <select id="dm-category" style="width:100%;background:rgba(0,0,0,.35);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:10px 12px;outline:none">
-                <option value="house">House</option>
-                <option value="apartment">Apartment</option>
-                <option value="office">Office</option>
-              </select>
-            </div>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
-            <div>
-              <label style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px">Title *</label>
-              <input type="text" id="dm-title" placeholder="e.g. Modern Villa" style="width:100%;background:rgba(0,0,0,.35);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:10px 12px;outline:none"/>
-            </div>
-            <div>
-              <label style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px">Style</label>
-              <input type="text" id="dm-style" placeholder="e.g. Modern, Luxury, Minimal" style="width:100%;background:rgba(0,0,0,.35);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:10px 12px;outline:none"/>
-            </div>
-          </div>
-          <div style="margin-bottom:14px">
-            <label style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px">Image URL *</label>
-            <input type="url" id="dm-img" placeholder="https://…" style="width:100%;background:rgba(0,0,0,.35);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:10px 12px;outline:none" oninput="previewDmImg()"/>
-            <img id="dm-img-preview" src="" alt="" style="display:none;width:100%;height:160px;object-fit:cover;border-radius:8px;margin-top:8px;border:1px solid var(--border)"/>
-          </div>
-          <div style="margin-bottom:14px">
-            <label style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px">Description</label>
-            <textarea id="dm-desc" placeholder="Short description of the design…" style="width:100%;background:rgba(0,0,0,.35);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:10px 12px;outline:none;resize:vertical;min-height:72px"></textarea>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
-            <div>
-              <label style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px">Tags (comma separated)</label>
-              <input type="text" id="dm-tags" placeholder="Modern, Glass, Luxury" style="width:100%;background:rgba(0,0,0,.35);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:10px 12px;outline:none"/>
-            </div>
-            <div>
-              <label style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px">Badge</label>
-              <select id="dm-badge" style="width:100%;background:rgba(0,0,0,.35);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:10px 12px;outline:none">
-                <option value="">None</option>
-                <option value="New">New</option>
-                <option value="Featured">Featured</option>
-                <option value="Popular">Popular</option>
-                <option value="Trending">Trending</option>
-              </select>
-            </div>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px">
-            <div>
-              <label style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px">Specs</label>
-              <input type="text" id="dm-specs" placeholder="4 BHK · 5,000 sq ft" style="width:100%;background:rgba(0,0,0,.35);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:10px 12px;outline:none"/>
-            </div>
-            <div>
-              <label style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px">Budget</label>
-              <input type="text" id="dm-budget" placeholder="₹2Cr–₹3Cr" style="width:100%;background:rgba(0,0,0,.35);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:10px 12px;outline:none"/>
-            </div>
-            <div>
-              <label style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px">Rating (0–5)</label>
-              <input type="number" id="dm-rating" placeholder="4.8" min="0" max="5" step="0.1" style="width:100%;background:rgba(0,0,0,.35);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:10px 12px;outline:none"/>
-            </div>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
-            <div>
-              <label style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px">Detail Page URL (optional)</label>
-              <input type="text" id="dm-detail-url" placeholder="mv.html" style="width:100%;background:rgba(0,0,0,.35);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:10px 12px;outline:none"/>
-            </div>
-            <div>
-              <label style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px">Display Order</label>
-              <input type="number" id="dm-order" placeholder="1" min="0" style="width:100%;background:rgba(0,0,0,.35);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:10px 12px;outline:none"/>
-            </div>
-          </div>
-          <div id="dm-room-wrap" style="margin-bottom:14px;display:none">
-            <label style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px">Room Type (Interior only)</label>
-            <input type="text" id="dm-room" placeholder="Living Room, Bedroom, Kitchen…" style="width:100%;background:rgba(0,0,0,.35);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:10px 12px;outline:none"/>
-          </div>
-          <div style="margin-bottom:18px">
-            <label style="font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px;cursor:pointer">
-              <input type="checkbox" id="dm-active" checked style="width:15px;height:15px;accent-color:var(--teal)"/> Active (visible on site immediately)
-            </label>
-          </div>
-          <div style="display:flex;gap:10px;justify-content:flex-end;padding-top:16px;border-top:1px solid var(--border)">
-            <button onclick="closeDesignModal()" style="padding:9px 20px;border-radius:8px;background:transparent;border:1px solid var(--border);color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer">Cancel</button>
-            <button id="dmSaveBtn" onclick="saveDesign()" style="padding:9px 22px;border-radius:8px;background:linear-gradient(135deg,#3d0070,#00c9a7);color:#fff;border:none;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:7px">
-              <i class="fa-solid fa-save"></i> <span id="dmSaveLbl">Save Design</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- DM Toast element -->
-    <div id="dmToast" style="position:fixed;bottom:24px;right:24px;z-index:9999;background:rgba(12,22,44,.98);border:1px solid rgba(0,201,167,.3);border-radius:10px;padding:12px 18px;font-size:13px;color:var(--text);box-shadow:0 8px 30px rgba(0,0,0,.5);display:flex;align-items:center;gap:10px;opacity:0;transform:translateY(20px);transition:all .35s;pointer-events:none;max-width:340px">
-      <i class="fa-solid fa-circle-check" style="font-size:14px;color:var(--teal)"></i>
-      <span id="dmToastMsg"></span>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -1410,6 +1584,7 @@
       let usersLoaded = false;
       let pkgLoaded = false, allPkgRequests = [], pkgFilter = "all";
       let consultationsLoaded = false, allConsultations = [], cFilter = "all", unsubConsult = null;
+      let galLoaded = false, allGalItems = [], galCat = 'all', galStatus = 'all', galSortAsc = false, galSel = new Set(), unsubGal = null;
 
       // ── AUTH GUARD ──────────────────────────────────────────────
       auth.onAuthStateChanged(async (user) => {
@@ -1440,7 +1615,7 @@
         if (name === "Users" && !usersLoaded) loadUsersTab();
         if (name === "Packages" && !pkgLoaded) loadPackages();
         if (name === "Consultations" && !consultationsLoaded) loadConsultationsTab();
-        if (name === "Designs" && !_dmLoaded) { _dmLoaded = true; loadDesignManager(); }
+        if (name === "Gallery" && !galLoaded) loadGalleryTab();
       }
 
       // ══════════════════════════════════════════════
@@ -1716,7 +1891,7 @@
               '<div class="user-card" onclick="showUserDesigns(\'' +
               u.uid +
               "','" +
-              esc(name).replace(/'/g, "\\'") +
+              esc(name).replace(/'/g, "\'") +
               "')\">" +
               '<div class="user-avatar">' +
               esc(initials) +
@@ -1893,6 +2068,8 @@
           window.location.href = "login.html";
         });
       }
+
+      // ── HELPERS ─────────────────────────────────────────────────
 
       // ══════════════════════════════════════════════
       // PACKAGE REQUESTS
@@ -2091,6 +2268,433 @@
         db.collection("consultations").doc(id).delete();
       }
 
+
+      // ══════════════════════════════════════════════
+      // GALLERY & INTERIOR MANAGER  (collection: gallery_designs)
+      // Schema matches what gallery.html reads:
+      //   title, category(house|apartment|office), style, tags, rating,
+      //   badge, imageUrl, description, specs, area, capacity, budget,
+      //   detailUrl, active(bool), order(number), createdAt
+      // ══════════════════════════════════════════════
+      function loadGalleryTab() {
+        galLoaded = true;
+        document.getElementById("galGrid").innerHTML =
+          '<div class="gal-empty"><i class="fa-solid fa-spinner fa-spin"></i>Connecting to Firestore…</div>';
+        if (unsubGal) unsubGal();
+
+        var settled = false;
+        var timeoutId = setTimeout(function () {
+          if (!settled) {
+            document.getElementById("galGrid").innerHTML =
+              '<div class="gal-empty"><i class="fa-solid fa-triangle-exclamation" style="color:var(--gold)"></i>' +
+              'Still waiting on Firestore. Check that <code>gallery_designs</code> has a security rule allowing reads.<br/><br/>' +
+              '<button class="filter-btn" onclick="loadGalleryTab()"><i class="fa-solid fa-rotate-right"></i> Retry</button></div>';
+          }
+        }, 8000);
+
+        unsubGal = db.collection("gallery_designs")
+          .onSnapshot(function(snap) {
+            settled = true;
+            clearTimeout(timeoutId);
+            allGalItems = snap.docs.map(function(d){ return Object.assign({id:d.id}, d.data()); });
+            galUpdateStats();
+            galRender();
+          }, function(err){
+            settled = true;
+            clearTimeout(timeoutId);
+            console.error("gallery_designs listener error:", err);
+            var msg = (err && err.code === "permission-denied")
+              ? 'Permission denied. Make sure your Firestore rules allow admin read/write on <code>gallery_designs</code>.'
+              : 'Failed to load (' + (err && err.code || err) + '). Check your connection and Firestore rules.';
+            document.getElementById("galGrid").innerHTML =
+              '<div class="gal-empty"><i class="fa-solid fa-triangle-exclamation" style="color:var(--red)"></i>' + msg +
+              '<br/><br/><button class="filter-btn" onclick="loadGalleryTab()"><i class="fa-solid fa-rotate-right"></i> Retry</button></div>';
+          });
+      }
+
+      function galUpdateStats(){
+        var t = allGalItems.length;
+        var h = allGalItems.filter(function(x){ return (x.category||"house")==="house"; }).length;
+        var a = allGalItems.filter(function(x){ return x.category==="apartment"; }).length;
+        var o = allGalItems.filter(function(x){ return x.category==="office"; }).length;
+        document.getElementById("galStatTotal").textContent  = t;
+        document.getElementById("galStatHouse").textContent  = h;
+        document.getElementById("galStatApt").textContent    = a;
+        document.getElementById("galStatOffice").textContent = o;
+      }
+
+      function galSetCat(cat, btn){
+        galCat = cat;
+        document.querySelectorAll(".gal-cat-tab").forEach(function(b){ b.classList.remove("active"); });
+        btn.classList.add("active");
+        galRender();
+      }
+
+      function galSetStatus(st, btn){
+        galStatus = st;
+        document.querySelectorAll("#paneGallery .filter-btn").forEach(function(b){ b.classList.remove("active"); });
+        btn.classList.add("active");
+        galRender();
+      }
+
+      function galToggleSort(){
+        galSortAsc = !galSortAsc;
+        var ic = document.getElementById("galSortIcon");
+        ic.className = galSortAsc ? "fa-solid fa-arrow-down-wide-short" : "fa-solid fa-arrow-up-wide-short";
+        galRender();
+      }
+
+      function galRender(){
+        var q = ((document.getElementById("galSearch")||{}).value||"").toLowerCase().trim();
+        var list = allGalItems.filter(function(item){
+          var cat = item.category || "house";
+          var isActive = item.active !== false;
+          var catOk = galCat==="all" || cat===galCat;
+          var stOk  = galStatus==="all" || (galStatus==="active" ? isActive : !isActive);
+          var qOk   = !q || (item.title||"").toLowerCase().includes(q)
+                         || (item.tags||"").toLowerCase().includes(q)
+                         || (item.style||"").toLowerCase().includes(q)
+                         || (item.description||"").toLowerCase().includes(q);
+          return catOk && stOk && qOk;
+        });
+        if(galSortAsc) list=list.slice().sort(function(a,b){ return (a.title||"").localeCompare(b.title||""); });
+        else list=list.slice().sort(function(a,b){ return (a.order||0)-(b.order||0); });
+
+        var grid = document.getElementById("galGrid");
+        if(!list.length){
+          grid.innerHTML = '<div class="gal-empty"><i class="fa-solid fa-images"></i>No designs found. Use the form to add one!</div>';
+          return;
+        }
+
+        var editingId = document.getElementById("galEditId").value;
+        grid.innerHTML = list.map(function(item){
+          var cat      = item.category || "house";
+          var isActive = item.active !== false;
+          var ck       = galSel.has(item.id) ? "checked" : "";
+          var statusDot = isActive
+            ? '<span style="color:var(--teal);font-size:9px"><i class="fa-solid fa-eye"></i> Active</span>'
+            : '<span style="color:var(--muted);font-size:9px"><i class="fa-solid fa-eye-slash"></i> Inactive</span>';
+          var ratHtml = item.rating
+            ? '<span style="color:var(--gold);font-size:10px">&#9733; '+parseFloat(item.rating).toFixed(1)+'</span>' : "";
+          var badgeHtml = item.badge
+            ? '<span class="gal-cat-badge" style="background:rgba(245,197,66,.12);color:var(--gold);border-color:rgba(245,197,66,.3)">'+esc(item.badge)+'</span>' : "";
+          var specsHtml = item.specs
+            ? '<div style="font-size:10px;color:var(--muted);margin-top:4px"><i class="fa-solid fa-ruler-combined" style="color:var(--teal);margin-right:3px"></i>'+esc(item.specs)+'</div>':'';
+          var budgetHtml = item.budget
+            ? '<div style="font-size:10px;color:var(--gold);margin-top:2px"><i class="fa-solid fa-indian-rupee-sign" style="margin-right:3px"></i>'+esc(item.budget)+'</div>':'';
+
+          // catVisual maps to badge CSS classes that already exist (interior/exterior/commercial/landscape) —
+          // reuse "interior"-style coloring for house, "exterior" for apartment, "commercial" for office
+          var catClassMap = {house:"interior", apartment:"exterior", office:"commercial"};
+          var catClass = catClassMap[cat] || "interior";
+
+          var catOpts = ['house','apartment','office'].map(function(c){
+            return '<option value="'+c+'"'+(cat===c?" selected":"")+'>'+c.charAt(0).toUpperCase()+c.slice(1)+'</option>';
+          }).join("");
+          var badgeOpts = ['','Featured','New','Popular','Trending'].map(function(b){
+            var label = b || "— None —";
+            return '<option value="'+b+'"'+((item.badge||"")===b?" selected":"")+'>'+label+'</option>';
+          }).join("");
+
+          return (
+            '<div class="gal-card'+(item.id===editingId?" editing":"")+'" id="galcard-'+esc(item.id)+'">'+
+            '<input type="checkbox" class="gal-check" '+ck+' onchange="galToggleSel(\''+esc(item.id)+'\',this)">'+
+            '<div class="gal-card-img-wrap">'+
+              (item.imageUrl ? '<img src="'+esc(item.imageUrl)+'" alt="'+esc(item.title)+'" loading="lazy" onerror="this.style.display=\'none\'">':'')  +
+              '<div class="gal-card-img-placeholder"'+(item.imageUrl?' style="display:none"':'')+'>'+
+                '<i class="fa-regular fa-image"></i></div>'+
+              '<div class="gal-card-overlay">'+
+                '<button class="gal-overlay-btn edit" onclick="galStartEdit(\''+esc(item.id)+'\')"><i class="fa-solid fa-pen"></i> Edit</button>'+
+                '<button class="gal-overlay-btn del"  onclick="galDelete(\''+esc(item.id)+'\')"><i class="fa-solid fa-trash"></i></button>'+
+              '</div>'+
+            '</div>'+
+            '<div class="gal-card-body">'+
+              '<div class="gal-card-name">'+esc(item.title||"Untitled")+'</div>'+
+              '<div class="gal-card-meta">'+
+                '<span class="gal-cat-badge '+esc(catClass)+'">'+esc(cat)+'</span>'+
+                statusDot+ratHtml+badgeHtml+
+              '</div>'+
+              specsHtml+budgetHtml+
+            '</div>'+
+            '<div class="gal-inline-edit" id="galEdit-'+esc(item.id)+'">'+
+              '<input class="gal-input" id="galETitle-'+esc(item.id)+'"    value="'+esc(item.title||"")+'" placeholder="Title"/>'+
+              '<select class="gal-select" id="galECat-'+esc(item.id)+'">'+catOpts+'</select>'+
+              '<input class="gal-input" id="galEStyle-'+esc(item.id)+'"    value="'+esc(item.style||"")+'" placeholder="Style / sub-type"/>'+
+              '<input class="gal-input" id="galEImg-'+esc(item.id)+'"      value="'+esc(item.imageUrl||"")+'" placeholder="Image URL"/>'+
+              '<textarea class="gal-textarea" id="galEDesc-'+esc(item.id)+'" placeholder="Description" style="min-height:50px">'+esc(item.description||"")+'</textarea>'+
+              '<input class="gal-input" id="galETags-'+esc(item.id)+'"     value="'+esc(item.tags||"")+'" placeholder="Tags, comma-separated"/>'+
+              '<select class="gal-select" id="galEBadge-'+esc(item.id)+'">'+badgeOpts+'</select>'+
+              '<input class="gal-input" id="galERating-'+esc(item.id)+'"   value="'+esc(item.rating||"")+'" placeholder="Rating 1-5" type="number" min="1" max="5" step="0.1"/>'+
+              '<input class="gal-input" id="galESpecs-'+esc(item.id)+'"    value="'+esc(item.specs||"")+'" placeholder="Specs / info line"/>'+
+              '<input class="gal-input" id="galEArea-'+esc(item.id)+'"     value="'+esc(item.area||"")+'" placeholder="Area"/>'+
+              '<input class="gal-input" id="galECapacity-'+esc(item.id)+'" value="'+esc(item.capacity||"")+'" placeholder="Capacity"/>'+
+              '<input class="gal-input" id="galEBudget-'+esc(item.id)+'"   value="'+esc(item.budget||"")+'" placeholder="Budget"/>'+
+              '<input class="gal-input" id="galEDetailUrl-'+esc(item.id)+'" value="'+esc(item.detailUrl||"")+'" placeholder="Detail page URL"/>'+
+              '<input class="gal-input" id="galEOrder-'+esc(item.id)+'"    value="'+esc(item.order||0)+'" placeholder="Display order" type="number" min="0"/>'+
+              '<div style="display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted)">'+
+                '<input type="checkbox" id="galEActive-'+esc(item.id)+'" '+(isActive?"checked":"")+' style="width:14px;height:14px;accent-color:var(--teal)"/>'+
+                '<label for="galEActive-'+esc(item.id)+'">Active (visible on live site)</label>'+
+              '</div>'+
+              '<div class="gal-inline-actions">'+
+                '<button class="btn-gal-save" onclick="galSaveEdit(\''+esc(item.id)+'\')"><i class="fa-solid fa-floppy-disk"></i> Save</button>'+
+                '<button class="btn-gal-cancel" onclick="galCancelEdit()">Cancel</button>'+
+              '</div>'+
+            '</div>'+
+            '</div>'
+          );
+        }).join("");
+      }
+
+      function galStartEdit(id){
+        var prev = document.getElementById("galEditId").value;
+        if(prev && prev!==id){
+          var oc=document.getElementById("galcard-"+prev);
+          if(oc) oc.classList.remove("editing");
+        }
+        document.getElementById("galEditId").value = id;
+        var card = document.getElementById("galcard-"+id);
+        if(card) card.classList.add("editing");
+        document.getElementById("galFormTitle").textContent = "Editing Design";
+        document.getElementById("galHint").textContent = "Save or cancel the inline edit below the card.";
+        card && card.scrollIntoView({behavior:"smooth", block:"nearest"});
+      }
+
+      function galCancelEdit(){
+        var id = document.getElementById("galEditId").value;
+        if(id){ var c=document.getElementById("galcard-"+id); if(c) c.classList.remove("editing"); }
+        document.getElementById("galEditId").value = "";
+        document.getElementById("galFormTitle").textContent = "Add New Design";
+        document.getElementById("galHint").textContent = "Click the ✏️ Edit button on any card to modify it inline, or fill this form to add a new design.";
+      }
+
+      function galSaveEdit(id){
+        var updates = {
+          title:       document.getElementById("galETitle-"+id).value.trim(),
+          category:    document.getElementById("galECat-"+id).value,
+          style:       document.getElementById("galEStyle-"+id).value.trim(),
+          imageUrl:    document.getElementById("galEImg-"+id).value.trim(),
+          description: document.getElementById("galEDesc-"+id).value.trim(),
+          tags:        document.getElementById("galETags-"+id).value.trim(),
+          badge:       document.getElementById("galEBadge-"+id).value,
+          rating:      parseFloat(document.getElementById("galERating-"+id).value)||null,
+          specs:       document.getElementById("galESpecs-"+id).value.trim(),
+          area:        document.getElementById("galEArea-"+id).value.trim(),
+          capacity:    document.getElementById("galECapacity-"+id).value.trim(),
+          budget:      document.getElementById("galEBudget-"+id).value.trim(),
+          detailUrl:   document.getElementById("galEDetailUrl-"+id).value.trim(),
+          order:       parseInt(document.getElementById("galEOrder-"+id).value)||0,
+          active:      document.getElementById("galEActive-"+id).checked,
+          updatedAt:   firebase.firestore.FieldValue.serverTimestamp()
+        };
+        if(!updates.title){ galToast("Title is required!", true); return; }
+        db.collection("gallery_designs").doc(id).update(updates)
+          .then(function(){ galToast("Design updated!"); galCancelEdit(); })
+          .catch(function(e){ galToast("Error: "+e.message, true); });
+      }
+
+      function galSubmit(){
+        var title    = document.getElementById("galFTitle").value.trim();
+        var category = document.getElementById("galFCategory").value;
+        var imageUrl = document.getElementById("galFImg").value.trim();
+        if(!title||!category||!imageUrl){ galToast("Title, Category & Image URL are required.", true); return; }
+        var btn = document.getElementById("galSubmitBtn");
+        btn.disabled = true;
+        db.collection("gallery_designs").add({
+          title:       title,
+          category:    category,
+          style:       document.getElementById("galFStyle").value.trim(),
+          imageUrl:    imageUrl,
+          description: document.getElementById("galFDesc").value.trim(),
+          tags:        document.getElementById("galFTags").value.trim(),
+          badge:       document.getElementById("galFBadge").value,
+          rating:      parseFloat(document.getElementById("galFRating").value)||null,
+          specs:       document.getElementById("galFSpecs").value.trim(),
+          area:        document.getElementById("galFArea").value.trim(),
+          capacity:    document.getElementById("galFCapacity").value.trim(),
+          budget:      document.getElementById("galFBudget").value.trim(),
+          detailUrl:   document.getElementById("galFDetailUrl").value.trim(),
+          order:       parseInt(document.getElementById("galFOrder").value)||0,
+          active:      document.getElementById("galFActive").checked,
+          createdAt:   firebase.firestore.FieldValue.serverTimestamp()
+        }).then(function(){
+          galToast("Design added to gallery!");
+          galResetForm();
+          btn.disabled = false;
+        }).catch(function(e){
+          galToast("Error: "+e.message, true);
+          btn.disabled = false;
+        });
+      }
+
+      function galResetForm(){
+        ["galFTitle","galFStyle","galFImg","galFDesc","galFTags","galFRating","galFSpecs","galFArea","galFCapacity","galFBudget","galFDetailUrl","galFOrder"].forEach(function(id){
+          var el=document.getElementById(id); if(el) el.value="";
+        });
+        document.getElementById("galFCategory").value = "";
+        document.getElementById("galFBadge").value    = "";
+        document.getElementById("galFActive").checked = true;
+        document.getElementById("galImgPreviewWrap").style.display = "none";
+      }
+
+      function galDelete(id){
+        if(!confirm("Delete this design? This cannot be undone and will remove it from the live gallery.")) return;
+        db.collection("gallery_designs").doc(id).delete()
+          .then(function(){ galToast("Design deleted."); })
+          .catch(function(e){ galToast("Error: "+e.message, true); });
+      }
+
+      function galToggleSel(id, cb){
+        if(cb.checked) galSel.add(id); else galSel.delete(id);
+        var bar = document.getElementById("galBulkBar");
+        if(galSel.size>0){
+          bar.classList.add("show");
+          document.getElementById("galBulkCount").textContent = galSel.size+" selected";
+        } else { bar.classList.remove("show"); }
+      }
+
+      function galClearSel(){
+        galSel.clear();
+        document.querySelectorAll(".gal-check").forEach(function(cb){ cb.checked=false; });
+        document.getElementById("galBulkBar").classList.remove("show");
+      }
+
+      function galBulkDelete(){
+        if(!galSel.size) return;
+        if(!confirm("Delete "+galSel.size+" selected design(s)? This removes them from the live gallery.")) return;
+        var batch = db.batch();
+        galSel.forEach(function(id){ batch.delete(db.collection("gallery_designs").doc(id)); });
+        batch.commit()
+          .then(function(){ galToast(galSel.size+" design(s) deleted."); galClearSel(); })
+          .catch(function(e){ galToast("Error: "+e.message, true); });
+      }
+
+      function galBulkActive(activeVal){
+        if(!galSel.size) return;
+        var batch = db.batch();
+        galSel.forEach(function(id){ batch.update(db.collection("gallery_designs").doc(id), {active:activeVal}); });
+        batch.commit()
+          .then(function(){ galToast(galSel.size+' design(s) set to '+(activeVal?"Active":"Inactive")+'.'); galClearSel(); })
+          .catch(function(e){ galToast("Error: "+e.message, true); });
+      }
+
+      function galPreviewImg(url){
+        var wrap = document.getElementById("galImgPreviewWrap");
+        var img  = document.getElementById("galImgPreview");
+        if(url && url.startsWith("http")){ img.src=url; wrap.style.display="block"; }
+        else { wrap.style.display="none"; }
+      }
+
+      // ── ONE-TIME IMPORT: the 12 designs currently hardcoded in gallery.html ──
+      var STATIC_DESIGNS = [
+        // HOUSES
+        { title:"Modern Villa", category:"house", style:"Villa", imageUrl:"https://images.unsplash.com/photo-1613977257363-707ba9348227?w=800&q=80",
+          description:"Sleek lines, floor-to-ceiling glass, and open-plan living spaces for the contemporary family.",
+          tags:"Modern, Glass Facade, Luxury", badge:"Featured", rating:4.9, specs:"4–6 BHK • 5,000+ sq ft",
+          area:"5,000+ sq ft", capacity:"Family", budget:"₹2.5Cr+", detailUrl:"mv.html", order:1 },
+        { title:"Minimal House", category:"house", style:"Minimal", imageUrl:"https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80",
+          description:"Less is more — clean surfaces, natural light, and only what matters. A sanctuary of calm.",
+          tags:"Minimal, Neutral, Calm", badge:"New", rating:4.7, specs:"3–4 BHK • 2,800 sq ft",
+          area:"2,800 sq ft", capacity:"Family", budget:"₹85L–₹1.2Cr", detailUrl:"minimalhouse.html", order:2 },
+        { title:"Luxury Duplex", category:"house", style:"Duplex", imageUrl:"https://images.unsplash.com/photo-1560184897-ae75f418493e?w=800&q=80",
+          description:"Double-storey grandeur with private terraces, home cinema, and a rooftop infinity pool.",
+          tags:"Luxury, Duplex, Rooftop Pool", badge:"Popular", rating:4.8, specs:"5 BHK • 7,000 sq ft",
+          area:"7,000 sq ft", capacity:"Family", budget:"₹3.5Cr+", detailUrl:"luxuryduplex.html", order:3 },
+        { title:"Traditional House", category:"house", style:"Traditional", imageUrl:"https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&q=80",
+          description:"Heritage craft meets modern comfort — carved woodwork, inner courtyards, and warm terracotta.",
+          tags:"Traditional, Heritage, Classic", badge:"", rating:4.6, specs:"4 BHK • 3,500 sq ft",
+          area:"3,500 sq ft", capacity:"Family", budget:"₹1Cr–₹1.5Cr", detailUrl:"traditionalhouse.html", order:4 },
+        { title:"Futuristic House", category:"house", style:"Futuristic", imageUrl:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
+          description:"AI-integrated smart systems, fluid organic forms, and holographic room controls.",
+          tags:"Futuristic, Smart Home, AI", badge:"Trending", rating:4.9, specs:"4–5 BHK • 4,500 sq ft",
+          area:"4,500 sq ft", capacity:"Family", budget:"₹2Cr–₹3Cr", detailUrl:"futuristichouse.html", order:5 },
+        { title:"Eco-Friendly House", category:"house", style:"Eco", imageUrl:"https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=800&q=80",
+          description:"Net-zero living with solar roofing, rainwater harvesting, and a living green facade.",
+          tags:"Eco, Solar, Green Facade", badge:"New", rating:4.8, specs:"3–4 BHK • 3,200 sq ft",
+          area:"3,200 sq ft", capacity:"Family", budget:"₹90L–₹1.4Cr", detailUrl:"ecofriendly.html", order:6 },
+        // APARTMENTS
+        { title:"Modern Apartment", category:"apartment", style:"Modern", imageUrl:"https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80",
+          description:"City living reimagined — open layouts, statement lighting, and a curated material palette.",
+          tags:"Modern, City, Open Plan", badge:"Popular", rating:4.7, specs:"2–3 BHK • 1,400 sq ft",
+          area:"1,400 sq ft", capacity:"Urban", budget:"₹55L–₹85L", detailUrl:"modernappartment.html", order:7 },
+        { title:"Luxury Apartment", category:"apartment", style:"Luxury", imageUrl:"https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&q=80",
+          description:"Penthouse-level finishes — marble, warm brass, and a panoramic glass corner for city views.",
+          tags:"Luxury, Marble, Penthouse", badge:"Featured", rating:4.9, specs:"3–4 BHK • 2,800 sq ft",
+          area:"2,800 sq ft", capacity:"Urban", budget:"₹1.5Cr–₹2.5Cr", detailUrl:"luxuryapartment.html", order:8 },
+        { title:"Studio Apartment", category:"apartment", style:"Studio", imageUrl:"https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800&q=80",
+          description:"Every centimetre counts — convertible furniture, hidden storage, and multi-function zones.",
+          tags:"Studio, Compact, Smart Storage", badge:"New", rating:4.6, specs:"Studio • 650 sq ft",
+          area:"650 sq ft", capacity:"Solo", budget:"₹30L–₹45L", detailUrl:"studioapartment.html", order:9 },
+        // OFFICES
+        { title:"Corporate Office", category:"office", style:"Corporate", imageUrl:"https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80",
+          description:"Prestigious environments built for enterprise teams — boardrooms, executive suites, and branded reception areas.",
+          tags:"Corporate, Formal, Professional", badge:"Corporate", rating:4.8, specs:"8 designs • 4.8 avg ★",
+          area:"", capacity:"", budget:"", detailUrl:"corporate-office.html", order:10 },
+        { title:"Startup Office", category:"office", style:"Startup", imageUrl:"https://images.unsplash.com/photo-1556761175-4b46a572b786?w=800&q=80",
+          description:"Bold, agile, and built to scale — open floors, collaboration zones, and modular furniture for fast-moving teams.",
+          tags:"Startup, Agile, Open, Creative", badge:"Startup", rating:4.9, specs:"6 designs • 4.9 avg ★",
+          area:"", capacity:"", budget:"", detailUrl:"startupoffice.html", order:11 },
+        { title:"Futuristic Office", category:"office", style:"Futuristic", imageUrl:"https://images.unsplash.com/photo-1488998427799-e3362cec87c3?w=800&q=80",
+          description:"AI-orchestrated, sensor-responsive, and architecturally bold — spaces built for the next decade of work.",
+          tags:"Futuristic, AI, Smart, Tech", badge:"Futuristic", rating:4.9, specs:"6 concepts • 4.9 avg ★",
+          area:"", capacity:"", budget:"", detailUrl:"futuristicoffice.html", order:12 }
+      ];
+
+      function galMigrateStatic(){
+        if(!confirm("Import the 12 existing static designs into Firestore so they can be managed here?\\n\\nAlready-imported designs (matched by title) will be skipped — safe to run more than once.")) return;
+        var btn = document.getElementById("galMigrateBtn");
+        var label = document.getElementById("galMigrateLabel");
+        btn.disabled = true;
+        label.textContent = "Checking existing…";
+
+        db.collection("gallery_designs").get().then(function(snap){
+          var existingTitles = new Set(snap.docs.map(function(d){ return (d.data().title||"").trim().toLowerCase(); }));
+          var toAdd = STATIC_DESIGNS.filter(function(d){ return !existingTitles.has(d.title.toLowerCase()); });
+
+          if(!toAdd.length){
+            galToast("All static designs are already imported.");
+            btn.disabled = false;
+            label.textContent = "Import 12 Existing Static Designs";
+            return;
+          }
+
+          label.textContent = "Importing " + toAdd.length + "…";
+          var batch = db.batch();
+          toAdd.forEach(function(d){
+            var ref = db.collection("gallery_designs").doc();
+            batch.set(ref, Object.assign({}, d, {
+              active: true,
+              migratedFrom: "static",
+              createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            }));
+          });
+          batch.commit().then(function(){
+            galToast(toAdd.length + " design(s) imported! You can now edit/delete them here.");
+            btn.disabled = false;
+            label.textContent = "Import 12 Existing Static Designs";
+          }).catch(function(e){
+            galToast("Import failed: " + e.message, true);
+            btn.disabled = false;
+            label.textContent = "Import 12 Existing Static Designs";
+          });
+        }).catch(function(e){
+          galToast("Couldn't check existing designs: " + e.message, true);
+          btn.disabled = false;
+          label.textContent = "Import 12 Existing Static Designs";
+        });
+      }
+
+      function galToast(msg, isErr){
+        var t = document.getElementById("galToast");
+        document.getElementById("galToastMsg").textContent = msg;
+        document.getElementById("galToastIcon").className = isErr
+          ? "fa-solid fa-triangle-exclamation" : "fa-solid fa-circle-check";
+        t.className = "gal-toast"+(isErr?" err":"");
+        t.classList.add("show");
+        clearTimeout(t._to);
+        t._to = setTimeout(function(){ t.classList.remove("show"); }, 3200);
+      }
+
+
       function esc(str) {
         if (!str) return "";
         return String(str)
@@ -2098,247 +2702,6 @@
           .replace(/</g, "&lt;")
           .replace(/>/g, "&gt;")
           .replace(/"/g, "&quot;");
-      }
-
-      /* ══════════════════════════════════════════
-         DESIGN MANAGER
-      ══════════════════════════════════════════ */
-      var allDesignDocs = [];
-      var dmFilterVal = 'all';
-      var dmEditId = null;  // null = add mode, string = edit mode
-      var dmUnsubGallery = null, dmUnsubInterior = null;
-      var dmGalleryDocs = [], dmInteriorDocs = [];
-
-      // Load designs tab when switched to
-      var _dmLoaded = false;
-
-      function loadDesignManager() {
-        // Listen to gallery_designs
-        dmUnsubGallery = db.collection('gallery_designs').onSnapshot(function(snap) {
-          dmGalleryDocs = snap.docs.map(function(d){ return Object.assign({id:d.id, _page:'gallery'}, d.data()); });
-          dmGalleryDocs.sort(function(a,b){ return (a.order||0)-(b.order||0); });
-          rebuildDmAll();
-        }, function(e){ dmToast('Gallery load error: ' + e.message, 'err'); });
-
-        // Listen to interior_designs
-        dmUnsubInterior = db.collection('interior_designs').onSnapshot(function(snap) {
-          dmInteriorDocs = snap.docs.map(function(d){ return Object.assign({id:d.id, _page:'interior'}, d.data()); });
-          dmInteriorDocs.sort(function(a,b){ return (a.order||0)-(b.order||0); });
-          rebuildDmAll();
-        }, function(e){ dmToast('Interior load error: ' + e.message, 'err'); });
-      }
-
-      function rebuildDmAll() {
-        allDesignDocs = dmGalleryDocs.concat(dmInteriorDocs);
-        // Stats
-        var gal = dmGalleryDocs.length, intr = dmInteriorDocs.length;
-        var active = allDesignDocs.filter(function(d){ return d.active; }).length;
-        document.getElementById('dmGalleryCount').textContent = gal;
-        document.getElementById('dmInteriorCount').textContent = intr;
-        document.getElementById('dmActiveCount').textContent = active;
-        document.getElementById('dmHiddenCount').textContent = allDesignDocs.length - active;
-        dmRender();
-      }
-
-      function setDmFilter(f, btn) {
-        dmFilterVal = f;
-        document.querySelectorAll('#paneDesigns .filter-btn').forEach(function(b){ b.classList.remove('active'); });
-        btn.classList.add('active');
-        dmRender();
-      }
-
-      function dmFilter() { dmRender(); }
-
-      function dmRender() {
-        var q = (document.getElementById('dmSearch').value || '').toLowerCase().trim();
-        var list = allDesignDocs.filter(function(d) {
-          if (dmFilterVal === 'gallery'  && d._page !== 'gallery')  return false;
-          if (dmFilterVal === 'interior' && d._page !== 'interior') return false;
-          if (dmFilterVal === 'active'   && !d.active)              return false;
-          if (dmFilterVal === 'hidden'   && d.active)               return false;
-          if (q) {
-            var txt = ((d.title||'') + ' ' + (d.tags||'') + ' ' + (d.category||'') + ' ' + (d.style||'') + ' ' + (d.room||'')).toLowerCase();
-            if (!txt.includes(q)) return false;
-          }
-          return true;
-        });
-
-        var grid = document.getElementById('dmGrid');
-        if (!list.length) {
-          grid.innerHTML = '<div class="state-msg" style="grid-column:1/-1"><i class="fa-regular fa-image"></i>No designs found. Click "Add Design" to create one.</div>';
-          return;
-        }
-
-        grid.innerHTML = list.map(function(d) {
-          var pageLabel = d._page === 'gallery' ? 'Gallery' : 'Interior';
-          var pageClass = d._page === 'gallery' ? 'dm-page-gallery' : 'dm-page-interior';
-          var tagsArr = (d.tags||'').split(',').map(function(t){return t.trim();}).filter(Boolean);
-          var tagHTML = tagsArr.slice(0,4).map(function(t){ return '<span class="dm-meta-tag">'+esc(t)+'</span>'; }).join('');
-          var ratStr = d.rating ? '<span class="dm-rating">★'+parseFloat(d.rating).toFixed(1)+'</span>' : '';
-          return '<div class="dm-card' + (d.active?'':' dm-hidden') + '" id="dmc-'+d.id+'">'+
-            '<div class="dm-card-img">'+
-              '<img src="'+esc(d.imageUrl||'')+'" alt="'+esc(d.title)+'" onerror="this.src=\'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&q=60\'"/>'+
-              '<span class="dm-card-page '+pageClass+'">'+pageLabel+'</span>'+
-              (d.badge?'<span class="dm-card-badge">'+esc(d.badge)+'</span>':'')+
-              (!d.active?'<div class="dm-card-hidden-ov"><i class="fa-solid fa-eye-slash"></i>Hidden</div>':'')+
-            '</div>'+
-            '<div class="dm-card-body">'+
-              '<div class="dm-card-cat">'+(esc(d.category||d.room||'—'))+' · '+esc(d.style||'')+'</div>'+
-              '<div class="dm-card-title">'+esc(d.title)+'</div>'+
-              '<div class="dm-card-desc">'+esc(d.description||'No description.')+'</div>'+
-              '<div class="dm-card-meta">'+tagHTML+'</div>'+
-              '<div class="dm-card-info">'+
-                '<span>'+(esc(d.specs||'—'))+'</span>'+
-                '<span class="dm-card-budget">'+(esc(d.budget||'—'))+'</span>'+
-              '</div>'+
-              '<div class="dm-card-info" style="margin-top:4px">'+
-                '<span>Order: '+(d.order||0)+'</span>'+
-                ratStr+
-              '</div>'+
-              '<div class="dm-card-actions">'+
-                '<button class="dm-btn" onclick="editDesign(\''+d.id+'\',\''+d._page+'\')"><i class="fa-solid fa-pen"></i> Edit</button>'+
-                '<button class="dm-btn dm-btn-hide" onclick="toggleDesignActive(\''+d.id+'\',\''+d._page+'\','+(!d.active)+')">'+(d.active?'<i class="fa-solid fa-eye-slash"></i> Hide':'<i class="fa-solid fa-eye"></i> Show')+'</button>'+
-                '<button class="dm-btn dm-btn-del" onclick="deleteDesign(\''+d.id+'\',\''+d._page+'\')"><i class="fa-solid fa-trash"></i> Delete</button>'+
-              '</div>'+
-            '</div>'+
-          '</div>';
-        }).join('');
-      }
-
-      /* ── MODAL ── */
-      function openDesignModal() {
-        dmEditId = null;
-        document.getElementById('dmModalTitle').textContent = 'Add New Design';
-        document.getElementById('dmSaveLbl').textContent = 'Save Design';
-        // Clear fields
-        ['dm-title','dm-style','dm-img','dm-desc','dm-tags','dm-specs','dm-budget','dm-detail-url','dm-room'].forEach(function(id){
-          var el=document.getElementById(id); if(el) el.value='';
-        });
-        document.getElementById('dm-rating').value = '4.8';
-        document.getElementById('dm-order').value = '0';
-        document.getElementById('dm-badge').value = '';
-        document.getElementById('dm-page').value = 'gallery';
-        document.getElementById('dm-category').value = 'house';
-        document.getElementById('dm-active').checked = true;
-        document.getElementById('dm-img-preview').style.display = 'none';
-        toggleOfficeField();
-        document.getElementById('designModal').classList.add('open');
-      }
-
-      function editDesign(id, page) {
-        var doc = allDesignDocs.find(function(d){ return d.id===id && d._page===page; });
-        if(!doc) return;
-        dmEditId = {id:id, page:page};
-        document.getElementById('dmModalTitle').textContent = 'Edit: ' + (doc.title||'Design');
-        document.getElementById('dmSaveLbl').textContent = 'Update Design';
-        document.getElementById('dm-page').value = page;
-        document.getElementById('dm-category').value = doc.category || 'house';
-        document.getElementById('dm-title').value = doc.title || '';
-        document.getElementById('dm-style').value = doc.style || '';
-        document.getElementById('dm-img').value = doc.imageUrl || '';
-        document.getElementById('dm-desc').value = doc.description || '';
-        document.getElementById('dm-tags').value = doc.tags || '';
-        document.getElementById('dm-badge').value = doc.badge || '';
-        document.getElementById('dm-specs').value = doc.specs || '';
-        document.getElementById('dm-budget').value = doc.budget || '';
-        document.getElementById('dm-rating').value = doc.rating || '';
-        document.getElementById('dm-detail-url').value = doc.detailUrl || '';
-        document.getElementById('dm-order').value = typeof doc.order!=='undefined' ? doc.order : 0;
-        document.getElementById('dm-room').value = doc.room || '';
-        document.getElementById('dm-active').checked = !!doc.active;
-        previewDmImg();
-        toggleOfficeField();
-        document.getElementById('designModal').classList.add('open');
-      }
-
-      function closeDesignModal() {
-        document.getElementById('designModal').classList.remove('open');
-      }
-
-      function toggleOfficeField() {
-        var page = document.getElementById('dm-page').value;
-        var roomWrap = document.getElementById('dm-room-wrap');
-        if(roomWrap) roomWrap.style.display = page==='interior' ? 'block' : 'none';
-      }
-
-      function previewDmImg() {
-        var url = document.getElementById('dm-img').value.trim();
-        var prev = document.getElementById('dm-img-preview');
-        if(url) { prev.src=url; prev.style.display='block'; prev.onerror=function(){prev.style.display='none';}; }
-        else prev.style.display='none';
-      }
-
-      function saveDesign() {
-        var page      = document.getElementById('dm-page').value;
-        var title     = document.getElementById('dm-title').value.trim();
-        var imageUrl  = document.getElementById('dm-img').value.trim();
-        if(!title || !imageUrl) { dmToast('Title and Image URL are required', 'err'); return; }
-
-        var data = {
-          title:      title,
-          category:   document.getElementById('dm-category').value,
-          style:      document.getElementById('dm-style').value.trim(),
-          imageUrl:   imageUrl,
-          description:document.getElementById('dm-desc').value.trim(),
-          tags:       document.getElementById('dm-tags').value.trim(),
-          badge:      document.getElementById('dm-badge').value,
-          specs:      document.getElementById('dm-specs').value.trim(),
-          budget:     document.getElementById('dm-budget').value.trim(),
-          rating:     parseFloat(document.getElementById('dm-rating').value)||4.8,
-          detailUrl:  document.getElementById('dm-detail-url').value.trim(),
-          order:      parseInt(document.getElementById('dm-order').value)||0,
-          active:     document.getElementById('dm-active').checked,
-          room:       document.getElementById('dm-room').value.trim(),
-          updatedAt:  firebase.firestore.FieldValue.serverTimestamp()
-        };
-
-        var col = page==='gallery' ? 'gallery_designs' : 'interior_designs';
-        var btn = document.getElementById('dmSaveBtn');
-        btn.disabled = true;
-        document.getElementById('dmSaveLbl').textContent = 'Saving…';
-
-        var p;
-        if(dmEditId) {
-          p = db.collection(col).doc(dmEditId.id).update(data);
-        } else {
-          data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
-          p = db.collection(col).add(data);
-        }
-        p.then(function() {
-          dmToast(dmEditId ? 'Design updated! Changes are live on the site.' : 'Design added! It\'s now live on the site.');
-          closeDesignModal();
-          btn.disabled = false;
-          document.getElementById('dmSaveLbl').textContent = dmEditId ? 'Update Design' : 'Save Design';
-        }).catch(function(e) {
-          dmToast('Save failed: ' + e.message, 'err');
-          btn.disabled = false;
-          document.getElementById('dmSaveLbl').textContent = dmEditId ? 'Update Design' : 'Save Design';
-        });
-      }
-
-      function toggleDesignActive(id, page, newVal) {
-        var col = page==='gallery' ? 'gallery_designs' : 'interior_designs';
-        db.collection(col).doc(id).update({active: newVal}).then(function() {
-          dmToast('Design ' + (newVal ? 'shown' : 'hidden') + ' on site.');
-        });
-      }
-
-      function deleteDesign(id, page) {
-        if(!confirm('Delete this design permanently? It will be removed from the site immediately.')) return;
-        var col = page==='gallery' ? 'gallery_designs' : 'interior_designs';
-        db.collection(col).doc(id).delete().then(function() {
-          dmToast('Design deleted.');
-        });
-      }
-
-      /* ── DM TOAST ── */
-      function dmToast(msg, type) {
-        var t = document.getElementById('dmToast');
-        document.getElementById('dmToastMsg').textContent = msg;
-        t.className = 'show' + (type==='err' ? ' err' : '');
-        t.querySelector('i').className = 'fa-solid ' + (type==='err'?'fa-circle-exclamation':'fa-circle-check');
-        clearTimeout(t._t);
-        t._t = setTimeout(function(){ t.classList.remove('show'); }, 3200);
       }
     </script>
   </body>
