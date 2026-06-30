@@ -1415,24 +1415,28 @@
     </div>
 
     <script>
-      var KEY = "archinova_wishlist";
-      function getWL() {
-        try {
-          return JSON.parse(localStorage.getItem(KEY) || "[]");
-        } catch (e) {
-          return [];
-        }
-      }
-      function setWL(l) {
-        localStorage.setItem(KEY, JSON.stringify(l));
+      /* ══ WISHLIST — now backed by Firestore (gallery_wishlist), per logged-in user ══ */
+      var wlCache = [];          // local cache of {docId, title, ...} for the current user
+      var wlReady = false;       // true once first Firestore read completes
+      var wlUser = null;         // currentUser.uid or null
+
+      function wlDB(){
+        if(!firebase.apps.length) firebase.initializeApp({
+          apiKey:"AIzaSyAgcKYuy18C6lEvfxhI_Ir_9AWPtyWj7WM",
+          authDomain:"archinova-41427.firebaseapp.com",
+          projectId:"archinova-41427",
+          storageBucket:"archinova-41427.firebasestorage.app",
+          messagingSenderId:"710524988548",
+          appId:"1:710524988548:web:34526229a8ad3051c866d1"
+        });
+        return firebase.firestore();
       }
 
       function updateBadge() {
-        var wl = getWL();
         var b = document.getElementById("wcount");
-        if (wl.length) {
+        if (wlCache.length) {
           b.style.display = "inline";
-          b.textContent = wl.length;
+          b.textContent = wlCache.length;
         } else {
           b.style.display = "none";
         }
@@ -1448,49 +1452,66 @@
       }
 
       function renderWP() {
-        var wl = getWL();
         var box = document.getElementById("wpItems");
-        if (!wl.length) {
+        if (!wlUser) {
+          box.innerHTML = '<div class="wp-empty">Login to save designs to your Wishlist.</div>';
+          return;
+        }
+        if (!wlCache.length) {
           box.innerHTML = '<div class="wp-empty">No designs saved yet.</div>';
           return;
         }
         box.innerHTML =
-          wl
+          wlCache
             .slice(0, 5)
-            .map(function (d, i) {
+            .map(function (d) {
               return (
                 '<div class="wi"><div><div>' +
-                d.title +
+                escHTML(d.title) +
                 '</div><div class="wi-cat">' +
-                d.section +
+                escHTML(d.section) +
                 '</div></div><button class="wi-rm" onclick="removeWI(\'' +
-                d.id +
+                d.docId +
                 "')\">&#10005;</button></div>"
               );
             })
             .join("") +
-          (wl.length > 5
+          (wlCache.length > 5
             ? '<div style="font-size:.72rem;color:var(--w50);text-align:center;padding:.4rem 0">+' +
-              (wl.length - 5) +
+              (wlCache.length - 5) +
               " more</div>"
             : "");
       }
-      function removeWI(id) {
-        var wl = getWL().filter(function (d) {
-          return d.id !== id;
-        });
-        setWL(wl);
-        updateBadge();
-        renderWP();
+
+      function syncHeartButtons() {
+        var titleSet = {};
+        wlCache.forEach(function (d) { titleSet[d.title] = d.docId; });
         document.querySelectorAll(".csave").forEach(function (b) {
           var c = b.closest(".card");
-          if (c && c.dataset.name === id) {
+          var name = c && c.dataset.name;
+          if (name && titleSet[name]) {
+            b.classList.add("saved");
+            b.innerHTML = "&#9829;";
+          } else {
             b.classList.remove("saved");
             b.innerHTML = "&#9825;";
           }
         });
-        showToast("Removed from Wishlist.");
       }
+
+      function removeWI(docId) {
+        if (!wlUser) return;
+        wlDB().collection("gallery_wishlist").doc(docId).delete()
+          .then(function () {
+            wlCache = wlCache.filter(function (d) { return d.docId !== docId; });
+            updateBadge();
+            renderWP();
+            syncHeartButtons();
+            showToast("Removed from Wishlist.");
+          })
+          .catch(function (e) { showToast("Error: " + e.message); });
+      }
+
       function toggleWP(e) {
         e.stopPropagation();
         var p = document.getElementById("wp");
@@ -1503,14 +1524,38 @@
           p.classList.remove("open");
       });
 
+      function saveCardFromBtn(btn){
+        var card = btn.closest('.card');
+        if(!card) return;
+        var name    = card.dataset.name || '';
+        var section = card.dataset.cat || '';
+        var img     = card.dataset.img || '';
+        var area    = card.dataset.area || '';
+        var cap     = card.dataset.cap || '';
+        var budget  = card.dataset.budget || '';
+        var tags    = [];
+        try { tags = JSON.parse(card.dataset.tagsjson || '[]'); } catch(e) { tags = []; }
+        saveCard(btn, name, section, img, area, cap, budget, tags);
+      }
+
       function saveCard(btn, name, section, img, area, cap, budget, tags) {
-        var wl = getWL();
-        var idx = wl.findIndex(function (d) {
-          return d.id === name;
-        });
-        if (idx === -1) {
-          wl.push({
-            id: name,
+        if (!wlUser) {
+          showToast("Please login to save designs to your Wishlist.");
+          setTimeout(function () {
+            window.location.href = "login.html?from=gallery.html";
+          }, 1200);
+          return;
+        }
+        if (!wlReady) {
+          showToast("Still loading your Wishlist — try again in a moment.");
+          return;
+        }
+        var existing = wlCache.find(function (d) { return d.title === name; });
+        var db = wlDB();
+        if (!existing) {
+          btn.disabled = true;
+          var docData = {
+            userId: wlUser,
             title: name,
             section: section,
             badge: section,
@@ -1520,20 +1565,61 @@
             budget: budget,
             tags: tags,
             desc: "ArchiNova " + section + " design.",
-            savedAt: new Date().toISOString(),
-          });
-          setWL(wl);
-          btn.classList.add("saved");
-          btn.innerHTML = "&#9829;";
-          showToast('"' + name + '" saved to Wishlist!');
+            savedAt: firebase.firestore.FieldValue.serverTimestamp(),
+          };
+          db.collection("gallery_wishlist").add(docData)
+            .then(function (ref) {
+              wlCache.push(Object.assign({ docId: ref.id }, docData, { savedAt: new Date().toISOString() }));
+              btn.classList.add("saved");
+              btn.innerHTML = "&#9829;";
+              btn.disabled = false;
+              showToast('"' + name + '" saved to Wishlist!');
+              updateBadge();
+            })
+            .catch(function (e) {
+              btn.disabled = false;
+              showToast("Error: " + e.message);
+            });
         } else {
-          wl.splice(idx, 1);
-          setWL(wl);
-          btn.classList.remove("saved");
-          btn.innerHTML = "&#9825;";
-          showToast('"' + name + '" removed from Wishlist.');
+          btn.disabled = true;
+          db.collection("gallery_wishlist").doc(existing.docId).delete()
+            .then(function () {
+              wlCache = wlCache.filter(function (d) { return d.docId !== existing.docId; });
+              btn.classList.remove("saved");
+              btn.innerHTML = "&#9825;";
+              btn.disabled = false;
+              showToast('"' + name + '" removed from Wishlist.');
+              updateBadge();
+            })
+            .catch(function (e) {
+              btn.disabled = false;
+              showToast("Error: " + e.message);
+            });
         }
-        updateBadge();
+      }
+
+      function loadWishlistForUser(uid) {
+        wlUser = uid;
+        if (!uid) {
+          wlCache = [];
+          wlReady = true;
+          updateBadge();
+          syncHeartButtons();
+          return;
+        }
+        wlDB().collection("gallery_wishlist").where("userId", "==", uid).get()
+          .then(function (snap) {
+            wlCache = snap.docs.map(function (d) {
+              return Object.assign({ docId: d.id }, d.data());
+            });
+            wlReady = true;
+            updateBadge();
+            syncHeartButtons();
+          })
+          .catch(function (e) {
+            console.error("Wishlist load error:", e);
+            wlReady = true;
+          });
       }
 
       var activeSec = "all",
@@ -1598,16 +1684,6 @@
 
       window.addEventListener("DOMContentLoaded", function () {
         updateBadge();
-        var wl = getWL();
-        wl.forEach(function (item) {
-          document.querySelectorAll(".csave").forEach(function (btn) {
-            var card = btn.closest(".card");
-            if (card && card.dataset.name === item.id) {
-              btn.classList.add("saved");
-              btn.innerHTML = "&#9829;";
-            }
-          });
-        });
       });
     </script>
     <script>
@@ -1650,6 +1726,9 @@
           var dashLi = document.getElementById("navDashLi");
           var mobileDashLi = document.getElementById("mobileNavDashLi");
           var mobileLogin = document.getElementById("mobileNavLogin");
+          if (typeof loadWishlistForUser === "function") {
+            loadWishlistForUser(user ? user.uid : null);
+          }
           if (!li) return;
           if (user) {
             li.innerHTML =
@@ -1691,38 +1770,54 @@
         return firebase.firestore();
       }
 
+      function escAttr(str){
+        return String(str==null?'':str)
+          .replace(/&/g,'&amp;')
+          .replace(/</g,'&lt;')
+          .replace(/>/g,'&gt;')
+          .replace(/"/g,'&quot;')
+          .replace(/'/g,'&#39;');
+      }
+      function escHTML(str){
+        return String(str==null?'':str)
+          .replace(/&/g,'&amp;')
+          .replace(/</g,'&lt;')
+          .replace(/>/g,'&gt;');
+      }
+
       function badgeHTML(b){
         var map={featured:'b-feat',new:'b-new',popular:'b-pop',trending:'b-trend'};
         if(!b)return'';
-        return '<span class="bdg '+(map[b.toLowerCase()]||'b-new')+'">'+b+'</span>';
+        return '<span class="bdg '+(map[b.toLowerCase()]||'b-new')+'">'+escHTML(b)+'</span>';
       }
 
       function buildCard(d){
         var tagsArr = (d.tags||'').split(',').map(function(t){return t.trim();}).filter(Boolean);
-        var tagHTML = tagsArr.map(function(t){return '<span class="ct">'+t+'</span>';}).join('');
+        var tagHTML = tagsArr.map(function(t){return '<span class="ct">'+escHTML(t)+'</span>';}).join('');
         var rat = parseFloat(d.rating)||4.8;
-        return '<div class="card" data-name="'+d.title+'" data-tags="'+(d.tags||'').toLowerCase()+'" data-cat="'+(d.category||'house')+'" data-rat="'+rat+'" data-dynamic="1">'+
-          '<div class="card-img"><img src="'+d.imageUrl+'" onerror="this.src=\'https://images.unsplash.com/photo-1613977257363-707ba9348227?w=600&q=75\'" alt="'+d.title+'"/>'+
+        return '<div class="card" data-name="'+escAttr(d.title)+'" data-tags="'+escAttr((d.tags||'').toLowerCase())+'" data-cat="'+escAttr(d.category||'house')+'" data-rat="'+rat+'" data-dynamic="1"'+
+          ' data-img="'+escAttr(d.imageUrl)+'" data-area="'+escAttr(d.area||'')+'" data-cap="'+escAttr(d.capacity||'')+'" data-budget="'+escAttr(d.budget||'')+'" data-tagsjson="'+escAttr(JSON.stringify(tagsArr))+'">'+
+          '<div class="card-img"><img src="'+escAttr(d.imageUrl)+'" onerror="this.src=\'https://images.unsplash.com/photo-1613977257363-707ba9348227?w=600&q=75\'" alt="'+escAttr(d.title)+'"/>'+
           '<div class="card-overlay"></div>'+
           '<div class="card-badges">'+badgeHTML(d.badge)+'</div>'+
           '<div class="card-rating"><em>&#9733;</em>'+rat.toFixed(1)+'</div></div>'+
-          '<div class="card-body"><div class="card-cat">'+(d.category||'House')+' &bull; '+(d.style||'')+'</div>'+
-          '<h3>'+d.title+'</h3><p>'+(d.description||'')+'</p>'+
+          '<div class="card-body"><div class="card-cat">'+escHTML(d.category||'House')+' &bull; '+escHTML(d.style||'')+'</div>'+
+          '<h3>'+escHTML(d.title)+'</h3><p>'+escHTML(d.description||'')+'</p>'+
           '<div class="card-tags">'+tagHTML+'</div></div>'+
-          '<div class="card-foot"><div class="card-info">'+(d.specs||'')+'</div>'+
+          '<div class="card-foot"><div class="card-info">'+escHTML(d.specs||'')+'</div>'+
           '<div class="card-btns">'+
-          '<button class="csave" onclick="saveCard(this,\''+d.title+'\',\''+d.category+'\',\''+d.imageUrl+'\',\''+(d.area||'')+'\',\''+(d.capacity||'')+'\',\''+(d.budget||'')+'\','+JSON.stringify(tagsArr)+')">&#9825;</button>'+
-          (d.detailUrl?'<a href="'+d.detailUrl+'" class="cview">View &#8594;</a>':'<span style="font-size:.7rem;color:var(--w50)">Coming Soon</span>')+
+          '<button class="csave" onclick="saveCardFromBtn(this)">&#9825;</button>'+
+          (d.detailUrl?'<a href="'+escAttr(d.detailUrl)+'" class="cview">View &#8594;</a>':'<span style="font-size:.7rem;color:var(--w50)">Coming Soon</span>')+
           '</div></div></div>';
       }
 
       function buildOfficeCard(d){
-        return '<a href="'+(d.detailUrl||'#')+'" class="otype" data-cat="office" data-tags="'+(d.tags||'').toLowerCase()+'" data-name="'+d.title+'" data-dynamic="1">'+
-          '<div class="otype-img"><img src="'+d.imageUrl+'" onerror="this.src=\'https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=75\'" alt="'+d.title+'"/>'+
+        return '<a href="'+escAttr(d.detailUrl||'#')+'" class="otype" data-cat="office" data-tags="'+escAttr((d.tags||'').toLowerCase())+'" data-name="'+escAttr(d.title)+'" data-dynamic="1">'+
+          '<div class="otype-img"><img src="'+escAttr(d.imageUrl)+'" onerror="this.src=\'https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=75\'" alt="'+escAttr(d.title)+'"/>'+
           '<div class="otype-ov"></div>'+
-          '<div class="otype-badge" style="background:var(--t);color:var(--n1)">'+d.badge+'</div></div>'+
-          '<div class="otype-body"><h3>'+d.title+'</h3><p>'+(d.description||'')+'</p></div>'+
-          '<div class="otype-foot"><div class="otype-count">'+(d.specs||'')+'</div>'+
+          '<div class="otype-badge" style="background:var(--t);color:var(--n1)">'+escHTML(d.badge)+'</div></div>'+
+          '<div class="otype-body"><h3>'+escHTML(d.title)+'</h3><p>'+escHTML(d.description||'')+'</p></div>'+
+          '<div class="otype-foot"><div class="otype-count">'+escHTML(d.specs||'')+'</div>'+
           '<div class="otype-btn">Explore &#8594;</div></div></a>';
       }
 
@@ -1761,14 +1856,8 @@
           }
         }
 
-        // Re-sync wishlist saved state
-        var wl=getWL();
-        wl.forEach(function(item){
-          document.querySelectorAll('.csave').forEach(function(btn){
-            var card=btn.closest('.card');
-            if(card&&card.dataset.name===item.id){btn.classList.add('saved');btn.innerHTML='&#9829;';}
-          });
-        });
+        // Re-sync wishlist saved state (uses the Firestore-backed cache from the wishlist module)
+        if (typeof syncHeartButtons === "function") syncHeartButtons();
       }
 
       window.addEventListener('DOMContentLoaded',function(){

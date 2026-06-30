@@ -1254,20 +1254,22 @@
       /* ── LOAD STATS ── */
       async function loadStats() {
         const uid = currentUser.uid;
-        const [saved, favs] = await Promise.all([
+        const [saved, favs, wishlist] = await Promise.all([
           db.collection("saved_designs").where("userId", "==", uid).get(),
           db
             .collection("saved_designs")
             .where("userId", "==", uid)
             .where("favourite", "==", true)
             .get(),
+          db.collection("gallery_wishlist").where("userId", "==", uid).get(),
         ]);
+        const totalFavs = favs.size + wishlist.size;
         document.getElementById("statSaved").textContent = saved.size;
-        document.getElementById("statFavs").textContent = favs.size;
+        document.getElementById("statFavs").textContent = totalFavs;
         document.getElementById("statExports").textContent =
           localStorage.getItem(`Archinova_exports_${uid}`) || "0";
         document.getElementById("profileSaved").textContent = saved.size;
-        document.getElementById("profileFavs").textContent = favs.size;
+        document.getElementById("profileFavs").textContent = totalFavs;
       }
 
       /* ── LOAD SAVED DESIGNS ── */
@@ -1321,10 +1323,28 @@
         document.getElementById("savedCount").textContent =
           snap.size + " design" + (snap.size !== 1 ? "s" : "");
 
-        /* Favourites */
+        /* Favourites — merges AI-generated saved_designs marked favourite
+           with hearted gallery_designs (gallery_wishlist) from gallery.html */
         const favDocs = snap.docs.filter((d) => d.data().favourite);
-        document.getElementById("favsGrid").innerHTML = favDocs.length
-          ? designsHTML(favDocs)
+
+        let wishlistDocs = [];
+        try {
+          const wlSnap = await db
+            .collection("gallery_wishlist")
+            .where("userId", "==", uid)
+            .get();
+          wishlistDocs = wlSnap.docs;
+        } catch (e) {
+          console.warn("Gallery wishlist load failed:", e.message);
+        }
+
+        const favHTML = designsHTML(favDocs);
+        const wishlistHTML = wishlistCardsHTML(wishlistDocs);
+        const combinedHTML = favHTML + wishlistHTML;
+        const totalFavCount = favDocs.length + wishlistDocs.length;
+
+        document.getElementById("favsGrid").innerHTML = combinedHTML
+          ? combinedHTML
           : emptyHTML(
               "fa-heart",
               "No favourites yet — heart a design to save it here",
@@ -1332,7 +1352,69 @@
               "interior.html",
             );
         document.getElementById("favCount").textContent =
-          favDocs.length + " favourite" + (favDocs.length !== 1 ? "s" : "");
+          totalFavCount + " favourite" + (totalFavCount !== 1 ? "s" : "");
+      }
+
+      /* ── GALLERY WISHLIST CARDS (hearted designs from gallery.html) ── */
+      function wishlistCardsHTML(docs) {
+        if (!docs.length) return "";
+        return docs
+          .map((doc) => {
+            const d = doc.data();
+            const savedDate = d.savedAt
+              ? d.savedAt.seconds
+                ? new Date(d.savedAt.seconds * 1000).toLocaleDateString("en-IN", {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
+                  })
+                : new Date(d.savedAt).toLocaleDateString("en-IN", {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
+                  })
+              : "";
+            const tags = Array.isArray(d.tags) ? d.tags : [];
+            return `<div class="design-card">
+      <div class="design-card-img">
+        ${
+          d.img
+            ? `<img src="${d.img}" alt="${(d.title || "Design").replace(/"/g, "&quot;")}" onerror="this.parentElement.innerHTML='<div class=\\"no-img\\"><i class=\\"fa-solid fa-image\\"></i></div>'">`
+            : `<div class="no-img" style="display:flex;align-items:center;justify-content:center;height:100%">
+               <i class="fa-solid fa-couch" style="font-size:32px;color:rgba(0,201,167,0.35)"></i>
+             </div>`
+        }
+        <div class="design-card-fav fav" onclick="removeFromWishlist('${doc.id}', this)">
+          <i class="fa-solid fa-heart"></i>
+        </div>
+      </div>
+      <div class="design-card-body">
+        <div class="design-card-title">${d.title || "Gallery Design"}</div>
+        <div class="design-card-meta">${[d.section].filter(Boolean).join(" · ")}${savedDate ? ` · ${savedDate}` : ""}</div>
+        <div class="design-card-tags">
+          ${tags.slice(0, 3).map((t) => `<span class="design-tag">${t}</span>`).join("")}
+          ${d.budget ? `<span class="design-tag">${d.budget}</span>` : ""}
+        </div>
+        <div class="design-card-actions">
+          <a class="card-btn view" href="gallery.html" style="text-decoration:none;text-align:center"><i class="fa-solid fa-images"></i> View in Gallery</a>
+          <button class="card-btn del" onclick="removeFromWishlist('${doc.id}', this)"><i class="fa-solid fa-trash"></i></button>
+        </div>
+      </div>
+    </div>`;
+          })
+          .join("");
+      }
+
+      async function removeFromWishlist(docId, el) {
+        if (!confirm("Remove this design from your Wishlist?")) return;
+        try {
+          await db.collection("gallery_wishlist").doc(docId).delete();
+          showToast("Removed from Wishlist");
+          loadSavedDesigns();
+          loadStats();
+        } catch (e) {
+          showToast("Error: " + e.message);
+        }
       }
 
       function designsHTML(docs) {
