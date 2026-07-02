@@ -1201,11 +1201,44 @@
     }
     function closeCM() { document.getElementById('cm').classList.remove('open'); document.body.style.overflow = ''; }
     function submitCon() {
-      if (!document.getElementById('c-first').value.trim() || !document.getElementById('c-email').value.trim()) {
+      const first = document.getElementById('c-first').value.trim();
+      const last = document.getElementById('c-last').value.trim();
+      const email = document.getElementById('c-email').value.trim();
+      if (!first || !email) {
         alert('Please fill in name and email.'); return;
       }
-      document.getElementById('c-ok').style.display = 'block';
-      setTimeout(() => closeCM(), 2200);
+
+      const designTitles = allItems.map(d => d.title).filter(Boolean);
+      const payload = {
+        userId: currentUid || null,
+        name: (first + ' ' + last).trim(),
+        phone: '',
+        email: email,
+        projectType: 'Consultation Request (Wishlist)',
+        date: document.getElementById('c-date').value || '',
+        details: designTitles.length
+          ? 'Regarding saved designs: ' + designTitles.join(', ')
+          : '',
+        builder: '',
+        city: '',
+        status: 'new',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      };
+
+      const btn = document.querySelector('#cm .btn-p');
+      if (btn) btn.disabled = true;
+
+      db.collection('consultations').add(payload)
+        .then(() => {
+          document.getElementById('c-ok').style.display = 'block';
+          setTimeout(() => closeCM(), 2200);
+        })
+        .catch(e => {
+          alert('Could not book consultation: ' + e.message);
+        })
+        .finally(() => {
+          if (btn) btn.disabled = false;
+        });
     }
 
     /* ── toast ── */
