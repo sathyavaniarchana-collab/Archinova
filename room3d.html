@@ -412,32 +412,6 @@
         cursor: pointer;
       }
 
-      /* PDF BUTTON */
-      .pdf-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        width: 100%;
-        padding: 14px 24px;
-        background: linear-gradient(135deg, #3d0070, #00c9a7);
-        border: none;
-        border-radius: 8px;
-        color: white;
-        font-family: "DM Sans", sans-serif;
-        font-size: 13px;
-        font-weight: 500;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        cursor: pointer;
-        transition: all 0.3s;
-        text-decoration: none;
-      }
-      .pdf-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 30px rgba(0, 201, 167, 0.35);
-      }
-
       /* CURRENT SELECTION SUMMARY */
       .summary-row {
         display: flex;
@@ -861,8 +835,6 @@
             </div>
           </div>
 
-          <!-- PDF Export -->
-         
         </div>
       </div>
     </div>
@@ -1672,28 +1644,6 @@
         t.classList.add("show");
         setTimeout(() => t.classList.remove("show"), 2200);
       }
-
-      // Save to localStorage for PDF export
-      function savePreviewData() {
-        const data = {
-          room: currentRoom,
-          roomName: roomNames[currentRoom],
-          wall: currentWall.name,
-          wallHex: currentWall.hex,
-          floor: currentFloor.name,
-          timestamp: new Date().toLocaleDateString("en-IN", {
-            day: "numeric",
-            month: "long",
-            year: "numeric",
-          }),
-        };
-        localStorage.setItem("Archinova3DPreview", JSON.stringify(data));
-      }
-
-      // Update export link
-      document.getElementById("exportBtn").addEventListener("click", (e) => {
-        savePreviewData();
-      });
 
       // ── NEURAL BG ──
       (function () {
