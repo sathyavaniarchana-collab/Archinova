@@ -199,65 +199,146 @@ select.fi{background:#0b1e35;cursor:pointer}
 
 <div id="toast"></div>
 
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
 <script>
-const KEY='archinova_wishlist';
-function getL(){try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){return[]}}
-function setL(l){localStorage.setItem(KEY,JSON.stringify(l))}
-let sortMode='newest';
+/* ══ ArchiNova Wishlist — Firestore-backed (gallery_wishlist collection) ══ */
 
-function pBudget(s){if(!s)return 0;const n=parseFloat(s.replace(/[^0-9.]/g,''));if(s.includes('M'))return n*1e6;if(s.includes('K'))return n*1e3;return n;}
-function fBudget(t){if(t>=1e6)return'$'+(t/1e6).toFixed(1)+'M';if(t>=1e3)return'$'+(t/1e3).toFixed(0)+'K';return'$'+t;}
-function fDate(iso){try{return new Date(iso).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}catch(e){return''}}
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyAgcKYuy18C6lEvfxhI_Ir_9AWPtyWj7WM",
+  authDomain: "archinova-41427.firebaseapp.com",
+  projectId: "archinova-41427",
+  storageBucket: "archinova-41427.firebasestorage.app",
+  messagingSenderId: "710524988548",
+  appId: "1:710524988548:web:34526229a8ad3051c866d1"
+};
+if (!firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
+const db   = firebase.firestore();
+const auth = firebase.auth();
 
-function sorted(){
-  const l=getL();
-  if(sortMode==='newest')return l.slice().sort((a,b)=>new Date(b.savedAt)-new Date(a.savedAt));
-  if(sortMode==='oldest')return l.slice().sort((a,b)=>new Date(a.savedAt)-new Date(b.savedAt));
-  if(sortMode==='alpha')return l.slice().sort((a,b)=>a.title.localeCompare(b.title));
-  if(sortMode==='bhi')return l.slice().sort((a,b)=>pBudget(b.budget)-pBudget(a.budget));
-  if(sortMode==='blo')return l.slice().sort((a,b)=>pBudget(a.budget)-pBudget(b.budget));
+/* ── state ── */
+let allItems  = [];   // full wishlist from Firestore
+let sortMode  = 'newest';
+let currentUid = null;
+let _rid = null;
+
+/* ── helpers ── */
+function pBudget(s) {
+  if (!s) return 0;
+  const n = parseFloat(s.replace(/[^0-9.]/g, ''));
+  if (s.includes('Cr')) return n * 1e7;
+  if (s.includes('L'))  return n * 1e5;
+  if (s.includes('M'))  return n * 1e6;
+  if (s.includes('K'))  return n * 1e3;
+  return n;
+}
+function fBudget(t) {
+  if (t >= 1e7) return '₹' + (t / 1e7).toFixed(1) + 'Cr';
+  if (t >= 1e5) return '₹' + (t / 1e5).toFixed(0) + 'L';
+  if (t >= 1e6) return '$' + (t / 1e6).toFixed(1) + 'M';
+  if (t >= 1e3) return '$' + (t / 1e3).toFixed(0) + 'K';
+  return t ? String(t) : '—';
+}
+function fDate(val) {
+  if (!val) return '';
+  try {
+    // Firestore Timestamp object
+    const d = val && val.seconds ? new Date(val.seconds * 1000) : new Date(val);
+    return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+  } catch(e) { return ''; }
+}
+function escH(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* ── sort ── */
+function sorted() {
+  const l = allItems.slice();
+  if (sortMode === 'newest') return l.sort((a,b) => {
+    const ta = a.savedAt && a.savedAt.seconds ? a.savedAt.seconds : new Date(a.savedAt||0)/1000;
+    const tb = b.savedAt && b.savedAt.seconds ? b.savedAt.seconds : new Date(b.savedAt||0)/1000;
+    return tb - ta;
+  });
+  if (sortMode === 'oldest') return l.sort((a,b) => {
+    const ta = a.savedAt && a.savedAt.seconds ? a.savedAt.seconds : new Date(a.savedAt||0)/1000;
+    const tb = b.savedAt && b.savedAt.seconds ? b.savedAt.seconds : new Date(b.savedAt||0)/1000;
+    return ta - tb;
+  });
+  if (sortMode === 'alpha')  return l.sort((a,b) => (a.title||'').localeCompare(b.title||''));
+  if (sortMode === 'bhi')    return l.sort((a,b) => pBudget(b.budget) - pBudget(a.budget));
+  if (sortMode === 'blo')    return l.sort((a,b) => pBudget(a.budget) - pBudget(b.budget));
   return l;
 }
 
-function render(){
-  const list=sorted();
-  const g=id=>document.getElementById(id);
-  const secs=[...new Set(list.map(d=>d.section||'Gallery'))];
-  g('s-saved').textContent=list.length;
-  g('s-secs').textContent=secs.length||0;
-  const tot=list.reduce((s,d)=>s+pBudget(d.budget),0);
-  g('s-budget').textContent=list.length?fBudget(tot):'—';
-  const lat=[...list].sort((a,b)=>new Date(b.savedAt)-new Date(a.savedAt))[0];
-  g('s-latest').textContent=lat?fDate(lat.savedAt):'—';
-  g('ph-sub').textContent=list.length?`${list.length} design${list.length!==1?'s':''} saved across ${secs.length} section${secs.length!==1?'s':''}.`:'Your curated selection — saved across all ArchiNova gallery pages.';
-  if(!list.length){g('empty').style.display='block';g('cards').innerHTML='';g('bot-bar').style.display='none';return;}
-  g('empty').style.display='none';g('bot-bar').style.display='flex';
-  g('bot-msg').innerHTML=`<b>${list.length} design${list.length!==1?'s':''} saved.</b> Request packages or book a consultation.`;
-  const groups={};
-  list.forEach(d=>{const s=d.section||'Gallery';if(!groups[s])groups[s]=[];groups[s].push(d);});
-  g('cards').innerHTML=Object.entries(groups).map(([sec,items])=>`
+/* ── render ── */
+function render() {
+  const list = sorted();
+  const g = id => document.getElementById(id);
+
+  // Stats row
+  const secs = [...new Set(list.map(d => d.section || 'Gallery'))];
+  g('s-saved').textContent  = list.length;
+  g('s-secs').textContent   = secs.length || 0;
+  const tot = list.reduce((s, d) => s + pBudget(d.budget), 0);
+  g('s-budget').textContent = list.length ? fBudget(tot) : '—';
+  const lat = [...list].sort((a, b) => {
+    const ta = a.savedAt && a.savedAt.seconds ? a.savedAt.seconds : new Date(a.savedAt||0)/1000;
+    const tb = b.savedAt && b.savedAt.seconds ? b.savedAt.seconds : new Date(b.savedAt||0)/1000;
+    return tb - ta;
+  })[0];
+  g('s-latest').textContent = lat ? fDate(lat.savedAt) : '—';
+  g('ph-sub').textContent   = list.length
+    ? `${list.length} design${list.length !== 1 ? 's' : ''} saved across ${secs.length} section${secs.length !== 1 ? 's' : ''}.`
+    : 'Your curated selection — saved across all ArchiNova gallery pages.';
+
+  if (!list.length) {
+    g('empty').style.display  = 'block';
+    g('cards').innerHTML      = '';
+    g('bot-bar').style.display = 'none';
+    return;
+  }
+  g('empty').style.display   = 'none';
+  g('bot-bar').style.display = 'flex';
+  g('bot-msg').innerHTML = `<b>${list.length} design${list.length !== 1 ? 's' : ''} saved.</b> Request packages or book a consultation.`;
+
+  // Group by section
+  const groups = {};
+  list.forEach(d => {
+    const s = d.section || 'Gallery';
+    if (!groups[s]) groups[s] = [];
+    groups[s].push(d);
+  });
+
+  g('cards').innerHTML = Object.entries(groups).map(([sec, items]) => `
     <div class="grp">
-      <div class="grp-hd"><div class="grp-title">${sec}<span class="grp-cnt">${items.length}</span></div></div>
-      <div class="wgrid">${items.map(d=>`
+      <div class="grp-hd">
+        <div class="grp-title">${escH(sec)}<span class="grp-cnt">${items.length}</span></div>
+      </div>
+      <div class="wgrid">${items.map(d => `
         <div class="wc">
           <div class="wc-img">
-            <img src="${d.img}" alt="${d.title}" loading="lazy"/>
-            <button class="wc-rem" onclick="rem('${d.id}')">&#10005;</button>
+            <img src="${escH(d.img||'')}" alt="${escH(d.title||'')}" loading="lazy"
+              onerror="this.style.display='none'"/>
+            <button class="wc-rem" onclick="rem('${escH(d.docId)}')">&#10005;</button>
             <div class="wc-date">Saved ${fDate(d.savedAt)}</div>
           </div>
           <div class="wc-body">
-            <div class="wc-sec">${d.badge||sec}</div>
-            <div class="wc-title">${d.title}</div>
-            <div class="wc-desc">${d.desc||''}</div>
+            <div class="wc-sec">${escH(d.badge || sec)}</div>
+            <div class="wc-title">${escH(d.title||'')}</div>
+            <div class="wc-desc">${escH(d.desc||d.description||'')}</div>
             <div class="wc-specs">
-              <div class="wc-spec"><b>${d.area||'—'}</b>Area</div>
-              <div class="wc-spec"><b>${d.cap||'—'}</b>Capacity</div>
-              <div class="wc-spec"><b>${d.budget||'—'}</b>Budget</div>
+              <div class="wc-spec"><b>${escH(d.area||'—')}</b>Area</div>
+              <div class="wc-spec"><b>${escH(d.cap||d.capacity||'—')}</b>Capacity</div>
+              <div class="wc-spec"><b>${escH(d.budget||'—')}</b>Budget</div>
             </div>
-            <div class="wc-tags">${(d.tags||[]).map(t=>'<span class="wc-tag">'+t+'</span>').join('')}</div>
+            <div class="wc-tags">${(Array.isArray(d.tags)?d.tags:[]).map(t=>'<span class="wc-tag">'+escH(t)+'</span>').join('')}</div>
             <div class="wc-acts">
-              <button class="wc-bp" onclick="openRM('${d.id}')">Request Package</button>
-              <button class="wc-bg" onclick="rem('${d.id}')">Remove</button>
+              <button class="wc-bp" onclick="openRM('${escH(d.docId)}')">Request Package</button>
+              <button class="wc-bg" onclick="rem('${escH(d.docId)}')">Remove</button>
             </div>
           </div>
         </div>`).join('')}
@@ -265,49 +346,132 @@ function render(){
     </div>`).join('');
 }
 
-function rem(id){setL(getL().filter(d=>d.id!==id));render();showToast('Design removed');}
-function clearAll(){if(!getL().length)return;if(!confirm('Remove all saved designs?'))return;setL([]);render();showToast('Wishlist cleared');}
+/* ── remove one ── */
+function rem(docId) {
+  if (!currentUid) return;
+  db.collection('gallery_wishlist').doc(docId).delete()
+    .then(() => {
+      allItems = allItems.filter(d => d.docId !== docId);
+      render();
+      showToast('Design removed from Wishlist');
+    })
+    .catch(e => showToast('Error: ' + e.message));
+}
 
-let _rid=null;
-function openRM(id){
-  _rid=id;
-  const d=getL().find(x=>x.id===id);
-  document.getElementById('rm-title').textContent=d?d.title:'Design Package';
-  document.getElementById('r-ok').style.display='none';
-  ['r-name','r-email','r-co'].forEach(i=>document.getElementById(i).value='');
-  document.getElementById('rm').classList.add('open');document.body.style.overflow='hidden';
+/* ── clear all ── */
+function clearAll() {
+  if (!allItems.length) return;
+  if (!confirm('Remove all saved designs from your Wishlist?')) return;
+  const batch = db.batch();
+  allItems.forEach(d => batch.delete(db.collection('gallery_wishlist').doc(d.docId)));
+  batch.commit()
+    .then(() => { allItems = []; render(); showToast('Wishlist cleared'); })
+    .catch(e => showToast('Error: ' + e.message));
 }
-function reqAll(){
-  _rid='all';const n=getL().length;
-  document.getElementById('rm-title').textContent='All '+n+' saved designs';
-  document.getElementById('r-ok').style.display='none';
-  ['r-name','r-email','r-co'].forEach(i=>document.getElementById(i).value='');
-  document.getElementById('rm').classList.add('open');document.body.style.overflow='hidden';
+
+/* ── request package modal ── */
+function openRM(docId) {
+  _rid = docId;
+  const d = allItems.find(x => x.docId === docId);
+  document.getElementById('rm-title').textContent = d ? d.title : 'Design Package';
+  document.getElementById('r-ok').style.display = 'none';
+  ['r-name','r-email','r-co'].forEach(i => document.getElementById(i).value = '');
+  document.getElementById('rm').classList.add('open');
+  document.body.style.overflow = 'hidden';
 }
-function closeRM(){document.getElementById('rm').classList.remove('open');document.body.style.overflow='';}
-function submitReq(){
-  if(!document.getElementById('r-name').value.trim()||!document.getElementById('r-email').value.trim()){alert('Please fill in name and email.');return;}
-  document.getElementById('r-ok').style.display='block';
-  setTimeout(()=>closeRM(),2400);
+function reqAll() {
+  _rid = 'all';
+  const n = allItems.length;
+  document.getElementById('rm-title').textContent = 'All ' + n + ' saved designs';
+  document.getElementById('r-ok').style.display = 'none';
+  ['r-name','r-email','r-co'].forEach(i => document.getElementById(i).value = '');
+  document.getElementById('rm').classList.add('open');
+  document.body.style.overflow = 'hidden';
 }
-function openCM(){
-  document.getElementById('c-ok').style.display='none';
-  ['c-first','c-last','c-email'].forEach(i=>document.getElementById(i).value='');
-  document.getElementById('cm').classList.add('open');document.body.style.overflow='hidden';
+function closeRM() { document.getElementById('rm').classList.remove('open'); document.body.style.overflow = ''; }
+function submitReq() {
+  if (!document.getElementById('r-name').value.trim() || !document.getElementById('r-email').value.trim()) {
+    alert('Please fill in name and email.'); return;
+  }
+  document.getElementById('r-ok').style.display = 'block';
+  setTimeout(() => closeRM(), 2400);
 }
-function closeCM(){document.getElementById('cm').classList.remove('open');document.body.style.overflow='';}
-function submitCon(){
-  if(!document.getElementById('c-first').value.trim()||!document.getElementById('c-email').value.trim()){alert('Please fill in name and email.');return;}
-  document.getElementById('c-ok').style.display='block';
-  setTimeout(()=>closeCM(),2200);
+
+/* ── consultation modal ── */
+function openCM() {
+  document.getElementById('c-ok').style.display = 'none';
+  ['c-first','c-last','c-email'].forEach(i => document.getElementById(i).value = '');
+  document.getElementById('cm').classList.add('open');
+  document.body.style.overflow = 'hidden';
 }
-function showToast(msg){
-  const t=document.getElementById('toast');t.textContent=msg;
-  t.style.opacity='1';t.style.transform='translateX(-50%) translateY(0)';
-  clearTimeout(t._t);t._t=setTimeout(()=>{t.style.opacity='0';t.style.transform='translateX(-50%) translateY(80px)';},2800);
+function closeCM() { document.getElementById('cm').classList.remove('open'); document.body.style.overflow = ''; }
+function submitCon() {
+  if (!document.getElementById('c-first').value.trim() || !document.getElementById('c-email').value.trim()) {
+    alert('Please fill in name and email.'); return;
+  }
+  document.getElementById('c-ok').style.display = 'block';
+  setTimeout(() => closeCM(), 2200);
 }
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeRM();closeCM();}});
-render();
+
+/* ── toast ── */
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.opacity = '1';
+  t.style.transform = 'translateX(-50%) translateY(0)';
+  clearTimeout(t._t);
+  t._t = setTimeout(() => {
+    t.style.opacity = '0';
+    t.style.transform = 'translateX(-50%) translateY(80px)';
+  }, 2800);
+}
+
+/* ── auth gate + Firestore load ── */
+function showLoginPrompt() {
+  document.getElementById('cards').innerHTML = '';
+  document.getElementById('empty').style.display  = 'block';
+  document.getElementById('bot-bar').style.display = 'none';
+  document.getElementById('empty').innerHTML = `
+    <div class="empty-icon">
+      <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+    </div>
+    <h2>Sign in to view your Wishlist</h2>
+    <p>Your saved designs are tied to your account and sync across all devices. Please log in to access them.</p>
+    <div class="blinks">
+      <a href="login.html?from=wishlist.html" class="bl" style="background:var(--teal);color:#fff;border-color:var(--teal)">&#8594; Log In</a>
+      <a href="gallery.html" class="bl">Browse Gallery</a>
+    </div>`;
+}
+
+function loadWishlist(uid) {
+  currentUid = uid;
+  document.getElementById('cards').innerHTML =
+    '<div style="text-align:center;padding:5rem 2rem;color:var(--muted);font-size:.9rem">' +
+    '<i style="font-size:2rem;display:block;margin-bottom:1rem;opacity:.4">&#9825;</i>Loading your wishlist…</div>';
+
+  db.collection('gallery_wishlist')
+    .where('userId', '==', uid)
+    .get()
+    .then(snap => {
+      allItems = snap.docs.map(doc => Object.assign({ docId: doc.id }, doc.data()));
+      render();
+    })
+    .catch(e => {
+      console.error('Wishlist load error:', e);
+      document.getElementById('cards').innerHTML =
+        '<div style="text-align:center;padding:5rem 2rem;color:#f87171;font-size:.85rem">Failed to load wishlist. Check your connection and try again.</div>';
+    });
+}
+
+auth.onAuthStateChanged(user => {
+  if (user) {
+    loadWishlist(user.uid);
+  } else {
+    showLoginPrompt();
+  }
+});
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeRM(); closeCM(); } });
 </script>
 </body>
 </html>
